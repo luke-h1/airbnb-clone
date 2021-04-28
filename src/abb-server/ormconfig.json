@@ -6,5 +6,8 @@
     "password": "Password",
     "database": "abbdev",
     "entities": ["dist/entities/*.js"],
-    "migrations": ["src/migrations/*.js"]
+    "migrations": ["src/migrations/*.js"],
+    "cli": {
+        "migrationsDir": "src/migrations/*.js"
+    }
 }
