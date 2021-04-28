@@ -1,62 +1,60 @@
-import { Field, ObjectType } from "type-graphql";
+import { Field, ObjectType } from 'type-graphql';
 import {
   BaseEntity,
   Column,
   Entity,
   ManyToOne,
   PrimaryGeneratedColumn,
-} from "typeorm";
-import { User } from "./User";
-
-
+} from 'typeorm';
+import { User } from './User';
 
 @ObjectType()
-@Entity("listings")
+@Entity('listings')
 export class Listing extends BaseEntity {
-  @PrimaryGeneratedColumn("uuid") id: string;
+  @PrimaryGeneratedColumn('uuid') id: string;
 
   @Field()
-  @Column("varchar", { length: 100 })
+  @Column('varchar', { length: 100 })
   name!: string;
 
   @Field()
-  @Column("varchar", { length: 100 })
+  @Column('varchar', { length: 100 })
   category: string;
 
   @Field()
-  @Column("text", { nullable: true })
+  @Column('text', { nullable: true })
   pictureUrl: string;
 
   @Field()
-  @Column("varchar", { length: 255 })
+  @Column('varchar', { length: 255 })
   description: string;
 
   @Field()
-  @Column("int")
+  @Column('int')
   price: number;
 
   @Field()
-  @Column("int")
+  @Column('int')
   beds: number;
 
   @Field()
-  @Column("int")
+  @Column('int')
   guests: number;
 
   @Field()
-  @Column("double precision")
+  @Column('double precision')
   latitude: number;
 
   @Field()
-  @Column("double precision")
+  @Column('double precision')
   longitude: number;
 
   @Field(() => [String])
   @Column('text', { array: true })
-  amenities: string[]
+  amenities: string[];
 
   @Field()
-  @Column("uuid")
+  @Column('uuid')
   userId: string;
 
   @ManyToOne(() => User, (user) => user.listings)

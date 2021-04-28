@@ -1,4 +1,4 @@
-import { Field, ObjectType } from "type-graphql";
+import { Field, ObjectType } from 'type-graphql';
 import {
   BaseEntity,
   Column,
@@ -7,14 +7,14 @@ import {
   OneToMany,
   PrimaryGeneratedColumn,
   UpdateDateColumn,
-} from "typeorm";
-import { Listing } from "./Listing";
+} from 'typeorm';
+import { Listing } from './Listing';
 
 @ObjectType()
-@Entity("users")
+@Entity('users')
 export class User extends BaseEntity {
   @Field()
-  @PrimaryGeneratedColumn("uuid")
+  @PrimaryGeneratedColumn('uuid')
   id: string;
 
   @Field()
