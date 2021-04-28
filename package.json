@@ -1,0 +1,17 @@
+{
+  "name": "abb-clone",
+  "private": true,
+
+  "devDependencies": {
+    "lerna": "^4.0.0"
+  },
+  "scripts": {
+    "start:server": "cd src/abb-server",
+    "start:web": "cd src/abb-web && npm run dev",
+    "clean": "lerna clean -y",
+    "bootstrap": "lerna bootstrap --ci --force-local",
+    "bootstrap:prod": "lerna bootstrap --ci --force-local -- --only=prod",
+    "bootstrap:install": "lerna bootstrap --force-local"
+
+  }
+}
