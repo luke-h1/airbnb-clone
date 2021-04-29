@@ -1,6 +1,6 @@
-import { Listing } from 'src/entities/Listing';
-import { User } from 'src/entities/User';
 import { createConnection } from 'typeorm';
+import { Listing } from '../entities/Listing';
+import { User } from '../entities/User';
 
 export const createTestConn = async (resetDB: boolean = false) => {
   const conn = await createConnection({

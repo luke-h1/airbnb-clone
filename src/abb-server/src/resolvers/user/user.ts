@@ -1,14 +1,14 @@
 import argon2 from 'argon2';
-import { FORGET_PASSWORD_PREFIX } from 'src/constants';
-import { User } from 'src/entities/User';
 import { MyContext } from 'src/types';
-import { createForgotPasswordLink } from 'src/utils/createForgotPasswordLink';
-import { formatYupError } from 'src/utils/formatYupError';
-import { sendEmail } from 'src/utils/sendEmail';
 import {
   Arg, Ctx, Mutation, Resolver,
 } from 'type-graphql';
 import { v4 } from 'uuid';
+import { createForgotPasswordLink } from '../../utils/createForgotPasswordLink';
+import { formatYupError } from '../../utils/formatYupError';
+import { sendEmail } from '../../utils/sendEmail';
+import { User } from '../../entities/User';
+import { FORGET_PASSWORD_PREFIX } from '../../constants';
 import { expiredKeyError } from './errorMessages';
 import { changePasswordSchema } from '../../../../abb-common/index';
 

@@ -1,8 +1,8 @@
-import { __prod__ } from 'src/constants';
-import { Listing } from 'src/entities/Listing';
-import { User } from 'src/entities/User';
 import { createConnection } from 'typeorm';
 import path from 'path';
+import { __prod__ } from '../constants';
+import { Listing } from '../entities/Listing';
+import { User } from '../entities/User';
 
 export const createTypeormConn = async () => {
   const conn = await createConnection({
