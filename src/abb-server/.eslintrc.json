@@ -24,6 +24,7 @@
     "import/no-unresolved": "off",
     "class-methods-use-this": "off",
     "global-require": "off",
-    "no-unused-vars": "off"
+    "no-unused-vars": "off",
+    "import/no-extraneous-dependencies": "off"
   }
 }
