@@ -1,9 +1,12 @@
+/* eslint-disable no-shadow */
 import argon2 from 'argon2';
 import { MyContext } from 'src/types';
 import {
   Arg, Ctx, Field, Mutation, ObjectType, Resolver,
 } from 'type-graphql';
 import { v4 } from 'uuid';
+import { removeAllUserSessions } from 'src/utils/removeAllUserSessions';
+import { resolve } from 'node:path';
 import { createForgotPasswordLink } from '../../utils/createForgotPasswordLink';
 import { formatYupError } from '../../utils/formatYupError';
 import { sendEmail } from '../../utils/sendEmail';
@@ -145,5 +148,24 @@ export class UserResolver {
       await redis.lpush(`${userSessionIdPrefix}${user.id}`, req.sessionID);
     }
     return { sessionId: req.sessionID };
+  }
+
+  @Mutation(() => Boolean)
+  logout(@Ctx() { req, res, redis }: MyContext) {
+    return new Promise((resolve) => {
+      const { userId } = req.session;
+      if (userId) {
+        removeAllUserSessions(userId, redis);
+        req.session.destroy((err: any) => {
+          res.clearCookie('qid');
+          if (err) {
+            console.log(err);
+            resolve(false);
+            return;
+          }
+          resolve(true);
+        });
+      }
+    });
   }
 }
