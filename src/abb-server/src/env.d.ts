@@ -1,5 +1,6 @@
 declare namespace NodeJS {
   interface ProcessEnv {
+    TEST_DATABASE_URL: string;
     DATABASE_URL: string;
     REDIS_URL: string;
     PORT: string;

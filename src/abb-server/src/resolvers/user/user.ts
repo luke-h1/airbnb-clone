@@ -1,6 +1,5 @@
 /* eslint-disable no-shadow */
 import argon2 from 'argon2';
-import { MyContext } from 'src/types';
 import {
   Arg,
   Ctx,
@@ -11,8 +10,8 @@ import {
   Resolver,
 } from 'type-graphql';
 import { v4 } from 'uuid';
-import { removeAllUserSessions } from 'src/utils/removeAllUserSessions';
-import { RequestError } from 'request-promise/errors';
+import { removeAllUserSessions } from '../../utils/removeAllUserSessions';
+import { MyContext } from '../../types';
 import { createForgotPasswordLink } from '../../utils/createForgotPasswordLink';
 import { formatYupError } from '../../utils/formatYupError';
 import { sendEmail } from '../../utils/sendEmail';
