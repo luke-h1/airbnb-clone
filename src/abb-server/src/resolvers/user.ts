@@ -1,7 +1,9 @@
+import argon2, { hash } from 'argon2';
 import { expiredKeyError, FORGET_PASSWORD_PREFIX } from 'src/constants';
 import { User } from 'src/entities/User';
 import { MyContext } from 'src/types';
 import { createForgotPasswordLink } from 'src/utils/createForgotPasswordLink';
+import { formatYupError } from 'src/utils/formatYupError';
 import { sendEmail } from 'src/utils/sendEmail';
 import {
   Arg, Ctx, Mutation, Resolver,
@@ -66,8 +68,19 @@ export class UserResolver {
         { abortEarly: false },
       );
     } catch (e) {
-      console.error(e);
+      return formatYupError(e);
     }
-    return {};
+    const hashedPassword = await argon2.hash(newPassword);
+
+    const updatePromise = User.update(
+      { id: userId },
+      {
+        forgotPasswordLocked: false,
+        password: hashedPassword,
+      },
+    );
+    const deleteKeyPromise = redis.del(key);
+    await Promise.all([updatePromise, deleteKeyPromise]);
+    return null;
   }
 }
