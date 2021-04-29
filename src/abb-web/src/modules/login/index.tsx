@@ -3,10 +3,10 @@ import React from 'react';
 
 interface indexProps {}
 
-const index: React.FC<indexProps> = ({}) => {
+const index: React.FC<indexProps> = () => {
   return (
     <>
-      <Text fontSize="30px">Register page</Text>
+      <Text fontSize="30px">login page</Text>
     </>
   );
 };

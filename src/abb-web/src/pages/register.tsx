@@ -1,3 +1,3 @@
 export {
   default,
-} from '../modules/register';
+} from '../modules/register/register';
