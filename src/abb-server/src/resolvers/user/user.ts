@@ -1,5 +1,5 @@
-import argon2, { hash } from 'argon2';
-import { expiredKeyError, FORGET_PASSWORD_PREFIX } from 'src/constants';
+import argon2 from 'argon2';
+import { FORGET_PASSWORD_PREFIX } from 'src/constants';
 import { User } from 'src/entities/User';
 import { MyContext } from 'src/types';
 import { createForgotPasswordLink } from 'src/utils/createForgotPasswordLink';
@@ -9,7 +9,9 @@ import {
   Arg, Ctx, Mutation, Resolver,
 } from 'type-graphql';
 import { v4 } from 'uuid';
-import { changePasswordSchema } from '../../../abb-common/index';
+import { expiredKeyError } from './errorMessages';
+import { changePasswordSchema } from '../../../../abb-common/index';
+
 @Resolver(User)
 export class UserResolver {
   @Mutation(() => Boolean)
