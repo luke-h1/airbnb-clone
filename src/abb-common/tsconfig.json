@@ -25,13 +25,14 @@
     "emitDecoratorMetadata": true,
     "experimentalDecorators": true,
     "resolveJsonModule": true,
-    "baseUrl": "."
+    "baseUrl": ".",
+    "paths": { 
+      "@abb/*": ["./*/src"]
+    }
   },
   "exclude": [
     "node_modules"
   ],
-  "include": [
-    "./*.ts",
-    "./**/*.ts"
-  ]
+  "include": ["./src/**/*.tsx", "./src/**/*.ts"]
+
 }

@@ -1,5 +1,6 @@
 /* eslint-disable no-shadow */
 import argon2 from 'argon2';
+import { validUserSchema, changePasswordSchema } from 'abb-common';
 import {
   Arg,
   Ctx,
@@ -10,6 +11,9 @@ import {
   Resolver,
 } from 'type-graphql';
 import { v4 } from 'uuid';
+
+import { redis } from '../../redis';
+import { createConfirmEmailLink } from '../../utils/createConfirmEmailLink';
 import { removeAllUserSessions } from '../../utils/removeAllUserSessions';
 import { MyContext } from '../../types';
 import { createForgotPasswordLink } from '../../utils/createForgotPasswordLink';
@@ -19,11 +23,12 @@ import { User } from '../../entities/User';
 import { FORGET_PASSWORD_PREFIX, userSessionIdPrefix } from '../../constants';
 import {
   confirmEmailError,
+  duplicateEmail,
   expiredKeyError,
   forgotPasswordLockedError,
   invalidLogin,
 } from './errorMessages';
-import { changePasswordSchema } from '../../../../abb-common/index';
+import { UsernamePasswordInput } from './UsernamePasswordInput';
 
 const errorResponse = [
   {
@@ -181,5 +186,46 @@ export class UserResolver {
       return null;
     }
     return User.findOne({ where: { id: req.session.userId } });
+  }
+
+  @Mutation(() => User)
+  async register(
+    @Arg('options') options: UsernamePasswordInput,
+    @Ctx() { url }: MyContext,
+  ) {
+    try {
+      await validUserSchema.validate(options, { abortEarly: true });
+    } catch (e) {
+      return formatYupError(e);
+    }
+    const { email, password } = options;
+
+    const userAlreadyExists = await User.findOne({
+      where: { email },
+      select: ['id'],
+    });
+    if (userAlreadyExists) {
+      return [
+        {
+          path: 'email',
+          message: duplicateEmail,
+        },
+      ];
+    }
+    const user = await User.create({
+      email,
+      password,
+    });
+
+    await user.save();
+
+    if (process.env.NODE_ENV !== 'test') {
+      await sendEmail(
+        email,
+        await createConfirmEmailLink(url, user.id, redis),
+        'confirm email',
+      );
+    }
+    return null;
   }
 }

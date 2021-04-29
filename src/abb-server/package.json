@@ -10,7 +10,7 @@
     "format": "prettier --write \"src/**/*.{js,jsx,ts,tsx}\"",
     "watch": "tsc -w",
     "test": "cross-env NODE_ENV=test jest --watch",
-    "dev": "cross-env NODE_ENV=development nodemon dist/abb-server/src/index.js",
+    "dev": "cross-env NODE_ENV=development nodemon dist/index.js",
     "gen-migration": "typeorm migration:generate -n <NAME>"
   },
   "keywords": [],
