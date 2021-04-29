@@ -1,6 +1,6 @@
 import { Request, Response } from 'express';
-import { PubSub } from 'graphql-subscriptions';
 import { Redis } from 'ioredis';
+import { PubSub } from 'graphql-yoga';
 import { createUserLoader } from './Loaders/UserLoader';
 
 export type MyContext = {
