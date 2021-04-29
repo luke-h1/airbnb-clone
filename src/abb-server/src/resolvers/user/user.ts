@@ -1,52 +1,100 @@
-/* eslint-disable no-shadow */
+/* eslint-disable */
 import argon2 from 'argon2';
-import { validUserSchema, changePasswordSchema } from 'abb-common';
 import {
   Arg,
   Ctx,
   Field,
+  FieldResolver,
   Mutation,
   ObjectType,
   Query,
   Resolver,
+  Root,
 } from 'type-graphql';
 import { v4 } from 'uuid';
 
-import { redis } from '../../redis';
-import { createConfirmEmailLink } from '../../utils/createConfirmEmailLink';
-import { removeAllUserSessions } from '../../utils/removeAllUserSessions';
+import { getConnection } from 'typeorm';
 import { MyContext } from '../../types';
-import { createForgotPasswordLink } from '../../utils/createForgotPasswordLink';
-import { formatYupError } from '../../utils/formatYupError';
 import { sendEmail } from '../../utils/sendEmail';
 import { User } from '../../entities/User';
-import { FORGET_PASSWORD_PREFIX, userSessionIdPrefix } from '../../constants';
-import {
-  confirmEmailError,
-  duplicateEmail,
-  expiredKeyError,
-  forgotPasswordLockedError,
-  invalidLogin,
-} from './errorMessages';
+import { FORGET_PASSWORD_PREFIX } from '../../constants';
 import { UsernamePasswordInput } from './UsernamePasswordInput';
-
-const errorResponse = [
-  {
-    path: 'email',
-    message: invalidLogin,
-  },
-];
+import { validateRegister } from '../../utils/validateRegister';
 
 @ObjectType()
+class FieldError {
+  @Field()
+  field: string;
+  @Field()
+  message: string;
+}
+@ObjectType()
 class UserResponse {
+  @Field(() => [FieldError], { nullable: true })
+  errors?: FieldError[];
+
   @Field(() => User, { nullable: true })
   user?: User;
 }
 
 @Resolver(User)
 export class UserResolver {
+  @FieldResolver(() => String)
+  email(@Root() user: User, @Ctx() { req }: MyContext) {
+    // this is the current user and its ok to show them their own email
+    if (req.session.userId === user.id) {
+      return user.email;
+    }
+    // current user wants to see someone elses email
+    return '';
+  }
+
+  @Mutation(() => UserResponse)
+  async changePassword(
+    @Arg('token') token: string,
+    @Arg('newPassword') newPassword: string,
+    @Ctx() { redis, req }: MyContext,
+  ): Promise<UserResponse> {
+    if (newPassword.length <= 2) {
+      return {
+        errors: [
+          {
+            field: 'newPassword',
+            message: 'length must be greater than 2',
+          },
+        ],
+      };
+    }
+    const key = FORGET_PASSWORD_PREFIX + token;
+    const userId = await redis.get(key);
+    if (!userId) {
+      return {
+        errors: [{ field: 'token', message: 'token expired' }],
+      };
+    }
+    const userIdNum = parseInt(userId);
+    const user = await User.findOne(userIdNum);
+    if (!user) {
+      return {
+        errors: [
+          {
+            field: 'token',
+            message: 'User no longer exists',
+          },
+        ],
+      };
+    }
+    await User.update({ id: userIdNum } as any, {
+      password: await argon2.hash(newPassword),
+    });
+    await redis.del(key);
+    // log in user after change password
+    req.session.userId = user.id;
+    return { user };
+  }
+
   @Mutation(() => Boolean)
-  async sendForgotPasswordEmail(
+  async forgotPassword(
     @Arg('email') email: string,
     @Ctx() { redis }: MyContext,
   ) {
@@ -54,14 +102,7 @@ export class UserResolver {
     if (!user) {
       // email is not in DB
       return true;
-      // return [
-      //   {
-      //     path: "email",
-      //     message: userNotFoundError
-      //   }
-      // ];
     }
-    // await forgotPasswordLockAccount(user.id, redis);
     const token = v4();
     await redis.set(
       FORGET_PASSWORD_PREFIX + token,
@@ -69,114 +110,11 @@ export class UserResolver {
       'ex',
       1000 * 60 * 60 * 24 * 3,
     );
-    // user has 3 days to reset their password
-    const url = await createForgotPasswordLink(
-      process.env.FRONTEND_HOST,
-      user.id,
-      redis,
+    await sendEmail(
+      email,
+      `<a href="http://localhost:3000/change-password/${token}">reset password</a>`,
     );
-    await sendEmail(email, url, 'reset password');
     return true;
-  }
-
-  @Mutation(() => Boolean)
-  async forgotPasswordChange(
-    @Arg('key') key: string,
-    @Arg('newPassword') newPassword: string,
-    @Ctx() { redis, req }: MyContext,
-  ) {
-    const redisKey = `${FORGET_PASSWORD_PREFIX}${key}`;
-    const userId = await redis.get(redisKey);
-    if (!userId) {
-      return [
-        {
-          path: 'newPassword',
-          message: expiredKeyError,
-        },
-      ];
-    }
-    try {
-      await changePasswordSchema.validate(
-        { newPassword },
-        { abortEarly: false },
-      );
-    } catch (e) {
-      return formatYupError(e);
-    }
-    const hashedPassword = await argon2.hash(newPassword);
-
-    const updatePromise = User.update(
-      { id: userId },
-      {
-        forgotPasswordLocked: false,
-        password: hashedPassword,
-      },
-    );
-    const deleteKeyPromise = redis.del(key);
-    await Promise.all([updatePromise, deleteKeyPromise]);
-    return null;
-  }
-
-  @Mutation(() => UserResponse)
-  async login(
-    @Arg('email') email: string,
-    @Arg('password') password: string,
-    @Ctx() { req, redis }: MyContext,
-  ) {
-    const user = await User.findOne({ where: { email } });
-    if (!user) {
-      return { errors: errorResponse };
-    }
-    if (!user.confirmed) {
-      return {
-        errors: [
-          {
-            path: 'email',
-            message: confirmEmailError,
-          },
-        ],
-      };
-    }
-    if (user.forgotPasswordLocked) {
-      return {
-        errors: [
-          {
-            path: 'email',
-            message: forgotPasswordLockedError,
-          },
-        ],
-      };
-    }
-    const valid = await argon2.verify(user.password, password);
-    if (!valid) {
-      return { errors: errorResponse };
-    }
-    // login is succesful
-    // give them a cookie 🍪
-    req.session.userId = user.id;
-    if (req.sessionID) {
-      await redis.lpush(`${userSessionIdPrefix}${user.id}`, req.sessionID);
-    }
-    return { sessionId: req.sessionID };
-  }
-
-  @Mutation(() => Boolean)
-  logout(@Ctx() { req, res, redis }: MyContext) {
-    return new Promise((resolve) => {
-      const { userId } = req.session;
-      if (userId) {
-        removeAllUserSessions(userId, redis);
-        req.session.destroy((err: any) => {
-          res.clearCookie('qid');
-          if (err) {
-            console.log(err);
-            resolve(false);
-            return;
-          }
-          resolve(true);
-        });
-      }
-    });
   }
 
   @Query(() => User, { nullable: true })
@@ -185,47 +123,97 @@ export class UserResolver {
     if (!req.session.userId) {
       return null;
     }
-    return User.findOne({ where: { id: req.session.userId } });
+    return User.findOne(req.session.userId);
   }
 
-  @Mutation(() => User)
+  @Mutation(() => UserResponse)
   async register(
     @Arg('options') options: UsernamePasswordInput,
-    @Ctx() { url }: MyContext,
-  ) {
+    @Ctx() { req }: MyContext,
+  ): Promise<UserResponse> {
+    const errors = validateRegister(options);
+    if (errors) {
+      return { errors };
+    }
+    const hashedPassword = await argon2.hash(options.password);
+    let user;
     try {
-      await validUserSchema.validate(options, { abortEarly: true });
+      const result = await getConnection()
+        .createQueryBuilder()
+        .insert()
+        .into(User)
+        .values({
+          email: options.email,
+          password: hashedPassword,
+        })
+        .returning('*')
+        .execute();
+      user = result.raw[0];
     } catch (e) {
-      return formatYupError(e);
+      if (e.code === '23505') {
+        return {
+          errors: [
+            {
+              field: 'email',
+              message: 'email already taken',
+            },
+          ],
+        };
+      }
     }
-    const { email, password } = options;
+    // store user id session
+    // this will set a cookie on the user
+    // keep them logged in
+    req.session.userId = user.id;
+    return { user };
+  }
 
-    const userAlreadyExists = await User.findOne({
-      where: { email },
-      select: ['id'],
-    });
-    if (userAlreadyExists) {
-      return [
-        {
-          path: 'email',
-          message: duplicateEmail,
-        },
-      ];
+  @Mutation(() => UserResponse)
+  async login(
+    @Arg('email') email: string,
+    @Arg('password') password: string,
+    @Ctx() { req }: MyContext,
+  ): Promise<UserResponse> {
+    const user = await User.findOne({ where: { email } });
+    if (!user) {
+      return {
+        errors: [
+          {
+            field: 'email',
+            message: 'email doesnt exist',
+          },
+        ],
+      };
     }
-    const user = await User.create({
-      email,
-      password,
-    });
-
-    await user.save();
-
-    if (process.env.NODE_ENV !== 'test') {
-      await sendEmail(
-        email,
-        await createConfirmEmailLink(url, user.id, redis),
-        'confirm email',
-      );
+    const valid = await argon2.verify(user.password, password);
+    if (!valid) {
+      return {
+        errors: [
+          {
+            field: 'password',
+            message: 'incorrect password',
+          },
+        ],
+      };
     }
-    return null;
+    req.session.userId = user.id;
+    return {
+      user,
+    };
+  }
+
+  @Mutation(() => Boolean)
+  logout(@Ctx() { req, res }: MyContext) {
+    return new Promise(resolve =>
+      req.session.destroy((err: any) => {
+        res.clearCookie('qid');
+        if (err) {
+          console.log(err);
+          resolve(false);
+          return;
+        }
+        resolve(true);
+      }),
+    );
   }
 }

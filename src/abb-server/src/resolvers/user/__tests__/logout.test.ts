@@ -6,7 +6,7 @@ import { createTestConn } from 'src/testUtils/createTestConn';
 import { TestClient } from 'src/utils/TestClient';
 import { Connection } from 'typeorm';
 
-let conn: Connection;
+let conn: any;
 faker.seed(Date.now() + 2);
 const email = faker.internet.email();
 const password = faker.internet.password();

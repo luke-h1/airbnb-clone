@@ -3,7 +3,7 @@ import { Listing } from '../entities/Listing';
 import { User } from '../entities/User';
 
 export const createTestConn = async (resetDB: boolean = false) => {
-  const conn = await createConnection({
+  await createConnection({
     type: 'postgres',
     url: process.env.TEST_DATABASE_URL,
     logging: true,

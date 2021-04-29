@@ -1,18 +1,16 @@
 /* eslint-disable no-undef */
 import * as faker from 'faker';
-import { User } from 'src/entities/User';
-import { createTestConn } from 'src/testUtils/createTestConn';
-import { TestClient } from 'src/utils/TestClient';
-import { Connection } from 'typeorm';
+import { User } from '../../../entities/User';
+import { createTestConn } from '../../../testUtils/createTestConn';
+import { TestClient } from '../../../utils/TestClient';
 import { confirmEmailError, invalidLogin } from '../errorMessages';
 
-faker.seed(Date.now() + 1);
 const email = faker.internet.email();
 const password = faker.internet.password();
 
 const client = new TestClient(process.env.TEST_HOST);
 
-let conn: Connection;
+let conn: any;
 let response;
 
 beforeAll(async () => {

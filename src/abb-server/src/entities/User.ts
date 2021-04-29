@@ -15,7 +15,7 @@ import { Listing } from './Listing';
 export class User extends BaseEntity {
   @Field()
   @PrimaryGeneratedColumn('uuid')
-  id: string;
+  id!: string;
 
   @Field()
   @Column({ unique: true })
@@ -23,14 +23,6 @@ export class User extends BaseEntity {
 
   @Column()
   password!: string;
-
-  @Field()
-  @Column({ default: false })
-  confirmed: boolean;
-
-  @Field()
-  @Column({ default: false })
-  forgotPasswordLocked: boolean;
 
   @OneToMany(() => Listing, (listing) => listing.user)
   listings: Listing[];

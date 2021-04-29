@@ -1,10 +1,6 @@
 import nodemailer from 'nodemailer';
 
-export const sendEmail = async (
-  recipient: string,
-  url: string,
-  linkText: string,
-) => {
+export const sendEmail = async (to: string, html: string) => {
   nodemailer.createTestAccount((err1, account) => {
     if (err1) {
       console.error(err1);
@@ -20,15 +16,10 @@ export const sendEmail = async (
     });
     const message = {
       from: 'Sender Name <sender@example.com>',
-      to: `Recipient <${recipient}>`,
+      to,
       subject: 'Nodemailer is unicode friendly ✔',
       text: 'Hello to myself!',
-      html: `<html>
-          <body>
-          <p>Testing</p>
-          <a href="${url}">${linkText}</a>
-          </body>
-          </html>`,
+      html,
     };
     transporter.sendMail(message, (err, info) => {
       if (err) {

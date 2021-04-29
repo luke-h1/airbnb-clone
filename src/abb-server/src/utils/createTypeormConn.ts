@@ -5,7 +5,7 @@ import { Listing } from '../entities/Listing';
 import { User } from '../entities/User';
 
 export const createTypeormConn = async () => {
-  const conn = await createConnection({
+  await createConnection({
     type: 'postgres',
     url: process.env.DATABASE_URL,
     logging: true,
