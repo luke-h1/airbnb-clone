@@ -6,7 +6,6 @@ import {
 } from 'type-graphql';
 import { v4 } from 'uuid';
 import { removeAllUserSessions } from 'src/utils/removeAllUserSessions';
-import { resolve } from 'node:path';
 import { createForgotPasswordLink } from '../../utils/createForgotPasswordLink';
 import { formatYupError } from '../../utils/formatYupError';
 import { sendEmail } from '../../utils/sendEmail';
