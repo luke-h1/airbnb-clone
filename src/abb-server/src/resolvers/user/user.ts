@@ -2,10 +2,17 @@
 import argon2 from 'argon2';
 import { MyContext } from 'src/types';
 import {
-  Arg, Ctx, Field, Mutation, ObjectType, Resolver,
+  Arg,
+  Ctx,
+  Field,
+  Mutation,
+  ObjectType,
+  Query,
+  Resolver,
 } from 'type-graphql';
 import { v4 } from 'uuid';
 import { removeAllUserSessions } from 'src/utils/removeAllUserSessions';
+import { RequestError } from 'request-promise/errors';
 import { createForgotPasswordLink } from '../../utils/createForgotPasswordLink';
 import { formatYupError } from '../../utils/formatYupError';
 import { sendEmail } from '../../utils/sendEmail';
@@ -166,5 +173,14 @@ export class UserResolver {
         });
       }
     });
+  }
+
+  @Query(() => User, { nullable: true })
+  me(@Ctx() { req }: MyContext) {
+    // user isn't logged in
+    if (!req.session.userId) {
+      return null;
+    }
+    return User.findOne({ where: { id: req.session.userId } });
   }
 }
