@@ -1,14 +1,12 @@
 import { Text } from '@chakra-ui/layout';
 import React from 'react';
 
-interface indexProps {
-
-}
+interface indexProps {}
 
 const index: React.FC<indexProps> = ({}) => {
   return (
     <>
-      <Text fontSize="30px">Index</Text>
+      <Text fontSize="30px">Register page</Text>
     </>
   );
 };

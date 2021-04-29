@@ -62,11 +62,14 @@
     ],
     "react/jsx-curly-newline": "off",
     "react/jsx-one-expression-per-line": "off",
-    "react/jsx-props-no-spreading": ["error", {
-      "html": "enforce",
-      "custom": "ignore"
-    }],
-    "react/jsx-wrap-multilines": ["error", { "prop": "ignore" }],
+    "react/jsx-props-no-spreading": [
+      "error",
+      {
+        "html": "enforce",
+        "custom": "ignore"
+      }
+    ],
+    "react/jsx-wrap-multilines": ["error", { "prop": "ignore" }]
   },
   "ignorePatterns": ["node_modules/", ".next/"],
   "overrides": [
