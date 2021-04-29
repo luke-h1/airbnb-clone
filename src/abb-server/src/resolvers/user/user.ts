@@ -1,16 +1,34 @@
 import argon2 from 'argon2';
 import { MyContext } from 'src/types';
 import {
-  Arg, Ctx, Mutation, Resolver,
+  Arg, Ctx, Field, Mutation, ObjectType, Resolver,
 } from 'type-graphql';
 import { v4 } from 'uuid';
 import { createForgotPasswordLink } from '../../utils/createForgotPasswordLink';
 import { formatYupError } from '../../utils/formatYupError';
 import { sendEmail } from '../../utils/sendEmail';
 import { User } from '../../entities/User';
-import { FORGET_PASSWORD_PREFIX } from '../../constants';
-import { expiredKeyError } from './errorMessages';
+import { FORGET_PASSWORD_PREFIX, userSessionIdPrefix } from '../../constants';
+import {
+  confirmEmailError,
+  expiredKeyError,
+  forgotPasswordLockedError,
+  invalidLogin,
+} from './errorMessages';
 import { changePasswordSchema } from '../../../../abb-common/index';
+
+const errorResponse = [
+  {
+    path: 'email',
+    message: invalidLogin,
+  },
+];
+
+@ObjectType()
+class UserResponse {
+  @Field(() => User, { nullable: true })
+  user?: User;
+}
 
 @Resolver(User)
 export class UserResolver {
@@ -84,5 +102,48 @@ export class UserResolver {
     const deleteKeyPromise = redis.del(key);
     await Promise.all([updatePromise, deleteKeyPromise]);
     return null;
+  }
+
+  @Mutation(() => UserResponse)
+  async login(
+    @Arg('email') email: string,
+    @Arg('password') password: string,
+    @Ctx() { req, redis }: MyContext,
+  ) {
+    const user = await User.findOne({ where: { email } });
+    if (!user) {
+      return { errors: errorResponse };
+    }
+    if (!user.confirmed) {
+      return {
+        errors: [
+          {
+            path: 'email',
+            message: confirmEmailError,
+          },
+        ],
+      };
+    }
+    if (user.forgotPasswordLocked) {
+      return {
+        errors: [
+          {
+            path: 'email',
+            message: forgotPasswordLockedError,
+          },
+        ],
+      };
+    }
+    const valid = await argon2.verify(user.password, password);
+    if (!valid) {
+      return { errors: errorResponse };
+    }
+    // login is succesful
+    // give them a cookie 🍪
+    req.session.userId = user.id;
+    if (req.sessionID) {
+      await redis.lpush(`${userSessionIdPrefix}${user.id}`, req.sessionID);
+    }
+    return { sessionId: req.sessionID };
   }
 }
