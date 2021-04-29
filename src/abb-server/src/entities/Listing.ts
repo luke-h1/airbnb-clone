@@ -11,7 +11,7 @@ import { User } from './User';
 @ObjectType()
 @Entity('listings')
 export class Listing extends BaseEntity {
-  @PrimaryGeneratedColumn('uuid') id: string;
+  @PrimaryGeneratedColumn() id: string;
 
   @Field()
   @Column('varchar', { length: 100 })

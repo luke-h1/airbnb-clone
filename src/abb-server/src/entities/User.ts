@@ -14,7 +14,7 @@ import { Listing } from './Listing';
 @Entity('users')
 export class User extends BaseEntity {
   @Field()
-  @PrimaryGeneratedColumn('uuid')
+  @PrimaryGeneratedColumn()
   id!: string;
 
   @Field()

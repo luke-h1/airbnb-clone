@@ -7,8 +7,7 @@ import express from 'express';
 import session from 'express-session';
 import { buildSchema } from 'type-graphql';
 import { RedisPubSub } from 'graphql-redis-subscriptions';
-import { listingCacheKey, __prod__ } from './constants';
-import { Listing } from './entities/Listing';
+import { __prod__ } from './constants';
 import { createUserLoader } from './Loaders/UserLoader';
 import { HelloResolver } from './resolvers/hello';
 import { createTestConn } from './testUtils/createTestConn';
@@ -35,15 +34,15 @@ export const main = async () => {
     connection: process.env.REDIS_URL as any,
   });
 
-  //   clear cache
-  await redis.del(listingCacheKey);
-  // fill cache
-  const listings = await Listing.find();
-  const listingStrings = listings.map((x) => JSON.stringify(x));
-  if (listingStrings.length) {
-    await redis.lpush(listingCacheKey, ...listingStrings);
-  }
-  console.log(await redis.lrange(listingCacheKey, 0, -1));
+  // //   clear cache
+  // await redis.del(listingCacheKey);
+  // // fill cache
+  // const listings = await Listing.find();
+  // const listingStrings = listings.map((x) => JSON.stringify(x));
+  // if (listingStrings.length) {
+  //   await redis.lpush(listingCacheKey, ...listingStrings);
+  // }
+  // console.log(await redis.lrange(listingCacheKey, 0, -1));
 
   // const redis = new Redis(process.env.REDIS_URL);
   app.set('trust-proxy', 1);
