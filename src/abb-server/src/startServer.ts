@@ -5,35 +5,50 @@ import cors from 'cors';
 import 'dotenv-safe/config';
 import express, { request } from 'express';
 import session from 'express-session';
+import Redis from 'ioredis';
+import path from 'path';
 import { buildSchema } from 'type-graphql';
+import { createConnection } from 'typeorm';
 import { RedisPubSub } from 'graphql-redis-subscriptions';
-import { redis } from './redis';
-import { listingCacheKey, __prod__ } from './constants';
+import { COOKIE_NAME, listingCacheKey, __prod__ } from './constants';
+import { User } from './entities/User';
 import { Listing } from './entities/Listing';
 import { createUserLoader } from './Loaders/UserLoader';
 import { HelloResolver } from './resolvers/hello';
-import { UserResolver } from './resolvers/user/user';
-import { confirmEmail } from './routes/confirmEmail';
 import { createTestConn } from './testUtils/createTestConn';
 import { createTypeormConn } from './utils/createTypeormConn';
+import { redis } from './redis';
+import { confirmEmail } from './routes/confirmEmail';
 
-export const startServer = async () => {
+export const main = async () => {
+  if (process.env.NODE_ENV === 'test') {
+    await createTestConn(true);
+  } else {
+    await createTypeormConn();
+  }
+  // await conn.runMigrations();
   const app = express();
+  app.use('/images', express.static('images'));
+
+  app.get('/confirm/:id', confirmEmail);
 
   const RedisStore = connectRedis(session);
 
-  if (process.env.NODE_ENV === 'test') {
-    await redis.flushall();
+  const pubsub = new RedisPubSub({
+    connection: process.env.REDIS_URL as any,
+  });
+
+  //   clear cache
+  await redis.del(listingCacheKey);
+  // fill cache
+  const listings = await Listing.find();
+  const listingStrings = listings.map((x) => JSON.stringify(x));
+  if (listingStrings.length) {
+    await redis.lpush(listingCacheKey, ...listingStrings);
   }
+  console.log(await redis.lrange(listingCacheKey, 0, -1));
 
-  const pubsub = new RedisPubSub(
-    process.env.NODE_ENV === 'production'
-      ? {
-        connection: process.env.REDIS_URL as any,
-      }
-      : {},
-  );
-
+  // const redis = new Redis(process.env.REDIS_URL);
   app.set('trust-proxy', 1);
   app.use(
     session({
@@ -49,11 +64,13 @@ export const startServer = async () => {
         domain: __prod__ ? 'deployed-api' : undefined,
       },
       saveUninitialized: false,
-      name: 'qid',
       secret: process.env.SESSION_SECRET,
       resave: false,
     }),
   );
+
+  app.use('/images', express.static('images'));
+
   app.use(
     cors({
       origin:
@@ -64,29 +81,9 @@ export const startServer = async () => {
     }),
   );
 
-  app.use('/images', express.static('images'));
-
-  app.get('/confirm/:id', confirmEmail);
-
-  if (process.env.NODE_ENV === 'test') {
-    await createTestConn(true);
-  } else {
-    await createTypeormConn();
-  }
-
-  //   clear cache
-  await redis.del(listingCacheKey);
-  // fill cache
-  const listings = await Listing.find();
-  const listingStrings = listings.map((x) => JSON.stringify(x));
-  if (listingStrings.length) {
-    await redis.lpush(listingCacheKey, ...listingStrings);
-  }
-  // console.log(await redis.lrange(listingCacheKey, 0, -1));
-
   const apolloServer = new ApolloServer({
     schema: await buildSchema({
-      resolvers: [HelloResolver, UserResolver],
+      resolvers: [HelloResolver],
       validate: false,
     }),
     context: ({ req, res }) => ({
@@ -95,14 +92,13 @@ export const startServer = async () => {
       redis,
       userLoader: createUserLoader(),
       pubsub,
-      session: request ? request.session : undefined,
-      url: request ? `${request.protocol}://${request.get('host')}` : '',
     }),
   });
   apolloServer.applyMiddleware({
     app,
     cors: false,
   });
+
   app.listen(process.env.PORT, () => {
     console.log(`Server listening on localhost:${process.env.PORT}`);
   });
