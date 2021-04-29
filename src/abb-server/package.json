@@ -76,10 +76,11 @@
   },
   "jest": {
     "rootDir": "./src",
+    "globalSetup": "./testUtils/callSetup.js",
     "transform": {
       "^.+\\.tsx?$": "ts-jest"
     },
-    "testRegex": "(/__tests__/.*|(\\.|/)(test|spec))\\.(jsx?|tsx?)$",
+    "testRegex": "(/__tests__/.*|(\\.|/)(test|spec))\\.(jsx?|ts?)$",
     "moduleFileExtensions": [
       "ts",
       "tsx",

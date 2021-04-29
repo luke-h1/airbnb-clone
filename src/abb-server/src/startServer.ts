@@ -3,15 +3,11 @@ import { ApolloServer } from 'apollo-server-express';
 import connectRedis from 'connect-redis';
 import cors from 'cors';
 import 'dotenv-safe/config';
-import express, { request } from 'express';
+import express from 'express';
 import session from 'express-session';
-import Redis from 'ioredis';
-import path from 'path';
 import { buildSchema } from 'type-graphql';
-import { createConnection } from 'typeorm';
 import { RedisPubSub } from 'graphql-redis-subscriptions';
-import { COOKIE_NAME, listingCacheKey, __prod__ } from './constants';
-import { User } from './entities/User';
+import { listingCacheKey, __prod__ } from './constants';
 import { Listing } from './entities/Listing';
 import { createUserLoader } from './Loaders/UserLoader';
 import { HelloResolver } from './resolvers/hello';
@@ -19,6 +15,7 @@ import { createTestConn } from './testUtils/createTestConn';
 import { createTypeormConn } from './utils/createTypeormConn';
 import { redis } from './redis';
 import { confirmEmail } from './routes/confirmEmail';
+import { UserResolver } from './resolvers/user/user';
 
 export const main = async () => {
   if (process.env.NODE_ENV === 'test') {
@@ -83,7 +80,7 @@ export const main = async () => {
 
   const apolloServer = new ApolloServer({
     schema: await buildSchema({
-      resolvers: [HelloResolver],
+      resolvers: [HelloResolver, UserResolver],
       validate: false,
     }),
     context: ({ req, res }) => ({
