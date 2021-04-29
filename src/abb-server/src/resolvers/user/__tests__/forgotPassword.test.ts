@@ -19,7 +19,6 @@ beforeAll(async () => {
   const user = await User.create({
     email,
     password,
-    confirmed: true,
   }).save();
   userId = user.id;
 });

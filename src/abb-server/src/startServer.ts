@@ -34,17 +34,18 @@ export const main = async () => {
     connection: process.env.REDIS_URL as any,
   });
 
+  // const redis = new Redis(process.env.REDIS_URL);
+
   // //   clear cache
   // await redis.del(listingCacheKey);
   // // fill cache
   // const listings = await Listing.find();
-  // const listingStrings = listings.map((x) => JSON.stringify(x));
+  // const listingStrings = listings.map(x => JSON.stringify(x));
   // if (listingStrings.length) {
   //   await redis.lpush(listingCacheKey, ...listingStrings);
   // }
   // console.log(await redis.lrange(listingCacheKey, 0, -1));
 
-  // const redis = new Redis(process.env.REDIS_URL);
   app.set('trust-proxy', 1);
   app.use(
     session({
