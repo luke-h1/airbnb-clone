@@ -43,12 +43,12 @@ const index: React.FC<indexProps> = () => {
             },
           });
           console.log(response);
-          // if (response.data?.register.errors) {
-          //   console.log('response.data?.register.errors', response.data?.register.errors);
-          //   setErrors(toErrorMap(response.data.register.errors));
-          // } else if (response.data?.register.user) {
-          //   router.push('/');
-          // }
+          if (response.data?.register.errors) {
+            console.log('response.data?.register.errors', response.data?.register.errors);
+            setErrors(toErrorMap(response.data.register.errors));
+          } else if (response.data?.register.user) {
+            router.push('/');
+          }
         }}
       >
         {({ isSubmitting }) => (

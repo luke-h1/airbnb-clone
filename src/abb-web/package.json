@@ -17,6 +17,7 @@
     "@chakra-ui/react": "^1.6.0",
     "@emotion/react": "^11.1.5",
     "@emotion/styled": "^11.3.0",
+    "@urql/exchange-graphcache": "^4.0.0",
     "cross-env": "^7.0.3",
     "cross-fetch": "^3.1.4",
     "date-fns": "^1.30.1",
@@ -26,10 +27,13 @@
     "graphql-tag": "^2.12.3",
     "next": "10.2.0",
     "next-apollo": "^5.0.4",
+    "next-urql": "^3.0.1",
     "react": "17.0.2",
     "react-dom": "17.0.2",
     "react-hot-toast": "^1.0.2",
-    "react-is": "^16.13.1"
+    "react-is": "^16.13.1",
+    "urql": "^2.0.2",
+    "wonka": "^4.0.15"
   },
   "devDependencies": {
     "@babel/plugin-proposal-nullish-coalescing-operator": "^7.13.8",
@@ -38,6 +42,7 @@
     "@graphql-codegen/typescript": "1.22.0",
     "@graphql-codegen/typescript-operations": "1.17.16",
     "@graphql-codegen/typescript-react-apollo": "2.2.4",
+    "@graphql-codegen/typescript-urql": "^2.0.6",
     "@testing-library/dom": "^7.30.4",
     "@testing-library/jest-dom": "^5.12.0",
     "@testing-library/react": "^11.2.6",
