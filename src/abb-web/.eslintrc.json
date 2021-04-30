@@ -39,6 +39,7 @@
     "import/no-extraneous-dependencies": ["error", { "devDependencies": true }],
     "import/no-unresolved": "off",
     "react/forbid-prop-types": "off",
+    "max-len": "off",
     "react/no-unescaped-entities": [
       "error",
       {
