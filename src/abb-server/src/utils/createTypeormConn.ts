@@ -5,7 +5,7 @@ import { Listing } from '../entities/Listing';
 import { User } from '../entities/User';
 
 export const createTypeormConn = async () => {
-  await createConnection({
+  const conn = await createConnection({
     type: 'postgres',
     url: process.env.DATABASE_URL,
     logging: true,
@@ -13,4 +13,5 @@ export const createTypeormConn = async () => {
     migrations: [path.join(__dirname, './migrations/*.*')],
     entities: [User, Listing],
   });
+  // await conn.runMigrations();
 };

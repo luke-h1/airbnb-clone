@@ -1,4 +1,3 @@
-/* eslint-disable */
 import argon2 from 'argon2';
 import {
   Arg,
@@ -25,6 +24,7 @@ import { validateRegister } from '../../utils/validateRegister';
 class FieldError {
   @Field()
   field: string;
+
   @Field()
   message: string;
 }
@@ -72,6 +72,7 @@ export class UserResolver {
         errors: [{ field: 'token', message: 'token expired' }],
       };
     }
+    // eslint-disable-next-line
     const userIdNum = parseInt(userId);
     const user = await User.findOne(userIdNum);
     if (!user) {
@@ -204,16 +205,14 @@ export class UserResolver {
 
   @Mutation(() => Boolean)
   logout(@Ctx() { req, res }: MyContext) {
-    return new Promise(resolve =>
-      req.session.destroy((err: any) => {
-        res.clearCookie('qid');
-        if (err) {
-          console.log(err);
-          resolve(false);
-          return;
-        }
-        resolve(true);
-      }),
-    );
+    return new Promise((resolve) => req.session.destroy((err: any) => {
+      res.clearCookie('qid');
+      if (err) {
+        console.log(err);
+        resolve(false);
+        return;
+      }
+      resolve(true);
+    }));
   }
 }
