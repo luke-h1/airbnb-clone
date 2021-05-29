@@ -11,7 +11,8 @@
     "watch": "tsc -w",
     "test": "cross-env NODE_ENV=test jest --watch",
     "dev": "cross-env NODE_ENV=development nodemon dist/index.js",
-    "gen-migration": "typeorm migration:generate -n <NAME>"
+    "gen:migration": "typeorm migration:generate -n <NAME>",
+    "run:migration": "typeorm migration:run"
   },
   "keywords": [],
   "author": "",
