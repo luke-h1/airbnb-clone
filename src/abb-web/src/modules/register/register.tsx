@@ -27,7 +27,7 @@ const RegisterPage: React.FC<RegisterPageProps> = () => {
       alignItems="center"
     >
       <Formik
-        initialValues={{ email: '', name: '', password: '' }}
+        initialValues={{ email: '', password: '' }}
         onSubmit={async (values, { setErrors }) => {
           const response = await register({ options: values });
           if (response.data?.register.errors) {
@@ -41,8 +41,6 @@ const RegisterPage: React.FC<RegisterPageProps> = () => {
         {({ isSubmitting }) => (
           <Form>
             <InputField name="email" placeholder="Email" label="email" />
-            <InputField name="name" placeholder="name" label="name" />
-
             <InputField
               name="password"
               placeholder="Password"

@@ -180,10 +180,10 @@ export class UserResolver {
 
   @Mutation(() => UserResponse)
   async login(
-    @Arg('email') email: string,
-    @Arg('password') password: string,
+    @Arg('options') options: UsernamePasswordInput,
     @Ctx() { req }: MyContext,
   ): Promise<UserResponse> {
+    const { email, password } = options;
     const user = await User.findOne({ where: { email } });
     if (!user) {
       return {
