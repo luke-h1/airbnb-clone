@@ -1,3 +1,5 @@
+import 'dotenv/config';
+import { v4 } from 'uuid';
 import argon2 from 'argon2';
 import {
   Arg,
@@ -10,15 +12,14 @@ import {
   Resolver,
   Root,
 } from 'type-graphql';
-import { v4 } from 'uuid';
-
 import { getConnection } from 'typeorm';
-import { sendPasswordResetMail } from '../../utils/sendPasswordResetMail';
-import { MyContext } from '../../types';
 import { User } from '../../entities/User';
-import { FORGET_PASSWORD_PREFIX } from '../../constants';
+import { MyContext } from '../../types';
+
 import { UsernamePasswordInput } from './UsernamePasswordInput';
 import { validateRegister } from '../../utils/validateRegister';
+import { COOKIE_NAME, FORGET_PASSWORD_PREFIX } from '../../constants';
+import { sendPasswordResetMail } from '../../utils/sendPasswordResetMail';
 
 @ObjectType()
 class FieldError {
@@ -28,6 +29,7 @@ class FieldError {
   @Field()
   message: string;
 }
+
 @ObjectType()
 class UserResponse {
   @Field(() => [FieldError], { nullable: true })
@@ -36,16 +38,14 @@ class UserResponse {
   @Field(() => User, { nullable: true })
   user?: User;
 }
-
 @Resolver(User)
 export class UserResolver {
   @FieldResolver(() => String)
   email(@Root() user: User, @Ctx() { req }: MyContext) {
-    // this is the current user and its ok to show them their own email
+    // this is the current logged in user so can show them their own email
     if (req.session.userId === user.id) {
       return user.email;
     }
-    // current user wants to see someone elses email
     return '';
   }
 
@@ -69,10 +69,15 @@ export class UserResolver {
     const userId = await redis.get(key);
     if (!userId) {
       return {
-        errors: [{ field: 'token', message: 'token expired' }],
+        errors: [
+          {
+            field: 'token',
+            message: 'token expired',
+          },
+        ],
       };
     }
-    // eslint-disable-next-line
+    // eslint-disable-next-line radix
     const userIdNum = parseInt(userId);
     const user = await User.findOne(userIdNum);
     if (!user) {
@@ -80,16 +85,19 @@ export class UserResolver {
         errors: [
           {
             field: 'token',
-            message: 'User no longer exists',
+            message: 'user no longer exists',
           },
         ],
       };
     }
-    await User.update({ id: userIdNum } as any, {
-      password: await argon2.hash(newPassword),
-    });
+    await User.update(
+      { id: userIdNum },
+      {
+        password: await argon2.hash(newPassword),
+      },
+    );
     await redis.del(key);
-    // log in user after change password
+    // login user after changed password
     req.session.userId = user.id;
     return { user };
   }
@@ -101,26 +109,26 @@ export class UserResolver {
   ) {
     const user = await User.findOne({ where: { email } });
     if (!user) {
-      // email is not in DB
       return true;
     }
     const token = v4();
+
     await redis.set(
       FORGET_PASSWORD_PREFIX + token,
       user.id,
       'ex',
-      1000 * 60 * 60 * 24 * 3,
+      1000 * 60 * 60 * 24 * 2, // 2 days TODO: (change when deploying)
     );
     await sendPasswordResetMail(
       email,
-      `<a href="http://localhost:3000/change-password/${token}">reset password</a>`,
+      `<a href="http://localhost:3000/change-password/${token}" target='_blank'>Reset Password</a>`, // TODO: setup mailgun on prod
     );
     return true;
   }
 
   @Query(() => User, { nullable: true })
   me(@Ctx() { req }: MyContext) {
-    // user isn't logged in
+    // not logged in
     if (!req.session.userId) {
       return null;
     }
@@ -150,6 +158,7 @@ export class UserResolver {
         .returning('*')
         .execute();
       user = result.raw[0];
+      console.log(user);
     } catch (e) {
       if (e.code === '23505') {
         return {
@@ -171,17 +180,17 @@ export class UserResolver {
 
   @Mutation(() => UserResponse)
   async login(
-    @Arg('options') options: UsernamePasswordInput,
+    @Arg('email') email: string,
+    @Arg('password') password: string,
     @Ctx() { req }: MyContext,
   ): Promise<UserResponse> {
-    const { email, password } = options;
     const user = await User.findOne({ where: { email } });
     if (!user) {
       return {
         errors: [
           {
             field: 'email',
-            message: 'email doesnt exist',
+            message: "That email doesn't exist",
           },
         ],
       };
@@ -192,7 +201,7 @@ export class UserResolver {
         errors: [
           {
             field: 'password',
-            message: 'incorrect password',
+            message: 'Incorrect credentials',
           },
         ],
       };
@@ -205,10 +214,10 @@ export class UserResolver {
 
   @Mutation(() => Boolean)
   logout(@Ctx() { req, res }: MyContext) {
-    return new Promise((resolve) => req.session.destroy((err: any) => {
-      res.clearCookie('qid');
-      if (err) {
-        console.log(err);
+    return new Promise((resolve) => req.session.destroy((e: any) => {
+      res.clearCookie(COOKIE_NAME);
+      if (e) {
+        console.log('LOGOUT ERROR', e);
         resolve(false);
         return;
       }

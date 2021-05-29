@@ -27,12 +27,13 @@ const RegisterPage: React.FC<RegisterPageProps> = () => {
       alignItems="center"
     >
       <Formik
-        initialValues={{ email: '', password: '' }}
+        initialValues={{ email: '', name: '', password: '' }}
         onSubmit={async (values, { setErrors }) => {
-          const res = await register({ options: values });
-          if (res.data?.register.errors) {
-            setErrors(toErrorMap(res.data.register.errors));
-          } else {
+          const response = await register({ options: values });
+          if (response.data?.register.errors) {
+            setErrors(toErrorMap(response.data.register.errors));
+          } else if (response.data?.register.user) {
+          // worked
             router.push('/');
           }
         }}
@@ -40,6 +41,8 @@ const RegisterPage: React.FC<RegisterPageProps> = () => {
         {({ isSubmitting }) => (
           <Form>
             <InputField name="email" placeholder="Email" label="email" />
+            <InputField name="name" placeholder="name" label="name" />
+
             <InputField
               name="password"
               placeholder="Password"

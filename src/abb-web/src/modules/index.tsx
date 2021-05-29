@@ -5,7 +5,7 @@ interface indexProps {
 
 }
 
-const index: React.FC<indexProps> = ({}) => {
+const index: React.FC<indexProps> = () => {
   return (
     <>
       <Text fontSize="30px">Index</Text>

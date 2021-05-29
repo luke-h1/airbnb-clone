@@ -40,6 +40,7 @@
     "import/no-unresolved": "off",
     "react/forbid-prop-types": "off",
     "max-len": "off",
+    
     "react/no-unescaped-entities": [
       "error",
       {
@@ -72,7 +73,7 @@
     ],
     "react/jsx-wrap-multilines": ["error", { "prop": "ignore" }]
   },
-  "ignorePatterns": ["node_modules/", ".next/"],
+  "ignorePatterns": ["node_modules/", ".next/", "src/generated/*"],
   "overrides": [
     {
       "files": ["**/*.js"],
