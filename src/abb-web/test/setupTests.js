@@ -4,6 +4,7 @@ import 'core-js/features/string/replace-all';
 import '@common-test/setupGlobals';
 import '@common-test/extend-expect';
 
+// eslint-disable-next-line no-undef
 jest.setTimeout(10000);
 
 if (typeof window !== 'undefined') {
