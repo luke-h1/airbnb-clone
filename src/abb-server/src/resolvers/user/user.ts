@@ -13,8 +13,8 @@ import {
 import { v4 } from 'uuid';
 
 import { getConnection } from 'typeorm';
+import { sendPasswordResetMail } from 'src/utils/sendPasswordResetMail';
 import { MyContext } from '../../types';
-import { sendEmail } from '../../utils/sendEmail';
 import { User } from '../../entities/User';
 import { FORGET_PASSWORD_PREFIX } from '../../constants';
 import { UsernamePasswordInput } from './UsernamePasswordInput';
@@ -111,7 +111,7 @@ export class UserResolver {
       'ex',
       1000 * 60 * 60 * 24 * 3,
     );
-    await sendEmail(
+    await sendPasswordResetMail(
       email,
       `<a href="http://localhost:3000/change-password/${token}">reset password</a>`,
     );

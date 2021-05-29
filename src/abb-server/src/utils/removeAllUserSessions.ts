@@ -1,5 +1,5 @@
 import { Redis } from 'ioredis';
-import { reidSessionPrefix, userSessionIdPrefix } from '../constants';
+import { redisSessionPrefix, userSessionIdPrefix } from '../constants';
 
 export const removeAllUserSessions = async (userId: string, redis: Redis) => {
   const sessionIds = await redis.lrange(
@@ -9,7 +9,7 @@ export const removeAllUserSessions = async (userId: string, redis: Redis) => {
   );
   const promises = [];
   for (let i = 0; i < sessionIds.length; i += 1) {
-    promises.push(redis.del(`${reidSessionPrefix}${sessionIds[i]}`));
+    promises.push(redis.del(`${redisSessionPrefix}${sessionIds[i]}`));
   }
   await Promise.all(promises);
 };

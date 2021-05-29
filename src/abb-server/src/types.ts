@@ -1,6 +1,5 @@
 import { Request, Response } from 'express';
 import { Redis } from 'ioredis';
-import { PubSub } from 'graphql-yoga';
 import { createUserLoader } from './Loaders/UserLoader';
 
 export type MyContext = {
@@ -9,5 +8,4 @@ export type MyContext = {
   res: Response;
   userLoader: ReturnType<typeof createUserLoader>;
   url: string;
-  pubsub: PubSub;
 };
