@@ -2,22 +2,21 @@ import {
   Box, Button, Flex, Link, Text,
 } from '@chakra-ui/react';
 import { Form, Formik } from 'formik';
+import { withUrqlClient } from 'next-urql';
 import { useRouter } from 'next/router';
 import React from 'react';
 import { InputField } from 'src/components/InputField';
 import {
-  MeDocument,
-  MeQuery,
   useRegisterMutation,
 } from 'src/generated/graphql';
+import { createUrqlClient } from 'src/utils/createUrqlClient';
 import { toErrorMap } from 'src/utils/toErrorMap';
-import { withApollo } from 'src/utils/withApollo';
 
-interface indexProps {}
+interface RegisterPageProps {}
 
-const index: React.FC<indexProps> = () => {
+const RegisterPage: React.FC<RegisterPageProps> = () => {
   const router = useRouter();
-  const [register] = useRegisterMutation();
+  const [, register] = useRegisterMutation();
   return (
     <Box
       as={Flex}
@@ -30,23 +29,10 @@ const index: React.FC<indexProps> = () => {
       <Formik
         initialValues={{ email: '', password: '' }}
         onSubmit={async (values, { setErrors }) => {
-          const response = await register({
-            variables: { options: values },
-            update: (cache, { data }) => {
-              cache.writeQuery<MeQuery>({
-                query: MeDocument,
-                data: {
-                  __typename: 'Query',
-                  me: data?.register.user,
-                },
-              });
-            },
-          });
-          console.log(response);
-          if (response.data?.register.errors) {
-            console.log('response.data?.register.errors', response.data?.register.errors);
-            setErrors(toErrorMap(response.data.register.errors));
-          } else if (response.data?.register.user) {
+          const res = await register({ options: values });
+          if (res.data?.register.errors) {
+            setErrors(toErrorMap(res.data.register.errors));
+          } else {
             router.push('/');
           }
         }}
@@ -60,6 +46,7 @@ const index: React.FC<indexProps> = () => {
               label="password"
               type="password"
             />
+
             <Box mb={2} />
             <Button
               type="submit"
@@ -82,6 +69,7 @@ const index: React.FC<indexProps> = () => {
                   p={0}
                   textDecoration="underline"
                   as={Link}
+                  disabled={isSubmitting}
                   href="/login"
                 >
                   Login
@@ -94,4 +82,4 @@ const index: React.FC<indexProps> = () => {
     </Box>
   );
 };
-export default withApollo({ ssr: false })(index);
+export default withUrqlClient(createUrqlClient, { ssr: false })(RegisterPage);
