@@ -5,28 +5,17 @@
     "eslint": "^7.27.0",
     "husky": "^6.0.0",
     "lerna": "^4.0.0",
-    "lint-staged": "^10.5.4",
     "prettier": "^2.3.0"
   },
   "scripts": {
     "lint": "lerna run lint",
-    "format:server": "cd src/abb-server && npm run format && cd ../../",
-    "format:web": "cd src/abb-web && npm run format && cd ../../",
-    "clean": "lerna clean -y",
-    "format": "prettier --write \"src/**/*.{js,jsx,ts,tsx,css,scss,html}\"",
-    "format:check": "prettier --list-different \"src/**/*.{js,jsx,ts,tsx,css,scss,html}\"",
     "bootstrap": "lerna bootstrap --ci --force-local",
     "bootstrap:prod": "lerna bootstrap --ci --force-local -- --only=prod",
     "bootstrap:install": "lerna bootstrap --force-local",
-    "prepare": "husky install",
-    "precommit": "lint-staged",
-    "build:server": "lerna run build --scope={abb-server}",
-    "build:client": "lerna run build --scope={abb-web}"
-  },
-  "lint-staged": {
-    "*./src/**/{ts,tsx,js,jsx}": [
-      "eslint --quiet --fix"
-    ]
-   
-  }
+    "build": "lerna run build",
+    "clean": "lerna clean -y",
+    "format": "prettier --write \"src/**/*.{js,jsx,ts,tsx,css,scss,html}\"",
+    "format:check": "prettier --list-different \"src/**/*.{js,jsx,ts,tsx,css,scss,html}\"",
+    "prepare": "husky install" 
+   }
 }
