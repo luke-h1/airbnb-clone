@@ -9,13 +9,12 @@
   },
   "scripts": {
     "lint": "lerna run lint",
+    "format": "lerna run format",
     "bootstrap": "lerna bootstrap --ci --force-local",
     "bootstrap:prod": "lerna bootstrap --ci --force-local -- --only=prod",
     "bootstrap:install": "lerna bootstrap --force-local",
     "build": "lerna run build",
     "clean": "lerna clean -y",
-    "format": "prettier --write \"src/**/*.{js,jsx,ts,tsx,css,scss,html}\"",
-    "format:check": "prettier --list-different \"src/**/*.{js,jsx,ts,tsx,css,scss,html}\"",
     "prepare": "husky install" 
    }
 }
