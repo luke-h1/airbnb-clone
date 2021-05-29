@@ -24,14 +24,14 @@
     "build:client": "lerna run build --scope={abb-web}"
   },
   "lint-staged": {
+    "*./src/**/{js,jsx,ts,tsx,css,scss,html}": [
+      "prettier --write"
+    ],
     "*./src/**/{ts,tsx,js,jsx}": [
       "eslint --fix --quiet"
     ],
-    "*.{scss,css}": [
+    "*./src/**/{scss,css}": [
       "stylelint"
-    ],
-    "*.{js,jsx,ts,tsx,css,scss,html}": [
-      "prettier --write"
     ]
   }
 }
