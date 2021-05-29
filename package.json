@@ -20,7 +20,8 @@
     "bootstrap:install": "lerna bootstrap --force-local",
     "prepare": "husky install",
     "precommit": "lint-staged",
-    "build:server": "lerna run build --scope={abb-common,abb-server}"
+    "build:server": "lerna run build --scope={abb-server}",
+    "build:client": "lerna run build --scope={abb-web}"
   },
   "lint-staged": {
     "*.{ts,tsx,js,jsx}": [
