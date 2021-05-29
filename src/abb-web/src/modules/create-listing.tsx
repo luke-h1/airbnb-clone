@@ -3,7 +3,7 @@ import React from 'react';
 
 interface indexProps {}
 
-const index: React.FC<indexProps> = ({}) => {
+const index: React.FC<indexProps> = () => {
   return (
     <>
       <Text>Create Listing index page</Text>

@@ -24,7 +24,7 @@
     "build:client": "lerna run build --scope={abb-web}"
   },
   "lint-staged": {
-    "*./src/{ts,tsx,js,jsx}": [
+    "*.{ts,tsx,js,jsx}": [
       "eslint --fix --quiet"
     ],
     "*./src/**/{scss,css}": [
