@@ -28,16 +28,11 @@ const index: React.FC<indexProps> = () => {
         <Formik
           initialValues={{ email: '', password: '' }}
           onSubmit={async (values, { setErrors }) => {
-            const res = await login(values);
+            const res = await login({ options: values });
             if (res.data?.login.errors) {
               setErrors(toErrorMap(res.data.login.errors));
-            }
-            if (typeof router.query.next === 'string') {
-              router.push(router.query.next);
             } else {
-              setTimeout(() => {
-                router.push('/');
-              }, 2000);
+              router.push('/');
             }
           }}
         >
