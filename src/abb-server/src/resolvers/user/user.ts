@@ -13,7 +13,7 @@ import {
 import { v4 } from 'uuid';
 
 import { getConnection } from 'typeorm';
-import { sendPasswordResetMail } from 'src/utils/sendPasswordResetMail';
+import { sendPasswordResetMail } from '../../utils/sendPasswordResetMail';
 import { MyContext } from '../../types';
 import { User } from '../../entities/User';
 import { FORGET_PASSWORD_PREFIX } from '../../constants';
