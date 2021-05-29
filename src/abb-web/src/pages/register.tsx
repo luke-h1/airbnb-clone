@@ -1,3 +1,1 @@
-export {
-  default,
-} from '../modules/register/register';
+export { default } from '../modules/register/register';

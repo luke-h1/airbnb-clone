@@ -2,14 +2,14 @@
   "name": "abb-clone",
   "private": true,
   "devDependencies": {
-    "@types/request-promise": "^4.1.47",
+    "eslint": "^7.27.0",
     "husky": "^6.0.0",
     "lerna": "^4.0.0",
-    "lint-staged": "^10.5.4"
+    "lint-staged": "^10.5.4",
+    "prettier": "^2.3.0"
   },
   "scripts": {
     "lint": "lerna run lint",
-    "lint:web": "cd src/abb-web && npm run lint && cd ../../",
     "format:server": "cd src/abb-server && npm run format && cd ../../",
     "format:web": "cd src/abb-web && npm run format && cd ../../",
     "clean": "lerna clean -y",
@@ -24,14 +24,14 @@
     "build:client": "lerna run build --scope={abb-web}"
   },
   "lint-staged": {
-    "*.{ts,tsx,js,jsx}": [
-      "npm run lint"
+    "*./src/**/{ts,tsx,js,jsx}": [
+      "eslint --fix --quiet"
+    ],
+    "*.{scss,css}": [
+      "stylelint"
     ],
     "*.{js,jsx,ts,tsx,css,scss,html}": [
-      "npm run format:server && npm run format:web"
+      "prettier --write"
     ]
-  },
-  "dependencies": {
-    "request-promise": "^4.2.6"
   }
 }

@@ -1,3 +1,1 @@
-export {
-  default,
-} from '../modules/index';
+export { default } from '../modules/index';

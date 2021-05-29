@@ -1,14 +1,10 @@
-import {
-  Box, Button, Flex, Link, Text,
-} from '@chakra-ui/react';
+import { Box, Button, Flex, Link, Text } from '@chakra-ui/react';
 import { Form, Formik } from 'formik';
 import { withUrqlClient } from 'next-urql';
 import { useRouter } from 'next/router';
 import React from 'react';
 import { InputField } from 'src/components/InputField';
-import {
-  useRegisterMutation,
-} from 'src/generated/graphql';
+import { useRegisterMutation } from 'src/generated/graphql';
 import { createUrqlClient } from 'src/utils/createUrqlClient';
 import { toErrorMap } from 'src/utils/toErrorMap';
 
@@ -33,7 +29,7 @@ const RegisterPage: React.FC<RegisterPageProps> = () => {
           if (response.data?.register.errors) {
             setErrors(toErrorMap(response.data.register.errors));
           } else if (response.data?.register.user) {
-          // worked
+            // worked
             router.push('/');
           }
         }}

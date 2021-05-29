@@ -35,7 +35,7 @@ export const InputField: React.FC<InputFieldProps> = ({
 }) => {
   let InputOrTextarea: any = Input;
   if (textarea) {
-    (InputOrTextarea) = Textarea;
+    InputOrTextarea = Textarea;
   }
   const [field, { error }] = useField(props);
   return (

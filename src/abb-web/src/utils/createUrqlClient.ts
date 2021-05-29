@@ -1,9 +1,5 @@
 import { cacheExchange } from '@urql/exchange-graphcache';
-import {
-  dedupExchange,
-  Exchange,
-  fetchExchange,
-} from 'urql';
+import { dedupExchange, Exchange, fetchExchange } from 'urql';
 import { pipe, tap } from 'wonka';
 import Router from 'next/router';
 import {
@@ -16,16 +12,18 @@ import {
 import { CustomUpdateQuery } from './CustomUpdateQuery';
 import { isServer } from './isServer';
 
-const errorExchange: Exchange = ({ forward }) => (ops$) => {
-  return pipe(
-    forward(ops$),
-    tap(({ error }) => {
-      if (error?.message.includes('Not Authenticated')) {
-        Router.replace('/login');
-      }
-    }),
-  );
-};
+const errorExchange: Exchange =
+  ({ forward }) =>
+  (ops$) => {
+    return pipe(
+      forward(ops$),
+      tap(({ error }) => {
+        if (error?.message.includes('Not Authenticated')) {
+          Router.replace('/login');
+        }
+      })
+    );
+  };
 
 export const createUrqlClient = (ssrExchange: any, ctx: any) => {
   let cookie = '';
@@ -42,7 +40,7 @@ export const createUrqlClient = (ssrExchange: any, ctx: any) => {
       dedupExchange,
       cacheExchange({
         keys: {
-        //   PaginatedTodos: () => null,
+          //   PaginatedTodos: () => null,
         },
         resolvers: {
           Query: {
@@ -72,7 +70,7 @@ export const createUrqlClient = (ssrExchange: any, ctx: any) => {
                   return {
                     me: result.login.user,
                   };
-                },
+                }
               );
             },
             register: (_result, args, cache) => {
@@ -87,7 +85,7 @@ export const createUrqlClient = (ssrExchange: any, ctx: any) => {
                   return {
                     me: result.register.user,
                   };
-                },
+                }
               );
             },
             logout: (_result, args, cache) => {
@@ -95,7 +93,7 @@ export const createUrqlClient = (ssrExchange: any, ctx: any) => {
                 cache,
                 { query: MeDocument },
                 _result,
-                () => ({ me: null }),
+                () => ({ me: null })
               );
             },
           },
