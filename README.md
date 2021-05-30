@@ -28,7 +28,7 @@
 ### Running backend Migrations 
 * The backend contains 2 commands which are responsible for dealing with migrations. 
 * The first one is responsible for generating a migration based on changes made to the `entities` folder. `typeorm migration:generate -n <NAME>`. 
-* The second one is responsible for running generate migrations. `typeorm migration:run`
+* The second one is responsible for running the generated migrations. `typeorm migration:run`
 
 
 ### Deployment 
