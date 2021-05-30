@@ -16,7 +16,7 @@
 * run `npm ci && npm run bootstrap` in the root of the project to install dependencies 
 * copy the `.env.example ` to `.env` (`cp .env.example .env`).
 * Fill out the `.env` file with your own values
-* to start the backend: `cd src/abb-server && npm run watch`. This will compile Typesript down to common JS. Run `npm run dev` to start the backend server. 
+* to start the backend: `cd src/abb-server && npm run watch`. This will transpile Typescript down to common JS. Run `npm run dev` to start the backend server. 
 
 
 ### Frontend: 
