@@ -7,12 +7,14 @@
 ### Prerequisites
 * This project targets Node V14. Ensure you're using Node V14 by using something such as NVM. 
 * Ensure you have Node / NPM installed.
-* Ensure you have postgres setup and create a blank DB called `abb-clone`.
+* Ensure Postgres is installed & is running (see backend section for more details)
+* Ensure Redis is installed & is running (see backend section for more details)
 * This project only supports Mac / Linux. Any issues on Windows and you're on your own. 
 * Ensure your postgres user has superuser access on the `abb-clone` DB
 
 ### Backend: 
-* Install postgres 
+* [Install postgres](https://www.postgresql.org/download/)
+* [Install Redis (stable)](https://redis.io/download)
 * Create a blank postgres database called `abb-clone`
 * run `npm ci && npm run bootstrap` in the root of the project to install dependencies 
 * copy the `.env.example ` to `.env` (`cp .env.example .env`).
