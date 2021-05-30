@@ -34,7 +34,6 @@ export class ListingResolver {
     @Arg('latitude') latitude: number,
     @Arg('longitude') longitude: number,
     @Arg('amenities') amenities: string[],
-
   ) {
     return true;
   }
