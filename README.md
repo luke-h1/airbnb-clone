@@ -9,6 +9,7 @@
 * Ensure you have Node / NPM installed.
 * Ensure you have postgres setup and create a blank DB called `airbnb-clone`.
 * This project only supports Mac / Linux. Any issues on Windows and you're on your own. 
+* Ensure your postgres user has superuser access
 
 ### Backend: 
 * Install postgres 
