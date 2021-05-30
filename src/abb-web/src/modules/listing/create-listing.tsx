@@ -71,14 +71,29 @@ const index: React.FC<indexProps> = () => {
                 placeholder="description"
                 label="description"
               />
-              <InputField name="price" placeholder="price" label="price" type='number' />
-              <InputField name="beds" placeholder="Number of beds" label="beds" type='number'/>
-              <InputField name="guests" placeholder="Number of guests" label="guests" type='number'/>
+              <InputField
+                name="price"
+                placeholder="price"
+                label="price"
+                type="number"
+              />
+              <InputField
+                name="beds"
+                placeholder="Number of beds"
+                label="beds"
+                type="number"
+              />
+              <InputField
+                name="guests"
+                placeholder="Number of guests"
+                label="guests"
+                type="number"
+              />
               <InputField
                 name="amentities"
                 placeholder="Number of amentities"
                 label="amentities"
-                type='number'
+                type="number"
               />
 
               <Box mb={2} />

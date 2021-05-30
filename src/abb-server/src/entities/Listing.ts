@@ -14,11 +14,11 @@ export class Listing extends BaseEntity {
   @PrimaryGeneratedColumn() id: string;
 
   @Field()
-  @Column('varchar', { length: 100 })
+  @Column('string', { length: 100 })
   name!: string;
 
   @Field()
-  @Column('varchar', { length: 100 })
+  @Column('string', { length: 100 })
   category: string;
 
   @Field()
@@ -26,7 +26,7 @@ export class Listing extends BaseEntity {
   pictureUrl: string;
 
   @Field()
-  @Column('varchar', { length: 255 })
+  @Column('string', { length: 255 })
   description: string;
 
   @Field()
