@@ -1,7 +1,5 @@
 /* eslint-disable */
-import {
-  Box, Button, Flex, Link, Text,
-} from '@chakra-ui/react';
+import { Box, Button, Flex, Link, Text } from '@chakra-ui/react';
 import { InputField } from '@src/components/InputField';
 import { toErrorMap } from '@src/utils/toErrorMap';
 import { Formik, Form } from 'formik';
@@ -73,13 +71,14 @@ const index: React.FC<indexProps> = () => {
                 placeholder="description"
                 label="description"
               />
-              <InputField name="price" placeholder="price" label="price" />
-              <InputField name="beds" placeholder="beds" label="beds" />
-              <InputField name="guests" placeholder="guests" label="guests" />
+              <InputField name="price" placeholder="price" label="price" type='number' />
+              <InputField name="beds" placeholder="Number of beds" label="beds" type='number'/>
+              <InputField name="guests" placeholder="Number of guests" label="guests" type='number'/>
               <InputField
                 name="amentities"
-                placeholder="amentities"
+                placeholder="Number of amentities"
                 label="amentities"
+                type='number'
               />
 
               <Box mb={2} />
