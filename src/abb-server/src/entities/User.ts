@@ -27,6 +27,9 @@ export class User extends BaseEntity {
   @OneToMany(() => Listing, (listing) => listing.user)
   listings: Listing[];
 
+  @Column('bool', { default: false })
+  confirmed: boolean;
+
   @Field(() => String)
   @CreateDateColumn()
   createdAt: Date;

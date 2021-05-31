@@ -12,6 +12,8 @@ import {
   Root,
 } from 'type-graphql';
 import { getConnection } from 'typeorm';
+import { sendConfirmationEmail } from '../../utils/sendConfirmationEmail';
+import { sendEmail } from '../../utils/sendEmail';
 import { User } from '../../entities/User';
 import { MyContext } from '../../types';
 
@@ -158,6 +160,13 @@ export class UserResolver {
         .execute();
       user = result.raw[0];
       console.log(user);
+
+      // send confirmation email
+      // don't let user log in until they have confirmed
+      await sendEmail(
+        options.email,
+        await sendConfirmationEmail(user.id, 'http://localhost:3000'),
+      );
     } catch (e) {
       if (e.code === '23505') {
         return {
