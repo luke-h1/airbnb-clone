@@ -1,4 +1,3 @@
-import 'dotenv/config';
 import { v4 } from 'uuid';
 import argon2 from 'argon2';
 import {
@@ -97,7 +96,7 @@ export class UserResolver {
       },
     );
     await redis.del(key);
-    // login user after changed password
+    // login user after they've changed their password
     req.session.userId = user.id;
     return { user };
   }
@@ -117,11 +116,11 @@ export class UserResolver {
       FORGET_PASSWORD_PREFIX + token,
       user.id,
       'ex',
-      1000 * 60 * 60 * 24 * 2, // 2 days TODO: (change when deploying)
+      1000 * 60 * 60 * 24 * 2, // 2 days to reset their password
     );
     await sendPasswordResetMail(
       email,
-      `<a href="http://localhost:3000/change-password/${token}" target='_blank'>Reset Password</a>`, // TODO: setup mailgun on prod
+      `<a href="http://localhost:3000/change-password/${token}" target='_blank'>Reset Password</a>`,
     );
     return true;
   }
