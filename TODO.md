@@ -7,3 +7,4 @@
 ### backend 
 * Create listings 
 * get all listings 
+* Email confirmation (you cannot logged in if you haven't confirmed your email)
