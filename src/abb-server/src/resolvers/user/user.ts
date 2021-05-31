@@ -214,6 +214,17 @@ export class UserResolver {
         ],
       };
     }
+    if (!user.confirmed) {
+      return {
+        errors: [
+          {
+            field: 'email',
+            message: 'You need to confirm your email in order to log in',
+          },
+        ],
+      };
+    }
+
     req.session.userId = user.id;
     return {
       user,
