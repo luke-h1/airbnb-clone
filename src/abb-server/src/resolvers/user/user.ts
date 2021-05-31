@@ -1,3 +1,4 @@
+/* eslint-disable no-shadow */
 import { v4 } from 'uuid';
 import argon2 from 'argon2';
 import {
@@ -12,15 +13,16 @@ import {
   Root,
 } from 'type-graphql';
 import { getConnection } from 'typeorm';
-import { sendConfirmationEmail } from '../../utils/sendConfirmationEmail';
-import { sendEmail } from '../../utils/sendEmail';
+import { redis } from '@src/redis';
+import { sendConfirmationEmail } from '../../utils/mail/sendConfirmationEmail';
+import { sendEmail } from '../../utils/mail/sendEmail';
 import { User } from '../../entities/User';
 import { MyContext } from '../../types';
 
 import { UsernamePasswordInput } from './UsernamePasswordInput';
 import { validateRegister } from '../../utils/validateRegister';
 import { COOKIE_NAME, FORGET_PASSWORD_PREFIX } from '../../constants';
-import { sendPasswordResetMail } from '../../utils/sendPasswordResetMail';
+import { sendPasswordResetMail } from '../../utils/mail/sendPasswordResetMail';
 
 @ObjectType()
 class FieldError {
@@ -184,6 +186,21 @@ export class UserResolver {
     // keep them logged in
     req.session.userId = user.id;
     return { user };
+  }
+
+  @Mutation(() => Boolean)
+  async confirmUser(
+    @Arg('token') token: string,
+    @Ctx() ctx: MyContext,
+  ): Promise<boolean> {
+    const userId = await redis.get(token);
+    // need to send something back to frontend here
+    // i.e. Your token has expired, request a new one from ...
+    if (!userId) {
+      console.log('confirmUser: BAD TOKEN / EXPIRED TOKEN');
+      return false;
+    }
+    return true;
   }
 
   @Mutation(() => UserResponse)
