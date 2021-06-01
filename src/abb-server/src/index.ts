@@ -18,9 +18,9 @@ const main = async () => {
   const conn = await createConnection({
     type: 'postgres',
     url: process.env.DATABASE_URL,
-    logging: true,
+    logging: !__prod__,
     synchronize: !__prod__,
-    migrations: [path.join(__dirname, './migrations/*.*')],
+    migrations: [path.join(__dirname, './migrations/*')],
     entities: [User, Listing],
   });
   // await conn.runMigrations();
@@ -37,7 +37,12 @@ const main = async () => {
     await redis.lpush(listingCacheKey, ...listingStrings);
   }
   console.log(await redis.lrange(listingCacheKey, 0, -1));
-
+  app.use(
+    cors({
+      origin: process.env.FRONTEND_HOST,
+      credentials: true,
+    }),
+  );
   app.set('trust-proxy', 1);
   app.use(
     session({
@@ -55,15 +60,6 @@ const main = async () => {
       saveUninitialized: false,
       secret: process.env.COOKIE_SECRET,
       resave: false,
-    }),
-  );
-
-  app.use('/images', express.static('images'));
-
-  app.use(
-    cors({
-      origin: process.env.FRONTEND_HOST as string,
-      credentials: true,
     }),
   );
 

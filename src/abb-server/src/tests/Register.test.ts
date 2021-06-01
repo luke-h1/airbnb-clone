@@ -31,7 +31,6 @@ mutation Register($options: UsernamePasswordInput!) {
       email
       createdAt
     }
-    
   }
 }
 `;
@@ -43,14 +42,15 @@ describe('Register', () => {
       password: faker.internet.password(),
     };
 
-    const response = await gCall({
+    const r = await gCall({
       source: registerMutation,
       variableValues: {
         options: user,
       },
     });
-    console.log(response);
-    // expect(response).toMatchObject({
+    console.log(r);
+
+    // expect(r).toMatchObject({
     //   data: {
     //     register: {
     //       errors: null,
@@ -64,6 +64,7 @@ describe('Register', () => {
     // });
 
     const dbUser = await User.findOne({ where: { email: user.email } });
+    console.log('dbUser', dbUser);
     expect(dbUser).toBeDefined();
     expect(dbUser!.confirmed).toBeFalsy();
     expect(dbUser!.email).toBe(user.email);

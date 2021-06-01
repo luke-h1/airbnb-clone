@@ -17,13 +17,14 @@ export class User extends BaseEntity {
   @PrimaryGeneratedColumn()
   id!: number;
 
-  @Field()
+  @Field(() => String)
   @Column({ unique: true })
   email!: string;
 
   @Column()
   password!: string;
 
+  @Field(() => Listing)
   @OneToMany(() => Listing, (listing) => listing.user)
   listings: Listing[];
 

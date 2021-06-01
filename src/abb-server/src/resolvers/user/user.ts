@@ -141,7 +141,10 @@ export class UserResolver {
   @Mutation(() => UserResponse)
   async register(
     @Arg('options') options: UsernamePasswordInput,
+    @Ctx() { req }: MyContext,
   ): Promise<UserResponse> {
+    const { email, password } = options;
+    console.log(email, password);
     const errors = validateRegister(options);
     if (errors) {
       return { errors };
@@ -164,10 +167,6 @@ export class UserResolver {
 
       // send confirmation email
       // don't let user log in until they have confirmed
-      await sendEmail(
-        options.email,
-        await sendConfirmationEmail(user.id, 'http://localhost:3000'),
-      );
     } catch (e) {
       if (e.code === '23505') {
         return {
@@ -185,8 +184,24 @@ export class UserResolver {
     // this will set a cookie on the user
     // keep them logged in
 
-    // req.session.userId = user.id;
-    return { user };
+    /*
+    @TODO:
+    NOTE Luke:
+    Tests will fail as we return null if
+    a user is not logged in then they can't see there email
+    we will need to allow the user to login
+    and instead just remind to to confirm their email.
+    if not confirmed after 1 day then send them to confirmation page
+    */
+
+    req.session.userId = user.id;
+    await sendEmail(
+      options.email,
+      await sendConfirmationEmail(user.id, 'http://localhost:3000'),
+    );
+    return {
+      user,
+    };
   }
 
   @Mutation(() => Boolean)

@@ -1,3 +1,5 @@
+/* eslint-disable prefer-template */
+/* eslint-disable no-path-concat */
 import { createConnection } from 'typeorm';
 
 export const testConn = (drop: boolean = false) => createConnection({
@@ -10,5 +12,5 @@ export const testConn = (drop: boolean = false) => createConnection({
   database: 'abb-clone-test',
   synchronize: drop,
   dropSchema: drop,
-  entities: [`${__dirname}/../entities/*.*`],
+  entities: [__dirname + '/../entities/*.*'],
 });
