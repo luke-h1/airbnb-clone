@@ -13,7 +13,7 @@ import {
   Root,
 } from 'type-graphql';
 import { getConnection } from 'typeorm';
-import { redis } from '@src/redis';
+import { redis } from '../../redis';
 import { sendConfirmationEmail } from '../../utils/mail/sendConfirmationEmail';
 import { sendEmail } from '../../utils/mail/sendEmail';
 import { User } from '../../entities/User';
@@ -141,7 +141,6 @@ export class UserResolver {
   @Mutation(() => UserResponse)
   async register(
     @Arg('options') options: UsernamePasswordInput,
-    @Ctx() { req }: MyContext,
   ): Promise<UserResponse> {
     const errors = validateRegister(options);
     if (errors) {
@@ -181,17 +180,19 @@ export class UserResolver {
         };
       }
     }
+
     // store user id session
     // this will set a cookie on the user
     // keep them logged in
-    req.session.userId = user.id;
+
+    // req.session.userId = user.id;
     return { user };
   }
 
   @Mutation(() => Boolean)
   async confirmUser(
     @Arg('token') token: string,
-    @Ctx() ctx: MyContext,
+    // @Ctx() ctx: MyContext,
   ): Promise<boolean> {
     const userId = await redis.get(token);
     // need to send something back to frontend here

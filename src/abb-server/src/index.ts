@@ -5,16 +5,14 @@ import cors from 'cors';
 import 'dotenv-safe/config';
 import express from 'express';
 import session from 'express-session';
-import { buildSchema } from 'type-graphql';
 import { createConnection } from 'typeorm';
 import path from 'path';
 import { listingCacheKey, __prod__ } from './constants';
 import { createUserLoader } from './Loaders/UserLoader';
-import { HelloResolver } from './resolvers/hello';
 import { redis } from './redis';
-import { UserResolver } from './resolvers/user/user';
 import { Listing } from './entities/Listing';
 import { User } from './entities/User';
+import { createSchema } from './utils/createSchema';
 
 const main = async () => {
   const conn = await createConnection({
@@ -70,10 +68,7 @@ const main = async () => {
   );
 
   const apolloServer = new ApolloServer({
-    schema: await buildSchema({
-      resolvers: [HelloResolver, UserResolver],
-      validate: false,
-    }),
+    schema: await createSchema(),
     context: ({ req, res }) => ({
       req,
       res,
