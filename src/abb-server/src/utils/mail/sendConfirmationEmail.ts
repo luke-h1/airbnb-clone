@@ -1,5 +1,5 @@
 import { v4 } from 'uuid';
-import { redis } from '../redis';
+import { redis } from '../../redis';
 
 // http://localhost:3000/confirm/<ID>
 

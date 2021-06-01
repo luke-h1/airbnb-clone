@@ -13,7 +13,7 @@ import {
   Root,
 } from 'type-graphql';
 import { getConnection } from 'typeorm';
-import { redis } from '@src/redis';
+import { redis } from '../../redis';
 import { sendConfirmationEmail } from '../../utils/mail/sendConfirmationEmail';
 import { sendEmail } from '../../utils/mail/sendEmail';
 import { User } from '../../entities/User';

@@ -1,6 +1,8 @@
 import { buildSchema } from 'type-graphql';
+import { HelloResolver } from '../resolvers/hello';
+import { UserResolver } from '../resolvers/user/user';
 
 export const createSchema = async () => await buildSchema({
-  resolvers: [`${__dirname}../resolvers/**/*.ts`],
+  resolvers: [HelloResolver, UserResolver],
   validate: false,
 });
