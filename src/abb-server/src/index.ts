@@ -15,6 +15,7 @@ import { redis } from './redis';
 import { UserResolver } from './resolvers/user/user';
 import { Listing } from './entities/Listing';
 import { User } from './entities/User';
+import { createSchema } from './utils/createSchema';
 
 const main = async () => {
   const conn = await createConnection({
@@ -70,10 +71,7 @@ const main = async () => {
   );
 
   const apolloServer = new ApolloServer({
-    schema: await buildSchema({
-      resolvers: [HelloResolver, UserResolver],
-      validate: false,
-    }),
+    schema: await createSchema(),
     context: ({ req, res }) => ({
       req,
       res,
