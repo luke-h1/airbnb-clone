@@ -3,10 +3,10 @@ import { Maybe } from 'graphql/jsutils/Maybe';
 import { createSchema } from '../utils/createSchema';
 
 interface Options {
-    source: string;
-    variableValues?: Maybe<{
-        [key: string]: any;
-    }>;
+  source: string;
+  variableValues?: Maybe<{
+    [key: string]: any;
+  }>;
 }
 
 let schema: GraphQLSchema;
