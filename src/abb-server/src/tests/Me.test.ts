@@ -50,4 +50,19 @@ describe('me', () => {
       },
     });
   });
+  it('return null', async () => {
+    await User.create({
+      email: faker.internet.email(),
+      password: faker.internet.password(),
+    }).save();
+
+    const response = await gCall({
+      source: meQuery,
+    });
+    expect(response).toMatchObject({
+      data: {
+        me: null,
+      },
+    });
+  });
 });
