@@ -191,7 +191,7 @@ export class UserResolver {
   @Mutation(() => Boolean)
   async confirmUser(
     @Arg('token') token: string,
-    @Ctx() ctx: MyContext,
+    // @Ctx() ctx: MyContext,
   ): Promise<boolean> {
     const userId = await redis.get(token);
     // need to send something back to frontend here
