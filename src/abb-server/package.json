@@ -5,14 +5,14 @@
   "main": "index.js",
   "scripts": {
     "gen-env": "gen-env-types .env -o src/env.d.ts -e .",
-    "build": "rimraf dist && tsc",
+    "build": "rimraf dist && tsc -p tsconfig.json",
     "lint": "eslint --ext .ts,.tsx,.js,.jsx src --fix",
     "format": "prettier --write \"src/**/*.{js,jsx,ts,tsx}\"",
     "watch": "tsc -w",
     "db:setup": "ts-node ./src/test-utils/setup.ts",
-    "test": "npm run db:setup && jest",
-    "test:watch": "npm run db:setup && jest --watch",
-    "jest:cache-clear": "jest --clearCache",
+    "test": "cross-env NODE_ENV=test npm run db:setup && jest",
+    "test:watch": "cross-env NODE_ENV=test npm run db:setup && jest --watch",
+    "jest:cache-clear": "cross-env NODE_ENV=test jest --clearCache",
     "dev": "cross-env NODE_ENV=development nodemon dist/index.js",
     "gen:migration": "typeorm migration:generate -n <NAME>",
     "run:migration": "typeorm migration:run"

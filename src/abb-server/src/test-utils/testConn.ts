@@ -5,10 +5,10 @@ export const testConn = (drop: boolean = false) => createConnection({
   type: 'postgres',
   host: 'localhost',
   port: 5432,
-  username: 'postgres',
-  password: 'postgres',
+  username: 'lukehowsam',
+  password: '123',
   database: 'abb-clone-test',
   synchronize: drop,
   dropSchema: drop,
-  entities: ['/../entities/*.*'],
+  entities: [`${__dirname}/../entities/*.*`],
 });
