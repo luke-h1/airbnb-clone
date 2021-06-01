@@ -9,7 +9,8 @@
     "lint": "eslint --ext .ts,.tsx,.js,.jsx src --fix",
     "format": "prettier --write \"src/**/*.{js,jsx,ts,tsx}\"",
     "watch": "tsc -w",
-    "test": "cross-env NODE_ENV=test jest --watch",
+    "db:setup": "ts-node ./src/test-utils/setup.ts",
+    "test": "npm run db:setup && jest",
     "dev": "cross-env NODE_ENV=development nodemon dist/index.js",
     "gen:migration": "typeorm migration:generate -n <NAME>",
     "run:migration": "typeorm migration:run"
