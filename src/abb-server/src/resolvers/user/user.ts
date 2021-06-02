@@ -185,13 +185,8 @@ export class UserResolver {
     // keep them logged in
 
     /*
-    @TODO:
-    NOTE Luke:
-    Tests will fail as we return null if
-    a user is not logged in then they can't see there email
-    we will need to allow the user to login
-    and instead just remind to to confirm their email.
-    if not confirmed after 1 day then send them to confirmation page
+      prompt user to confirm email on login
+      if not confirmed in x amount of days drop them from the DB
     */
 
     req.session.userId = user.id;
@@ -207,8 +202,8 @@ export class UserResolver {
   @Mutation(() => Boolean)
   async confirmUser(
     @Arg('token') token: string,
-    // @Ctx() ctx: MyContext,
-  ): Promise<boolean> {
+  ): // @Ctx() ctx: MyContext,
+  Promise<boolean> {
     const userId = await redis.get(token);
     // need to send something back to frontend here
     // i.e. Your token has expired, request a new one from ...
@@ -218,6 +213,7 @@ export class UserResolver {
     }
 
     await User.update({ id: parseInt(userId, 10) }, { confirmed: true });
+
     await redis.del(token);
     return true;
   }
