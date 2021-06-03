@@ -15,7 +15,7 @@ import { User } from './entities/User';
 import { createSchema } from './utils/createSchema';
 
 const main = async () => {
-  const conn = await createConnection({
+  await createConnection({
     type: 'postgres',
     url: process.env.DATABASE_URL,
     logging: !__prod__,
