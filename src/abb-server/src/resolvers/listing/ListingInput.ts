@@ -29,6 +29,6 @@ export class ListingInput {
   @Field()
   longitude: number;
 
-  @Field()
-  amenities: (() => string) | string[] | undefined
+  @Field(() => [String])
+  amenities: string[]
 }

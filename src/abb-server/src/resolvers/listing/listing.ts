@@ -1,16 +1,18 @@
-import { listingCacheKey } from '@src/constants';
-import { redis } from '@src/redis';
-import { processUpload } from '@src/utils/processUpload';
-import { validateListing } from '@src/utils/validateListing';
 import {
   Arg, Field, Mutation, ObjectType, Resolver,
 } from 'type-graphql';
 import { getConnection } from 'typeorm';
+import { validateListing } from '../../utils/validateListing';
+import { processUpload } from '../../utils/processUpload';
+import { redis } from '../../redis';
+import { listingCacheKey } from '../../constants';
 import { Listing } from '../../entities/Listing';
 import { ListingInput } from './ListingInput';
 
-@ObjectType()
-class FieldError {
+// @TODO: Inherit this from user.
+// extract out FieldError and make it inherit two classes
+@ObjectType({ isAbstract: true })
+class ListingFieldError {
   @Field()
   field: string;
 
@@ -19,8 +21,8 @@ class FieldError {
 }
 @ObjectType()
 class ListingResponse {
-  @Field(() => [FieldError], { nullable: true })
-  errors?: FieldError[];
+  @Field(() => [ListingFieldError], { nullable: true })
+  errors?: ListingFieldError[];
 
   @Field(() => Listing, { nullable: true })
   listing?: Listing;
@@ -29,9 +31,7 @@ class ListingResponse {
 @Resolver(Listing)
 export class ListingResolver {
   @Mutation(() => ListingResponse)
-  async createListing(
-    @Arg('options') options: ListingInput,
-  ) {
+  async createListing(@Arg('options') options: ListingInput) {
     const errors = validateListing(options);
     if (errors) {
       return errors;
@@ -67,7 +67,6 @@ export class ListingResolver {
       console.error(e);
     }
     redis.lpush(listingCacheKey, JSON.stringify(listing));
-
     return {
       listing,
     };

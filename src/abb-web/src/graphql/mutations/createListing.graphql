@@ -1,0 +1,7 @@
+mutation CreateListing(options: $options){
+  createListing(options: $options){
+    listing {
+        ...RegularListingResponse
+    }
+  }
+}
