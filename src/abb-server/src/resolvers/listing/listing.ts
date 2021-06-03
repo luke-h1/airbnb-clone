@@ -3,6 +3,7 @@ import {
   Arg, Field, Mutation, ObjectType, Resolver,
 } from 'type-graphql';
 import { Listing } from '../../entities/Listing';
+import { ListingInput } from './ListingInput';
 
 @ObjectType()
 class FieldError {
@@ -25,18 +26,13 @@ class ListingResponse {
 export class ListingResolver {
   @Mutation(() => ListingResponse)
   async createListing(
+    @Arg('options') options: ListingInput,
     // @TODO: refactor below into it's own input type so we don't get duplicate pictureUrls
-    @Arg('name') name: string,
-    @Arg('category') category: string,
-    @Arg('pictureUrl') pictureUrl: string,
-    @Arg('description') description: string,
-    @Arg('price') price: number,
-    @Arg('beds') beds: number,
-    @Arg('guests') guests: number,
-    @Arg('latitude') latitude: number,
-    @Arg('longitude') longitude: number,
-    @Arg('amenities') amenities: string[],
   ) {
-    const pictureUrl = picture ? await processUpload(picture) : null;
+    const pictureUrl = options.picture ? await processUpload(options.picture) : null;
+
+    /* 
+      @TODO: check for errors first, then create the listing in the DB and push to redis
+    */
   }
 }

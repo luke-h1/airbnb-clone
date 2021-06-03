@@ -3,13 +3,16 @@ import { Field, InputType } from 'type-graphql';
 @InputType()
 export class ListingInput {
   @Field()
+  name: string;
+
+  @Field()
+  category: string;
+
+  @Field()
   picture: string;
 
   @Field()
-  category: String;
-
-  @Field()
-  description: String;
+  description: string;
 
   @Field()
   price: number;
