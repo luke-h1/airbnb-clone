@@ -1,6 +1,6 @@
-import { ListingInput } from '@src/resolvers/listing/ListingInput';
+import { CreateListingInput } from '../resolvers/listing/CreateListingInput';
 
-export const validateListing = (options: ListingInput) => {
+export const validateListing = (options: CreateListingInput) => {
   if (!options.name) {
     return [
       {
@@ -17,7 +17,7 @@ export const validateListing = (options: ListingInput) => {
       },
     ];
   }
-  if (!options.picture) {
+  if (!options.pictureUrl) {
     return [
       {
         field: 'picture',

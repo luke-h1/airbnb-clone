@@ -25,7 +25,7 @@ export class User extends BaseEntity {
   password!: string;
 
   @Field(() => Listing)
-  @OneToMany(() => Listing, (listing) => listing.user)
+  @OneToMany(() => Listing, listing => listing.user)
   listings: Listing[];
 
   @Column('bool', { default: false })

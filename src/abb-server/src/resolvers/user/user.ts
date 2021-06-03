@@ -143,8 +143,6 @@ export class UserResolver {
     @Arg('options') options: UsernamePasswordInput,
     @Ctx() { req }: MyContext,
   ): Promise<UserResponse> {
-    const { email, password } = options;
-    console.log(email, password);
     const errors = validateRegister(options);
     if (errors) {
       return { errors };
@@ -265,14 +263,16 @@ export class UserResolver {
 
   @Mutation(() => Boolean)
   logout(@Ctx() { req, res }: MyContext) {
-    return new Promise((resolve) => req.session.destroy((e: any) => {
-      res.clearCookie(COOKIE_NAME);
-      if (e) {
-        console.log('LOGOUT ERROR', e);
-        resolve(false);
-        return;
-      }
-      resolve(true);
-    }));
+    return new Promise(resolve =>
+      req.session.destroy((e: any) => {
+        res.clearCookie(COOKIE_NAME);
+        if (e) {
+          console.log('LOGOUT ERROR', e);
+          resolve(false);
+          return;
+        }
+        resolve(true);
+      }),
+    );
   }
 }

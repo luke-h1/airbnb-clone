@@ -1,7 +1,7 @@
 import { Field, InputType } from 'type-graphql';
 
 @InputType()
-export class ListingInput {
+export class CreateListingInput {
   @Field()
   name: string;
 
@@ -9,7 +9,7 @@ export class ListingInput {
   category: string;
 
   @Field()
-  picture: string;
+  pictureUrl: string;
 
   @Field()
   description: string;

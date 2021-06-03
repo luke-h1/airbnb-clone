@@ -1,13 +1,10 @@
-import {
-  Arg, Field, Mutation, ObjectType, Resolver,
-} from 'type-graphql';
+import { Arg, Field, Mutation, ObjectType, Resolver } from 'type-graphql';
 import { getConnection } from 'typeorm';
 import { validateListing } from '../../utils/validateListing';
 import { processUpload } from '../../utils/processUpload';
 import { redis } from '../../redis';
-import { listingCacheKey } from '../../constants';
 import { Listing } from '../../entities/Listing';
-import { ListingInput } from './ListingInput';
+import { CreateListingInput } from './CreateListingInput';
 
 // @TODO: Inherit this from user.
 // extract out FieldError and make it inherit two classes
@@ -31,14 +28,16 @@ class ListingResponse {
 @Resolver(Listing)
 export class ListingResolver {
   @Mutation(() => ListingResponse)
-  async createListing(@Arg('options') options: ListingInput) {
+  async createListing(
+    @Arg('options') options: CreateListingInput,
+  ): Promise<ListingResponse> {
     const errors = validateListing(options);
     if (errors) {
-      return errors;
+      return { errors };
     }
 
-    const pictureUrl = options.picture
-      ? await processUpload(options.picture)
+    const pictureUrl = options.pictureUrl
+      ? await processUpload(options.pictureUrl)
       : null;
 
     let listing;
@@ -62,11 +61,11 @@ export class ListingResolver {
         .returning('*')
         .execute();
       listing = result.raw[0];
-      console.log(listing);
+      console.log('listing', listing);
     } catch (e) {
       console.error(e);
     }
-    redis.lpush(listingCacheKey, JSON.stringify(listing));
+    // redis.lpush(listingCacheKey, JSON.stringify(listing));
     return {
       listing,
     };
