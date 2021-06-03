@@ -32,7 +32,7 @@ const main = async () => {
   await redis.del(listingCacheKey);
   // fill cache
   const listings = await Listing.find();
-  const listingStrings = listings.map(x => JSON.stringify(x));
+  const listingStrings = listings.map((x) => JSON.stringify(x));
   if (listingStrings.length) {
     await redis.lpush(listingCacheKey, ...listingStrings);
   }
@@ -82,6 +82,6 @@ const main = async () => {
   });
 };
 
-main().catch(err => {
+main().catch((err) => {
   console.error(err);
 });

@@ -1,7 +1,10 @@
-import { Arg, Field, Mutation, ObjectType, Resolver } from 'type-graphql';
+import {
+  Arg, Ctx, Field, Mutation, ObjectType, Resolver,
+} from 'type-graphql';
 import { getConnection } from 'typeorm';
+import { MyContext } from '@src/types';
 import { validateListing } from '../../utils/validateListing';
-import { processUpload } from '../../utils/processUpload';
+import { storeUpload } from '../../utils/processUpload';
 import { redis } from '../../redis';
 import { Listing } from '../../entities/Listing';
 import { CreateListingInput } from './CreateListingInput';
@@ -30,17 +33,17 @@ export class ListingResolver {
   @Mutation(() => ListingResponse)
   async createListing(
     @Arg('options') options: CreateListingInput,
+    @Ctx() { req }: MyContext,
   ): Promise<ListingResponse> {
     const errors = validateListing(options);
     if (errors) {
       return { errors };
     }
+    console.log('pictureUrl', options.pictureUrl);
 
-    const pictureUrl = options.pictureUrl
-      ? await processUpload(options.pictureUrl)
-      : null;
-
+    options.pictureUrl ? storeUpload(options.pictureUrl) : null;
     let listing;
+    // inserts dogshit into the DB. Images don't work loooll
     try {
       const result = await getConnection()
         .createQueryBuilder()
@@ -49,7 +52,7 @@ export class ListingResolver {
         .values({
           name: options.name,
           category: options.category,
-          pictureUrl,
+          pictureUrl: options.pictureUrl,
           description: options.description,
           price: options.price,
           beds: options.beds,
@@ -57,6 +60,7 @@ export class ListingResolver {
           latitude: options.latitude,
           longitude: options.longitude,
           amenities: options.amenities,
+          userId: req.session.userId,
         })
         .returning('*')
         .execute();
