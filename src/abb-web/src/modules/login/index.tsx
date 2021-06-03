@@ -1,4 +1,6 @@
-import { Box, Button, Flex, Link, Text } from '@chakra-ui/react';
+import {
+  Box, Button, Flex, Link, Text,
+} from '@chakra-ui/react';
 import { Form, Formik } from 'formik';
 import { withUrqlClient } from 'next-urql';
 import { useRouter } from 'next/router';
@@ -9,6 +11,11 @@ import { createUrqlClient } from 'src/utils/createUrqlClient';
 import { toErrorMap } from 'src/utils/toErrorMap';
 
 interface indexProps {}
+
+interface FormValues {
+  email: string;
+  password: string;
+}
 
 const index: React.FC<indexProps> = () => {
   const router = useRouter();
@@ -23,7 +30,7 @@ const index: React.FC<indexProps> = () => {
         justifyContent="center"
         alignItems="center"
       >
-        <Formik
+        <Formik<FormValues>
           initialValues={{ email: '', password: '' }}
           onSubmit={async (values, { setErrors }) => {
             const res = await login({ options: values });

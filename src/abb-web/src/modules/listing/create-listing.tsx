@@ -22,6 +22,19 @@ amenities
 
 */
 
+interface FormValues {
+  name: string;
+  category: string;
+  pictureUrl: string;
+  description: string;
+  price: number;
+  beds: number;
+  guests: number;
+  latitude: number;
+  longitude: number;
+  amenities: string[];
+}
+
 interface indexProps {}
 
 const index: React.FC<indexProps> = () => {
@@ -40,7 +53,7 @@ const index: React.FC<indexProps> = () => {
           Create a listing
         </Text>
 
-        <Formik
+        <Formik<FormValues>
           initialValues={{
             name: '',
             category: '',
