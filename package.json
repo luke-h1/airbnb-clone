@@ -16,8 +16,5 @@
     "build": "lerna run build",
     "clean": "lerna clean -y",
     "prepare": "husky install"
-  },
-  "dependencies": {
-    "nanoid": "^3.1.23"
   }
 }

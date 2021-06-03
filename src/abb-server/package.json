@@ -62,6 +62,7 @@
     "graphql": "^15.5.0",
     "ioredis": "^4.27.1",
     "jest": "^27.0.3",
+    "nanoid": "^3.1.23",
     "nodemailer": "^6.6.0",
     "pg": "^8.6.0",
     "rate-limit-redis": "^2.1.0",
