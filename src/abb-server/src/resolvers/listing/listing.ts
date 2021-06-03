@@ -29,9 +29,11 @@ export class ListingResolver {
     @Arg('options') options: ListingInput,
     // @TODO: refactor below into it's own input type so we don't get duplicate pictureUrls
   ) {
-    const pictureUrl = options.picture ? await processUpload(options.picture) : null;
+    const pictureUrl = options.picture
+      ? await processUpload(options.picture)
+      : null;
 
-    /* 
+    /*
       @TODO: check for errors first, then create the listing in the DB and push to redis
     */
   }
