@@ -2,9 +2,9 @@ import {
   Arg, Ctx, Field, Mutation, ObjectType, Resolver,
 } from 'type-graphql';
 import { getConnection } from 'typeorm';
-import { MyContext } from '@src/types';
+import { MyContext } from '../../types';
+import { listingCacheKey } from '../../constants';
 import { validateListing } from '../../utils/validateListing';
-import { storeUpload } from '../../utils/processUpload';
 import { redis } from '../../redis';
 import { Listing } from '../../entities/Listing';
 import { CreateListingInput } from './CreateListingInput';
@@ -39,11 +39,7 @@ export class ListingResolver {
     if (errors) {
       return { errors };
     }
-    console.log('pictureUrl', options.pictureUrl);
-
-    options.pictureUrl ? storeUpload(options.pictureUrl) : null;
     let listing;
-    // inserts dogshit into the DB. Images don't work loooll
     try {
       const result = await getConnection()
         .createQueryBuilder()
@@ -69,7 +65,7 @@ export class ListingResolver {
     } catch (e) {
       console.error(e);
     }
-    // redis.lpush(listingCacheKey, JSON.stringify(listing));
+    redis.lpush(listingCacheKey, JSON.stringify(listing));
     return {
       listing,
     };
