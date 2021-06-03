@@ -15,6 +15,9 @@
     "bootstrap:install": "lerna bootstrap --force-local",
     "build": "lerna run build",
     "clean": "lerna clean -y",
-    "prepare": "husky install" 
-   }
+    "prepare": "husky install"
+  },
+  "dependencies": {
+    "nanoid": "^3.1.23"
+  }
 }

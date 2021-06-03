@@ -1,3 +1,4 @@
+import { processUpload } from '@src/utils/processUpload';
 import {
   Arg, Field, Mutation, ObjectType, Resolver,
 } from 'type-graphql';
@@ -24,6 +25,7 @@ class ListingResponse {
 export class ListingResolver {
   @Mutation(() => ListingResponse)
   async createListing(
+    // @TODO: refactor below into it's own input type so we don't get duplicate pictureUrls
     @Arg('name') name: string,
     @Arg('category') category: string,
     @Arg('pictureUrl') pictureUrl: string,
@@ -35,6 +37,6 @@ export class ListingResolver {
     @Arg('longitude') longitude: number,
     @Arg('amenities') amenities: string[],
   ) {
-    return true;
+    const pictureUrl = picture ? await processUpload(picture) : null;
   }
 }
