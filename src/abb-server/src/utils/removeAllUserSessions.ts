@@ -1,5 +1,5 @@
 import { Redis } from 'ioredis';
-import { redisSessionPrefix, userSessionIdPrefix } from '../constants';
+import { redisSessionPrefix, userSessionIdPrefix } from '../shared/constants';
 
 export const removeAllUserSessions = async (userId: string, redis: Redis) => {
   const sessionIds = await redis.lrange(

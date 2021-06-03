@@ -7,12 +7,12 @@ import express from 'express';
 import session from 'express-session';
 import { createConnection } from 'typeorm';
 import path from 'path';
-import { listingCacheKey, __prod__ } from './constants';
+import { listingCacheKey, __prod__ } from './shared/constants';
 import { createUserLoader } from './Loaders/UserLoader';
 import { redis } from './redis';
 import { Listing } from './entities/Listing';
 import { User } from './entities/User';
-import { createSchema } from './utils/createSchema';
+import { createSchema } from './shared/createSchema';
 
 const main = async () => {
   await createConnection({

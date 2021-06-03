@@ -17,11 +17,11 @@ import { redis } from '../../redis';
 import { sendConfirmationEmail } from '../../utils/mail/sendConfirmationEmail';
 import { sendEmail } from '../../utils/mail/sendEmail';
 import { User } from '../../entities/User';
-import { MyContext } from '../../types';
+import { MyContext } from '../../shared/types';
 
 import { UsernamePasswordInput } from './UsernamePasswordInput';
-import { validateRegister } from '../../utils/validateRegister';
-import { COOKIE_NAME, FORGET_PASSWORD_PREFIX } from '../../constants';
+import { validateRegister } from '../../shared/validateRegister';
+import { COOKIE_NAME, FORGET_PASSWORD_PREFIX } from '../../shared/constants';
 import { sendPasswordResetMail } from '../../utils/mail/sendPasswordResetMail';
 
 @ObjectType()

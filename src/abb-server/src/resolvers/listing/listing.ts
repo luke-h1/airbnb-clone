@@ -2,9 +2,9 @@ import {
   Arg, Ctx, Field, Mutation, ObjectType, Resolver,
 } from 'type-graphql';
 import { getConnection } from 'typeorm';
-import { MyContext } from '../../types';
-import { listingCacheKey } from '../../constants';
-import { validateListing } from '../../utils/validateListing';
+import { MyContext } from '../../shared/types';
+import { listingCacheKey } from '../../shared/constants';
+import { validateListing } from '../../shared/validateListing';
 import { redis } from '../../redis';
 import { Listing } from '../../entities/Listing';
 import { CreateListingInput } from './CreateListingInput';

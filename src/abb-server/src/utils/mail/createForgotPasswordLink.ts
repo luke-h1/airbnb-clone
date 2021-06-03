@@ -1,6 +1,6 @@
 import { Redis } from 'ioredis';
 import { v4 } from 'uuid';
-import { FORGET_PASSWORD_PREFIX } from '../../constants';
+import { FORGET_PASSWORD_PREFIX } from '../../shared/constants';
 
 export const createForgotPasswordLink = async (
   url: string,
