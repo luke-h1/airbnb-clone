@@ -1,3 +1,5 @@
+import { listingCacheKey } from '@src/constants';
+import { redis } from '@src/redis';
 import { processUpload } from '@src/utils/processUpload';
 import { validateListing } from '@src/utils/validateListing';
 import {
@@ -29,7 +31,6 @@ export class ListingResolver {
   @Mutation(() => ListingResponse)
   async createListing(
     @Arg('options') options: ListingInput,
-    // @TODO: refactor below into it's own input type so we don't get duplicate pictureUrls
   ) {
     const errors = validateListing(options);
     if (errors) {
@@ -57,13 +58,18 @@ export class ListingResolver {
           latitude: options.latitude,
           longitude: options.longitude,
           amenities: options.amenities,
-        });
+        })
+        .returning('*')
+        .execute();
+      listing = result.raw[0];
+      console.log(listing);
     } catch (e) {
       console.error(e);
     }
+    redis.lpush(listingCacheKey, JSON.stringify(listing));
 
-    /*
-      @TODO: check for errors first, then create the listing in the DB and push to redis
-    */
+    return {
+      listing,
+    };
   }
 }
