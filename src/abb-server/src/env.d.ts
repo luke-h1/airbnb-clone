@@ -13,5 +13,9 @@ declare namespace NodeJS {
     MAIL_PORT: string;
     MAIL_USER: string;
     MAIL_PASS: string;
+    AWS_BUCKET_NAME: string;
+    AWS_BUCKET_REGION: string;
+    AWS_ACCESS_KEY: string;
+    AWS_ACCESS_SECRET: string;
   }
 }

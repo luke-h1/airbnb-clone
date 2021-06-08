@@ -2,6 +2,7 @@ import {
   Arg, Ctx, Field, Mutation, ObjectType, Resolver,
 } from 'type-graphql';
 import { getConnection } from 'typeorm';
+import { uploadFile } from '../../utils/uploadPicture';
 import { MyContext } from '../../shared/types';
 import { listingCacheKey } from '../../shared/constants';
 import { validateListing } from '../../shared/validateListing';
@@ -41,6 +42,8 @@ export class ListingResolver {
     }
     let listing;
     try {
+      console.log(options.pictureUrl);
+      const picture = await uploadFile(options.pictureUrl);
       const result = await getConnection()
         .createQueryBuilder()
         .insert()
@@ -48,7 +51,7 @@ export class ListingResolver {
         .values({
           name: options.name,
           category: options.category,
-          pictureUrl: options.pictureUrl,
+          pictureUrl: (picture) as string,
           description: options.description,
           price: options.price,
           beds: options.beds,
