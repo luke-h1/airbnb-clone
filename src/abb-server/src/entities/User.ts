@@ -24,8 +24,16 @@ export class User extends BaseEntity {
   @Column()
   password!: string;
 
+  @Field(() => String)
+  @Column()
+  FirstName: string;
+
+  @Field(() => String)
+  @Column()
+  LastName: string;
+
   @Field(() => Listing)
-  @OneToMany(() => Listing, (listing) => listing.user)
+  @OneToMany(() => Listing, (l) => l.creator)
   listings: Listing[];
 
   @Column('bool', { default: false })

@@ -9,9 +9,6 @@ export class CreateListingInput {
   category: string;
 
   @Field()
-  pictureUrl: string;
-
-  @Field()
   description: string;
 
   @Field()
@@ -24,11 +21,14 @@ export class CreateListingInput {
   guests: number;
 
   @Field()
-  latitude: number;
+  city: string;
 
   @Field()
-  longitude: number;
+  country: string;
 
-  @Field(() => [String])
-  amenities: string[];
+  @Field()
+  address: string;
+
+  @Field(() => String)
+  amenities: string;
 }

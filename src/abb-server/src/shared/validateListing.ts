@@ -17,14 +17,7 @@ export const validateListing = (options: CreateListingInput) => {
       },
     ];
   }
-  if (!options.pictureUrl) {
-    return [
-      {
-        field: 'picture',
-        message: 'picture is a required field',
-      },
-    ];
-  }
+
   if (!options.description) {
     return [
       {
@@ -57,19 +50,27 @@ export const validateListing = (options: CreateListingInput) => {
       },
     ];
   }
-  if (!options.latitude) {
+  if (!options.city) {
     return [
       {
-        field: 'latitude',
-        message: 'latitude is a required field',
+        field: 'city',
+        message: 'city is a required field',
       },
     ];
   }
-  if (!options.longitude) {
+  if (!options.country) {
     return [
       {
-        field: 'longitude',
-        message: 'longitude is a required field',
+        field: 'country',
+        message: 'country is a required field',
+      },
+    ];
+  }
+  if (!options.address) {
+    return [
+      {
+        field: 'address',
+        message: 'address is a required field',
       },
     ];
   }

@@ -7,7 +7,7 @@ import express from 'express';
 import session from 'express-session';
 import { createConnection } from 'typeorm';
 import path from 'path';
-import { listingCacheKey, __prod__ } from './shared/constants';
+import { COOKIE_NAME, __prod__ } from './shared/constants';
 import { createUserLoader } from './Loaders/UserLoader';
 import { redis } from './redis';
 import { Listing } from './entities/Listing';
@@ -28,15 +28,6 @@ const main = async () => {
 
   const RedisStore = connectRedis(session);
 
-  // clear cache
-  await redis.del(listingCacheKey);
-  // fill cache
-  const listings = await Listing.find();
-  const listingStrings = listings.map((x) => JSON.stringify(x));
-  if (listingStrings.length) {
-    await redis.lpush(listingCacheKey, ...listingStrings);
-  }
-  console.log(await redis.lrange(listingCacheKey, 0, -1));
   app.use(
     cors({
       origin: process.env.FRONTEND_HOST,
@@ -46,6 +37,7 @@ const main = async () => {
   app.set('trust-proxy', 1);
   app.use(
     session({
+      name: COOKIE_NAME,
       store: new RedisStore({
         client: redis,
         disableTouch: true,
@@ -58,7 +50,7 @@ const main = async () => {
         domain: __prod__ ? 'deployed-api' : undefined,
       },
       saveUninitialized: false,
-      secret: process.env.COOKIE_SECRET,
+      secret: process.env.COOKIE_SECRET!,
       resave: false,
     }),
   );

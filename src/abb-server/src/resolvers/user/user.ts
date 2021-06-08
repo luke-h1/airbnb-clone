@@ -23,6 +23,7 @@ import { UsernamePasswordInput } from './UsernamePasswordInput';
 import { validateRegister } from '../../shared/validateRegister';
 import { COOKIE_NAME, FORGET_PASSWORD_PREFIX } from '../../shared/constants';
 import { sendPasswordResetMail } from '../../utils/mail/sendPasswordResetMail';
+import { UserRegisterInput } from './UserRegisterInput';
 
 @ObjectType()
 class FieldError {
@@ -48,6 +49,15 @@ export class UserResolver {
     // this is the current logged in user so can show them their own email
     if (req.session.userId === user.id) {
       return user.email;
+    }
+    return '';
+  }
+
+  @FieldResolver(() => String)
+  fullName(@Root() user: User, @Ctx() { req }: MyContext) {
+    // this is the current logged in user so can show them their own name
+    if (req.session.userId === user.id) {
+      return user.FirstName + user.LastName;
     }
     return '';
   }
@@ -99,7 +109,6 @@ export class UserResolver {
         password: await argon2.hash(newPassword),
       },
     );
-    await redis.del(key);
     // login user after they've changed their password
     req.session.userId = user.id;
     return { user };
@@ -140,7 +149,7 @@ export class UserResolver {
 
   @Mutation(() => UserResponse)
   async register(
-    @Arg('options') options: UsernamePasswordInput,
+    @Arg('options') options: UserRegisterInput,
     @Ctx() { req }: MyContext,
   ): Promise<UserResponse> {
     const errors = validateRegister(options);
@@ -157,6 +166,8 @@ export class UserResolver {
         .values({
           email: options.email,
           password: hashedPassword,
+          FirstName: options.FirstName,
+          LastName: options.LastName,
         })
         .returning('*')
         .execute();
@@ -177,10 +188,6 @@ export class UserResolver {
         };
       }
     }
-
-    // store user id session
-    // this will set a cookie on the user
-    // keep them logged in
 
     /*
       prompt user to confirm email on login

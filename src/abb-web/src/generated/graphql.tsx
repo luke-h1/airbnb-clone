@@ -21,14 +21,14 @@ export type Scalars = {
 export type CreateListingInput = {
   name: Scalars['String'];
   category: Scalars['String'];
-  pictureUrl: Scalars['String'];
   description: Scalars['String'];
   price: Scalars['Float'];
   beds: Scalars['Float'];
   guests: Scalars['Float'];
-  latitude: Scalars['Float'];
-  longitude: Scalars['Float'];
-  amenities: Array<Scalars['String']>;
+  city: Scalars['String'];
+  country: Scalars['String'];
+  address: Scalars['String'];
+  amenities: Scalars['String'];
 };
 
 export type FieldError = {
@@ -41,15 +41,15 @@ export type Listing = {
   __typename?: 'Listing';
   name: Scalars['String'];
   category: Scalars['String'];
-  pictureUrl: Scalars['String'];
   description: Scalars['String'];
   price: Scalars['Float'];
   beds: Scalars['Float'];
   guests: Scalars['Float'];
-  latitude: Scalars['Float'];
-  longitude: Scalars['Float'];
-  amenities: Array<Scalars['String']>;
-  userId: Scalars['String'];
+  city: Scalars['String'];
+  country: Scalars['String'];
+  address: Scalars['String'];
+  amenities: Scalars['String'];
+  userId: Scalars['Float'];
 };
 
 export type ListingFieldError = {
@@ -89,7 +89,7 @@ export type MutationForgotPasswordArgs = {
 };
 
 export type MutationRegisterArgs = {
-  options: UsernamePasswordInput;
+  options: UserRegisterInput;
 };
 
 export type MutationConfirmUserArgs = {
@@ -110,9 +110,19 @@ export type User = {
   __typename?: 'User';
   id: Scalars['Int'];
   email: Scalars['String'];
+  FirstName: Scalars['String'];
+  LastName: Scalars['String'];
   listings: Listing;
   createdAt: Scalars['String'];
   updatedAt: Scalars['String'];
+  fullName: Scalars['String'];
+};
+
+export type UserRegisterInput = {
+  FirstName: Scalars['String'];
+  LastName: Scalars['String'];
+  email: Scalars['String'];
+  password: Scalars['String'];
 };
 
 export type UserResponse = {
@@ -126,6 +136,16 @@ export type UsernamePasswordInput = {
   password: Scalars['String'];
 };
 
+export type RegisterResponseFragment = { __typename?: 'UserResponse' } & {
+  errors?: Maybe<Array<{ __typename?: 'FieldError' } & RegularErrorFragment>>;
+  user?: Maybe<
+    { __typename?: 'User' } & Pick<
+      User,
+      'id' | 'email' | 'FirstName' | 'LastName'
+    >
+  >;
+};
+
 export type RegularErrorFragment = { __typename?: 'FieldError' } & Pick<
   FieldError,
   'field' | 'message'
@@ -135,13 +155,13 @@ export type RegularListingResponseFragment = { __typename?: 'Listing' } & Pick<
   Listing,
   | 'name'
   | 'category'
-  | 'pictureUrl'
   | 'description'
   | 'price'
   | 'beds'
   | 'guests'
-  | 'latitude'
-  | 'longitude'
+  | 'city'
+  | 'country'
+  | 'address'
   | 'amenities'
 >;
 
@@ -183,7 +203,7 @@ export type LogoutMutation = { __typename?: 'Mutation' } & Pick<
 >;
 
 export type RegisterMutationVariables = Exact<{
-  options: UsernamePasswordInput;
+  options: UserRegisterInput;
 }>;
 
 export type RegisterMutation = { __typename?: 'Mutation' } & {
@@ -196,24 +216,38 @@ export type MeQuery = { __typename?: 'Query' } & {
   me?: Maybe<{ __typename?: 'User' } & RegularUserFragment>;
 };
 
-export const RegularListingResponseFragmentDoc = gql`
-  fragment RegularListingResponse on Listing {
-    name
-    category
-    pictureUrl
-    description
-    price
-    beds
-    guests
-    latitude
-    longitude
-    amenities
-  }
-`;
 export const RegularErrorFragmentDoc = gql`
   fragment RegularError on FieldError {
     field
     message
+  }
+`;
+export const RegisterResponseFragmentDoc = gql`
+  fragment RegisterResponse on UserResponse {
+    errors {
+      ...RegularError
+    }
+    user {
+      id
+      email
+      FirstName
+      LastName
+    }
+  }
+  ${RegularErrorFragmentDoc}
+`;
+export const RegularListingResponseFragmentDoc = gql`
+  fragment RegularListingResponse on Listing {
+    name
+    category
+    description
+    price
+    beds
+    guests
+    city
+    country
+    address
+    amenities
   }
 `;
 export const RegularUserFragmentDoc = gql`
@@ -275,7 +309,7 @@ export function useLogoutMutation() {
   );
 }
 export const RegisterDocument = gql`
-  mutation Register($options: UsernamePasswordInput!) {
+  mutation Register($options: UserRegisterInput!) {
     register(options: $options) {
       ...RegularUserResponse
     }

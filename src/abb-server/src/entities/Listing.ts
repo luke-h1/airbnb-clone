@@ -3,6 +3,7 @@ import {
   BaseEntity,
   Column,
   Entity,
+  JoinColumn,
   ManyToOne,
   PrimaryGeneratedColumn,
 } from 'typeorm';
@@ -22,10 +23,6 @@ export class Listing extends BaseEntity {
   category: string;
 
   @Field()
-  @Column('text', { nullable: true })
-  pictureUrl: string;
-
-  @Field()
   @Column('varchar', { length: 255 })
   description: string;
 
@@ -42,21 +39,26 @@ export class Listing extends BaseEntity {
   guests: number;
 
   @Field()
-  @Column('double precision')
-  latitude: number;
+  @Column('varchar', { length: 30 })
+  city: string;
 
   @Field()
-  @Column('double precision')
-  longitude: number;
-
-  @Field(() => [String])
-  @Column('text', { array: true })
-  amenities: string[];
+  @Column('varchar', { length: 30 })
+  country: string;
 
   @Field()
-  @Column('uuid')
-  userId: string;
+  @Column('varchar', { length: 60 })
+  address: string;
 
-  @ManyToOne(() => User, (user) => user.listings)
-  user: User;
+  @Field(() => String)
+  @Column('text')
+  amenities: string;
+
+  @Field()
+  @Column('int')
+  userId: number;
+
+  @ManyToOne(() => User, (u) => u.listings)
+  @JoinColumn({ name: 'creatorId' })
+  creator: User;
 }

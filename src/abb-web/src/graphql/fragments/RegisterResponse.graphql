@@ -1,0 +1,11 @@
+fragment RegisterResponse on UserResponse {
+  errors {
+    ...RegularError
+  }
+  user {
+    id
+    email
+    FirstName
+    LastName
+  }
+}

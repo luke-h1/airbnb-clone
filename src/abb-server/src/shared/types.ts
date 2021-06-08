@@ -7,5 +7,4 @@ export type MyContext = {
   redis: Redis;
   res: Response;
   userLoader: ReturnType<typeof createUserLoader>;
-  url: string;
 };

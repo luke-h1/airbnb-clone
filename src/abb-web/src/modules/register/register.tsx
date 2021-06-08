@@ -15,6 +15,8 @@ interface RegisterPageProps {}
 interface FormValues {
   email: string;
   password: string;
+  FirstName: string;
+  LastName: string;
 }
 
 const RegisterPage: React.FC<RegisterPageProps> = () => {
@@ -30,7 +32,12 @@ const RegisterPage: React.FC<RegisterPageProps> = () => {
       alignItems="center"
     >
       <Formik<FormValues>
-        initialValues={{ email: '', password: '' }}
+        initialValues={{
+          email: '',
+          password: '',
+          FirstName: '',
+          LastName: '',
+        }}
         onSubmit={async (values, { setErrors }) => {
           const response = await register({ options: values });
           if (response.data?.register.errors) {
@@ -50,7 +57,18 @@ const RegisterPage: React.FC<RegisterPageProps> = () => {
               label="password"
               type="password"
             />
-
+            <InputField
+              name="FirstName"
+              placeholder="FirstName"
+              label="FirstName"
+              type="text"
+            />
+            <InputField
+              name="LastName"
+              placeholder="LastName"
+              label="LastName"
+              type="text"
+            />
             <Box mb={2} />
             <Button
               type="submit"

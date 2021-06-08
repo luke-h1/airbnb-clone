@@ -1,12 +1,12 @@
 fragment RegularListingResponse on Listing { 
       name
       category
-      pictureUrl
       description
       price
       beds
       guests
-      latitude
-      longitude
+      city
+      country
+      address
       amenities
 }

@@ -2,6 +2,28 @@ import AWS from 'aws-sdk';
 import fs from 'fs';
 import 'dotenv-safe/config';
 
+/*
+enum Visibility {
+    public
+    private
+}
+
+input S3ObjectInput {
+    bucket: String!
+    region: String!
+    localUri: String
+    visibility: Visibility
+    key: String
+    mimeType: String
+}
+
+type S3Object {
+    bucket: String!
+    region: String!
+    key: String!
+}
+*/
+
 export const S3 = new AWS.S3({
   signatureVersion: 's3v4',
   region: process.env.AWS_BUCKET_REGION,
@@ -55,6 +77,6 @@ export const getFileStream = (fileKey: string) => {
     Key: fileKey,
     Bucket: process.env.AWS_BUCKET_NAME,
   };
-    // @ts-ignore
+  // @ts-ignore
   return S3.getObject(downloadParams).createReadStream() as string;
 };
