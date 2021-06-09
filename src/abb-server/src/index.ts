@@ -28,15 +28,6 @@ const main = async () => {
 
   const RedisStore = connectRedis(session);
 
-  // clear cache
-  await redis.del(listingCacheKey);
-  // fill cache
-  const listings = await Listing.find();
-  const listingStrings = listings.map((x) => JSON.stringify(x));
-  if (listingStrings.length) {
-    await redis.lpush(listingCacheKey, ...listingStrings);
-  }
-  console.log(await redis.lrange(listingCacheKey, 0, -1));
   app.use(
     cors({
       origin: process.env.FRONTEND_HOST,
@@ -64,6 +55,8 @@ const main = async () => {
   );
 
   const apolloServer = new ApolloServer({
+    playground: process.env.NODE_ENV !== 'production',
+    uploads: true,
     schema: await createSchema(),
     context: ({ req, res }) => ({
       req,
