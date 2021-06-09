@@ -11,11 +11,12 @@ import { User } from './User';
 @ObjectType()
 @Entity('listings')
 export class Listing extends BaseEntity {
-  @PrimaryGeneratedColumn() id: string;
+  @PrimaryGeneratedColumn()
+  id!: number;
 
   @Field()
   @Column('varchar', { length: 100 })
-  name!: string;
+  name: string;
 
   @Field()
   @Column('varchar', { length: 100 })
