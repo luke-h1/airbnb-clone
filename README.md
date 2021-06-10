@@ -36,3 +36,8 @@
 
 ### Deployment 
 * TBD
+
+
+### Inspirations 
+* [benawad](https://github.com/benawad)
+* [Ania Kubów](https://twitter.com/ania_kubow)
