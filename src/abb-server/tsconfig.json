@@ -8,9 +8,6 @@
       "es2017",
       "esnext.asynciterable"
     ],
-    "paths": {
-      "@src/*": ["src/*"],
-    },
     "sourceMap": true,
     "outDir": "./dist",
     "moduleResolution": "node",

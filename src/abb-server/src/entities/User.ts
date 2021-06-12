@@ -26,7 +26,7 @@ export class User extends BaseEntity {
   password!: string;
 
   @Field(() => [Property])
-  @OneToMany(() => Property, (property) => property.host)
+  @OneToMany(() => Property, (p) => p.host)
   properties: Property[];
 
   @Field(() => [Review])

@@ -4,6 +4,7 @@ import {
   Column,
   CreateDateColumn,
   Entity,
+  JoinColumn,
   ManyToOne,
   PrimaryGeneratedColumn,
   UpdateDateColumn,
@@ -21,8 +22,9 @@ export class Property extends BaseEntity {
   @Column('varchar', { length: 30 })
   title: string;
 
-  @Field()
+  @Field(() => User)
   @Column('varchar', { length: 25 })
+  @JoinColumn({ referencedColumnName: 'id' })
   @ManyToOne(() => User, (user) => user.id)
   host: User;
 
@@ -36,6 +38,7 @@ export class Property extends BaseEntity {
 
   @Field(() => [PropertyImages])
   @Column('varchar', { length: 25 })
+  @JoinColumn({ referencedColumnName: 'images' })
   @ManyToOne(() => PropertyImages, (img) => img.images)
   images: PropertyImages[];
 
@@ -50,11 +53,6 @@ export class Property extends BaseEntity {
   @Field(() => [String])
   @Column('text', { array: true })
   amenities: string[];
-
-  @Field(() => User)
-  @ManyToOne(() => User, (user) => user.properties)
-  @Column()
-  user: User;
 
   @Field(() => String)
   @CreateDateColumn()

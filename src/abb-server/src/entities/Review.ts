@@ -4,6 +4,7 @@ import {
   Column,
   CreateDateColumn,
   Entity,
+  JoinColumn,
   ManyToOne,
   PrimaryGeneratedColumn,
   UpdateDateColumn,
@@ -43,6 +44,7 @@ export class Review extends BaseEntity {
 
   @Field(() => Int)
   @Column()
+  @JoinColumn({ referencedColumnName: 'id' })
   @ManyToOne(() => Property, (prop) => prop.id)
   propertyId: number;
 

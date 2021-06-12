@@ -1,6 +1,6 @@
-import { PropertyImages } from '@src/entities/PropertyImages';
-import { User } from '@src/entities/User';
 import { Field, InputType } from 'type-graphql';
+import { PropertyImages } from '../../entities/PropertyImages';
+import { User } from '../../entities/User';
 
 @InputType()
 export class CreatePropertyInput {
@@ -16,7 +16,7 @@ export class CreatePropertyInput {
   @Field()
   mainImage: string;
 
-  @Field()
+  @Field(() => [PropertyImages])
   images: PropertyImages[];
 
   @Field()
@@ -25,7 +25,7 @@ export class CreatePropertyInput {
   @Field()
   longitude: number;
 
-  @Field()
+  @Field(() => [String])
   amenities: string[];
 
   @Field()
