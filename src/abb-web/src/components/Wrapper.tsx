@@ -7,12 +7,6 @@ const WrapperStyles = styled.div`
   width: 100%;
 `;
 
-export const Wrapper: React.FC<{}> = ({
-  children,
-}) => {
-  return (
-    <WrapperStyles>
-      {children}
-    </WrapperStyles>
-  );
+export const Wrapper: React.FC<{}> = ({ children }) => {
+  return <WrapperStyles>{children}</WrapperStyles>;
 };
