@@ -1,11 +1,14 @@
 import type { AppProps } from 'next/app';
-import { ChakraProvider } from '@chakra-ui/react';
+import Navbar from '@src/components/Navbar';
+import { Reset } from '@src/styles/Reset';
 
 function MyApp({ Component, pageProps }: AppProps) {
   return (
-    <ChakraProvider>
+    <>
+      <Reset />
+      <Navbar />
       <Component {...pageProps} />
-    </ChakraProvider>
+    </>
   );
 }
 

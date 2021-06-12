@@ -2,9 +2,6 @@
 import { Box, Button, Flex, Text } from '@chakra-ui/react';
 import { Formik, Form } from 'formik';
 import React from 'react';
-import { withUrqlClient } from 'next-urql';
-import { createUrqlClient } from '@src/utils/createUrqlClient';
-
 interface indexProps {}
 
 const index: React.FC<indexProps> = () => {

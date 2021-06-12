@@ -19,6 +19,7 @@
     "react/state-in-constructor": "off",
     "no-unsafe-finally": "off",
     "jsx-a11y/anchor-is-valid": "off",
+    "react/jsx-props-no-spreading": "off",
     "arrow-body-style": "off",
     "jsx-no-lambda": "off",
     "react/prop-types": "off",
@@ -64,13 +65,6 @@
     ],
     "react/jsx-curly-newline": "off",
     "react/jsx-one-expression-per-line": "off",
-    "react/jsx-props-no-spreading": [
-      "error",
-      {
-        "html": "enforce",
-        "custom": "ignore"
-      }
-    ],
     "react/jsx-wrap-multilines": ["error", { "prop": "ignore" }]
   },
   "ignorePatterns": ["node_modules/", ".next/", "src/generated/*"],

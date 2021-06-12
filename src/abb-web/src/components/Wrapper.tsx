@@ -1,24 +1,18 @@
 import React from 'react';
-import { Box } from '@chakra-ui/react';
+import styled from '@emotion/styled';
 
-export type WrapperVariant = 'small' | 'regular';
+const WrapperStyles = styled.div`
+  margin-top: 2rem;
+  margin: 0 auto;
+  width: 100%;
+`;
 
-interface WrapperProps {
-  variant?: WrapperVariant;
-}
-
-export const Wrapper: React.FC<WrapperProps> = ({
+export const Wrapper: React.FC<{}> = ({
   children,
-  variant = 'regular',
 }) => {
   return (
-    <Box
-      mt={8}
-      mx="auto"
-      maxW={variant === 'regular' ? '800px' : '400px'}
-      w="100%"
-    >
+    <WrapperStyles>
       {children}
-    </Box>
+    </WrapperStyles>
   );
 };
