@@ -1,14 +1,10 @@
-import gql from 'graphql-tag';
-import * as Urql from 'urql';
+import { gql } from '@apollo/client';
+import * as Apollo from '@apollo/client';
 export type Maybe<T> = T | null;
-export type Exact<T extends { [key: string]: unknown }> = {
-  [K in keyof T]: T[K];
-};
-export type MakeOptional<T, K extends keyof T> = Omit<T, K> &
-  { [SubKey in K]?: Maybe<T[SubKey]> };
-export type MakeMaybe<T, K extends keyof T> = Omit<T, K> &
-  { [SubKey in K]: Maybe<T[SubKey]> };
-export type Omit<T, K extends keyof T> = Pick<T, Exclude<keyof T, K>>;
+export type Exact<T extends { [key: string]: unknown }> = { [K in keyof T]: T[K] };
+export type MakeOptional<T, K extends keyof T> = Omit<T, K> & { [SubKey in K]?: Maybe<T[SubKey]> };
+export type MakeMaybe<T, K extends keyof T> = Omit<T, K> & { [SubKey in K]: Maybe<T[SubKey]> };
+const defaultOptions =  {}
 /** All built-in and custom scalars, mapped to their actual values */
 export type Scalars = {
   ID: string;
@@ -18,16 +14,13 @@ export type Scalars = {
   Float: number;
 };
 
-export type CreateListingInput = {
-  name: Scalars['String'];
-  category: Scalars['String'];
-  pictureUrl: Scalars['String'];
-  description: Scalars['String'];
-  price: Scalars['Float'];
-  beds: Scalars['Float'];
-  guests: Scalars['Float'];
-  latitude: Scalars['Float'];
-  longitude: Scalars['Float'];
+export type CreatePropertyInput = {
+  title: Scalars['String'];
+  host: Scalars['Int'];
+  propertyType: Scalars['String'];
+  mainImage: Scalars['String'];
+  latitude: Scalars['Int'];
+  longitude: Scalars['Int'];
   amenities: Array<Scalars['String']>;
 };
 
@@ -37,67 +30,67 @@ export type FieldError = {
   message: Scalars['String'];
 };
 
-export type Listing = {
-  __typename?: 'Listing';
-  name: Scalars['String'];
-  category: Scalars['String'];
-  pictureUrl: Scalars['String'];
-  description: Scalars['String'];
-  price: Scalars['Float'];
-  beds: Scalars['Float'];
-  guests: Scalars['Float'];
-  latitude: Scalars['Float'];
-  longitude: Scalars['Float'];
-  amenities: Array<Scalars['String']>;
-  userId: Scalars['String'];
-};
-
-export type ListingFieldError = {
-  __typename?: 'ListingFieldError';
-  field: Scalars['String'];
-  message: Scalars['String'];
-};
-
-export type ListingResponse = {
-  __typename?: 'ListingResponse';
-  errors?: Maybe<Array<ListingFieldError>>;
-  listing?: Maybe<Listing>;
-};
-
 export type Mutation = {
   __typename?: 'Mutation';
-  createListing: ListingResponse;
+  createProperty: PropertyResponse;
   changePassword: UserResponse;
   forgotPassword: Scalars['Boolean'];
   register: UserResponse;
-  confirmUser: Scalars['Boolean'];
   login: UserResponse;
   logout: Scalars['Boolean'];
 };
 
-export type MutationCreateListingArgs = {
-  options: CreateListingInput;
+
+export type MutationCreatePropertyArgs = {
+  options: CreatePropertyInput;
 };
+
 
 export type MutationChangePasswordArgs = {
   newPassword: Scalars['String'];
   token: Scalars['String'];
 };
 
+
 export type MutationForgotPasswordArgs = {
   email: Scalars['String'];
 };
+
 
 export type MutationRegisterArgs = {
   options: UsernamePasswordInput;
 };
 
-export type MutationConfirmUserArgs = {
-  token: Scalars['String'];
-};
 
 export type MutationLoginArgs = {
   options: UsernamePasswordInput;
+};
+
+export type Property = {
+  __typename?: 'Property';
+  title: Scalars['String'];
+  host: User;
+  propertyReviews: Array<Scalars['String']>;
+  reviews: User;
+  propertyType: Scalars['String'];
+  mainImage: Scalars['String'];
+  latitude: Scalars['Float'];
+  longitude: Scalars['Float'];
+  amenities: Array<Scalars['String']>;
+  createdAt: Scalars['String'];
+  updatedAt: Scalars['String'];
+};
+
+export type PropertyFieldError = {
+  __typename?: 'PropertyFieldError';
+  field: Scalars['String'];
+  message: Scalars['String'];
+};
+
+export type PropertyResponse = {
+  __typename?: 'PropertyResponse';
+  errors?: Maybe<Array<PropertyFieldError>>;
+  Property?: Maybe<Property>;
 };
 
 export type Query = {
@@ -106,11 +99,27 @@ export type Query = {
   me?: Maybe<User>;
 };
 
+export type Review = {
+  __typename?: 'Review';
+  id: Scalars['Int'];
+  reviewDescription: Scalars['String'];
+  rating: Scalars['String'];
+  creatorId: Scalars['Int'];
+  creator: User;
+  createdAt: Scalars['Int'];
+  propertyReviews: Scalars['String'];
+  property: Property;
+  PropertyId: Scalars['Int'];
+  propertyId: Scalars['Int'];
+  updatedAt: Scalars['Int'];
+};
+
 export type User = {
   __typename?: 'User';
   id: Scalars['Int'];
   email: Scalars['String'];
-  listings: Listing;
+  properties: Array<Property>;
+  reviews: Array<Review>;
   createdAt: Scalars['String'];
   updatedAt: Scalars['String'];
 };
@@ -126,179 +135,222 @@ export type UsernamePasswordInput = {
   password: Scalars['String'];
 };
 
-export type RegularErrorFragment = { __typename?: 'FieldError' } & Pick<
-  FieldError,
-  'field' | 'message'
->;
+export type RegularErrorFragment = (
+  { __typename?: 'FieldError' }
+  & Pick<FieldError, 'field' | 'message'>
+);
 
-export type RegularListingResponseFragment = { __typename?: 'Listing' } & Pick<
-  Listing,
-  | 'name'
-  | 'category'
-  | 'pictureUrl'
-  | 'description'
-  | 'price'
-  | 'beds'
-  | 'guests'
-  | 'latitude'
-  | 'longitude'
-  | 'amenities'
->;
+export type RegularUserFragment = (
+  { __typename?: 'User' }
+  & Pick<User, 'id' | 'email'>
+);
 
-export type RegularUserFragment = { __typename?: 'User' } & Pick<
-  User,
-  'id' | 'email'
->;
-
-export type RegularUserResponseFragment = { __typename?: 'UserResponse' } & {
-  errors?: Maybe<Array<{ __typename?: 'FieldError' } & RegularErrorFragment>>;
-  user?: Maybe<{ __typename?: 'User' } & RegularUserFragment>;
-};
-
-export type CreateListingMutationVariables = Exact<{
-  options: CreateListingInput;
-}>;
-
-export type CreateListingMutation = { __typename?: 'Mutation' } & {
-  createListing: { __typename?: 'ListingResponse' } & {
-    listing?: Maybe<
-      { __typename?: 'Listing' } & RegularListingResponseFragment
-    >;
-  };
-};
+export type RegularUserResponseFragment = (
+  { __typename?: 'UserResponse' }
+  & { errors?: Maybe<Array<(
+    { __typename?: 'FieldError' }
+    & RegularErrorFragment
+  )>>, user?: Maybe<(
+    { __typename?: 'User' }
+    & RegularUserFragment
+  )> }
+);
 
 export type LoginMutationVariables = Exact<{
   options: UsernamePasswordInput;
 }>;
 
-export type LoginMutation = { __typename?: 'Mutation' } & {
-  login: { __typename?: 'UserResponse' } & RegularUserResponseFragment;
-};
 
-export type LogoutMutationVariables = Exact<{ [key: string]: never }>;
+export type LoginMutation = (
+  { __typename?: 'Mutation' }
+  & { login: (
+    { __typename?: 'UserResponse' }
+    & RegularUserResponseFragment
+  ) }
+);
 
-export type LogoutMutation = { __typename?: 'Mutation' } & Pick<
-  Mutation,
-  'logout'
->;
+export type LogoutMutationVariables = Exact<{ [key: string]: never; }>;
+
+
+export type LogoutMutation = (
+  { __typename?: 'Mutation' }
+  & Pick<Mutation, 'logout'>
+);
 
 export type RegisterMutationVariables = Exact<{
   options: UsernamePasswordInput;
 }>;
 
-export type RegisterMutation = { __typename?: 'Mutation' } & {
-  register: { __typename?: 'UserResponse' } & RegularUserResponseFragment;
-};
 
-export type MeQueryVariables = Exact<{ [key: string]: never }>;
+export type RegisterMutation = (
+  { __typename?: 'Mutation' }
+  & { register: (
+    { __typename?: 'UserResponse' }
+    & RegularUserResponseFragment
+  ) }
+);
 
-export type MeQuery = { __typename?: 'Query' } & {
-  me?: Maybe<{ __typename?: 'User' } & RegularUserFragment>;
-};
+export type MeQueryVariables = Exact<{ [key: string]: never; }>;
 
-export const RegularListingResponseFragmentDoc = gql`
-  fragment RegularListingResponse on Listing {
-    name
-    category
-    pictureUrl
-    description
-    price
-    beds
-    guests
-    latitude
-    longitude
-    amenities
-  }
-`;
+
+export type MeQuery = (
+  { __typename?: 'Query' }
+  & { me?: Maybe<(
+    { __typename?: 'User' }
+    & RegularUserFragment
+  )> }
+);
+
 export const RegularErrorFragmentDoc = gql`
-  fragment RegularError on FieldError {
-    field
-    message
-  }
-`;
+    fragment RegularError on FieldError {
+  field
+  message
+}
+    `;
 export const RegularUserFragmentDoc = gql`
-  fragment RegularUser on User {
-    id
-    email
-  }
-`;
+    fragment RegularUser on User {
+  id
+  email
+}
+    `;
 export const RegularUserResponseFragmentDoc = gql`
-  fragment RegularUserResponse on UserResponse {
-    errors {
-      ...RegularError
-    }
-    user {
-      ...RegularUser
-    }
+    fragment RegularUserResponse on UserResponse {
+  errors {
+    ...RegularError
   }
-  ${RegularErrorFragmentDoc}
-  ${RegularUserFragmentDoc}
-`;
-export const CreateListingDocument = gql`
-  mutation CreateListing($options: CreateListingInput!) {
-    createListing(options: $options) {
-      listing {
-        ...RegularListingResponse
-      }
-    }
+  user {
+    ...RegularUser
   }
-  ${RegularListingResponseFragmentDoc}
-`;
-
-export function useCreateListingMutation() {
-  return Urql.useMutation<
-    CreateListingMutation,
-    CreateListingMutationVariables
-  >(CreateListingDocument);
 }
+    ${RegularErrorFragmentDoc}
+${RegularUserFragmentDoc}`;
 export const LoginDocument = gql`
-  mutation Login($options: UsernamePasswordInput!) {
-    login(options: $options) {
-      ...RegularUserResponse
-    }
+    mutation Login($options: UsernamePasswordInput!) {
+  login(options: $options) {
+    ...RegularUserResponse
   }
-  ${RegularUserResponseFragmentDoc}
-`;
-
-export function useLoginMutation() {
-  return Urql.useMutation<LoginMutation, LoginMutationVariables>(LoginDocument);
 }
+    ${RegularUserResponseFragmentDoc}`;
+export type LoginMutationFn = Apollo.MutationFunction<LoginMutation, LoginMutationVariables>;
+
+/**
+ * __useLoginMutation__
+ *
+ * To run a mutation, you first call `useLoginMutation` within a React component and pass it any options that fit your needs.
+ * When your component renders, `useLoginMutation` returns a tuple that includes:
+ * - A mutate function that you can call at any time to execute the mutation
+ * - An object with fields that represent the current status of the mutation's execution
+ *
+ * @param baseOptions options that will be passed into the mutation, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options-2;
+ *
+ * @example
+ * const [loginMutation, { data, loading, error }] = useLoginMutation({
+ *   variables: {
+ *      options: // value for 'options'
+ *   },
+ * });
+ */
+export function useLoginMutation(baseOptions?: Apollo.MutationHookOptions<LoginMutation, LoginMutationVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return Apollo.useMutation<LoginMutation, LoginMutationVariables>(LoginDocument, options);
+      }
+export type LoginMutationHookResult = ReturnType<typeof useLoginMutation>;
+export type LoginMutationResult = Apollo.MutationResult<LoginMutation>;
+export type LoginMutationOptions = Apollo.BaseMutationOptions<LoginMutation, LoginMutationVariables>;
 export const LogoutDocument = gql`
-  mutation Logout {
-    logout
-  }
-`;
-
-export function useLogoutMutation() {
-  return Urql.useMutation<LogoutMutation, LogoutMutationVariables>(
-    LogoutDocument
-  );
+    mutation Logout {
+  logout
 }
+    `;
+export type LogoutMutationFn = Apollo.MutationFunction<LogoutMutation, LogoutMutationVariables>;
+
+/**
+ * __useLogoutMutation__
+ *
+ * To run a mutation, you first call `useLogoutMutation` within a React component and pass it any options that fit your needs.
+ * When your component renders, `useLogoutMutation` returns a tuple that includes:
+ * - A mutate function that you can call at any time to execute the mutation
+ * - An object with fields that represent the current status of the mutation's execution
+ *
+ * @param baseOptions options that will be passed into the mutation, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options-2;
+ *
+ * @example
+ * const [logoutMutation, { data, loading, error }] = useLogoutMutation({
+ *   variables: {
+ *   },
+ * });
+ */
+export function useLogoutMutation(baseOptions?: Apollo.MutationHookOptions<LogoutMutation, LogoutMutationVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return Apollo.useMutation<LogoutMutation, LogoutMutationVariables>(LogoutDocument, options);
+      }
+export type LogoutMutationHookResult = ReturnType<typeof useLogoutMutation>;
+export type LogoutMutationResult = Apollo.MutationResult<LogoutMutation>;
+export type LogoutMutationOptions = Apollo.BaseMutationOptions<LogoutMutation, LogoutMutationVariables>;
 export const RegisterDocument = gql`
-  mutation Register($options: UsernamePasswordInput!) {
-    register(options: $options) {
-      ...RegularUserResponse
-    }
+    mutation Register($options: UsernamePasswordInput!) {
+  register(options: $options) {
+    ...RegularUserResponse
   }
-  ${RegularUserResponseFragmentDoc}
-`;
-
-export function useRegisterMutation() {
-  return Urql.useMutation<RegisterMutation, RegisterMutationVariables>(
-    RegisterDocument
-  );
 }
+    ${RegularUserResponseFragmentDoc}`;
+export type RegisterMutationFn = Apollo.MutationFunction<RegisterMutation, RegisterMutationVariables>;
+
+/**
+ * __useRegisterMutation__
+ *
+ * To run a mutation, you first call `useRegisterMutation` within a React component and pass it any options that fit your needs.
+ * When your component renders, `useRegisterMutation` returns a tuple that includes:
+ * - A mutate function that you can call at any time to execute the mutation
+ * - An object with fields that represent the current status of the mutation's execution
+ *
+ * @param baseOptions options that will be passed into the mutation, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options-2;
+ *
+ * @example
+ * const [registerMutation, { data, loading, error }] = useRegisterMutation({
+ *   variables: {
+ *      options: // value for 'options'
+ *   },
+ * });
+ */
+export function useRegisterMutation(baseOptions?: Apollo.MutationHookOptions<RegisterMutation, RegisterMutationVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return Apollo.useMutation<RegisterMutation, RegisterMutationVariables>(RegisterDocument, options);
+      }
+export type RegisterMutationHookResult = ReturnType<typeof useRegisterMutation>;
+export type RegisterMutationResult = Apollo.MutationResult<RegisterMutation>;
+export type RegisterMutationOptions = Apollo.BaseMutationOptions<RegisterMutation, RegisterMutationVariables>;
 export const MeDocument = gql`
-  query Me {
-    me {
-      ...RegularUser
-    }
+    query Me {
+  me {
+    ...RegularUser
   }
-  ${RegularUserFragmentDoc}
-`;
-
-export function useMeQuery(
-  options: Omit<Urql.UseQueryArgs<MeQueryVariables>, 'query'> = {}
-) {
-  return Urql.useQuery<MeQuery>({ query: MeDocument, ...options });
 }
+    ${RegularUserFragmentDoc}`;
+
+/**
+ * __useMeQuery__
+ *
+ * To run a query within a React component, call `useMeQuery` and pass it any options that fit your needs.
+ * When your component renders, `useMeQuery` returns an object from Apollo Client that contains loading, error, and data properties
+ * you can use to render your UI.
+ *
+ * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
+ *
+ * @example
+ * const { data, loading, error } = useMeQuery({
+ *   variables: {
+ *   },
+ * });
+ */
+export function useMeQuery(baseOptions?: Apollo.QueryHookOptions<MeQuery, MeQueryVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return Apollo.useQuery<MeQuery, MeQueryVariables>(MeDocument, options);
+      }
+export function useMeLazyQuery(baseOptions?: Apollo.LazyQueryHookOptions<MeQuery, MeQueryVariables>) {
+          const options = {...defaultOptions, ...baseOptions}
+          return Apollo.useLazyQuery<MeQuery, MeQueryVariables>(MeDocument, options);
+        }
+export type MeQueryHookResult = ReturnType<typeof useMeQuery>;
+export type MeLazyQueryHookResult = ReturnType<typeof useMeLazyQuery>;
+export type MeQueryResult = Apollo.QueryResult<MeQuery, MeQueryVariables>;

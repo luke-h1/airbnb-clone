@@ -1,7 +1,0 @@
-mutation CreateListing($options: CreateListingInput!){
-  createListing(options: $options){
-    listing {
-        ...RegularListingResponse
-    }
-  }
-}

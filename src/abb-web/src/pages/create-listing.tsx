@@ -1,1 +1,1 @@
-export { default } from '../modules/listing/create-listing';
+export { default } from '../modules/property/create-property';
