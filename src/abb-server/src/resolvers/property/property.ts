@@ -1,8 +1,6 @@
 // @ts-ignore
 // @ts-nocheck
-import {
-  Arg, Ctx, Field, Mutation, ObjectType, Resolver,
-} from 'type-graphql';
+import { Arg, Ctx, Field, Mutation, ObjectType, Resolver } from 'type-graphql';
 import { MyContext } from '../../shared/types';
 import { validateProperty } from '../../shared/validateProperty';
 import { Property } from '../../entities/Property';

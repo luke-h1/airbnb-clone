@@ -1,6 +1,3 @@
-import {
-  Box, Button, Flex, Link, Text,
-} from '@chakra-ui/react';
 import { Form, Formik } from 'formik';
 import { withUrqlClient } from 'next-urql';
 import { useRouter } from 'next/router';
@@ -52,32 +49,10 @@ const RegisterPage: React.FC<RegisterPageProps> = () => {
             />
 
             <Box mb={2} />
-            <Button
-              type="submit"
-              bg="#F93458"
-              textColor="#fff"
-              minW="500px"
-              disabled={isSubmitting}
-              _hover={{
-                background: '#FE385C',
-                color: '#fff',
-              }}
-            >
-              Agree and continue
-            </Button>
+            <button type="submit">Agree and continue</button>
             <Box>
               <Text fontSize="15px">
-                Already have an account?{' '}
-                <Text
-                  m={0}
-                  p={0}
-                  textDecoration="underline"
-                  as={Link}
-                  disabled={isSubmitting}
-                  href="/login"
-                >
-                  Login
-                </Text>
+                Already have an account? <Link href="/login">Login</Link>
               </Text>
             </Box>
           </Form>

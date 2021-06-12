@@ -10,7 +10,7 @@ const Nav = styled.div`
 const Navbar = () => {
   return (
     <Nav>
-      <div className="logo">hello</div>
+      <div className="logo" />
     </Nav>
   );
 };
