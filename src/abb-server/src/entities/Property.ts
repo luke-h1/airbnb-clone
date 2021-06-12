@@ -24,7 +24,7 @@ export class Property extends BaseEntity {
 
   @Field(() => User)
   @Column('varchar', { length: 255 })
-  @ManyToOne(() => User, user => user.id)
+  @ManyToOne(() => User, (user) => user.id)
   host: User;
 
   @Field(() => [String])
@@ -34,7 +34,7 @@ export class Property extends BaseEntity {
   @Field(() => User)
   @Column('varchar', { length: 255 })
   @JoinColumn({ name: 'propertyReviews' })
-  @ManyToOne(() => Review, r => r.PropertyId)
+  @ManyToOne(() => Review, (r) => r.PropertyId)
   reviews: Review;
 
   @Field()
