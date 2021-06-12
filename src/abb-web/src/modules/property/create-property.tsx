@@ -5,7 +5,6 @@ import React from 'react';
 import { withUrqlClient } from 'next-urql';
 import { createUrqlClient } from '@src/utils/createUrqlClient';
 
-
 interface indexProps {}
 
 const index: React.FC<indexProps> = () => {
@@ -24,15 +23,11 @@ const index: React.FC<indexProps> = () => {
         </Text>
 
         <Formik<{}>
-          initialValues={{
-          }}
-          onSubmit={async (values, { setErrors }) => {
-           
-          }}
+          initialValues={{}}
+          onSubmit={async (values, { setErrors }) => {}}
         >
           {({ isSubmitting }) => (
             <Form>
-            
               <Box mb={2} />
               <Button
                 type="submit"
