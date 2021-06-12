@@ -13,9 +13,6 @@ import {
   Root,
 } from 'type-graphql';
 import { getConnection } from 'typeorm';
-import { redis } from '../../redis';
-import { sendConfirmationEmail } from '../../utils/mail/sendConfirmationEmail';
-import { sendEmail } from '../../utils/mail/sendEmail';
 import { User } from '../../entities/User';
 import { MyContext } from '../../shared/types';
 
@@ -161,10 +158,6 @@ export class UserResolver {
         .returning('*')
         .execute();
       user = result.raw[0];
-      console.log(user);
-
-      // send confirmation email
-      // don't let user log in until they have confirmed
     } catch (e) {
       if (e.code === '23505') {
         return {
@@ -181,39 +174,10 @@ export class UserResolver {
     // store user id session
     // this will set a cookie on the user
     // keep them logged in
-
-    /*
-      prompt user to confirm email on login
-      if not confirmed in x amount of days drop them from the DB
-    */
-
     req.session.userId = user.id;
-    await sendEmail(
-      options.email,
-      await sendConfirmationEmail(user.id, 'http://localhost:3000'),
-    );
     return {
       user,
     };
-  }
-
-  @Mutation(() => Boolean)
-  async confirmUser(
-    @Arg('token') token: string,
-  ): // @Ctx() ctx: MyContext,
-  Promise<boolean> {
-    const userId = await redis.get(token);
-    // need to send something back to frontend here
-    // i.e. Your token has expired, request a new one from ...
-    if (!userId) {
-      console.log('confirmUser: BAD TOKEN / EXPIRED TOKEN');
-      return false;
-    }
-
-    await User.update({ id: parseInt(userId, 10) }, { confirmed: true });
-
-    await redis.del(token);
-    return true;
   }
 
   @Mutation(() => UserResponse)
@@ -240,16 +204,6 @@ export class UserResolver {
           {
             field: 'password',
             message: 'Incorrect credentials',
-          },
-        ],
-      };
-    }
-    if (!user.confirmed) {
-      return {
-        errors: [
-          {
-            field: 'email',
-            message: 'You need to confirm your email in order to log in',
           },
         ],
       };

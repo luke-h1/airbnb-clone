@@ -66,7 +66,6 @@ describe('Register', () => {
     const dbUser = await User.findOne({ where: { email: user.email } });
     console.log('dbUser', dbUser);
     expect(dbUser).toBeDefined();
-    expect(dbUser!.confirmed).toBeFalsy();
     expect(dbUser!.email).toBe(user.email);
   });
 });

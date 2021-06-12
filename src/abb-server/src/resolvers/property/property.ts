@@ -1,3 +1,5 @@
+// @ts-ignore
+// @ts-nocheck
 import {
   Arg, Ctx, Field, Mutation, ObjectType, Resolver,
 } from 'type-graphql';

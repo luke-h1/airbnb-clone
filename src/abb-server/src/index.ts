@@ -14,7 +14,6 @@ import { Property } from './entities/Property';
 import { User } from './entities/User';
 import { createSchema } from './shared/createSchema';
 import { Review } from './entities/Review';
-import { PropertyImages } from './entities/PropertyImages';
 
 const main = async () => {
   await createConnection({
@@ -23,7 +22,7 @@ const main = async () => {
     logging: !__prod__,
     synchronize: !__prod__,
     migrations: [path.join(__dirname, './migrations/*')],
-    entities: [User, Property, Review, Property, PropertyImages],
+    entities: [User, Property, Review, Property],
   });
   // await conn.runMigrations();
   const app = express();
@@ -51,7 +50,7 @@ const main = async () => {
         domain: __prod__ ? 'deployed-api' : undefined,
       },
       saveUninitialized: false,
-      secret: process.env.COOKIE_SECRET,
+      secret: process.env.COOKIE_SECRET!,
       resave: false,
     }),
   );

@@ -26,11 +26,13 @@ export class User extends BaseEntity {
   password!: string;
 
   @Field(() => [Property])
+  @Column('jsonb', { array: true, nullable: true })
   @OneToMany(() => Property, (p) => p.host)
   properties: Property[];
 
   @Field(() => [Review])
-  @OneToMany(() => Review, (r) => r.user)
+  @OneToMany(() => Review, (r) => r.creator)
+  @Column('jsonb', { array: true, nullable: true })
   reviews: Review[];
 
   @Field(() => String)

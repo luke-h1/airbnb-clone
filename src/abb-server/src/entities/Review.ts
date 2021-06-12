@@ -27,28 +27,41 @@ export class Review extends BaseEntity {
   @Column()
   rating: string;
 
-  @Field(() => String)
-  @ManyToOne(() => User, (user) => user)
+  @Field(() => Int)
   @Column()
-  user: User;
+  creatorId: number;
 
-  @Field(() => String)
+  @Field(() => User)
+  @ManyToOne(() => User, (user) => user.reviews)
+  @JoinColumn({ name: 'creatorId' })
+  creator: User;
+
+  @Field(() => Int)
   @CreateDateColumn()
   @Column()
   createdAt: Date;
 
-  @Field(() => Property)
+  @Field(() => String)
   @Column()
+  propertyReviews: string;
+
+  @Field(() => Property)
+  // @Column()
   @ManyToOne(() => Property, (prop) => prop)
+  @JoinColumn({ name: 'propertyReviews' })
   property: Property;
 
   @Field(() => Int)
   @Column()
-  @JoinColumn({ referencedColumnName: 'id' })
+  PropertyId: number;
+
+  @Field(() => Int)
+  @Column()
+  @JoinColumn({ name: 'PropertyId' })
   @ManyToOne(() => Property, (prop) => prop.id)
   propertyId: number;
 
-  @Field(() => String)
+  @Field(() => Int)
   @UpdateDateColumn()
   @Column()
   updatedAt: Date;

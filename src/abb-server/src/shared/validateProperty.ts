@@ -57,13 +57,5 @@ export const validateProperty = (options: CreatePropertyInput) => {
       },
     ];
   }
-  if (!options.user) {
-    return [
-      {
-        field: 'user',
-        message: 'user is a required field',
-      },
-    ];
-  }
   return null;
 };

@@ -7,11 +7,11 @@ declare namespace NodeJS {
     CORS_ORIGIN: string;
     FRONTEND_HOST: string;
     CLOUDINARY_CLOUD_NAME: string;
-    CLOUDINARY_KEY: string;
-    CLOUDINARY_SECRET: string;
+    CLOUDINARY_API_KEY: string;
+    CLOUDINARY_API_SECRET: string;
     MAIL_HOST: any;
     MAIL_PORT: string;
-    MAIL_USER: string;
-    MAIL_PASS: string;
+    MAIL_USERNAME: string;
+    MAIL_PASSWORD: string;
   }
 }

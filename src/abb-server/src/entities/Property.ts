@@ -9,7 +9,7 @@ import {
   PrimaryGeneratedColumn,
   UpdateDateColumn,
 } from 'typeorm';
-import { PropertyImages } from './PropertyImages';
+import { Review } from './Review';
 import { User } from './User';
 
 @ObjectType()
@@ -23,10 +23,19 @@ export class Property extends BaseEntity {
   title: string;
 
   @Field(() => User)
-  @Column('varchar', { length: 25 })
-  @JoinColumn({ referencedColumnName: 'id' })
+  @Column('varchar', { length: 255 })
   @ManyToOne(() => User, (user) => user.id)
   host: User;
+
+  @Field(() => [String])
+  @Column()
+  propertyReviews: String[];
+
+  @Field(() => User)
+  @Column('varchar', { length: 255 })
+  @JoinColumn({ name: 'propertyReviews' })
+  @ManyToOne(() => Review, (r) => r.PropertyId)
+  reviews: Review;
 
   @Field()
   @Column('varchar', { length: 30 })
@@ -35,12 +44,6 @@ export class Property extends BaseEntity {
   @Field(() => String)
   @Column()
   mainImage: string;
-
-  @Field(() => [PropertyImages])
-  @Column('varchar', { length: 25 })
-  @JoinColumn({ referencedColumnName: 'images' })
-  @ManyToOne(() => PropertyImages, (img) => img.images)
-  images: PropertyImages[];
 
   @Field()
   @Column('double precision')
@@ -51,7 +54,7 @@ export class Property extends BaseEntity {
   longitude: number;
 
   @Field(() => [String])
-  @Column('text', { array: true })
+  @Column('jsonb', { array: true })
   amenities: string[];
 
   @Field(() => String)

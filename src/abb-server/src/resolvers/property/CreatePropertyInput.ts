@@ -1,33 +1,26 @@
-import { Field, InputType } from 'type-graphql';
-import { PropertyImages } from '../../entities/PropertyImages';
+import { Field, InputType, Int } from 'type-graphql';
 import { User } from '../../entities/User';
 
 @InputType()
 export class CreatePropertyInput {
-  @Field()
+  @Field(() => String)
   title: string;
 
-  @Field()
+  @Field(() => Int)
   host: User;
 
-  @Field()
+  @Field(() => String)
   propertyType: string;
 
-  @Field()
+  @Field(() => String)
   mainImage: string;
 
-  @Field(() => [PropertyImages])
-  images: PropertyImages[];
-
-  @Field()
+  @Field(() => Int)
   latitude: number;
 
-  @Field()
+  @Field(() => Int)
   longitude: number;
 
   @Field(() => [String])
   amenities: string[];
-
-  @Field()
-  user: User;
 }
