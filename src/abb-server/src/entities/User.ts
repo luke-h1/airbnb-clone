@@ -8,7 +8,8 @@ import {
   PrimaryGeneratedColumn,
   UpdateDateColumn,
 } from 'typeorm';
-import { Listing } from './Listing';
+import { Property } from './Property';
+import { Review } from './Review';
 
 @ObjectType()
 @Entity('users')
@@ -24,18 +25,21 @@ export class User extends BaseEntity {
   @Column()
   password!: string;
 
-  @Field(() => Listing)
-  @OneToMany(() => Listing, (listing) => listing.user)
-  listings: Listing[];
+  @Field(() => [Property])
+  @OneToMany(() => Property, (property) => property.host)
+  properties: Property[];
 
-  @Column('bool', { default: false })
-  confirmed: boolean;
+  @Field(() => [Review])
+  @OneToMany(() => Review, (r) => r.user)
+  reviews: Review[];
 
   @Field(() => String)
   @CreateDateColumn()
+  @Column()
   createdAt: Date;
 
   @Field(() => String)
   @UpdateDateColumn()
+  @Column()
   updatedAt: Date;
 }

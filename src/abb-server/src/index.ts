@@ -7,10 +7,10 @@ import express from 'express';
 import session from 'express-session';
 import { createConnection } from 'typeorm';
 import path from 'path';
-import { listingCacheKey, __prod__ } from './shared/constants';
+import { __prod__ } from './shared/constants';
 import { createUserLoader } from './Loaders/UserLoader';
 import { redis } from './redis';
-import { Listing } from './entities/Listing';
+import { Property } from './entities/Property';
 import { User } from './entities/User';
 import { createSchema } from './shared/createSchema';
 
@@ -21,7 +21,7 @@ const main = async () => {
     logging: !__prod__,
     synchronize: !__prod__,
     migrations: [path.join(__dirname, './migrations/*')],
-    entities: [User, Listing],
+    entities: [User, Property],
   });
   // await conn.runMigrations();
   const app = express();
