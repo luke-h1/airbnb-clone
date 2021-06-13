@@ -16,7 +16,6 @@ const Nav = styled.div`
   .button-group {
     align-items: center;
   }
- 
 `;
 
 const Navbar = () => {

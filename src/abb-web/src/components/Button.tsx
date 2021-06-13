@@ -22,7 +22,8 @@ const ButtonStyles: any = styled.button`
   background: linear-gradient(to right, rgb(230, 30, 77) 0%, rgb(227, 28, 95) 50%, rgb(215, 4, 102) 100%) !important;
   color: rgb(255, 255, 255) !important;
   /* width: 100% !important; */
-  width: ${(props) => (props.size === 'large' ? '120px' : props.size === 'small' && '80px')};
+  width: ${(props) =>
+    props.size === 'large' ? '120px' : props.size === 'small' && '80px'};
   margin: 0 10px 0 10px !important;
   cursor: pointer;
 
