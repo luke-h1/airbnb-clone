@@ -13,7 +13,6 @@
     "bootstrap": "lerna bootstrap --ci --force-local",
     "bootstrap:prod": "lerna bootstrap --ci --force-local -- --only=prod",
     "bootstrap:install": "lerna bootstrap --force-local",
-    "tsc": "lerna run tsc",
     "build": "lerna run build",
     "clean": "lerna clean -y",
     "prepare": "husky install"

@@ -8,7 +8,6 @@
     "test": "exit 0",
     "test:all": "jest",
     "start": "next start",
-    "tsc": "tsc --noEmit",
     "lint": "eslint \"./src/**/*.{js, jsx,ts,tsx}\" --quiet --fix && eslint \"./**/*.{js, jsx,ts,tsx}\" --quiet --fix",
     "format": "prettier --write \"**/*.{ts,tsx}\"",
     "gen": "graphql-codegen --config codegen.yml"

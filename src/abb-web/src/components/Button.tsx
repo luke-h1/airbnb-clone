@@ -37,10 +37,6 @@ interface ButtonProps {
 }
 
 const Button: React.FC<ButtonProps> = ({ text, disabled }) => {
-  return (
-    <ButtonStyles disabled={disabled}>
-      {text}
-    </ButtonStyles>
-  );
+  return <ButtonStyles disabled={disabled}>{text}</ButtonStyles>;
 };
 export default Button;

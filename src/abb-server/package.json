@@ -10,7 +10,6 @@
     "format": "prettier --write \"src/**/*.{js,jsx,ts,tsx}\"",
     "watch": "rimraf dist && tsc -w",
     "dev": "node dist/index.js",
-    "tsc": "tsc --noEmit",
     "db:setup": "ts-node ./src/test-utils/setup.ts",
     "test": "cross-env NODE_ENV=test npm run db:setup && jest",
     "test:watch": "cross-env NODE_ENV=test npm run db:setup && jest --watch",

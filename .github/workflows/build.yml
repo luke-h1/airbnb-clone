@@ -42,9 +42,6 @@ jobs:
       - name: lint
         run: npm run lint
 
-      - name: tsc
-        run: npm run tsc
-
       - name: build frontend, app & backend 
         run: npm run build
 
