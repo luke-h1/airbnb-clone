@@ -5,7 +5,7 @@ interface indexProps {}
 const index: React.FC<indexProps> = () => {
   return (
     <>
-      <h1>Listing index page</h1>
+      <h1>Property index page</h1>
     </>
   );
 };

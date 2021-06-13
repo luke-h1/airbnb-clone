@@ -1,8 +1,5 @@
 /* eslint-disable */
-import { Box, Button, Flex, Text } from '@chakra-ui/react';
-import { Formik, Form } from 'formik';
-import React from 'react';
-interface indexProps {}
+
 // https://github.com/luke-h1/twitter-tut/blob/master/web/src/components/UpdateProfile.tsx
 /* 
 @TODO:
@@ -15,7 +12,7 @@ interface indexProps {}
 7. add lat and lng fields (for now until map integration is setup)
 8. push items to array for amentities (figure out how to capture this input)
 */
-
+/*
 const index: React.FC<indexProps> = () => {
   return (
     <>
@@ -60,3 +57,4 @@ const index: React.FC<indexProps> = () => {
 };
 
 export default index;
+*/

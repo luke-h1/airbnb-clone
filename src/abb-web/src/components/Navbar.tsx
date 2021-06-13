@@ -27,12 +27,12 @@ const Navbar = () => {
         <div className="button-group">
           <Link href="/login">
             <a>
-              <Button text="Sign in" size="small" />
+              <Button text="Sign in" />
             </a>
           </Link>
           <Link href="/register">
             <a>
-              <Button text="Register" size="small" />
+              <Button text="Register" />
             </a>
           </Link>
         </div>

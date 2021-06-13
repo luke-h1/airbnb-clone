@@ -69,7 +69,7 @@ const LoginPage = () => {
                 <a>Register</a>
               </Link>
             </Flex>
-            <Button disabled={isSubmitting} text="register" size="small" />
+            <Button disabled={isSubmitting} text="register"/>
           </Form>
         )}
       </Formik>
