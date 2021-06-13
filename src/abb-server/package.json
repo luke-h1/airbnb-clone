@@ -54,7 +54,7 @@
     "apollo-server-express": "^2.23.0",
     "argon2": "^0.27.2",
     "axios": "^0.21.1",
-    "connect-redis": "^5.2.0",
+    "connect-redis": "^6.0.0",
     "cors": "^2.8.5",
     "dataloader": "^2.0.0",
     "dotenv-safe": "^8.2.0",
