@@ -58,4 +58,4 @@ const index: React.FC<indexProps> = () => {
 
 export default index;
 */
-export {}
+export {};
