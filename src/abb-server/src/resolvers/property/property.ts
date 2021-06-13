@@ -1,7 +1,13 @@
 // @ts-ignore
 // @ts-nocheck
 import {
-  Arg, Ctx, Field, Mutation, ObjectType, Resolver, UseMiddleware,
+  Arg,
+  Ctx,
+  Field,
+  Mutation,
+  ObjectType,
+  Resolver,
+  UseMiddleware,
 } from 'type-graphql';
 import { isAuth } from '../../middleware/isAuth';
 import { MyContext } from '../../shared/types';
