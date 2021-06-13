@@ -20,6 +20,7 @@ import { UsernamePasswordInput } from './UsernamePasswordInput';
 import { validateRegister } from '../../shared/validateRegister';
 import { COOKIE_NAME, FORGET_PASSWORD_PREFIX } from '../../shared/constants';
 import { sendPasswordResetMail } from '../../utils/mail/sendPasswordResetMail';
+import { UserRegisterInput } from './UserRegisterInput';
 
 @ObjectType()
 class FieldError {
@@ -38,6 +39,7 @@ class UserResponse {
   @Field(() => User, { nullable: true })
   user?: User;
 }
+
 @Resolver(User)
 export class UserResolver {
   @FieldResolver(() => String)
@@ -137,7 +139,7 @@ export class UserResolver {
 
   @Mutation(() => UserResponse)
   async register(
-    @Arg('options') options: UsernamePasswordInput,
+    @Arg('options') options: UserRegisterInput,
     @Ctx() { req }: MyContext,
   ): Promise<UserResponse> {
     const errors = validateRegister(options);

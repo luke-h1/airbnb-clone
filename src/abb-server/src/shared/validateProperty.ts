@@ -9,14 +9,6 @@ export const validateProperty = (options: CreatePropertyInput) => {
       },
     ];
   }
-  if (!options.host) {
-    return [
-      {
-        field: 'host',
-        message: 'host is a required field',
-      },
-    ];
-  }
   if (!options.propertyType) {
     return [
       {

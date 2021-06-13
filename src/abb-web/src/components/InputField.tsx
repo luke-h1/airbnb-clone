@@ -13,10 +13,10 @@ type InputFieldProps = InputHTMLAttributes<HTMLInputElement> & {
 export const InputField: React.FC<InputFieldProps> = ({ label, ...props }) => {
   const [field, { error }] = useField(props);
   return (
-    <>
-      <label htmlFor={field.name}>{label}</label>
-      <input {...field} {...props} id={field.name} />
+    <div className="form-wrapper">
+      <label htmlFor={field.name} hidden>{label}</label>
+      <input {...field} {...props} id={field.name} className="inputStyles" />
       {error ? <h1>{error}</h1> : null}
-    </>
+    </div>
   );
 };

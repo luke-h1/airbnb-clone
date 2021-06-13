@@ -16,11 +16,10 @@ export type Scalars = {
 
 export type CreatePropertyInput = {
   title: Scalars['String'];
-  host: Scalars['Int'];
   propertyType: Scalars['String'];
   mainImage: Scalars['String'];
-  latitude: Scalars['Int'];
-  longitude: Scalars['Int'];
+  latitude: Scalars['Float'];
+  longitude: Scalars['Float'];
   amenities: Array<Scalars['String']>;
 };
 
@@ -58,7 +57,7 @@ export type MutationForgotPasswordArgs = {
 
 
 export type MutationRegisterArgs = {
-  options: UsernamePasswordInput;
+  options: UserRegisterInput;
 };
 
 
@@ -126,6 +125,13 @@ export type User = {
   updatedAt: Scalars['String'];
 };
 
+export type UserRegisterInput = {
+  firstName: Scalars['String'];
+  lastName: Scalars['String'];
+  email: Scalars['String'];
+  password: Scalars['String'];
+};
+
 export type UserResponse = {
   __typename?: 'UserResponse';
   errors?: Maybe<Array<FieldError>>;
@@ -133,8 +139,6 @@ export type UserResponse = {
 };
 
 export type UsernamePasswordInput = {
-  firstName: Scalars['String'];
-  lastName: Scalars['String'];
   email: Scalars['String'];
   password: Scalars['String'];
 };
@@ -219,7 +223,7 @@ export type LogoutMutation = (
 );
 
 export type RegisterMutationVariables = Exact<{
-  options: UsernamePasswordInput;
+  options: UserRegisterInput;
 }>;
 
 
@@ -331,7 +335,7 @@ export function useLogoutMutation() {
   return Urql.useMutation<LogoutMutation, LogoutMutationVariables>(LogoutDocument);
 };
 export const RegisterDocument = gql`
-    mutation Register($options: UsernamePasswordInput!) {
+    mutation Register($options: UserRegisterInput!) {
   register(options: $options) {
     ...RegularUserResponse
   }

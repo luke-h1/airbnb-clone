@@ -1,13 +1,9 @@
 import { Field, InputType } from 'type-graphql';
-import { User } from '../../entities/User';
 
 @InputType()
 export class CreatePropertyInput {
   @Field()
   title: string;
-
-  @Field(() => User)
-  host: User;
 
   @Field()
   propertyType: string;
@@ -21,6 +17,6 @@ export class CreatePropertyInput {
   @Field()
   longitude: number;
 
-  @Field()
+  @Field(() => [String])
   amenities: string[];
 }
