@@ -24,7 +24,9 @@
       "paths": {
         "@server/*": ["./abb-server/src/*"],
         "@common/*": ["./abb-common/src/*"],
-        "@web/*": ["./abb-web/src/*"]
+        "@web/*": ["./abb-web/src/*"],
+        "@app/*": ["./abb-app/src/*"]
+
       },
       "sourceMap": true
     }
