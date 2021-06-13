@@ -19,7 +19,7 @@ const errorExchange: Exchange = ({ forward }) => (ops$) => {
       if (error?.message.includes('Not Authenticated')) {
         Router.replace('/login');
       }
-    }),
+    })
   );
 };
 
@@ -68,7 +68,7 @@ export const createUrqlClient = (ssrExchange: any, ctx: any) => {
                   return {
                     me: result.login.user,
                   };
-                },
+                }
               );
             },
             register: (_result, args, cache) => {
@@ -83,7 +83,7 @@ export const createUrqlClient = (ssrExchange: any, ctx: any) => {
                   return {
                     me: result.register.user,
                   };
-                },
+                }
               );
             },
             logout: (_result, args, cache) => {
@@ -91,7 +91,7 @@ export const createUrqlClient = (ssrExchange: any, ctx: any) => {
                 cache,
                 { query: MeDocument },
                 _result,
-                () => ({ me: null }),
+                () => ({ me: null })
               );
             },
           },

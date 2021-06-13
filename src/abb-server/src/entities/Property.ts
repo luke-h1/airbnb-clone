@@ -1,4 +1,4 @@
-import { Field, ObjectType } from 'type-graphql';
+import { Field, Int, ObjectType } from 'type-graphql';
 import {
   BaseEntity,
   Column,
@@ -24,12 +24,16 @@ export class Property extends BaseEntity {
 
   @Field(() => User)
   @Column('varchar', { length: 255 })
-  @ManyToOne(() => User, (user) => user.id)
+  @ManyToOne(() => User, user => user.id)
   host: User;
 
+  @Field(() => Int)
+  @Column()
+  propertyId: number;
+
   @Field(() => User)
-  @Column('varchar', { length: 255 })
-  @ManyToOne(() => Review, (r) => r.PropertyId)
+  @ManyToOne(() => Review, r => r.PropertyId)
+  @JoinColumn({ name: 'propertyId' })
   reviews: Review;
 
   @Field()
