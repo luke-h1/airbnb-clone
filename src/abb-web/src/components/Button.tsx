@@ -34,10 +34,6 @@ interface ButtonProps {
 }
 
 const Button: React.FC<ButtonProps> = ({ children }) => {
-  return (
-    <ButtonStyles>
-      {children}
-    </ButtonStyles>
-  );
+  return <ButtonStyles>{children}</ButtonStyles>;
 };
 export default Button;

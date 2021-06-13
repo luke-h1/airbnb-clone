@@ -23,7 +23,7 @@ const Nav = styled.div`
     align-items: center;
   }
 
-  .user { 
+  .user {
     text-align: left;
     font-size: 18px;
   }
@@ -44,21 +44,18 @@ const Navbar = () => {
 
   if (fetching) {
     // user is not logged in
-  } if (!data?.me) {
+  }
+  if (!data?.me) {
     body = (
       <>
         <Link href="/login">
           <a>
-            <Button>
-              Sign In
-            </Button>
+            <Button>Sign In</Button>
           </a>
         </Link>
         <Link href="/register">
           <a>
-            <Button>
-              Register
-            </Button>
+            <Button>Register</Button>
           </a>
         </Link>
       </>
@@ -67,25 +64,18 @@ const Navbar = () => {
     // user is logged in
     body = (
       <>
-        <div className="user">
-          👋 {data.me.email}
-        </div>
+        <div className="user">👋 {data.me.email}</div>
         {logoutFetching ? (
           <p>loading..</p>
         ) : (
-          <Button onClick={handleLogout()}>
-            Logout
-          </Button>
+          <Button onClick={handleLogout()}>Logout</Button>
         )}
 
         <Link href="/create-listing">
           <a>
-            <Button>
-              Create listing
-            </Button>
+            <Button>Create listing</Button>
           </a>
         </Link>
-
       </>
     );
   }
