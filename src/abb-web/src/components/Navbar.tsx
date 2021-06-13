@@ -16,6 +16,7 @@ const Nav = styled.div`
   .button-group {
     align-items: center;
   }
+ 
 `;
 
 const Navbar = () => {
@@ -25,10 +26,14 @@ const Navbar = () => {
       <div className="flex-end">
         <div className="button-group">
           <Link href="/login">
-            <Button text="Sign in" size="small" />
+            <a>
+              <Button text="Sign in" size="small" />
+            </a>
           </Link>
           <Link href="/register">
-            <Button text="Register" size="small" />
+            <a>
+              <Button text="Register" size="small" />
+            </a>
           </Link>
         </div>
       </div>
