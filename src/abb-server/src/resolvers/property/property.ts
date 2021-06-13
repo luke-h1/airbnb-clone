@@ -1,8 +1,9 @@
 // @ts-ignore
 // @ts-nocheck
 import {
-  Arg, Ctx, Field, Mutation, ObjectType, Resolver,
+  Arg, Ctx, Field, Mutation, ObjectType, Resolver, UseMiddleware,
 } from 'type-graphql';
+import { isAuth } from '../../middleware/isAuth';
 import { MyContext } from '../../shared/types';
 import { validateProperty } from '../../shared/validateProperty';
 import { Property } from '../../entities/Property';
@@ -28,6 +29,7 @@ class PropertyResponse {
 @Resolver(Property)
 export class PropertyResolver {
   @Mutation(() => PropertyResponse)
+  @UseMiddleware(isAuth)
   async createProperty(
     @Arg('options') options: CreatePropertyInput,
     @Ctx() { req }: MyContext,
@@ -36,7 +38,12 @@ export class PropertyResolver {
     if (errors) {
       return { errors };
     }
-    let prop;
-    return {};
+    const prop = await Property.create({
+      ...options,
+      host: req.session.userId,
+    }).save();
+    return {
+      prop,
+    };
   }
 }

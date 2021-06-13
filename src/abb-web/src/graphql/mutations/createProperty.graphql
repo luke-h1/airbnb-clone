@@ -1,0 +1,28 @@
+mutation CreateProperty($options: CreatePropertyInput!){
+  createProperty(options: $options) {
+    errors {
+      field
+      message
+    }
+    Property {
+      title
+      host {
+        id
+        email
+        firstName
+        lastName
+      }
+      propertyId
+      reviews {
+        email
+        firstName
+        lastName
+      }
+      propertyType 
+      mainImage
+      amenities
+      longitude
+      latitude
+    }
+  }
+}
