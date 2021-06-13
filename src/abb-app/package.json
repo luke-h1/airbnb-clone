@@ -18,7 +18,11 @@
     "android": "expo start --android",
     "ios": "expo start --ios",
     "web": "expo start --web",
-    "eject": "expo eject"
+    "eject": "expo eject",
+    "build": "exit 0",
+    "test": "exit 0",
+    "lint": "exit 0",
+    "format": "exit 0"
   },
   "private": true
 }

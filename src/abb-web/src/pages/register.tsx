@@ -1,1 +1,1 @@
-export { default } from '../modules/register/register';
+export { default } from '@src/modules/register/index';

@@ -6,6 +6,7 @@ const Nav = styled.div`
   position: sticky;
   z-index: 100;
   box-shadow: rgb(0 0 0 / 12%) 0 6px 16px;
+  align-items: center;
 
   .flex-end {
     display: flex;
