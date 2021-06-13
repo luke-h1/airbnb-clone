@@ -1,7 +1,7 @@
-import React from 'react';
 import styled from '@emotion/styled';
+import React from 'react';
 
-const ButtonStyles = styled.button`
+export const ButtonStyles = styled.button`
   padding: 10px;
   color: rgb(255, 255, 255);
   text-align: center;
@@ -25,18 +25,19 @@ const ButtonStyles = styled.button`
   width: 80px;
   margin: 0 10px 0 10px !important;
   cursor: pointer;
-
 }
 `;
 
-export type SizeVariant = 'small' | 'regular';
-
 interface ButtonProps {
-  text: string;
-  disabled?: boolean;
+  onClick?: () => Promise<void>;
+  children: React.ReactNode;
 }
 
-const Button: React.FC<ButtonProps> = ({ text, disabled }) => {
-  return <ButtonStyles disabled={disabled}>{text}</ButtonStyles>;
+const Button: React.FC<ButtonProps> = ({ children }) => {
+  return (
+    <ButtonStyles>
+      {children}
+    </ButtonStyles>
+  );
 };
 export default Button;

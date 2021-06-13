@@ -38,12 +38,12 @@ const IndexStyles = styled.div`
   animation-iteration-count: 1 !important;
   animation-fill-mode: both !important;
 
-  .title { 
+  .title {
     font-size: 22px !important;
     line-height: 26px !important;
     color: rgb(34, 34, 34) !important;
     font-weight: 600 !important;
-    margin-bottom: 8px !important;    
+    margin-bottom: 8px !important;
   }
   .mb-2 {
     margin-bottom: 2;
@@ -93,7 +93,9 @@ const LoginPage = () => {
                 <a>Register</a>
               </Link>
             </Flex>
-            <Button disabled={isSubmitting} text="register" />
+            <Button disabled={isSubmitting} type="submit">
+              Login
+            </Button>
           </Form>
         )}
       </Formik>

@@ -14,7 +14,9 @@ export const InputField: React.FC<InputFieldProps> = ({ label, ...props }) => {
   const [field, { error }] = useField(props);
   return (
     <div className="form-wrapper">
-      <label htmlFor={field.name} hidden>{label}</label>
+      <label htmlFor={field.name} hidden>
+        {label}
+      </label>
       <input {...field} {...props} id={field.name} className="inputStyles" />
       {error ? <h1>{error}</h1> : null}
     </div>

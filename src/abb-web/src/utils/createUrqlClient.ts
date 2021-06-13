@@ -47,15 +47,6 @@ export const createUrqlClient = (ssrExchange: any, ctx: any) => {
         },
         updates: {
           Mutation: {
-            // deleteTodo: (_result, args, cache) => {
-            //   cache.invalidate({
-            //     __typename: 'Todo',
-            //     id: (args as DeleteTodoMutationVariables).id,
-            //   });
-            // },
-            // createTodo: (_result, args, cache) => {
-            //   invalidateAllTodos(cache);
-            // },
             login: (_result, args, cache) => {
               CustomUpdateQuery<LoginMutation, MeQuery>(
                 cache,
