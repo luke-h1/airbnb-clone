@@ -29,12 +29,12 @@ export class Review extends BaseEntity {
 
   @Field(() => Int)
   @Column()
-  creatorId: number;
+  reviewerId: number;
 
   @Field(() => User)
   @ManyToOne(() => User, (user) => user.reviews)
-  @JoinColumn({ name: 'creatorId' })
-  creator: User;
+  @JoinColumn({ name: 'reviewerId' })
+  reviewer: User;
 
   @Field(() => Int)
   @CreateDateColumn()
@@ -46,7 +46,6 @@ export class Review extends BaseEntity {
   propertyReviews: string;
 
   @Field(() => Property)
-  // @Column()
   @ManyToOne(() => Property, (prop) => prop)
   @JoinColumn({ name: 'propertyReviews' })
   property: Property;
@@ -56,7 +55,6 @@ export class Review extends BaseEntity {
   PropertyId: number;
 
   @Field(() => Int)
-  @Column()
   @JoinColumn({ name: 'PropertyId' })
   @ManyToOne(() => Property, (prop) => prop.id)
   propertyId: number;

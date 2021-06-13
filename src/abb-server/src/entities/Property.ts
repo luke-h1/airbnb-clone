@@ -27,13 +27,8 @@ export class Property extends BaseEntity {
   @ManyToOne(() => User, (user) => user.id)
   host: User;
 
-  @Field(() => [String])
-  @Column()
-  propertyReviews: String[];
-
   @Field(() => User)
   @Column('varchar', { length: 255 })
-  @JoinColumn({ name: 'propertyReviews' })
   @ManyToOne(() => Review, (r) => r.PropertyId)
   reviews: Review;
 
