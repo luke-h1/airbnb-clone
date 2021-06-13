@@ -14,9 +14,18 @@ mutation CreateProperty($options: CreatePropertyInput!){
       }
       propertyId
       reviews {
-        email
-        firstName
-        lastName
+        reviews {
+          id
+          reviewer {
+            email
+            firstName
+            lastName
+            reviews {
+              PropertyId
+              reviewDescription
+            }
+          }
+        }
       }
       propertyType 
       mainImage
