@@ -35,7 +35,7 @@ export type FieldError = {
 
 export type Mutation = {
   __typename?: 'Mutation';
-  createProperty: PropertyResponse;
+  createProperty: Property;
   changePassword: UserResponse;
   forgotPassword: Scalars['Boolean'];
   register: UserResponse;
@@ -66,10 +66,10 @@ export type MutationLoginArgs = {
 
 export type Property = {
   __typename?: 'Property';
+  id: Scalars['Int'];
   title: Scalars['String'];
-  host: User;
-  propertyId: Scalars['Int'];
-  reviews: User;
+  userId: Scalars['Int'];
+  user: User;
   propertyType: Scalars['String'];
   mainImage: Scalars['String'];
   latitude: Scalars['Float'];
@@ -77,39 +77,19 @@ export type Property = {
   amenities: Array<Scalars['String']>;
   createdAt: Scalars['String'];
   updatedAt: Scalars['String'];
-};
-
-export type PropertyFieldError = {
-  __typename?: 'PropertyFieldError';
-  field: Scalars['String'];
-  message: Scalars['String'];
-};
-
-export type PropertyResponse = {
-  __typename?: 'PropertyResponse';
-  errors?: Maybe<Array<PropertyFieldError>>;
-  Property?: Maybe<Property>;
+  propertyCreator: User;
 };
 
 export type Query = {
   __typename?: 'Query';
+  properties: Array<Property>;
+  property: Property;
   hello: Scalars['String'];
   me?: Maybe<User>;
 };
 
-export type Review = {
-  __typename?: 'Review';
+export type QueryPropertyArgs = {
   id: Scalars['Int'];
-  reviewDescription: Scalars['String'];
-  rating: Scalars['String'];
-  reviewerId: Scalars['Int'];
-  reviewer: User;
-  propertyReviews: Scalars['String'];
-  property: Property;
-  PropertyId: Scalars['Int'];
-  propertyId: Scalars['Int'];
-  createdAt: Scalars['Int'];
-  updatedAt: Scalars['Int'];
 };
 
 export type User = {
@@ -119,7 +99,6 @@ export type User = {
   firstName: Scalars['String'];
   lastName: Scalars['String'];
   properties: Array<Property>;
-  reviews: Array<Review>;
   createdAt: Scalars['String'];
   updatedAt: Scalars['String'];
 };
@@ -162,50 +141,18 @@ export type CreatePropertyMutationVariables = Exact<{
 }>;
 
 export type CreatePropertyMutation = { __typename?: 'Mutation' } & {
-  createProperty: { __typename?: 'PropertyResponse' } & {
-    errors?: Maybe<
-      Array<
-        { __typename?: 'PropertyFieldError' } & Pick<
-          PropertyFieldError,
-          'field' | 'message'
-        >
-      >
-    >;
-    Property?: Maybe<
-      { __typename?: 'Property' } & Pick<
-        Property,
-        | 'title'
-        | 'propertyId'
-        | 'propertyType'
-        | 'mainImage'
-        | 'amenities'
-        | 'longitude'
-        | 'latitude'
-      > & {
-          host: { __typename?: 'User' } & Pick<
-            User,
-            'id' | 'email' | 'firstName' | 'lastName'
-          >;
-          reviews: { __typename?: 'User' } & {
-            reviews: Array<
-              { __typename?: 'Review' } & Pick<Review, 'id'> & {
-                  reviewer: { __typename?: 'User' } & Pick<
-                    User,
-                    'email' | 'firstName' | 'lastName'
-                  > & {
-                      reviews: Array<
-                        { __typename?: 'Review' } & Pick<
-                          Review,
-                          'PropertyId' | 'reviewDescription'
-                        >
-                      >;
-                    };
-                }
-            >;
-          };
-        }
-    >;
-  };
+  createProperty: { __typename?: 'Property' } & Pick<
+    Property,
+    | 'userId'
+    | 'title'
+    | 'propertyType'
+    | 'mainImage'
+    | 'latitude'
+    | 'longitude'
+    | 'amenities'
+    | 'createdAt'
+    | 'updatedAt'
+  >;
 };
 
 export type LoginMutationVariables = Exact<{
@@ -237,6 +184,33 @@ export type MeQuery = { __typename?: 'Query' } & {
   me?: Maybe<{ __typename?: 'User' } & RegularUserFragment>;
 };
 
+export type PropertiesQueryVariables = Exact<{ [key: string]: never }>;
+
+export type PropertiesQuery = { __typename?: 'Query' } & {
+  properties: Array<
+    { __typename?: 'Property' } & Pick<
+      Property,
+      | 'title'
+      | 'propertyType'
+      | 'mainImage'
+      | 'latitude'
+      | 'longitude'
+      | 'amenities'
+    > & {
+        propertyCreator: { __typename?: 'User' } & Pick<
+          User,
+          'email' | 'firstName' | 'lastName'
+        >;
+      }
+  >;
+};
+
+export type PropertyQueryVariables = Exact<{ [key: string]: never }>;
+
+export type PropertyQuery = { __typename?: 'Query' } & {
+  property: { __typename?: 'Property' } & Pick<Property, 'title' | 'id'>;
+};
+
 export const RegularErrorFragmentDoc = gql`
   fragment RegularError on FieldError {
     field
@@ -266,39 +240,15 @@ export const RegularUserResponseFragmentDoc = gql`
 export const CreatePropertyDocument = gql`
   mutation CreateProperty($options: CreatePropertyInput!) {
     createProperty(options: $options) {
-      errors {
-        field
-        message
-      }
-      Property {
-        title
-        host {
-          id
-          email
-          firstName
-          lastName
-        }
-        propertyId
-        reviews {
-          reviews {
-            id
-            reviewer {
-              email
-              firstName
-              lastName
-              reviews {
-                PropertyId
-                reviewDescription
-              }
-            }
-          }
-        }
-        propertyType
-        mainImage
-        amenities
-        longitude
-        latitude
-      }
+      userId
+      title
+      propertyType
+      mainImage
+      latitude
+      longitude
+      amenities
+      createdAt
+      updatedAt
     }
   }
 `;
@@ -359,4 +309,44 @@ export function useMeQuery(
   options: Omit<Urql.UseQueryArgs<MeQueryVariables>, 'query'> = {}
 ) {
   return Urql.useQuery<MeQuery>({ query: MeDocument, ...options });
+}
+export const PropertiesDocument = gql`
+  query Properties {
+    properties {
+      title
+      propertyType
+      mainImage
+      latitude
+      longitude
+      amenities
+      propertyCreator {
+        email
+        firstName
+        lastName
+      }
+    }
+  }
+`;
+
+export function usePropertiesQuery(
+  options: Omit<Urql.UseQueryArgs<PropertiesQueryVariables>, 'query'> = {}
+) {
+  return Urql.useQuery<PropertiesQuery>({
+    query: PropertiesDocument,
+    ...options,
+  });
+}
+export const PropertyDocument = gql`
+  query Property {
+    property(id: 1) {
+      title
+      id
+    }
+  }
+`;
+
+export function usePropertyQuery(
+  options: Omit<Urql.UseQueryArgs<PropertyQueryVariables>, 'query'> = {}
+) {
+  return Urql.useQuery<PropertyQuery>({ query: PropertyDocument, ...options });
 }

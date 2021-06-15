@@ -5,8 +5,10 @@ import {
   Ctx,
   Field,
   FieldResolver,
+  Int,
   Mutation,
   ObjectType,
+  Query,
   Resolver,
   Root,
   UseMiddleware,
@@ -46,5 +48,17 @@ export class PropertyResolver {
       ...options,
       userId: req.session.userId,
     }).save();
+  }
+
+  @Query(() => [Property])
+  async properties(): Promise<Property[]> {
+    return await Property.find();
+  }
+
+  @Query(() => Property)
+  async property(
+    @Arg('id', () => Int) id: number,
+  ): Promise<Property | undefined> {
+    return Property.findOne(id);
   }
 }

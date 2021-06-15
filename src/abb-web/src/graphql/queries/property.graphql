@@ -1,0 +1,6 @@
+query Property {
+  property(id: 1) {
+    title
+    id
+  }
+}
