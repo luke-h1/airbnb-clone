@@ -6,10 +6,11 @@
   "scripts": {
     "gen-env": "gen-env-types .env -o src/env.d.ts -e .",
     "build": "rimraf dist && tsc -p tsconfig.json",
+    "start": "NODE_ENV=production node dist/index.js",
     "lint": "eslint --ext .ts,.tsx,.js,.jsx src --fix",
     "format": "prettier --write \"src/**/*.{js,jsx,ts,tsx}\"",
     "watch": "rimraf dist && tsc -w",
-    "dev": "node dist/index.js",
+    "dev": "cross-env NODE_ENV=development node dist/index.js",
     "db:setup": "ts-node ./src/test-utils/setup.ts",
     "test": "cross-env NODE_ENV=test npm run db:setup && jest",
     "test:watch": "cross-env NODE_ENV=test npm run db:setup && jest --watch",
