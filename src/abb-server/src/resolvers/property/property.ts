@@ -4,48 +4,41 @@ import {
   Arg,
   Ctx,
   Field,
+  FieldResolver,
   Mutation,
   ObjectType,
   Resolver,
+  Root,
   UseMiddleware,
 } from 'type-graphql';
-import { FindOptionsUtils } from 'typeorm';
+import { FindOptionsUtils, getConnection } from 'typeorm';
 import { isAuth } from '../../middleware/isAuth';
 import { MyContext } from '../../shared/types';
 import { validateProperty } from '../../shared/validateProperty';
 import { Property } from '../../entities/Property';
 import { CreatePropertyInput } from './CreatePropertyInput';
-
-@ObjectType({ isAbstract: true })
-class PropertyFieldError {
-  @Field()
-  field: string;
-
-  @Field()
-  message: string;
-}
-@ObjectType()
-class PropertyResponse {
-  @Field(() => [PropertyFieldError], { nullable: true })
-  errors?: PropertyFieldError[];
-
-  @Field(() => Property, { nullable: true })
-  Property?: Property;
-}
+import { User } from '../../entities/User';
 
 @Resolver(Property)
 export class PropertyResolver {
-  @Mutation(() => PropertyResponse)
+  @FieldResolver(() => User)
+  propertyCreator(@Root() property: Property, @Ctx() { userLoader }: MyContext) {
+    return userLoader.load(property.userId);
+  }
+
+  @Mutation(() => Property)
   @UseMiddleware(isAuth)
   async createProperty(
     @Arg('options') options: CreatePropertyInput,
     @Ctx() { req }: MyContext,
-  ): Promise<PropertyResponse> {
+  ): Promise<Property> {
+    let property;
     const errors = validateProperty(options);
     if (errors) {
       return { errors };
     }
-    // Doesn't return property or user for some reason
+    const userIdNum = parseInt(req.session.userId, 10);
+    console.log(req.session.userId);
     return Property.create({
       ...options,
       userId: req.session.userId,

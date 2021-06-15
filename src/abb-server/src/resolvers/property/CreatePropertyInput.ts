@@ -5,10 +5,10 @@ export class CreatePropertyInput {
   @Field()
   title: string;
 
-  @Field()
+  @Field(() => String)
   propertyType: string;
 
-  @Field()
+  @Field(() => String)
   mainImage: string;
 
   @Field(() => Float)
