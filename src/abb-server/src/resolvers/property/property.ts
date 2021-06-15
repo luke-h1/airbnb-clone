@@ -9,6 +9,7 @@ import {
   Resolver,
   UseMiddleware,
 } from 'type-graphql';
+import { FindOptionsUtils } from 'typeorm';
 import { isAuth } from '../../middleware/isAuth';
 import { MyContext } from '../../shared/types';
 import { validateProperty } from '../../shared/validateProperty';
@@ -44,12 +45,10 @@ export class PropertyResolver {
     if (errors) {
       return { errors };
     }
-    const prop = await Property.create({
+    // Doesn't return property or user for some reason
+    return Property.create({
       ...options,
-      host: req.session.userId,
+      userId: req.session.userId,
     }).save();
-    return {
-      prop,
-    };
   }
 }

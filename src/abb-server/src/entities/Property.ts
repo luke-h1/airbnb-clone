@@ -21,7 +21,8 @@ export class Property extends BaseEntity {
   title: string;
 
   @Field(() => User)
-  @Column('int') userId: string;
+  @Column('int')
+  userId: string;
 
   @ManyToOne(() => User, (user) => user.properties)
   host: User;

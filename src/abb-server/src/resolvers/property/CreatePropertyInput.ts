@@ -1,4 +1,4 @@
-import { Field, InputType } from 'type-graphql';
+import { Field, Float, InputType } from 'type-graphql';
 
 @InputType()
 export class CreatePropertyInput {
@@ -11,10 +11,10 @@ export class CreatePropertyInput {
   @Field()
   mainImage: string;
 
-  @Field()
+  @Field(() => Float)
   latitude: number;
 
-  @Field()
+  @Field(() => Float)
   longitude: number;
 
   @Field(() => [String])
