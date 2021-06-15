@@ -14,7 +14,9 @@ export const Reset = () => {
         html {
           font-size: 16px;
         }
-        *,
+        * {
+          box-sizing: border-box;
+        }
         *:before,
         *:after {
           box-sizing: inherit;
@@ -25,6 +27,11 @@ export const Reset = () => {
           -moz-osx-font-smoothing: grayscale;
           background: #fff;
           overflow-x: hidden;
+          font-size: 14px;
+          letter-spacing: normal;
+          line-height: 18px;
+          color: rgb(34, 34, 34);
+          -webkit-font-smoothing: antialiased;
         }
       `}
     />
