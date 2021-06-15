@@ -26,12 +26,6 @@ export const Reset = () => {
           background: #fff;
           overflow-x: hidden;
         }
-        a {
-          color: blue;
-          &:hover {
-            cursor: pointer;
-          }
-        }
       `}
     />
   );

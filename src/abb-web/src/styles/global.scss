@@ -1,8 +1,9 @@
-.logo { 
-  width: 130px;
-  height: 40px;
-  background-image: url('../styles/assets/abb-logo.png');
-  background-size: 130px;
+:root {
+  --grey-med: #ddd;
+  --grey-light: #f7f7f7;
+  --grey-text-light: #717171;
+  --grey-text-dark: #222;
+  --pink: #ff385c;
 }
 
 .inputStyles { 
