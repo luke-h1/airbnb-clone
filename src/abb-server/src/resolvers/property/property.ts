@@ -22,7 +22,10 @@ import { User } from '../../entities/User';
 @Resolver(Property)
 export class PropertyResolver {
   @FieldResolver(() => User)
-  propertyCreator(@Root() property: Property, @Ctx() { userLoader }: MyContext) {
+  propertyCreator(
+    @Root() property: Property,
+    @Ctx() { userLoader }: MyContext,
+  ) {
     return userLoader.load(property.userId);
   }
 
