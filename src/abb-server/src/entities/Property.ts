@@ -1,15 +1,13 @@
-import { Field, Int, ObjectType } from 'type-graphql';
+import { Field, ObjectType } from 'type-graphql';
 import {
   BaseEntity,
   Column,
   CreateDateColumn,
   Entity,
-  JoinColumn,
   ManyToOne,
   PrimaryGeneratedColumn,
   UpdateDateColumn,
 } from 'typeorm';
-import { Review } from './Review';
 import { User } from './User';
 
 @ObjectType()
@@ -23,18 +21,10 @@ export class Property extends BaseEntity {
   title: string;
 
   @Field(() => User)
-  @Column('varchar', { length: 255 })
-  @ManyToOne(() => User, (user) => user.id)
+  @Column('int') userId: string;
+
+  @ManyToOne(() => User, (user) => user.properties)
   host: User;
-
-  @Field(() => Int)
-  @Column()
-  propertyId: number;
-
-  @Field(() => User)
-  @ManyToOne(() => Review, (r) => r.PropertyId)
-  @JoinColumn({ name: 'propertyId' })
-  reviews: Review;
 
   @Field()
   @Column('varchar', { length: 30 })
@@ -53,16 +43,14 @@ export class Property extends BaseEntity {
   longitude: number;
 
   @Field(() => [String])
-  @Column('jsonb', { array: true })
+  @Column('text', { array: true })
   amenities: string[];
 
   @Field(() => String)
   @CreateDateColumn()
-  @Column()
   createdAt: Date;
 
   @Field(() => String)
   @UpdateDateColumn()
-  @Column()
   updatedAt: Date;
 }

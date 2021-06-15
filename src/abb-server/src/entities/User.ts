@@ -9,7 +9,6 @@ import {
   UpdateDateColumn,
 } from 'typeorm';
 import { Property } from './Property';
-import { Review } from './Review';
 
 @ObjectType()
 @Entity('users')
@@ -34,14 +33,8 @@ export class User extends BaseEntity {
   password!: string;
 
   @Field(() => [Property])
-  @Column('jsonb', { array: true, nullable: true })
-  @OneToMany(() => Property, (p) => p.host)
+  @OneToMany(() => Property, (property) => property.host)
   properties: Property[];
-
-  @Field(() => [Review])
-  @OneToMany(() => Review, (r) => r.reviewer)
-  @Column('jsonb', { array: true, nullable: true })
-  reviews: Review[];
 
   @Field(() => String)
   @CreateDateColumn()
