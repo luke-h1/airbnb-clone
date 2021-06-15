@@ -1,4 +1,4 @@
-mutation CreateProperty($options: createPropertyInput!) { 
+mutation CreateProperty($options: CreatePropertyInput!) { 
   createProperty(options: $options) {
     userId
     title

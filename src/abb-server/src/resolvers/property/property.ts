@@ -7,6 +7,7 @@ import {
   FieldResolver,
   Mutation,
   ObjectType,
+  Query,
   Resolver,
   Root,
   UseMiddleware,
@@ -46,5 +47,10 @@ export class PropertyResolver {
       ...options,
       userId: req.session.userId,
     }).save();
+  }
+
+  @Query(() => [Property])
+  async properties():Promise<Property[]> {
+    return await Property.find();
   }
 }
