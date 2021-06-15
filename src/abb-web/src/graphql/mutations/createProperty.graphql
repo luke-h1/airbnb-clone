@@ -1,37 +1,13 @@
-mutation CreateProperty($options: CreatePropertyInput!){
+mutation CreateProperty($options: createPropertyInput!) { 
   createProperty(options: $options) {
-    errors {
-      field
-      message
-    }
-    Property {
-      title
-      host {
-        id
-        email
-        firstName
-        lastName
-      }
-      propertyId
-      reviews {
-        reviews {
-          id
-          reviewer {
-            email
-            firstName
-            lastName
-            reviews {
-              PropertyId
-              reviewDescription
-            }
-          }
-        }
-      }
-      propertyType 
-      mainImage
-      amenities
-      longitude
-      latitude
-    }
+    userId
+    title
+    propertyType
+    mainImage
+    latitude
+    longitude
+    amenities
+    createdAt
+    updatedAt
   }
 }

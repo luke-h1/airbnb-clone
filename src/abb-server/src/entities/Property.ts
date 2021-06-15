@@ -1,9 +1,10 @@
-import { Field, ObjectType } from 'type-graphql';
+import { Field, Int, ObjectType } from 'type-graphql';
 import {
   BaseEntity,
   Column,
   CreateDateColumn,
   Entity,
+  JoinColumn,
   ManyToOne,
   PrimaryGeneratedColumn,
   UpdateDateColumn,
@@ -20,11 +21,14 @@ export class Property extends BaseEntity {
   @Column('varchar', { length: 30 })
   title: string;
 
-  @Field(() => User)
-  @Column('int') userId: string;
+  @Field(() => Int)
+  @Column()
+  userId: number;
 
+  @Field(() => User)
   @ManyToOne(() => User, (user) => user.properties)
-  host: User;
+  @JoinColumn({ name: 'userId' })
+  user: User;
 
   @Field()
   @Column('varchar', { length: 30 })
