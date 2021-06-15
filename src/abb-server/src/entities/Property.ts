@@ -14,6 +14,7 @@ import { User } from './User';
 @ObjectType()
 @Entity('properties')
 export class Property extends BaseEntity {
+  @Field(() => Int)
   @PrimaryGeneratedColumn()
   id!: number;
 

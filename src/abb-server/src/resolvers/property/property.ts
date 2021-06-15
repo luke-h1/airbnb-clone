@@ -5,6 +5,7 @@ import {
   Ctx,
   Field,
   FieldResolver,
+  Int,
   Mutation,
   ObjectType,
   Query,
@@ -50,7 +51,14 @@ export class PropertyResolver {
   }
 
   @Query(() => [Property])
-  async properties():Promise<Property[]> {
+  async properties(): Promise<Property[]> {
     return await Property.find();
+  }
+
+  @Query(() => Property)
+  async property(
+    @Arg('id', () => Int) id: number,
+  ): Promise<Property | undefined> {
+    return Property.findOne(id);
   }
 }
