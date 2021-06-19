@@ -2,6 +2,7 @@ import type { AppProps } from 'next/app';
 import Header from '@src/components/Header';
 import { Reset } from '@src/styles/Global';
 import '@src/styles/global.scss';
+import Footer from '@src/components/Footer';
 
 function MyApp({ Component, pageProps }: AppProps) {
   return (
@@ -9,6 +10,7 @@ function MyApp({ Component, pageProps }: AppProps) {
       <Reset />
       <Header />
       <Component {...pageProps} />
+      <Footer />
     </>
   );
 }
