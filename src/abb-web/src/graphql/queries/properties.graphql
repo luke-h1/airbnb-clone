@@ -1,0 +1,13 @@
+query Properties {
+  properties {
+    id
+    title
+    propertyType
+    mainImage
+    amenities
+    propertyCreator {
+      firstName 
+      lastName
+    }
+  }
+}

@@ -1,0 +1,13 @@
+mutation CreateProperty($options: CreatePropertyInput!) { 
+  createProperty(options: $options) {
+    userId
+    title
+    propertyType
+    mainImage
+    latitude
+    longitude
+    amenities
+    createdAt
+    updatedAt
+  }
+}

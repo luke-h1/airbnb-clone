@@ -4,7 +4,7 @@
     "port": 5432,
     "username": "lhowsam",
     "password": "Password",
-    "database": "abbdev",
+    "database": "abb-clone",
     "entities": ["dist/entities/*.js"],
     "migrations": ["src/migrations/*.js"],
     "cli": {

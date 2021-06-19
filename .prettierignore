@@ -1,2 +1,5 @@
 src/migrations
 src/migrations/*
+dist
+.next
+node_modules

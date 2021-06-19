@@ -1,4 +1,4 @@
-import { Field, ObjectType } from 'type-graphql';
+import { Field, Int, ObjectType } from 'type-graphql';
 import {
   BaseEntity,
   Column,
@@ -8,32 +8,33 @@ import {
   PrimaryGeneratedColumn,
   UpdateDateColumn,
 } from 'typeorm';
-import { Listing } from './Listing';
+import { Property } from './Property';
 
 @ObjectType()
 @Entity('users')
 export class User extends BaseEntity {
-  @Field()
-  @PrimaryGeneratedColumn('uuid')
-  id: string;
+  @Field(() => Int)
+  @PrimaryGeneratedColumn()
+  id!: number;
 
-  @Field()
+  @Field(() => String)
   @Column({ unique: true })
   email!: string;
+
+  @Field(() => String)
+  @Column()
+  firstName!: string;
+
+  @Field(() => String)
+  @Column()
+  lastName!: string;
 
   @Column()
   password!: string;
 
-  @Field()
-  @Column({ default: false })
-  confirmed: boolean;
-
-  @Field()
-  @Column({ default: false })
-  forgotPasswordLocked: boolean;
-
-  @OneToMany(() => Listing, (listing) => listing.user)
-  listings: Listing[];
+  @Field(() => [Property])
+  @OneToMany(() => Property, (property) => property.user)
+  properties: Property[];
 
   @Field(() => String)
   @CreateDateColumn()

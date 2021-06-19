@@ -1,16 +1,21 @@
 import type { AppProps } from 'next/app';
-import { ChakraProvider, theme } from '@chakra-ui/react';
-import Reset from '../../styles/Reset';
+import '@src/styles/global.scss';
+import Footer from '@src/components/Footer';
+import { Wrapper } from '@src/components/Wrapper';
+import Header from '@src/components/Header';
+import { Reset } from '@src/styles/Global';
+import '@fontsource/lato';
 
 function MyApp({ Component, pageProps }: AppProps) {
   return (
     <>
-      <ChakraProvider theme={theme}>
-        {Reset}
+      <Reset />
+      <Header {...pageProps} />
+      <Wrapper>
         <Component {...pageProps} />
-      </ChakraProvider>
+      </Wrapper>
+      <Footer />
     </>
   );
 }
-
 export default MyApp;

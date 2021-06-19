@@ -19,6 +19,7 @@
     "react/state-in-constructor": "off",
     "no-unsafe-finally": "off",
     "jsx-a11y/anchor-is-valid": "off",
+    "react/jsx-props-no-spreading": "off",
     "arrow-body-style": "off",
     "jsx-no-lambda": "off",
     "react/prop-types": "off",
@@ -39,6 +40,8 @@
     "import/no-extraneous-dependencies": ["error", { "devDependencies": true }],
     "import/no-unresolved": "off",
     "react/forbid-prop-types": "off",
+    "max-len": "off",
+    
     "react/no-unescaped-entities": [
       "error",
       {
@@ -62,13 +65,9 @@
     ],
     "react/jsx-curly-newline": "off",
     "react/jsx-one-expression-per-line": "off",
-    "react/jsx-props-no-spreading": ["error", {
-      "html": "enforce",
-      "custom": "ignore"
-    }],
-    "react/jsx-wrap-multilines": ["error", { "prop": "ignore" }],
+    "react/jsx-wrap-multilines": ["error", { "prop": "ignore" }]
   },
-  "ignorePatterns": ["node_modules/", ".next/"],
+  "ignorePatterns": ["node_modules/", ".next/", "src/generated/*"],
   "overrides": [
     {
       "files": ["**/*.js"],

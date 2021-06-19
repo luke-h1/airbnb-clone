@@ -1,0 +1,33 @@
+{
+    "compilerOptions": {
+      "allowJs": true,
+      "alwaysStrict": true,
+      "allowSyntheticDefaultImports": true,
+      "module": "esnext",
+      "moduleResolution": "node",
+      "noEmit": true,
+      "noImplicitAny": true,
+      "strict": true,
+      "strictNullChecks": true,
+      "jsx": "preserve",
+      "target": "es6",
+      "lib": [
+        "dom",
+        "dom.iterable",
+        "esnext"
+      ],
+      "skipLibCheck": true,
+      "esModuleInterop": true,
+      "forceConsistentCasingInFileNames": true,
+      "resolveJsonModule": true,
+      "baseUrl": ".",
+      "paths": {
+        "@server/*": ["./abb-server/src/*"],
+        "@common/*": ["./abb-common/src/*"],
+        "@web/*": ["./abb-web/src/*"],
+        "@app/*": ["./abb-app/src/*"]
+
+      },
+      "sourceMap": true
+    }
+  }
