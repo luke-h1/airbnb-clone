@@ -175,6 +175,6 @@ const ListingStyles = styled.div`
       height: 1px;
       background: ${baseColors.greyMed};
     }
-  } 
+  }
 `;
 export default ListingStyles;

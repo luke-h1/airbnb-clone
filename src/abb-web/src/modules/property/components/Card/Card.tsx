@@ -36,7 +36,9 @@ const Card = () => {
           <div className="listings__details">
             <div className="listings__rating">
               <img src="/icons/star.svg" alt="Star" />
-              <span>5 <span>(14)</span></span>
+              <span>
+                5 <span>(14)</span>
+              </span>
             </div>
             <div className="listings__price">
               <div className="listings__price__night">
