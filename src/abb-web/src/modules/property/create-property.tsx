@@ -80,5 +80,5 @@ const CreatePropertyPage = () => {
   );
 };
 export default withUrqlClient(createUrqlClient, { ssr: false })(
-  CreatePropertyPage,
+  CreatePropertyPage
 );
