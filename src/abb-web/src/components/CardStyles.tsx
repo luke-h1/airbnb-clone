@@ -1,4 +1,4 @@
-import { baseColors } from '@src/styles/Variables';
+import { baseColors, fonts, fontWeights } from '@src/styles/Variables';
 import styled from '@emotion/styled';
 
 const ListingStyles = styled.div`
@@ -9,22 +9,25 @@ const ListingStyles = styled.div`
       margin-top: auto;
     }
     &__price {
-      text-align: right;
+      text-align: left;
       display: flex;
       flex-direction: column;
       &__night {
-        font-family: 'Circular Bold';
+        font-family: ${fonts.regularText};
+          font-weight: ${fontWeights.bold};
+
         font-size: 18px;
         span {
-          color: #484848;
-          font-family: 'Circular Book';
+          color: gray;
+          font-family: ${fonts.regularText};
+          font-weight: ${fontWeights.bold};
+
         }
       }
       &__total {
-        font-size: 14px;
-        color: ${baseColors.greyTextLight};
-        text-decoration: underline;
-        margin-top: 2px;
+        font-size: 16px;
+        color: ${baseColors.greyTextDark};
+        margin-top: 8px;
       }
     }
     &__rating {
@@ -35,9 +38,9 @@ const ListingStyles = styled.div`
         margin-right: 4px;
       }
       span {
-        font-family: 'Circular Medium';
+        font-family: ${fonts.regularText};
         span {
-          font-family: 'Circular Book';
+          font-family: ${fonts.regularText};
           color: ${baseColors.greyLight};
         }
       }
@@ -79,7 +82,8 @@ const ListingStyles = styled.div`
           left: 10px;
           letter-spacing: 0.48px;
           font-size: 12px;
-          font-family: 'Circular Medium';
+          font-family: ${fonts.regularText};
+          font-weight: ${fontWeights.bold};
           text-transform: uppercase;
         }
       }
@@ -151,8 +155,8 @@ const ListingStyles = styled.div`
       }
       h2 {
         font-size: 18px;
-        font-weight: 400;
-        font-family: 'Circular Book';
+        font-family: ${fonts.regularText};
+          font-weight: ${fontWeights.regular};
         color: ${baseColors.greyTextDark};
         margin-top: 5px 0 15px;
       }
@@ -168,7 +172,8 @@ const ListingStyles = styled.div`
       font-size: 14px;
       line-height: 18px;
       color: ${baseColors.greyTextLight};
-      /* font-family: "Circular Light"; */
+      font-family: ${fonts.regularText};
+      font-weight: ${fontWeights.bold};
     }
     .seperator {
       width: 32px;

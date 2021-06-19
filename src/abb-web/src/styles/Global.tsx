@@ -22,7 +22,7 @@ export const Reset = () => {
           box-sizing: inherit;
         }
         body {
-          font-family: 'Noto Sans JP';
+          font-family: 'Lato';
           -webkit-font-smoothing: antialiased;
           -moz-osx-font-smoothing: grayscale;
           background: #fff;

@@ -7,7 +7,12 @@ export const baseColors = {
 } as const;
 
 export const fonts = {
-  regularText: 'Circular Book',
-  mediumText: 'Circular Medium',
-  boldText: 'Circular Bold',
+  regularText: 'Lato',
+} as const;
+
+export const fontWeights = {
+  light: '300',
+  regular: '400',
+  medium: '500',
+  bold: '700',
 } as const;

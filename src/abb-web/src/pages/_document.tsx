@@ -7,11 +7,6 @@ export default class MyDocument extends Document {
     return (
       <Html lang="en">
         <Head>
-          <link rel="preconnect" href="https://fonts.gstatic.com" />
-          <link
-            href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP&display=swap"
-            rel="stylesheet"
-          />
           <link href="/icons/favicon-16x16.png" rel="shortcut icon" />
           <link href="site.webmanifest" rel="manifest" />
           <link
