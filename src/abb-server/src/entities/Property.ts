@@ -27,7 +27,7 @@ export class Property extends BaseEntity {
   userId: number;
 
   @Field(() => User)
-  @ManyToOne(() => User, (user) => user.properties)
+  @ManyToOne(() => User, user => user.properties)
   @JoinColumn({ name: 'userId' })
   user: User;
 
