@@ -1,6 +1,16 @@
-query Property {
-  property(id: 1) {
+query Property($id: Int!) {
+  property(id: $id) {
+   id 
     title
-    id
+    propertyType
+    mainImage
+    latitude
+    longitude
+    propertyCreator {
+      email
+      firstName
+      lastName
+
   }
 }
+} 
