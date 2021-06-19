@@ -50,8 +50,8 @@ const Card: React.FC<PropertyProps> = ({
             </div>
             <div className="seperator" />
             <div className="listings__description">
-              {amenities &&
-                amenities.map((a) => <span className="greyText">{a}</span>)}
+              {amenities
+                && amenities.map((a) => <span className="greyText">{a}</span>)}
               {/* <span className="greyText"> 2 Guests . 1 Bedroom </span>
             <span className="greyText"> Kitchen . Wifi . Heating </span> */}
             </div>

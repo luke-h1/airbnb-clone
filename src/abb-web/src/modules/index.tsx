@@ -16,19 +16,17 @@ const index: React.FC<indexProps> = () => {
         <p>loading...</p>
       ) : (
         <>
-          {data?.properties.map((p) =>
-            !p ? null : (
-              <Card
-                key={p.id}
-                id={p.id}
-                title={p.title}
-                propertyType={p.propertyType}
-                mainImage={p.mainImage}
-                amenities={p.amenities}
-                propertyCreator={p.propertyCreator}
-              />
-            )
-          )}
+          {data?.properties.map((p) => (!p ? null : (
+            <Card
+              key={p.id}
+              id={p.id}
+              title={p.title}
+              propertyType={p.propertyType}
+              mainImage={p.mainImage}
+              amenities={p.amenities}
+              propertyCreator={p.propertyCreator}
+            />
+          )))}
         </>
       )}
     </>

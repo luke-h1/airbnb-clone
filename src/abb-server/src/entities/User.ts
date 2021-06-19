@@ -33,7 +33,7 @@ export class User extends BaseEntity {
   password!: string;
 
   @Field(() => [Property])
-  @OneToMany(() => Property, property => property.user)
+  @OneToMany(() => Property, (property) => property.user)
   properties: Property[];
 
   @Field(() => String)
