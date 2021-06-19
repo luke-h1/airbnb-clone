@@ -27,7 +27,7 @@ docker push lhowsam/airbnb-clone-prod:$VERSION
 
 ssh ${USER}@${TARGET} -i /Users/lukehowsam/aws/*.cer "sudo docker pull lhowsam/airbnb-clone-prod:$VERSION && sudo docker tag lhowsam/airbnb-clone-prod:$VERSION dokku/airbnb-api-prod:$VERSION && dokku deploy airbnb-api-prod $VERSION"
 
-echo "SUCCESFULLY DEPLOYED SERVER TO PRODUCTION 🚀"
+echo "SUCCESFULLY DEPLOYED SERVER TO PRODUCTION ✅"
 else
 echo "Bad input, not continuing with SERVER deploy! ❌"
 fi
