@@ -187,7 +187,11 @@ const Header: React.FC<HeaderProps> = () => {
   return (
     <StyledHeader>
       <div className="logo">
-        <img src="/icons/logo.svg" alt="Airbnb Logo" />
+        <Link href="/">
+          <a>
+            <img src="/icons/logo.svg" alt="Airbnb Logo" />
+          </a>
+        </Link>
       </div>
       <HeaderSearch>
         <button type="button">Selected map area</button>
