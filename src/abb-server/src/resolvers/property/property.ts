@@ -52,7 +52,13 @@ export class PropertyResolver {
 
   @Query(() => [Property])
   async properties(): Promise<Property[]> {
-    return await Property.find();
+    const properties = await getConnection().query(
+      `
+        SELECT p.* from "properties" p 
+        ORDER BY p."createdAt" DESC
+      `,
+    );
+    return properties;
   }
 
   @Query(() => Property)

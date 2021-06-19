@@ -37,7 +37,6 @@ const Card: React.FC<PropertyProps> = ({
               <h2>{title}</h2>
               <h3>
                 Posted by {propertyCreator.firstName}
-
                 {propertyCreator.lastName}
               </h3>
             </div>
