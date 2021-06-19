@@ -190,16 +190,11 @@ export type PropertiesQuery = { __typename?: 'Query' } & {
   properties: Array<
     { __typename?: 'Property' } & Pick<
       Property,
-      | 'title'
-      | 'propertyType'
-      | 'mainImage'
-      | 'latitude'
-      | 'longitude'
-      | 'amenities'
+      'id' | 'title' | 'propertyType' | 'mainImage' | 'amenities'
     > & {
         propertyCreator: { __typename?: 'User' } & Pick<
           User,
-          'email' | 'firstName' | 'lastName'
+          'firstName' | 'lastName'
         >;
       }
   >;
@@ -313,14 +308,12 @@ export function useMeQuery(
 export const PropertiesDocument = gql`
   query Properties {
     properties {
+      id
       title
       propertyType
       mainImage
-      latitude
-      longitude
       amenities
       propertyCreator {
-        email
         firstName
         lastName
       }
