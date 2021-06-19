@@ -14,14 +14,13 @@ const ListingStyles = styled.div`
       flex-direction: column;
       &__night {
         font-family: ${fonts.regularText};
-          font-weight: ${fontWeights.bold};
+        font-weight: ${fontWeights.bold};
 
         font-size: 18px;
         span {
           color: gray;
           font-family: ${fonts.regularText};
           font-weight: ${fontWeights.bold};
-
         }
       }
       &__total {
@@ -156,7 +155,7 @@ const ListingStyles = styled.div`
       h2 {
         font-size: 18px;
         font-family: ${fonts.regularText};
-          font-weight: ${fontWeights.regular};
+        font-weight: ${fontWeights.regular};
         color: ${baseColors.greyTextDark};
         margin-top: 5px 0 15px;
       }
