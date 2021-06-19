@@ -1,1 +1,1 @@
-export {} from '../../modules/property/create-property';
+export { default } from '../../modules/property/create-property';

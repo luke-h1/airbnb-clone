@@ -173,7 +173,9 @@ const Header: React.FC<HeaderProps> = () => {
         <Link href="/create-property">
           <a className="button button-greyHover">Create Listing</a>
         </Link>
-        {logoutFetching ? <p>loading...</p> : (
+        {logoutFetching ? (
+          <p>loading...</p>
+        ) : (
           <button onClick={handleLogout} type="button">
             logout
           </button>
