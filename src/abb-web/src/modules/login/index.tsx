@@ -7,7 +7,6 @@ import { useLoginMutation } from 'src/generated/graphql';
 import { createUrqlClient } from 'src/utils/createUrqlClient';
 import { toErrorMap } from 'src/utils/toErrorMap';
 import styled from '@emotion/styled';
-import Button from '@src/components/Button';
 import Link from 'next/link';
 import { Flex } from '@src/components/Flex';
 
@@ -93,9 +92,9 @@ const LoginPage = () => {
                 <a>Register</a>
               </Link>
             </Flex>
-            <Button disabled={isSubmitting} type="submit">
+            <button disabled={isSubmitting} type="submit">
               Login
-            </Button>
+            </button>
           </Form>
         )}
       </Formik>

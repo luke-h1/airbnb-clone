@@ -1,18 +1,18 @@
 import type { AppProps } from 'next/app';
-import Header from '@src/components/Header';
-import { Reset } from '@src/styles/Global';
 import '@src/styles/global.scss';
 import Footer from '@src/components/Footer';
+import { Wrapper } from '@src/components/Wrapper';
+import Header from '@src/components/Header';
 
 function MyApp({ Component, pageProps }: AppProps) {
   return (
     <>
-      <Reset />
-      <Header />
-      <Component {...pageProps} />
+      <Header {...pageProps} />
+      <Wrapper>
+        <Component {...pageProps} />
+      </Wrapper>
       <Footer />
     </>
   );
 }
-
 export default MyApp;

@@ -3,12 +3,11 @@ import styled from '@emotion/styled';
 import { baseColors } from '@src/styles/Variables';
 import Image from 'next/image';
 import Link from 'next/link';
+import { useLogoutMutation, useMeQuery } from '@src/generated/graphql';
+import { useRouter } from 'next/router';
+import { isServer } from '@src/utils/isServer';
 import { withUrqlClient } from 'next-urql';
 import { createUrqlClient } from '@src/utils/createUrqlClient';
-// import { useLogoutMutation, useMeQuery } from '@src/generated/graphql';
-import { useMeQuery } from '@src/generated/graphql';
-// import { useRouter } from 'next/router';
-import { isServer } from '@src/utils/isServer';
 
 // @TODO: on click event to open menu. -> sign in / sign out depending on the state
 
@@ -16,6 +15,7 @@ interface HeaderProps {}
 
 const StyledHeader = styled.header`
   height: 80px;
+  width: 100vw;
   padding: 0 24px;
   display: flex;
   align-items: center;
@@ -134,16 +134,16 @@ const HeaderNavigation = styled.div`
 `;
 
 const Header: React.FC<HeaderProps> = () => {
-  // const router = useRouter();
-  // const [{ fetching: logoutFetching }, logout] = useLogoutMutation();
+  const router = useRouter();
+  const [{ fetching: logoutFetching }, logout] = useLogoutMutation();
   const [{ data, fetching }] = useMeQuery({
     pause: isServer(),
   });
 
-  // const handleLogout = async () => {
-  //   await logout();
-  //   router.reload();
-  // };
+  const handleLogout = async () => {
+    await logout();
+    router.reload();
+  };
 
   let navLinks = null;
 
@@ -173,6 +173,13 @@ const Header: React.FC<HeaderProps> = () => {
         <Link href="/create-property">
           <a className="button button-greyHover">Create Listing</a>
         </Link>
+        {logoutFetching ? (
+          <p>loading...</p>
+        ) : (
+          <button onClick={handleLogout} type="button">
+            logout
+          </button>
+        )}
       </>
     );
   }
