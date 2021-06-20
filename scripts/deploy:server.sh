@@ -20,7 +20,7 @@ ssh ${USER}@${TARGET} -i /Users/lukehowsam/aws/*.cer "sudo docker pull lhowsam/a
 echo "✅ Succesfully deployed server to dev"
 
 elif [[ $response =~ ^([pP][rR][oO][dD])$ ]]; then
-echo "Deploying server to production 🚀 "
+echo "🚀 Deploying server to production"
 
 docker build -t lhowsam/airbnb-clone-prod:$VERSION .
 docker push lhowsam/airbnb-clone-prod:$VERSION
