@@ -2,7 +2,7 @@ import React from 'react';
 import styled from '@emotion/styled';
 
 const WrapperStyles = styled.div`
-  position: relative;
+  /* position: relative; */
   padding-top: 80px;
   min-height: calc(100vh - 80px);
   width: 840px;
