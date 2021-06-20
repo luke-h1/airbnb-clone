@@ -3,10 +3,13 @@ import { createUrqlClient } from '@src/utils/createUrqlClient';
 import { withUrqlClient } from 'next-urql';
 import React from 'react';
 import Card from '@src/components/Card';
+// import dynamic from 'next/dynamic';
 
-interface indexProps {}
+// const MapBlockInternal = dynamic(() => import('@src/components/Map'), {
+//   ssr: false,
+// });
 
-const index: React.FC<indexProps> = () => {
+const index: React.FC<{}> = () => {
   const [{ data, error, fetching }] = usePropertiesQuery();
   return (
     <>
