@@ -5,6 +5,7 @@ import { withUrqlClient } from 'next-urql';
 
 const SingleProperty: React.FC<{}> = () => {
   const [{ data, error, fetching }] = useGetPropertyFromUrl();
+  console.log(data);
   if (fetching) {
     return <p>loading..</p>;
   }
@@ -18,11 +19,8 @@ const SingleProperty: React.FC<{}> = () => {
 
   return (
     <>
-      <div>
-        {JSON.stringify(data, null, 2)}
-        Single Property
-      </div>
     </>
+
   );
 };
 export default withUrqlClient(createUrqlClient, { ssr: false })(SingleProperty);
