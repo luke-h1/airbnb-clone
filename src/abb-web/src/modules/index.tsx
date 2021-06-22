@@ -3,6 +3,7 @@ import { createUrqlClient } from '@src/utils/createUrqlClient';
 import { withUrqlClient } from 'next-urql';
 import React from 'react';
 import Card from '@src/components/Card';
+import { Wrapper } from '@src/components/Wrapper';
 // import dynamic from 'next/dynamic';
 
 // const MapBlockInternal = dynamic(() => import('@src/components/Map'), {
@@ -12,7 +13,7 @@ import Card from '@src/components/Card';
 const index: React.FC<{}> = () => {
   const [{ data, error, fetching }] = usePropertiesQuery();
   return (
-    <>
+    <Wrapper>
       {error && <h1>error</h1>}
 
       {!data && fetching ? (
@@ -32,7 +33,7 @@ const index: React.FC<{}> = () => {
           )))}
         </>
       )}
-    </>
+    </Wrapper>
   );
 };
 export default withUrqlClient(createUrqlClient, { ssr: false })(index);
