@@ -11,6 +11,9 @@ export class CreatePropertyInput {
   propertyType: string;
 
   @Field(() => String)
+  description: string;
+
+  @Field(() => String)
   mainImage: string;
 
   @Field(() => Int)

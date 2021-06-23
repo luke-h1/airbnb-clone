@@ -1,3 +1,4 @@
+/* eslint-disable prefer-spread */
 import React from 'react';
 import { createUrqlClient } from '@src/utils/createUrqlClient';
 import { useGetPropertyFromUrl } from '@src/utils/useGetPropertyFromUrl';
@@ -86,11 +87,9 @@ const SingleProperty: React.FC<{}> = () => {
       {/* Amenities section */}
       <Box p={4} mb={20}>
         <Stack spacing={4} as={Container} maxW="3xl" textAlign="center">
-          <Heading fontSize="3xl">This is the headline</Heading>
+          <Heading fontSize="3xl">Amenitites</Heading>
           <Text color="gray.600" fontSize="xl">
-            Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam
-            nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam
-            erat, sed diam voluptua.
+            From wifi to cleaning supplies, here’s what this property has
           </Text>
         </Stack>
 
@@ -112,55 +111,44 @@ const SingleProperty: React.FC<{}> = () => {
       </Box>
       {/* Reviews */}
       <SimpleGrid columns={2} spacingX="40px" spacingY="20px">
-        <Box bg="tomato" height="80px" />
-        <Box bg="tomato" height="80px" />
+        {data.property.reviews
+          && data.property.reviews.map((r) => (
+            <Flex p={50} w="full" alignItems="center" justifyContent="center">
+              <Box w="sm" mx="auto" shadow="lg" rounded="lg" overflow="hidden">
+                <Image
+                  w="full"
+                  h={56}
+                  fit="cover"
+                  objectPosition="center"
+                  src="https://images.unsplash.com/photo-1517841905240-472988babdf9?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=334&q=80"
+                  alt="avatar"
+                />
+
+                <Flex alignItems="center" px={6} py={3} bg="gray.900">
+                  <Text
+                    as="h1"
+                    mx={3}
+                    color="white"
+                    fontWeight="bold"
+                    fontSize="lg"
+                  >
+                    {r.title}
+                  </Text>
+                </Flex>
+
+                <Box py={4} px={6}>
+                  <Text as="h1" fontSize="xl" fontWeight="bold">
+                    Property review by, {r.user.fullName}
+                  </Text>
+
+                  <Text as="p" py={2}>
+                    {r.body}
+                  </Text>
+                </Box>
+              </Box>
+            </Flex>
+          ))}
       </SimpleGrid>
-      <Flex p={50} w="full" alignItems="center" justifyContent="center">
-        <Box w="sm" mx="auto" shadow="lg" rounded="lg" overflow="hidden">
-          <Image
-            w="full"
-            h={56}
-            fit="cover"
-            objectPosition="center"
-            src="https://images.unsplash.com/photo-1517841905240-472988babdf9?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=334&q=80"
-            alt="avatar"
-          />
-
-          <Flex alignItems="center" px={6} py={3} bg="gray.900">
-            <Text as="h1" mx={3} color="white" fontWeight="bold" fontSize="lg">
-              Focusing
-            </Text>
-          </Flex>
-
-          <Box py={4} px={6}>
-            <Text as="h1" fontSize="xl" fontWeight="bold">
-              Patterson johnson
-            </Text>
-
-            <Text as="p" py={2}>
-              Full Stack maker & UI / UX Designer , love hip hop music Author of
-              Building UI.
-            </Text>
-
-            <Flex alignItems="center" mt={4}>
-              <Text as="h1" px={2} fontSize="sm">
-                Choc UI
-              </Text>
-            </Flex>
-
-            <Flex alignItems="center" mt={4}>
-              <Text as="h1" px={2} fontSize="sm">
-                California
-              </Text>
-            </Flex>
-            <Flex alignItems="center" mt={4}>
-              <Text as="h1" px={2} fontSize="sm">
-                patterson@example.com
-              </Text>
-            </Flex>
-          </Box>
-        </Box>
-      </Flex>
     </>
   );
 };

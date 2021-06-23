@@ -40,6 +40,10 @@ export class Property extends BaseEntity {
   @Column()
   mainImage: string;
 
+  @Field(() => String)
+  @Column()
+  description!: string;
+
   @Field(() => Int)
   @Column()
   pricePerNight: number;
@@ -56,7 +60,7 @@ export class Property extends BaseEntity {
   @Column('text', { array: true })
   amenities: string[];
 
-  @Field(() => [Review])
+  @Field(() => [Review], { nullable: true })
   @ManyToOne(() => Review, (review) => review.user)
   reviews: Review[];
 
