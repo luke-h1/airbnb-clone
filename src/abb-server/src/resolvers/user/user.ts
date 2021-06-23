@@ -51,6 +51,14 @@ export class UserResolver {
     return '';
   }
 
+  @FieldResolver(() => String)
+  fullName(@Root() user: User) {
+    if (user) {
+      return user.firstName + user.lastName;
+    }
+    return null;
+  }
+
   @Mutation(() => UserResponse)
   async changePassword(
     @Arg('token') token: string,
@@ -158,6 +166,7 @@ export class UserResolver {
           lastName: options.lastName,
           email: options.email,
           password: hashedPassword,
+          picture: options.picture ?? options.picture,
         })
         .returning('*')
         .execute();

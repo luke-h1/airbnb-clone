@@ -7,6 +7,17 @@ query Property($id: Int!) {
     latitude
     longitude
     amenities
+    reviews {
+      id
+    user {
+        id
+        picture
+        createdAt
+        fullName
+      }
+      title
+      body
+    }
     propertyCreator {
       email
       firstName

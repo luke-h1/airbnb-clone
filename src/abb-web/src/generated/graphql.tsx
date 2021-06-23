@@ -22,6 +22,7 @@ export type CreatePropertyInput = {
   title: Scalars['String'];
   propertyType: Scalars['String'];
   mainImage: Scalars['String'];
+  pricePerNight: Scalars['Int'];
   latitude: Scalars['Float'];
   longitude: Scalars['Float'];
   amenities: Array<Scalars['String']>;
@@ -72,9 +73,11 @@ export type Property = {
   user: User;
   propertyType: Scalars['String'];
   mainImage: Scalars['String'];
+  pricePerNight: Scalars['Int'];
   latitude: Scalars['Float'];
   longitude: Scalars['Float'];
   amenities: Array<Scalars['String']>;
+  reviews: Array<Review>;
   createdAt: Scalars['String'];
   updatedAt: Scalars['String'];
   propertyCreator: User;
@@ -92,20 +95,32 @@ export type QueryPropertyArgs = {
   id: Scalars['Int'];
 };
 
+export type Review = {
+  __typename?: 'Review';
+  id: Scalars['Int'];
+  user: User;
+  title: Scalars['String'];
+  body: Scalars['String'];
+};
+
 export type User = {
   __typename?: 'User';
   id: Scalars['Int'];
   email: Scalars['String'];
   firstName: Scalars['String'];
+  picture?: Maybe<Scalars['String']>;
   lastName: Scalars['String'];
   properties: Array<Property>;
+  reviews: Array<Review>;
   createdAt: Scalars['String'];
   updatedAt: Scalars['String'];
+  fullName: Scalars['String'];
 };
 
 export type UserRegisterInput = {
   firstName: Scalars['String'];
   lastName: Scalars['String'];
+  picture: Scalars['String'];
   email: Scalars['String'];
   password: Scalars['String'];
 };
@@ -128,7 +143,7 @@ export type RegularErrorFragment = { __typename?: 'FieldError' } & Pick<
 
 export type RegularUserFragment = { __typename?: 'User' } & Pick<
   User,
-  'id' | 'email' | 'firstName' | 'lastName'
+  'id' | 'email' | 'fullName' | 'firstName' | 'lastName' | 'picture'
 >;
 
 export type RegularUserResponseFragment = { __typename?: 'UserResponse' } & {
@@ -150,6 +165,7 @@ export type CreatePropertyMutation = { __typename?: 'Mutation' } & {
     | 'latitude'
     | 'longitude'
     | 'amenities'
+    | 'pricePerNight'
     | 'createdAt'
     | 'updatedAt'
   >;
@@ -192,6 +208,14 @@ export type PropertiesQuery = { __typename?: 'Query' } & {
       Property,
       'id' | 'title' | 'propertyType' | 'mainImage' | 'amenities'
     > & {
+        reviews: Array<
+          { __typename?: 'Review' } & Pick<Review, 'id' | 'title' | 'body'> & {
+              user: { __typename?: 'User' } & Pick<
+                User,
+                'id' | 'picture' | 'createdAt' | 'fullName'
+              >;
+            }
+        >;
         propertyCreator: { __typename?: 'User' } & Pick<
           User,
           'firstName' | 'lastName'
@@ -215,6 +239,14 @@ export type PropertyQuery = { __typename?: 'Query' } & {
     | 'longitude'
     | 'amenities'
   > & {
+      reviews: Array<
+        { __typename?: 'Review' } & Pick<Review, 'id' | 'title' | 'body'> & {
+            user: { __typename?: 'User' } & Pick<
+              User,
+              'id' | 'picture' | 'createdAt' | 'fullName'
+            >;
+          }
+      >;
       propertyCreator: { __typename?: 'User' } & Pick<
         User,
         'email' | 'firstName' | 'lastName'
@@ -232,8 +264,10 @@ export const RegularUserFragmentDoc = gql`
   fragment RegularUser on User {
     id
     email
+    fullName
     firstName
     lastName
+    picture
   }
 `;
 export const RegularUserResponseFragmentDoc = gql`
@@ -258,6 +292,7 @@ export const CreatePropertyDocument = gql`
       latitude
       longitude
       amenities
+      pricePerNight
       createdAt
       updatedAt
     }
@@ -329,6 +364,17 @@ export const PropertiesDocument = gql`
       propertyType
       mainImage
       amenities
+      reviews {
+        id
+        user {
+          id
+          picture
+          createdAt
+          fullName
+        }
+        title
+        body
+      }
       propertyCreator {
         firstName
         lastName
@@ -355,6 +401,17 @@ export const PropertyDocument = gql`
       latitude
       longitude
       amenities
+      reviews {
+        id
+        user {
+          id
+          picture
+          createdAt
+          fullName
+        }
+        title
+        body
+      }
       propertyCreator {
         email
         firstName

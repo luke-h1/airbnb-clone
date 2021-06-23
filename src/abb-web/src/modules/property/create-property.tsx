@@ -20,6 +20,7 @@ const CreatePropertyPage = () => {
             title: '',
             propertyType: '',
             mainImage: '',
+            pricePerNight: 0,
             latitude: 0,
             longitude: 0,
             amenities: [],
@@ -50,6 +51,12 @@ const CreatePropertyPage = () => {
                 placeholder="A catchy image for your property"
                 label="mainImage"
                 type="text"
+              />
+              <InputField
+                name="pricePerNight"
+                placeholder="Price per night"
+                label="pricePerNight"
+                type="number"
               />
               <InputField
                 name="latitude"

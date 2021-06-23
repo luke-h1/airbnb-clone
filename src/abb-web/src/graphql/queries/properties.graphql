@@ -5,6 +5,17 @@ query Properties {
     propertyType
     mainImage
     amenities
+        reviews {
+      id
+         user {
+        id
+        picture
+        createdAt
+        fullName
+      }
+      title
+      body
+    }
     propertyCreator {
       firstName 
       lastName
