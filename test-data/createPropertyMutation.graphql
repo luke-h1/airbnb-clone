@@ -21,6 +21,7 @@ mutation {
       propertyType
       mainImage
       description
+      amenities
       pricePerNight
       latitude
       longitude

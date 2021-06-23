@@ -7,6 +7,7 @@ query Properties {
       description
       pricePerNight
       latitude
+      amenities
       longitude
       createdAt
       updatedAt

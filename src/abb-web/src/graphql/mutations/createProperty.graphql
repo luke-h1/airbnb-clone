@@ -12,6 +12,7 @@ mutation CreateProperty($options: CreatePropertyInput!) {
       description
       pricePerNight
       latitude
+      amenities
       longitude
       createdAt
       updatedAt
