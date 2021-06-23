@@ -66,7 +66,8 @@ const Card: React.FC<PropertyProps> = ({
             </div> */}
               <div className="listings__price">
                 <div className="listings__price__night">
-                  £{pricePerNight}<span>/ night</span>
+                  £{pricePerNight}
+                  <span>/ night</span>
                 </div>
                 {/* <div className="listings__price__total">
                   <span>$56 total</span>
