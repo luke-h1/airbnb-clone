@@ -1,29 +1,22 @@
 query Properties {
   properties {
-id 
-    title
-    propertyType
-    mainImage
-    latitude
-    longitude
-    amenities
-    pricePerNight
-    reviews {
-      id
-    user {
+      id 
+      title
+      creatorId
+      propertyType
+      mainImage
+      description
+      pricePerNight
+      latitude
+      longitude
+      amenities
+      createdAt
+      updatedAt
+      creator {
         id
+        email
         picture
-        createdAt
         fullName
       }
-      title
-      body
     }
-    propertyCreator {
-      email
-      firstName
-      lastName
-
-  }
-  }
-}
+} 

@@ -1,13 +1,9 @@
 import gql from 'graphql-tag';
 import * as Urql from 'urql';
 export type Maybe<T> = T | null;
-export type Exact<T extends { [key: string]: unknown }> = {
-  [K in keyof T]: T[K];
-};
-export type MakeOptional<T, K extends keyof T> = Omit<T, K> &
-  { [SubKey in K]?: Maybe<T[SubKey]> };
-export type MakeMaybe<T, K extends keyof T> = Omit<T, K> &
-  { [SubKey in K]: Maybe<T[SubKey]> };
+export type Exact<T extends { [key: string]: unknown }> = { [K in keyof T]: T[K] };
+export type MakeOptional<T, K extends keyof T> = Omit<T, K> & { [SubKey in K]?: Maybe<T[SubKey]> };
+export type MakeMaybe<T, K extends keyof T> = Omit<T, K> & { [SubKey in K]: Maybe<T[SubKey]> };
 export type Omit<T, K extends keyof T> = Pick<T, Exclude<keyof T, K>>;
 /** All built-in and custom scalars, mapped to their actual values */
 export type Scalars = {
@@ -37,7 +33,7 @@ export type FieldError = {
 
 export type Mutation = {
   __typename?: 'Mutation';
-  createProperty: Property;
+  createProperty: PropertyResponse;
   changePassword: UserResponse;
   forgotPassword: Scalars['Boolean'];
   register: UserResponse;
@@ -45,22 +41,27 @@ export type Mutation = {
   logout: Scalars['Boolean'];
 };
 
+
 export type MutationCreatePropertyArgs = {
   options: CreatePropertyInput;
 };
+
 
 export type MutationChangePasswordArgs = {
   newPassword: Scalars['String'];
   token: Scalars['String'];
 };
 
+
 export type MutationForgotPasswordArgs = {
   email: Scalars['String'];
 };
 
+
 export type MutationRegisterArgs = {
   options: UserRegisterInput;
 };
+
 
 export type MutationLoginArgs = {
   options: UsernamePasswordInput;
@@ -70,8 +71,7 @@ export type Property = {
   __typename?: 'Property';
   id: Scalars['Int'];
   title: Scalars['String'];
-  userId: Scalars['Int'];
-  user: User;
+  creatorId: Scalars['Int'];
   propertyType: Scalars['String'];
   mainImage: Scalars['String'];
   description: Scalars['String'];
@@ -82,7 +82,19 @@ export type Property = {
   reviews?: Maybe<Array<Review>>;
   createdAt: Scalars['String'];
   updatedAt: Scalars['String'];
-  propertyCreator: User;
+  creator: User;
+};
+
+export type PropertyFieldError = {
+  __typename?: 'PropertyFieldError';
+  field: Scalars['String'];
+  message: Scalars['String'];
+};
+
+export type PropertyResponse = {
+  __typename?: 'PropertyResponse';
+  errors?: Maybe<Array<PropertyFieldError>>;
+  property?: Maybe<Property>;
 };
 
 export type Query = {
@@ -93,6 +105,7 @@ export type Query = {
   me?: Maybe<User>;
 };
 
+
 export type QueryPropertyArgs = {
   id: Scalars['Int'];
 };
@@ -100,7 +113,8 @@ export type QueryPropertyArgs = {
 export type Review = {
   __typename?: 'Review';
   id: Scalars['Int'];
-  user: User;
+  creatorId: Scalars['Int'];
+  creator: User;
   title: Scalars['String'];
   body: Scalars['String'];
 };
@@ -138,186 +152,162 @@ export type UsernamePasswordInput = {
   password: Scalars['String'];
 };
 
-export type RegularErrorFragment = { __typename?: 'FieldError' } & Pick<
-  FieldError,
-  'field' | 'message'
->;
+export type RegularErrorFragment = (
+  { __typename?: 'FieldError' }
+  & Pick<FieldError, 'field' | 'message'>
+);
 
-export type RegularUserFragment = { __typename?: 'User' } & Pick<
-  User,
-  'id' | 'email' | 'fullName' | 'firstName' | 'lastName' | 'picture'
->;
+export type RegularUserFragment = (
+  { __typename?: 'User' }
+  & Pick<User, 'id' | 'email' | 'fullName' | 'firstName' | 'lastName' | 'picture'>
+);
 
-export type RegularUserResponseFragment = { __typename?: 'UserResponse' } & {
-  errors?: Maybe<Array<{ __typename?: 'FieldError' } & RegularErrorFragment>>;
-  user?: Maybe<{ __typename?: 'User' } & RegularUserFragment>;
-};
+export type RegularUserResponseFragment = (
+  { __typename?: 'UserResponse' }
+  & { errors?: Maybe<Array<(
+    { __typename?: 'FieldError' }
+    & RegularErrorFragment
+  )>>, user?: Maybe<(
+    { __typename?: 'User' }
+    & RegularUserFragment
+  )> }
+);
 
 export type CreatePropertyMutationVariables = Exact<{
   options: CreatePropertyInput;
 }>;
 
-export type CreatePropertyMutation = { __typename?: 'Mutation' } & {
-  createProperty: { __typename?: 'Property' } & Pick<
-    Property,
-    | 'id'
-    | 'title'
-    | 'propertyType'
-    | 'mainImage'
-    | 'description'
-    | 'pricePerNight'
-    | 'latitude'
-    | 'longitude'
-    | 'amenities'
-    | 'createdAt'
-    | 'updatedAt'
-  > & {
-      reviews?: Maybe<
-        Array<
-          { __typename?: 'Review' } & Pick<Review, 'id' | 'title' | 'body'> & {
-              user: { __typename?: 'User' } & Pick<
-                User,
-                'id' | 'email' | 'picture' | 'fullName'
-              >;
-            }
-        >
-      >;
-      propertyCreator: { __typename?: 'User' } & Pick<
-        User,
-        'id' | 'email' | 'firstName' | 'lastName'
-      >;
-    };
-};
+
+export type CreatePropertyMutation = (
+  { __typename?: 'Mutation' }
+  & { createProperty: (
+    { __typename?: 'PropertyResponse' }
+    & { errors?: Maybe<Array<(
+      { __typename?: 'PropertyFieldError' }
+      & Pick<PropertyFieldError, 'field' | 'message'>
+    )>>, property?: Maybe<(
+      { __typename?: 'Property' }
+      & Pick<Property, 'id' | 'title' | 'propertyType' | 'mainImage' | 'description' | 'pricePerNight' | 'latitude' | 'longitude' | 'createdAt' | 'updatedAt'>
+      & { creator: (
+        { __typename?: 'User' }
+        & Pick<User, 'id' | 'email' | 'picture' | 'fullName'>
+      ) }
+    )> }
+  ) }
+);
 
 export type LoginMutationVariables = Exact<{
   options: UsernamePasswordInput;
 }>;
 
-export type LoginMutation = { __typename?: 'Mutation' } & {
-  login: { __typename?: 'UserResponse' } & RegularUserResponseFragment;
-};
 
-export type LogoutMutationVariables = Exact<{ [key: string]: never }>;
+export type LoginMutation = (
+  { __typename?: 'Mutation' }
+  & { login: (
+    { __typename?: 'UserResponse' }
+    & RegularUserResponseFragment
+  ) }
+);
 
-export type LogoutMutation = { __typename?: 'Mutation' } & Pick<
-  Mutation,
-  'logout'
->;
+export type LogoutMutationVariables = Exact<{ [key: string]: never; }>;
+
+
+export type LogoutMutation = (
+  { __typename?: 'Mutation' }
+  & Pick<Mutation, 'logout'>
+);
 
 export type RegisterMutationVariables = Exact<{
   options: UserRegisterInput;
 }>;
 
-export type RegisterMutation = { __typename?: 'Mutation' } & {
-  register: { __typename?: 'UserResponse' } & RegularUserResponseFragment;
-};
 
-export type MeQueryVariables = Exact<{ [key: string]: never }>;
+export type RegisterMutation = (
+  { __typename?: 'Mutation' }
+  & { register: (
+    { __typename?: 'UserResponse' }
+    & RegularUserResponseFragment
+  ) }
+);
 
-export type MeQuery = { __typename?: 'Query' } & {
-  me?: Maybe<{ __typename?: 'User' } & RegularUserFragment>;
-};
+export type MeQueryVariables = Exact<{ [key: string]: never; }>;
 
-export type PropertiesQueryVariables = Exact<{ [key: string]: never }>;
 
-export type PropertiesQuery = { __typename?: 'Query' } & {
-  properties: Array<
-    { __typename?: 'Property' } & Pick<
-      Property,
-      | 'id'
-      | 'title'
-      | 'propertyType'
-      | 'mainImage'
-      | 'latitude'
-      | 'longitude'
-      | 'amenities'
-      | 'pricePerNight'
-    > & {
-        reviews?: Maybe<
-          Array<
-            { __typename?: 'Review' } & Pick<
-              Review,
-              'id' | 'title' | 'body'
-            > & {
-                user: { __typename?: 'User' } & Pick<
-                  User,
-                  'id' | 'picture' | 'createdAt' | 'fullName'
-                >;
-              }
-          >
-        >;
-        propertyCreator: { __typename?: 'User' } & Pick<
-          User,
-          'email' | 'firstName' | 'lastName'
-        >;
-      }
-  >;
-};
+export type MeQuery = (
+  { __typename?: 'Query' }
+  & { me?: Maybe<(
+    { __typename?: 'User' }
+    & RegularUserFragment
+  )> }
+);
+
+export type PropertiesQueryVariables = Exact<{ [key: string]: never; }>;
+
+
+export type PropertiesQuery = (
+  { __typename?: 'Query' }
+  & { properties: Array<(
+    { __typename?: 'Property' }
+    & Pick<Property, 'id' | 'title' | 'creatorId' | 'propertyType' | 'mainImage' | 'description' | 'pricePerNight' | 'latitude' | 'longitude' | 'amenities' | 'createdAt' | 'updatedAt'>
+    & { creator: (
+      { __typename?: 'User' }
+      & Pick<User, 'id' | 'email' | 'picture' | 'fullName'>
+    ) }
+  )> }
+);
 
 export type PropertyQueryVariables = Exact<{
   id: Scalars['Int'];
 }>;
 
-export type PropertyQuery = { __typename?: 'Query' } & {
-  property: { __typename?: 'Property' } & Pick<
-    Property,
-    | 'id'
-    | 'title'
-    | 'propertyType'
-    | 'mainImage'
-    | 'latitude'
-    | 'longitude'
-    | 'amenities'
-    | 'pricePerNight'
-  > & {
-      reviews?: Maybe<
-        Array<
-          { __typename?: 'Review' } & Pick<Review, 'id' | 'title' | 'body'> & {
-              user: { __typename?: 'User' } & Pick<
-                User,
-                'id' | 'picture' | 'createdAt' | 'fullName'
-              >;
-            }
-        >
-      >;
-      propertyCreator: { __typename?: 'User' } & Pick<
-        User,
-        'email' | 'firstName' | 'lastName'
-      >;
-    };
-};
+
+export type PropertyQuery = (
+  { __typename?: 'Query' }
+  & { property: (
+    { __typename?: 'Property' }
+    & Pick<Property, 'id' | 'title' | 'creatorId' | 'propertyType' | 'mainImage' | 'description' | 'pricePerNight' | 'latitude' | 'longitude' | 'amenities' | 'createdAt' | 'updatedAt'>
+    & { creator: (
+      { __typename?: 'User' }
+      & Pick<User, 'id' | 'email' | 'picture' | 'fullName'>
+    ) }
+  ) }
+);
 
 export const RegularErrorFragmentDoc = gql`
-  fragment RegularError on FieldError {
-    field
-    message
-  }
-`;
+    fragment RegularError on FieldError {
+  field
+  message
+}
+    `;
 export const RegularUserFragmentDoc = gql`
-  fragment RegularUser on User {
-    id
-    email
-    fullName
-    firstName
-    lastName
-    picture
-  }
-`;
+    fragment RegularUser on User {
+  id
+  email
+  fullName
+  firstName
+  lastName
+  picture
+}
+    `;
 export const RegularUserResponseFragmentDoc = gql`
-  fragment RegularUserResponse on UserResponse {
-    errors {
-      ...RegularError
-    }
-    user {
-      ...RegularUser
-    }
+    fragment RegularUserResponse on UserResponse {
+  errors {
+    ...RegularError
   }
-  ${RegularErrorFragmentDoc}
-  ${RegularUserFragmentDoc}
-`;
+  user {
+    ...RegularUser
+  }
+}
+    ${RegularErrorFragmentDoc}
+${RegularUserFragmentDoc}`;
 export const CreatePropertyDocument = gql`
-  mutation CreateProperty($options: CreatePropertyInput!) {
-    createProperty(options: $options) {
+    mutation CreateProperty($options: CreatePropertyInput!) {
+  createProperty(options: $options) {
+    errors {
+      field
+      message
+    }
+    property {
       id
       title
       propertyType
@@ -326,159 +316,117 @@ export const CreatePropertyDocument = gql`
       pricePerNight
       latitude
       longitude
-      amenities
-      reviews {
-        id
-        title
-        body
-        user {
-          id
-          email
-          picture
-          fullName
-        }
-      }
       createdAt
       updatedAt
-      propertyCreator {
+      creator {
         id
         email
-        firstName
-        lastName
+        picture
+        fullName
       }
     }
   }
-`;
+}
+    `;
 
 export function useCreatePropertyMutation() {
-  return Urql.useMutation<
-    CreatePropertyMutation,
-    CreatePropertyMutationVariables
-  >(CreatePropertyDocument);
-}
+  return Urql.useMutation<CreatePropertyMutation, CreatePropertyMutationVariables>(CreatePropertyDocument);
+};
 export const LoginDocument = gql`
-  mutation Login($options: UsernamePasswordInput!) {
-    login(options: $options) {
-      ...RegularUserResponse
-    }
+    mutation Login($options: UsernamePasswordInput!) {
+  login(options: $options) {
+    ...RegularUserResponse
   }
-  ${RegularUserResponseFragmentDoc}
-`;
+}
+    ${RegularUserResponseFragmentDoc}`;
 
 export function useLoginMutation() {
   return Urql.useMutation<LoginMutation, LoginMutationVariables>(LoginDocument);
-}
+};
 export const LogoutDocument = gql`
-  mutation Logout {
-    logout
-  }
-`;
+    mutation Logout {
+  logout
+}
+    `;
 
 export function useLogoutMutation() {
-  return Urql.useMutation<LogoutMutation, LogoutMutationVariables>(
-    LogoutDocument
-  );
-}
+  return Urql.useMutation<LogoutMutation, LogoutMutationVariables>(LogoutDocument);
+};
 export const RegisterDocument = gql`
-  mutation Register($options: UserRegisterInput!) {
-    register(options: $options) {
-      ...RegularUserResponse
-    }
+    mutation Register($options: UserRegisterInput!) {
+  register(options: $options) {
+    ...RegularUserResponse
   }
-  ${RegularUserResponseFragmentDoc}
-`;
+}
+    ${RegularUserResponseFragmentDoc}`;
 
 export function useRegisterMutation() {
-  return Urql.useMutation<RegisterMutation, RegisterMutationVariables>(
-    RegisterDocument
-  );
-}
+  return Urql.useMutation<RegisterMutation, RegisterMutationVariables>(RegisterDocument);
+};
 export const MeDocument = gql`
-  query Me {
-    me {
-      ...RegularUser
-    }
+    query Me {
+  me {
+    ...RegularUser
   }
-  ${RegularUserFragmentDoc}
-`;
+}
+    ${RegularUserFragmentDoc}`;
 
-export function useMeQuery(
-  options: Omit<Urql.UseQueryArgs<MeQueryVariables>, 'query'> = {}
-) {
+export function useMeQuery(options: Omit<Urql.UseQueryArgs<MeQueryVariables>, 'query'> = {}) {
   return Urql.useQuery<MeQuery>({ query: MeDocument, ...options });
-}
+};
 export const PropertiesDocument = gql`
-  query Properties {
-    properties {
+    query Properties {
+  properties {
+    id
+    title
+    creatorId
+    propertyType
+    mainImage
+    description
+    pricePerNight
+    latitude
+    longitude
+    amenities
+    createdAt
+    updatedAt
+    creator {
       id
-      title
-      propertyType
-      mainImage
-      latitude
-      longitude
-      amenities
-      pricePerNight
-      reviews {
-        id
-        user {
-          id
-          picture
-          createdAt
-          fullName
-        }
-        title
-        body
-      }
-      propertyCreator {
-        email
-        firstName
-        lastName
-      }
+      email
+      picture
+      fullName
     }
   }
-`;
-
-export function usePropertiesQuery(
-  options: Omit<Urql.UseQueryArgs<PropertiesQueryVariables>, 'query'> = {}
-) {
-  return Urql.useQuery<PropertiesQuery>({
-    query: PropertiesDocument,
-    ...options,
-  });
 }
+    `;
+
+export function usePropertiesQuery(options: Omit<Urql.UseQueryArgs<PropertiesQueryVariables>, 'query'> = {}) {
+  return Urql.useQuery<PropertiesQuery>({ query: PropertiesDocument, ...options });
+};
 export const PropertyDocument = gql`
-  query Property($id: Int!) {
-    property(id: $id) {
+    query Property($id: Int!) {
+  property(id: $id) {
+    id
+    title
+    creatorId
+    propertyType
+    mainImage
+    description
+    pricePerNight
+    latitude
+    longitude
+    amenities
+    createdAt
+    updatedAt
+    creator {
       id
-      title
-      propertyType
-      mainImage
-      latitude
-      longitude
-      amenities
-      pricePerNight
-      reviews {
-        id
-        user {
-          id
-          picture
-          createdAt
-          fullName
-        }
-        title
-        body
-      }
-      propertyCreator {
-        email
-        firstName
-        lastName
-      }
+      email
+      picture
+      fullName
     }
   }
-`;
-
-export function usePropertyQuery(
-  options: Omit<Urql.UseQueryArgs<PropertyQueryVariables>, 'query'> = {}
-) {
-  return Urql.useQuery<PropertyQuery>({ query: PropertyDocument, ...options });
 }
+    `;
+
+export function usePropertyQuery(options: Omit<Urql.UseQueryArgs<PropertyQueryVariables>, 'query'> = {}) {
+  return Urql.useQuery<PropertyQuery>({ query: PropertyDocument, ...options });
+};

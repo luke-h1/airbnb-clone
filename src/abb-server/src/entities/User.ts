@@ -38,11 +38,11 @@ export class User extends BaseEntity {
   password!: string;
 
   @Field(() => [Property])
-  @OneToMany(() => Property, (property) => property.creator)
+  @OneToMany(() => Property, (p) => p.creator)
   properties: Property[];
 
   @Field(() => [Review])
-  @OneToMany(() => Review, (review) => review.creator)
+  @OneToMany(() => Review, (r) => r.creator)
   reviews: Review[];
 
   @Field(() => String)

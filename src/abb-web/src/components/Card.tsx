@@ -9,7 +9,7 @@ export interface PropertyProps {
   mainImage: string;
   amenities: string[];
   pricePerNight: number;
-  propertyCreator: { firstName: string; lastName: string };
+  creator: { fullName: string };
 }
 
 const Card: React.FC<PropertyProps> = ({
@@ -18,9 +18,10 @@ const Card: React.FC<PropertyProps> = ({
   propertyType,
   mainImage,
   amenities,
-  propertyCreator,
+  creator,
   pricePerNight,
 }) => {
+  console.log(creator);
   return (
     <ListingStyles>
       <Link href={`/property/${id}`}>
@@ -40,8 +41,7 @@ const Card: React.FC<PropertyProps> = ({
                 <span className="greyText">{propertyType}</span>
                 <h2>{title}</h2>
                 <h3>
-                  Posted by {propertyCreator.firstName}
-                  {propertyCreator.lastName}
+                  Posted by {creator.fullName}
                 </h3>
               </div>
               <div className="listings__title__icon">

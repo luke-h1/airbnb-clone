@@ -2,14 +2,17 @@ import {
   Arg,
   Ctx,
   Field,
+  FieldResolver,
   Int,
   Mutation,
   ObjectType,
   Query,
   Resolver,
+  Root,
   UseMiddleware,
 } from 'type-graphql';
 import { getConnection } from 'typeorm';
+import { User } from '../../entities/User';
 import { isAuth } from '../../middleware/isAuth';
 import { MyContext } from '../../shared/types';
 import { validateProperty } from '../../shared/validateProperty';
@@ -36,6 +39,11 @@ class PropertyResponse {
 
 @Resolver(Property)
 export class PropertyResolver {
+  @FieldResolver(() => User)
+  creator(@Root() property: Property, @Ctx() { userLoader }: MyContext) {
+    return userLoader.load(property.creatorId);
+  }
+
   @Mutation(() => PropertyResponse)
   @UseMiddleware(isAuth)
   async createProperty(

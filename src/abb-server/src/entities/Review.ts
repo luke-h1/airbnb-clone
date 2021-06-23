@@ -18,12 +18,11 @@ export class Review extends BaseEntity {
   id!: number;
 
   @Field(() => Int)
-  creatorId: number
+  creatorId: number;
 
   @Field(() => User)
   @ManyToOne(() => User, (user) => user.reviews)
   @JoinColumn({ name: 'creatorId' })
-
   creator: User;
 
   @Field(() => String)

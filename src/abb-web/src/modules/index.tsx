@@ -27,7 +27,7 @@ const index: React.FC<{}> = () => {
   const [{ data, error, fetching }] = usePropertiesQuery();
   return (
     <IndexWrapper>
-      {error && <h1>error</h1>}
+      {error ? error.message : null}
 
       {!data && fetching ? (
         <p>loading...</p>
@@ -41,7 +41,7 @@ const index: React.FC<{}> = () => {
               propertyType={p.propertyType}
               mainImage={p.mainImage}
               amenities={p.amenities}
-              propertyCreator={p.propertyCreator}
+              creator={p.creator}
               pricePerNight={p.pricePerNight}
             />
           )))}

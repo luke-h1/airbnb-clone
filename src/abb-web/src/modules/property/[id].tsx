@@ -59,9 +59,7 @@ const SingleProperty: React.FC<{}> = () => {
             fontWeight="extrabold"
             mb={2}
           >
-            {data.property.title} Hosted by{' '}
-            {data.property.propertyCreator.firstName}{' '}
-            {data.property.propertyCreator.lastName}
+            {data.property.title} Hosted by {data.property.creator.fullName}{' '}
           </Text>
           <Text
             as="h1"
@@ -95,8 +93,8 @@ const SingleProperty: React.FC<{}> = () => {
 
         <Container maxW="6xl" mt={10}>
           <SimpleGrid columns={{ base: 1, md: 2, lg: 4 }} spacing={10}>
-            {data.property.amenities
-              && data.property.amenities.map((p) => (
+            {data.property.amenities &&
+              data.property.amenities.map((p) => (
                 <HStack align="top">
                   <Box color="green.400" px={2}>
                     <Icon as={CheckIcon} />
@@ -111,8 +109,8 @@ const SingleProperty: React.FC<{}> = () => {
       </Box>
       {/* Reviews */}
       <SimpleGrid columns={2} spacingX="40px" spacingY="20px">
-        {data.property.reviews
-          && data.property.reviews.map((r) => (
+        {data.property.reviews &&
+          data.property.reviews.map((r) => (
             <Flex p={50} w="full" alignItems="center" justifyContent="center">
               <Box w="sm" mx="auto" shadow="lg" rounded="lg" overflow="hidden">
                 <Image
