@@ -42,6 +42,7 @@ const index: React.FC<{}> = () => {
               mainImage={p.mainImage}
               amenities={p.amenities}
               propertyCreator={p.propertyCreator}
+              pricePerNight={p.pricePerNight}
             />
           )))}
         </>

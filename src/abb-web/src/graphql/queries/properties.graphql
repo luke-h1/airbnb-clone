@@ -1,13 +1,16 @@
 query Properties {
   properties {
-    id
+id 
     title
     propertyType
     mainImage
+    latitude
+    longitude
     amenities
-        reviews {
+    pricePerNight
+    reviews {
       id
-         user {
+    user {
         id
         picture
         createdAt
@@ -17,8 +20,10 @@ query Properties {
       body
     }
     propertyCreator {
-      firstName 
+      email
+      firstName
       lastName
-    }
+
+  }
   }
 }
