@@ -4,6 +4,7 @@ import {
   BaseEntity,
   Column,
   Entity,
+  JoinColumn,
   ManyToOne,
   PrimaryGeneratedColumn,
 } from 'typeorm';
@@ -16,9 +17,14 @@ export class Review extends BaseEntity {
   @PrimaryGeneratedColumn()
   id!: number;
 
+  @Field(() => Int)
+  creatorId: number
+
   @Field(() => User)
   @ManyToOne(() => User, (user) => user.reviews)
-  user: User;
+  @JoinColumn({ name: 'creatorId' })
+
+  creator: User;
 
   @Field(() => String)
   @Column('varchar', { length: '40' })

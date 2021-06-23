@@ -24,13 +24,13 @@ export class Property extends BaseEntity {
   title: string;
 
   @Field(() => Int)
-  @Column()
-  userId: number;
+  @Column('int')
+  creatorId: number;
 
   @Field(() => User)
-  @ManyToOne(() => User, (user) => user.properties)
-  @JoinColumn({ name: 'userId' })
-  user: User;
+  @ManyToOne(() => User, (u) => u.properties)
+  @JoinColumn({ name: 'creatorId' })
+  creator: User;
 
   @Field()
   @Column('varchar', { length: 30 })
@@ -61,7 +61,7 @@ export class Property extends BaseEntity {
   amenities: string[];
 
   @Field(() => [Review], { nullable: true })
-  @ManyToOne(() => Review, (review) => review.user)
+  @ManyToOne(() => Review, (review) => review.creator)
   reviews: Review[];
 
   @Field(() => String)
