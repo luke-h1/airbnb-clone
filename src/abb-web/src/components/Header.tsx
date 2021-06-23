@@ -7,6 +7,7 @@ import { useRouter } from 'next/router';
 import { isServer } from '@src/utils/isServer';
 import { withUrqlClient } from 'next-urql';
 import { createUrqlClient } from '@src/utils/createUrqlClient';
+import { Loader } from './Loader';
 
 interface HeaderProps {}
 
@@ -147,7 +148,7 @@ const Header: React.FC<HeaderProps> = () => {
           <img src={data.me?.picture && data.me.picture} alt="tes" />
         </ImgWrapper>
         {logoutFetching ? (
-          <p>loading...</p>
+          <Loader size="sm" />
         ) : (
           <button onClick={handleLogout} type="button">
             logout

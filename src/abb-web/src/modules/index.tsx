@@ -4,6 +4,7 @@ import { withUrqlClient } from 'next-urql';
 import React from 'react';
 import Card from '@src/components/Card';
 import styled from '@emotion/styled';
+import { Loader } from '@src/components/Loader';
 
 // import dynamic from 'next/dynamic';
 
@@ -30,7 +31,9 @@ const index: React.FC<{}> = () => {
       {error ? error.message : null}
 
       {!data && fetching ? (
-        <p>loading...</p>
+        <>
+          <Loader size="xl" />
+        </>
       ) : (
         <>
           {data?.properties.map((p) => (!p ? null : (
@@ -47,6 +50,7 @@ const index: React.FC<{}> = () => {
           )))}
         </>
       )}
+
     </IndexWrapper>
   );
 };

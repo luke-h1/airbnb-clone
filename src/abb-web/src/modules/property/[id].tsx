@@ -3,6 +3,8 @@ import React from 'react';
 import { createUrqlClient } from '@src/utils/createUrqlClient';
 import { useGetPropertyFromUrl } from '@src/utils/useGetPropertyFromUrl';
 import { withUrqlClient } from 'next-urql';
+import { Loader } from '@src/components/Loader';
+
 import {
   Box,
   Stack,
@@ -21,7 +23,11 @@ import { CheckIcon } from '@chakra-ui/icons';
 const SingleProperty: React.FC<{}> = () => {
   const [{ data, error, fetching }] = useGetPropertyFromUrl();
   if (fetching) {
-    return <p>loading..</p>;
+    return (
+      <Flex direction="column" minH="50vh" py={10} justifyContent="center" alignItems="center">
+        <Loader size="xl" />
+      </Flex>
+    );
   }
   if (error) {
     return <div>{error.message}</div>;
