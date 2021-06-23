@@ -40,9 +40,7 @@ const Card: React.FC<PropertyProps> = ({
               <div className="listings__icon__text">
                 <span className="greyText">{propertyType}</span>
                 <h2>{title}</h2>
-                <h3>
-                  Posted by {creator.fullName}
-                </h3>
+                <h3>Posted by {creator.fullName}</h3>
               </div>
               <div className="listings__title__icon">
                 <button type="button">

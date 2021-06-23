@@ -25,7 +25,7 @@ export class Property extends BaseEntity {
 
   @Field(() => Int)
   @Column()
-  creatorId: number
+  creatorId: number;
 
   @ManyToOne(() => User, (u) => u.properties)
   @JoinColumn({ name: 'creatorId' })
