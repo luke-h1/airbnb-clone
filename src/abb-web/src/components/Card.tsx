@@ -8,6 +8,7 @@ export interface PropertyProps {
   propertyType: string;
   mainImage: string;
   amenities: string[];
+  pricePerNight: number;
   propertyCreator: { firstName: string; lastName: string };
 }
 
@@ -18,6 +19,7 @@ const Card: React.FC<PropertyProps> = ({
   mainImage,
   amenities,
   propertyCreator,
+  pricePerNight,
 }) => {
   return (
     <ListingStyles>
@@ -64,11 +66,12 @@ const Card: React.FC<PropertyProps> = ({
             </div> */}
               <div className="listings__price">
                 <div className="listings__price__night">
-                  $28<span>/ night</span>
+                  £{pricePerNight}
+                  <span>/ night</span>
                 </div>
-                <div className="listings__price__total">
+                {/* <div className="listings__price__total">
                   <span>$56 total</span>
-                </div>
+                </div> */}
               </div>
             </div>
           </div>

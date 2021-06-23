@@ -1,15 +1,23 @@
-import { Field, Float, InputType } from 'type-graphql';
+import {
+  Field, Float, InputType, Int,
+} from 'type-graphql';
 
 @InputType()
 export class CreatePropertyInput {
-  @Field()
+  @Field(() => String)
   title: string;
 
   @Field(() => String)
   propertyType: string;
 
   @Field(() => String)
+  description: string;
+
+  @Field(() => String)
   mainImage: string;
+
+  @Field(() => Int)
+  pricePerNight: number;
 
   @Field(() => Float)
   latitude: number;

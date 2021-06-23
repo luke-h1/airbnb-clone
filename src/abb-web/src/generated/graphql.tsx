@@ -21,7 +21,9 @@ export type Scalars = {
 export type CreatePropertyInput = {
   title: Scalars['String'];
   propertyType: Scalars['String'];
+  description: Scalars['String'];
   mainImage: Scalars['String'];
+  pricePerNight: Scalars['Int'];
   latitude: Scalars['Float'];
   longitude: Scalars['Float'];
   amenities: Array<Scalars['String']>;
@@ -72,9 +74,12 @@ export type Property = {
   user: User;
   propertyType: Scalars['String'];
   mainImage: Scalars['String'];
+  description: Scalars['String'];
+  pricePerNight: Scalars['Int'];
   latitude: Scalars['Float'];
   longitude: Scalars['Float'];
   amenities: Array<Scalars['String']>;
+  reviews?: Maybe<Array<Review>>;
   createdAt: Scalars['String'];
   updatedAt: Scalars['String'];
   propertyCreator: User;
@@ -92,20 +97,32 @@ export type QueryPropertyArgs = {
   id: Scalars['Int'];
 };
 
+export type Review = {
+  __typename?: 'Review';
+  id: Scalars['Int'];
+  user: User;
+  title: Scalars['String'];
+  body: Scalars['String'];
+};
+
 export type User = {
   __typename?: 'User';
   id: Scalars['Int'];
   email: Scalars['String'];
   firstName: Scalars['String'];
+  picture?: Maybe<Scalars['String']>;
   lastName: Scalars['String'];
   properties: Array<Property>;
+  reviews: Array<Review>;
   createdAt: Scalars['String'];
   updatedAt: Scalars['String'];
+  fullName: Scalars['String'];
 };
 
 export type UserRegisterInput = {
   firstName: Scalars['String'];
   lastName: Scalars['String'];
+  picture: Scalars['String'];
   email: Scalars['String'];
   password: Scalars['String'];
 };
@@ -128,7 +145,7 @@ export type RegularErrorFragment = { __typename?: 'FieldError' } & Pick<
 
 export type RegularUserFragment = { __typename?: 'User' } & Pick<
   User,
-  'id' | 'email' | 'firstName' | 'lastName'
+  'id' | 'email' | 'fullName' | 'firstName' | 'lastName' | 'picture'
 >;
 
 export type RegularUserResponseFragment = { __typename?: 'UserResponse' } & {
@@ -143,16 +160,33 @@ export type CreatePropertyMutationVariables = Exact<{
 export type CreatePropertyMutation = { __typename?: 'Mutation' } & {
   createProperty: { __typename?: 'Property' } & Pick<
     Property,
-    | 'userId'
+    | 'id'
     | 'title'
     | 'propertyType'
     | 'mainImage'
+    | 'description'
+    | 'pricePerNight'
     | 'latitude'
     | 'longitude'
     | 'amenities'
     | 'createdAt'
     | 'updatedAt'
-  >;
+  > & {
+      reviews?: Maybe<
+        Array<
+          { __typename?: 'Review' } & Pick<Review, 'id' | 'title' | 'body'> & {
+              user: { __typename?: 'User' } & Pick<
+                User,
+                'id' | 'email' | 'picture' | 'fullName'
+              >;
+            }
+        >
+      >;
+      propertyCreator: { __typename?: 'User' } & Pick<
+        User,
+        'id' | 'email' | 'firstName' | 'lastName'
+      >;
+    };
 };
 
 export type LoginMutationVariables = Exact<{
@@ -190,11 +224,31 @@ export type PropertiesQuery = { __typename?: 'Query' } & {
   properties: Array<
     { __typename?: 'Property' } & Pick<
       Property,
-      'id' | 'title' | 'propertyType' | 'mainImage' | 'amenities'
+      | 'id'
+      | 'title'
+      | 'propertyType'
+      | 'mainImage'
+      | 'latitude'
+      | 'longitude'
+      | 'amenities'
+      | 'pricePerNight'
     > & {
+        reviews?: Maybe<
+          Array<
+            { __typename?: 'Review' } & Pick<
+              Review,
+              'id' | 'title' | 'body'
+            > & {
+                user: { __typename?: 'User' } & Pick<
+                  User,
+                  'id' | 'picture' | 'createdAt' | 'fullName'
+                >;
+              }
+          >
+        >;
         propertyCreator: { __typename?: 'User' } & Pick<
           User,
-          'firstName' | 'lastName'
+          'email' | 'firstName' | 'lastName'
         >;
       }
   >;
@@ -214,7 +268,18 @@ export type PropertyQuery = { __typename?: 'Query' } & {
     | 'latitude'
     | 'longitude'
     | 'amenities'
+    | 'pricePerNight'
   > & {
+      reviews?: Maybe<
+        Array<
+          { __typename?: 'Review' } & Pick<Review, 'id' | 'title' | 'body'> & {
+              user: { __typename?: 'User' } & Pick<
+                User,
+                'id' | 'picture' | 'createdAt' | 'fullName'
+              >;
+            }
+        >
+      >;
       propertyCreator: { __typename?: 'User' } & Pick<
         User,
         'email' | 'firstName' | 'lastName'
@@ -232,8 +297,10 @@ export const RegularUserFragmentDoc = gql`
   fragment RegularUser on User {
     id
     email
+    fullName
     firstName
     lastName
+    picture
   }
 `;
 export const RegularUserResponseFragmentDoc = gql`
@@ -251,15 +318,34 @@ export const RegularUserResponseFragmentDoc = gql`
 export const CreatePropertyDocument = gql`
   mutation CreateProperty($options: CreatePropertyInput!) {
     createProperty(options: $options) {
-      userId
+      id
       title
       propertyType
       mainImage
+      description
+      pricePerNight
       latitude
       longitude
       amenities
+      reviews {
+        id
+        title
+        body
+        user {
+          id
+          email
+          picture
+          fullName
+        }
+      }
       createdAt
       updatedAt
+      propertyCreator {
+        id
+        email
+        firstName
+        lastName
+      }
     }
   }
 `;
@@ -328,8 +414,23 @@ export const PropertiesDocument = gql`
       title
       propertyType
       mainImage
+      latitude
+      longitude
       amenities
+      pricePerNight
+      reviews {
+        id
+        user {
+          id
+          picture
+          createdAt
+          fullName
+        }
+        title
+        body
+      }
       propertyCreator {
+        email
         firstName
         lastName
       }
@@ -355,6 +456,18 @@ export const PropertyDocument = gql`
       latitude
       longitude
       amenities
+      pricePerNight
+      reviews {
+        id
+        user {
+          id
+          picture
+          createdAt
+          fullName
+        }
+        title
+        body
+      }
       propertyCreator {
         email
         firstName

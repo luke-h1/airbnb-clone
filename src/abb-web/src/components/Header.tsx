@@ -1,15 +1,12 @@
 import React from 'react';
 import styled from '@emotion/styled';
 import { baseColors } from '@src/styles/Variables';
-import Image from 'next/image';
 import Link from 'next/link';
 import { useLogoutMutation, useMeQuery } from '@src/generated/graphql';
 import { useRouter } from 'next/router';
 import { isServer } from '@src/utils/isServer';
 import { withUrqlClient } from 'next-urql';
 import { createUrqlClient } from '@src/utils/createUrqlClient';
-
-// @TODO: on click event to open menu. -> sign in / sign out depending on the state
 
 interface HeaderProps {}
 
@@ -28,50 +25,19 @@ const StyledHeader = styled.header`
 `;
 
 const HeaderSearch = styled.div`
-  display: inline-flex;
+  display: flex;
   border-radius: 24px;
   overflow: hidden;
+  font-size: 18px;
   align-items: center;
-  border: 1px solid ${baseColors.greyMed};
   transition: box-shadow 0.2s ease;
-  &:hover {
-    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.18);
-  }
-  button {
-    background: transparent;
-    cursor: pointer;
-    height: 48px;
-    padding: 0 16px;
-    display: flex;
-    align-items: center;
-    /* font-family: 'Circular Medium' */
-    border: none;
-    &:first-of-type {
-      padding-left: 24px;
+  a {
+    margin: 0 10px 0 10px;
+    color: #000;
+    text-decoration: none;
+    &:hover {
+      box-shadow: 0 2px 4px rgba(0, 0, 0, 0.18);
     }
-    &:last-of-type {
-      padding-right: 7px;
-    }
-    span {
-      width: 1px;
-      height: 24px;
-      background: 1px solid ${baseColors.greyMed};
-    }
-  }
-`;
-
-const SearchIcon = styled.div`
-  width: 32px;
-  height: 32px;
-  align-items: center;
-  justify-content: center;
-  margin-left: 16px;
-  display: flex;
-  border-radius: 50%;
-  background: var(--pink);
-  img {
-    width: 12px;
-    height: 12px;
   }
 `;
 
@@ -91,11 +57,6 @@ const HeaderNavigation = styled.div`
     height: 48px;
     border-radius: 22px;
     cursor: pointer;
-    &-greyHover {
-      &:hover {
-        background: ${baseColors.greyTextLight};
-      }
-    }
     &-language {
       img {
         &:first-child {
@@ -133,6 +94,15 @@ const HeaderNavigation = styled.div`
   }
 `;
 
+const ImgWrapper = styled.span`
+  width: 50px;
+  height: 50px;
+  img {
+    width: 100%;
+    object-fit: cover;
+  }
+`;
+
 const Header: React.FC<HeaderProps> = () => {
   const router = useRouter();
   const [{ fetching: logoutFetching }, logout] = useLogoutMutation();
@@ -146,11 +116,14 @@ const Header: React.FC<HeaderProps> = () => {
   };
 
   let navLinks = null;
+  let authLinks = null;
 
   if (fetching) {
     // user is not logged in
   }
   if (!data?.me) {
+    authLinks = null;
+
     navLinks = (
       <>
         <Link href="/login">
@@ -170,9 +143,9 @@ const Header: React.FC<HeaderProps> = () => {
             {data?.me?.email} ({data?.me?.firstName} {data?.me?.lastName})
           </a>
         </Link>
-        <Link href="/create-property">
-          <a className="button button-greyHover">Create Listing</a>
-        </Link>
+        <ImgWrapper>
+          <img src={data.me?.picture && data.me.picture} alt="tes" />
+        </ImgWrapper>
         {logoutFetching ? (
           <p>loading...</p>
         ) : (
@@ -180,6 +153,16 @@ const Header: React.FC<HeaderProps> = () => {
             logout
           </button>
         )}
+      </>
+    );
+    authLinks = (
+      <>
+        <Link href="/property/create-property">
+          <a>Create Property</a>
+        </Link>
+        <Link href="/account">
+          <a>View account</a>
+        </Link>
       </>
     );
   }
@@ -193,30 +176,8 @@ const Header: React.FC<HeaderProps> = () => {
           </a>
         </Link>
       </div>
-      <HeaderSearch>
-        <button type="button">Selected map area</button>
-        <span />
-        <button type="button">Selected map area</button>
-        <span />
-        <button type="button">1 guest</button>
-        <SearchIcon>
-          <Image src="/icons/searchIcon.svg" width={12} height={12} />
-        </SearchIcon>
-      </HeaderSearch>
-      <HeaderNavigation>
-        {navLinks}
-        <button
-          className="
-            button
-            button-language
-            button-greyHover
-          "
-          type="button"
-        >
-          <img src="/icons/globe.svg" alt="globe" />
-          <img src="/icons/chevronDown.svg" alt="down" />
-        </button>
-      </HeaderNavigation>
+      <HeaderSearch>{authLinks}</HeaderSearch>
+      <HeaderNavigation>{navLinks}</HeaderNavigation>
     </StyledHeader>
   );
 };

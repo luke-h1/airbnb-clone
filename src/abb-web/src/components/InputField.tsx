@@ -1,5 +1,13 @@
 import React, { InputHTMLAttributes } from 'react';
 import { useField } from 'formik';
+import {
+  FormControl,
+  FormLabel,
+  Input,
+  FormErrorMessage,
+  Textarea,
+} from '@chakra-ui/react';
+import { Wrapper } from '@src/components/Wrapper';
 
 type InputFieldProps = InputHTMLAttributes<HTMLInputElement> & {
   label: string;
@@ -10,15 +18,24 @@ type InputFieldProps = InputHTMLAttributes<HTMLInputElement> & {
 // '' => false
 // 'error message stuff' => true
 
-export const InputField: React.FC<InputFieldProps> = ({ label, ...props }) => {
+export const InputField: React.FC<InputFieldProps> = ({
+  label,
+  textarea,
+  size: _,
+  ...props
+}) => {
+  let InputOrTextarea = Input;
+  if (textarea) {
+    InputOrTextarea = Textarea as any;
+  }
   const [field, { error }] = useField(props);
   return (
-    <div className="form-wrapper">
-      <label htmlFor={field.name} hidden>
-        {label}
-      </label>
-      <input {...field} {...props} id={field.name} className="inputStyles" />
-      {error ? <h1>{error}</h1> : null}
-    </div>
+    <Wrapper>
+      <FormControl isInvalid={!!error}>
+        <FormLabel htmlFor={field.name}>{label}</FormLabel>
+        <InputOrTextarea {...field} {...props} id={field.name} />
+        {error ? <FormErrorMessage>{error}</FormErrorMessage> : null}
+      </FormControl>
+    </Wrapper>
   );
 };

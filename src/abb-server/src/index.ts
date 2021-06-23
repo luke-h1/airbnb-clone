@@ -13,6 +13,7 @@ import { redis } from './redis';
 import { Property } from './entities/Property';
 import { User } from './entities/User';
 import { createSchema } from './shared/createSchema';
+import { Review } from './entities/Review';
 
 const main = async () => {
   await createConnection({
@@ -21,7 +22,7 @@ const main = async () => {
     logging: !__prod__,
     synchronize: !__prod__,
     migrations: [path.join(__dirname, './migrations/*')],
-    entities: [User, Property],
+    entities: [User, Property, Review],
   });
   // await conn.runMigrations();
   const app = express();

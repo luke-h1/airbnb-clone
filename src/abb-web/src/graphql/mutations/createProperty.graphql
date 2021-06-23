@@ -1,13 +1,33 @@
 mutation CreateProperty($options: CreatePropertyInput!) { 
   createProperty(options: $options) {
-    userId
-    title
-    propertyType
+   id
+   title
+   propertyType
     mainImage
+    description
+    
+    pricePerNight
     latitude
     longitude
     amenities
+    reviews {
+      id
+      title
+      body
+      user {
+        id
+        email
+        picture
+        fullName
+      }
+    }
     createdAt
     updatedAt
+    propertyCreator {
+      id
+      email
+      firstName
+      lastName
+    }
   }
 }
