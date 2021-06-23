@@ -32,6 +32,16 @@ mutation {
         picture
         fullName
       }
+      reviews {
+        id
+        title
+        body
+        creator {
+          id
+          email
+          fullName
+        }
+      }
     }
   }
 }
