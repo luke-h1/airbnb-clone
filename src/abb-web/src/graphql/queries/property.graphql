@@ -2,14 +2,12 @@ query Property($id: Int!) {
   property(id: $id) {
       id
       title
-      creatorId
       propertyType
       mainImage
       description
       pricePerNight
       latitude
       longitude
-      amenities
       createdAt
       updatedAt
       creator {
@@ -17,6 +15,16 @@ query Property($id: Int!) {
         email
         picture
         fullName
+      }
+      reviews {
+        id
+        title
+        body
+        creator {
+          id
+          email
+          fullName
+        }
       }
   }
 } 

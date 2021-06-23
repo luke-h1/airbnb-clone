@@ -1,6 +1,6 @@
 mutation CreateProperty($options: CreatePropertyInput!) { 
   createProperty(options: $options) {
-   errors {
+    errors {
       field
       message
     }
@@ -20,6 +20,16 @@ mutation CreateProperty($options: CreatePropertyInput!) {
         email
         picture
         fullName
+      }
+      reviews {
+        id
+        title
+        body
+        creator {
+          id
+          email
+          fullName
+        }
       }
     }
   }
