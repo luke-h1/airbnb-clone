@@ -255,11 +255,18 @@ export type PropertiesQuery = (
   { __typename?: 'Query' }
   & { properties: Array<(
     { __typename?: 'Property' }
-    & Pick<Property, 'id' | 'title' | 'creatorId' | 'propertyType' | 'mainImage' | 'description' | 'pricePerNight' | 'latitude' | 'longitude' | 'amenities' | 'createdAt' | 'updatedAt'>
+    & Pick<Property, 'id' | 'title' | 'propertyType' | 'mainImage' | 'description' | 'pricePerNight' | 'latitude' | 'longitude' | 'createdAt' | 'updatedAt'>
     & { creator: (
       { __typename?: 'User' }
       & Pick<User, 'id' | 'email' | 'picture' | 'fullName'>
-    ) }
+    ), reviews?: Maybe<Array<(
+      { __typename?: 'Review' }
+      & Pick<Review, 'id' | 'title' | 'body'>
+      & { creator: (
+        { __typename?: 'User' }
+        & Pick<User, 'id' | 'email' | 'fullName'>
+      ) }
+    )>> }
   )> }
 );
 
@@ -403,14 +410,12 @@ export const PropertiesDocument = gql`
   properties {
     id
     title
-    creatorId
     propertyType
     mainImage
     description
     pricePerNight
     latitude
     longitude
-    amenities
     createdAt
     updatedAt
     creator {
@@ -418,6 +423,16 @@ export const PropertiesDocument = gql`
       email
       picture
       fullName
+    }
+    reviews {
+      id
+      title
+      body
+      creator {
+        id
+        email
+        fullName
+      }
     }
   }
 }
