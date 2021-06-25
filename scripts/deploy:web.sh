@@ -1,4 +1,3 @@
-
 #!/bin/bash
 echo "Deploy frontend to development or production? (enter 'dev' or 'prod')"
 read -r response
