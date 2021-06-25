@@ -1,5 +1,5 @@
 /* eslint-disable */
-import { Button, Flex, Text, Box } from '@chakra-ui/react';
+import { Button, Flex, Text, Box, SimpleGrid } from '@chakra-ui/react';
 import { InputField } from '@src/components/InputField';
 import {
   usePropertyQuery,
@@ -52,7 +52,7 @@ const EditPropertyPage = () => {
   return (
     <>
       <h1>Update Property</h1>
-      <Flex>
+      <SimpleGrid columns={2} spacingX="40px" spacingY="20px">
         <Formik
           initialValues={{
             title: data.property.title,
@@ -122,7 +122,8 @@ const EditPropertyPage = () => {
                 label="amenities"
                 type="text"
               />
-              <Box
+              <Flex direction='column' justifyContent='center' alignItems='center'>
+              <Box 
                 mt={4}
                 mb={6}
                 as={Button}
@@ -135,10 +136,14 @@ const EditPropertyPage = () => {
               >
                 Update Property
               </Box>
+              </Flex>
             </Form>
           )}
         </Formik>
-      </Flex>
+        <Box bg="tomato" height="80px">
+          Map goes here
+        </Box>
+      </SimpleGrid>
     </>
   );
 };
