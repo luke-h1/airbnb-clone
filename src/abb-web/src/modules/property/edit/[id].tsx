@@ -1,36 +1,75 @@
 /* eslint-disable */
-import { Flex } from '@src/components/Flex';
+import { Button, Flex, Text, Box } from '@chakra-ui/react';
 import { InputField } from '@src/components/InputField';
-import { useCreatePropertyMutation } from '@src/generated/graphql';
+import {
+  usePropertyQuery,
+  useUpdatePropertyMutation,
+} from '@src/generated/graphql';
 import { createUrqlClient } from '@src/utils/createUrqlClient';
+import { useGetIntId } from '@src/utils/useGetIntId';
 import { Formik, Form } from 'formik';
 import { withUrqlClient } from 'next-urql';
 import { useRouter } from 'next/router';
 import React from 'react';
+import { Loader } from '@src/components/Loader';
 
-const CreatePropertyPage = () => {
+const EditPropertyPage = () => {
   const router = useRouter();
-  const [, createProperty] = useCreatePropertyMutation();
+  const intId = useGetIntId();
+  const [, updateProperty] = useUpdatePropertyMutation();
+  const [{ data, fetching }] = usePropertyQuery({
+    /**
+     * If id =-1 we know we're on server side
+     * pause until id is not -1
+     * lookup id in DB
+     * if is present, fetch property, prefill form with fields
+     * else not found
+     */
+    pause: intId === -1,
+    variables: {
+      id: intId,
+    },
+  });
+
+  if (fetching) {
+    return (
+      <Flex direction="column" alignItems="center" justifyContent="center">
+        <Loader size="md" />
+      </Flex>
+    );
+  }
+
+  if (!data?.property) {
+    <Flex direction="column" alignItems="center" justifyContent="center">
+      <Text as="h1" fontSize="30px">
+        404 - Could not find property
+      </Text>
+    </Flex>;
+  }
+  if (!data) {
+    return null;
+  }
   return (
     <>
-      <h1>Create Property</h1>
+      <h1>Update Property</h1>
       <Flex>
         <Formik
           initialValues={{
-            title: '',
-            propertyType: '',
-            mainImage: '',
-            pricePerNight: 0,
-            description: '',
-            latitude: 0,
-            longitude: 0,
-            amenities: [],
+            title: data.property.title,
+            propertyType: data.property.propertyType,
+            mainImage: data.property.mainImage,
+            pricePerNight: data.property.pricePerNight,
+            description: data.property.description,
+            latitude: data.property.latitude,
+            longitude: data.property.longitude,
+            amenities: data.property.amenities,
           }}
           onSubmit={async (values, { setErrors }) => {
-            const res = await createProperty({ options: values });
-            if (res.data?.createProperty) {
-              router.push('/');
-            }
+            await updateProperty({
+              options: { ...values },
+              id: intId,
+            });
+            router.push(`/property/${intId}`)
           }}
         >
           {({ isSubmitting }) => (
@@ -83,9 +122,19 @@ const CreatePropertyPage = () => {
                 label="amenities"
                 type="text"
               />
-              <button type="submit" disabled={isSubmitting}>
-                Create Property
-              </button>
+                <Box
+                mt={4}
+                mb={6}
+                as={Button}
+                isLoading={isSubmitting}
+                spinnerPlacement="start"
+                loadingText="Loading"
+                disabled={isSubmitting}
+                type="submit"
+                colorScheme="teal"
+              >
+                Update Property
+              </Box>
             </Form>
           )}
         </Formik>
@@ -94,5 +143,5 @@ const CreatePropertyPage = () => {
   );
 };
 export default withUrqlClient(createUrqlClient, { ssr: false })(
-  CreatePropertyPage
+  EditPropertyPage
 );

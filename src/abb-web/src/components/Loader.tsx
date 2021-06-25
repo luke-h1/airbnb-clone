@@ -1,10 +1,10 @@
 import React from 'react';
 import { Spinner } from '@chakra-ui/react';
 
-type Size = 'xs' | 'sm' | 'md' | 'lg' | 'xl'
+type Size = 'xs' | 'sm' | 'md' | 'lg' | 'xl';
 
 interface LoaderProps {
-    size: Size
+  size: Size;
 }
 
 export const Loader: React.FC<LoaderProps> = ({ size }) => {

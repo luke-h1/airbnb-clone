@@ -1,10 +1,11 @@
 import { usePropertiesQuery } from '@src/generated/graphql';
 import { createUrqlClient } from '@src/utils/createUrqlClient';
 import { withUrqlClient } from 'next-urql';
-import React from 'react';
+import React, { useState } from 'react';
 import Card from '@src/components/Card';
 import styled from '@emotion/styled';
 import { Loader } from '@src/components/Loader';
+import { Box, Flex, Button } from '@chakra-ui/react';
 
 // import dynamic from 'next/dynamic';
 
@@ -25,7 +26,12 @@ const IndexWrapper = styled.div`
 `;
 
 const index: React.FC<{}> = () => {
-  const [{ data, error, fetching }] = usePropertiesQuery();
+  const [variables, setVariables] = useState({
+    limit: 15,
+    cursor: null as null | string,
+  });
+
+  const [{ data, error, fetching }] = usePropertiesQuery({ variables });
   return (
     <IndexWrapper>
       {error ? error.message : null}
@@ -36,7 +42,7 @@ const index: React.FC<{}> = () => {
         </>
       ) : (
         <>
-          {data?.properties.map((p) => (!p ? null : (
+          {data?.properties.properties.map((p) => (!p ? null : (
             <Card
               key={p.id}
               id={p.id}
@@ -48,9 +54,27 @@ const index: React.FC<{}> = () => {
               pricePerNight={p.pricePerNight}
             />
           )))}
+          {data?.properties.hasMore ? (
+            <Flex direction="column" justify="left" alignItems="center">
+              <Box
+                as={Button}
+                type="submit"
+                colorScheme="teal"
+                onClick={() => {
+                  setVariables({
+                    limit: variables.limit,
+                    cursor: data.properties.properties[data.properties.properties.length - 1].createdAt,
+                  });
+                }}
+
+              >
+                Load More
+              </Box>
+            </Flex>
+
+          ) : ''}
         </>
       )}
-
     </IndexWrapper>
   );
 };

@@ -24,7 +24,13 @@ const SingleProperty: React.FC<{}> = () => {
   const [{ data, error, fetching }] = useGetPropertyFromUrl();
   if (fetching) {
     return (
-      <Flex direction="column" minH="50vh" py={10} justifyContent="center" alignItems="center">
+      <Flex
+        direction="column"
+        minH="50vh"
+        py={10}
+        justifyContent="center"
+        alignItems="center"
+      >
         <Loader size="xl" />
       </Flex>
     );

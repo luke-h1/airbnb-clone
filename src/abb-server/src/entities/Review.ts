@@ -18,6 +18,7 @@ export class Review extends BaseEntity {
   id!: number;
 
   @Field(() => Int)
+  @Column()
   creatorId: number;
 
   @Field(() => User)
