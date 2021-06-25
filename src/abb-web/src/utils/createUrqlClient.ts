@@ -19,21 +19,23 @@ import {
 import { CustomUpdateQuery } from './CustomUpdateQuery';
 import { isServer } from './isServer';
 
-const errorExchange: Exchange = ({ forward }) => (ops$) => {
-  return pipe(
-    forward(ops$),
-    tap(({ error }) => {
-      if (error?.message.includes('Not Authenticated')) {
-        Router.replace('/login');
-      }
-    }),
-  );
-};
+const errorExchange: Exchange =
+  ({ forward }) =>
+  (ops$) => {
+    return pipe(
+      forward(ops$),
+      tap(({ error }) => {
+        if (error?.message.includes('Not Authenticated')) {
+          Router.replace('/login');
+        }
+      })
+    );
+  };
 
 function invalidateAllProperties(cache: Cache) {
   const allFields = cache.inspectFields('Query');
   const fieldInfos = allFields.filter(
-    (info) => info.fieldName === 'properties',
+    (info) => info.fieldName === 'properties'
   );
   fieldInfos.forEach((fi) => {
     cache.invalidate('Query', 'properties', fi.arguments || {});
@@ -53,7 +55,7 @@ const cursorPagination = (): Resolver => {
     const fieldKey = `${fieldName}(${stringifyVariables(fieldArgs)})`;
     const isItInTheCache = cache.resolve(
       cache.resolve(entityKey, fieldKey) as string,
-      'properties',
+      'properties'
     );
     // eslint-disable-next-line no-param-reassign
     info.partial = !isItInTheCache;
@@ -112,7 +114,7 @@ export const createUrqlClient = (ssrExchange: any, ctx: any) => {
                   return {
                     me: result.login.user,
                   };
-                },
+                }
               );
             },
             createProperty: (_result, args, cache) => {
@@ -130,7 +132,7 @@ export const createUrqlClient = (ssrExchange: any, ctx: any) => {
                   return {
                     me: result.register.user,
                   };
-                },
+                }
               );
             },
             logout: (_result, args, cache) => {
@@ -138,7 +140,7 @@ export const createUrqlClient = (ssrExchange: any, ctx: any) => {
                 cache,
                 { query: MeDocument },
                 _result,
-                () => ({ me: null }),
+                () => ({ me: null })
               );
             },
             deleteProperty: (_result, args, cache, info) => {

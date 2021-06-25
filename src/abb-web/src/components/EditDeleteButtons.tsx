@@ -29,14 +29,9 @@ const EditDeleteButtons: React.FC<EditDeleteButtonProps> = ({
         </Box>
       </Link>
       {fetching ? (
-        <Box
-          ml={5}
-          type="button"
-          as={Button}
-        >
+        <Box ml={5} type="button" as={Button}>
           <Loader size="md" />
         </Box>
-
       ) : (
         <Box
           ml={5}
@@ -49,7 +44,6 @@ const EditDeleteButtons: React.FC<EditDeleteButtonProps> = ({
         >
           <MdDelete fontSize="15px" />
         </Box>
-
       )}
     </Box>
   );
