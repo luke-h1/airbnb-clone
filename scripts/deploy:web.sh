@@ -1,16 +1,16 @@
-
 #!/bin/bash
-echo "Deploy frontend to development or production? (enter 'dev' or 'prod')"
+echo "Which environment do you want to deploy to ?"
 read -r response
+cd ../src/abb-web
+
 if [[ $response =~ ^([dD][eE][vV])$ ]]; then
 echo "🚀 Deploying frontend to dev"
-cd ../src/abb-web
 npm run format 
 npm run lint 
 npm run tsc 
 npm run build 
 vc -f 
-echo "✅ Succesfully deployed web to dev"
+echo "✅ Succesfully deployed frontend to dev"
 
 elif [[ $response =~ ^([pP][rR][oO][dD])$ ]]; then
 echo "🚀 Deploying frontend to production"
