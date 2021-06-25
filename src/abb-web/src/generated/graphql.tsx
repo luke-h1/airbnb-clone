@@ -38,6 +38,8 @@ export type FieldError = {
 export type Mutation = {
   __typename?: 'Mutation';
   createProperty: PropertyResponse;
+  updateProperty?: Maybe<Property>;
+  deleteProperty: Scalars['Boolean'];
   changePassword: UserResponse;
   forgotPassword: Scalars['Boolean'];
   register: UserResponse;
@@ -47,6 +49,15 @@ export type Mutation = {
 
 export type MutationCreatePropertyArgs = {
   options: CreatePropertyInput;
+};
+
+export type MutationUpdatePropertyArgs = {
+  id: Scalars['Int'];
+  options: UpdatePropertyInput;
+};
+
+export type MutationDeletePropertyArgs = {
+  id: Scalars['Int'];
 };
 
 export type MutationChangePasswordArgs = {
@@ -64,6 +75,12 @@ export type MutationRegisterArgs = {
 
 export type MutationLoginArgs = {
   options: UsernamePasswordInput;
+};
+
+export type PaginatedProperties = {
+  __typename?: 'PaginatedProperties';
+  properties: Array<Property>;
+  hasMore: Scalars['Boolean'];
 };
 
 export type Property = {
@@ -98,10 +115,15 @@ export type PropertyResponse = {
 
 export type Query = {
   __typename?: 'Query';
-  properties: Array<Property>;
+  properties: PaginatedProperties;
   property: Property;
   hello: Scalars['String'];
   me?: Maybe<User>;
+};
+
+export type QueryPropertiesArgs = {
+  cursor?: Maybe<Scalars['String']>;
+  limit: Scalars['Int'];
 };
 
 export type QueryPropertyArgs = {
@@ -115,6 +137,17 @@ export type Review = {
   creator: User;
   title: Scalars['String'];
   body: Scalars['String'];
+};
+
+export type UpdatePropertyInput = {
+  title: Scalars['String'];
+  propertyType: Scalars['String'];
+  description: Scalars['String'];
+  mainImage: Scalars['String'];
+  pricePerNight: Scalars['Int'];
+  latitude: Scalars['Float'];
+  longitude: Scalars['Float'];
+  amenities: Array<Scalars['String']>;
 };
 
 export type User = {
@@ -216,6 +249,15 @@ export type CreatePropertyMutation = { __typename?: 'Mutation' } & {
   };
 };
 
+export type DeletePropertyMutationVariables = Exact<{
+  id: Scalars['Int'];
+}>;
+
+export type DeletePropertyMutation = { __typename?: 'Mutation' } & Pick<
+  Mutation,
+  'deleteProperty'
+>;
+
 export type LoginMutationVariables = Exact<{
   options: UsernamePasswordInput;
 }>;
@@ -239,16 +281,13 @@ export type RegisterMutation = { __typename?: 'Mutation' } & {
   register: { __typename?: 'UserResponse' } & RegularUserResponseFragment;
 };
 
-export type MeQueryVariables = Exact<{ [key: string]: never }>;
+export type UpdatePropertyMutationVariables = Exact<{
+  options: UpdatePropertyInput;
+  id: Scalars['Int'];
+}>;
 
-export type MeQuery = { __typename?: 'Query' } & {
-  me?: Maybe<{ __typename?: 'User' } & RegularUserFragment>;
-};
-
-export type PropertiesQueryVariables = Exact<{ [key: string]: never }>;
-
-export type PropertiesQuery = { __typename?: 'Query' } & {
-  properties: Array<
+export type UpdatePropertyMutation = { __typename?: 'Mutation' } & {
+  updateProperty?: Maybe<
     { __typename?: 'Property' } & Pick<
       Property,
       | 'id'
@@ -256,16 +295,15 @@ export type PropertiesQuery = { __typename?: 'Query' } & {
       | 'propertyType'
       | 'mainImage'
       | 'description'
-      | 'pricePerNight'
+      | 'longitude'
       | 'latitude'
       | 'amenities'
-      | 'longitude'
       | 'createdAt'
       | 'updatedAt'
     > & {
         creator: { __typename?: 'User' } & Pick<
           User,
-          'id' | 'email' | 'picture' | 'fullName'
+          'id' | 'email' | 'fullName' | 'picture' | 'createdAt' | 'updatedAt'
         >;
         reviews?: Maybe<
           Array<
@@ -282,6 +320,59 @@ export type PropertiesQuery = { __typename?: 'Query' } & {
         >;
       }
   >;
+};
+
+export type MeQueryVariables = Exact<{ [key: string]: never }>;
+
+export type MeQuery = { __typename?: 'Query' } & {
+  me?: Maybe<{ __typename?: 'User' } & RegularUserFragment>;
+};
+
+export type PropertiesQueryVariables = Exact<{
+  limit: Scalars['Int'];
+  cursor?: Maybe<Scalars['String']>;
+}>;
+
+export type PropertiesQuery = { __typename?: 'Query' } & {
+  properties: { __typename?: 'PaginatedProperties' } & Pick<
+    PaginatedProperties,
+    'hasMore'
+  > & {
+      properties: Array<
+        { __typename?: 'Property' } & Pick<
+          Property,
+          | 'id'
+          | 'title'
+          | 'propertyType'
+          | 'mainImage'
+          | 'description'
+          | 'pricePerNight'
+          | 'latitude'
+          | 'amenities'
+          | 'longitude'
+          | 'createdAt'
+          | 'updatedAt'
+        > & {
+            creator: { __typename?: 'User' } & Pick<
+              User,
+              'id' | 'email' | 'picture' | 'fullName'
+            >;
+            reviews?: Maybe<
+              Array<
+                { __typename?: 'Review' } & Pick<
+                  Review,
+                  'id' | 'title' | 'body'
+                > & {
+                    creator: { __typename?: 'User' } & Pick<
+                      User,
+                      'id' | 'email' | 'fullName'
+                    >;
+                  }
+              >
+            >;
+          }
+      >;
+    };
 };
 
 export type PropertyQueryVariables = Exact<{
@@ -394,6 +485,18 @@ export function useCreatePropertyMutation() {
     CreatePropertyMutationVariables
   >(CreatePropertyDocument);
 }
+export const DeletePropertyDocument = gql`
+  mutation DeleteProperty($id: Int!) {
+    deleteProperty(id: $id)
+  }
+`;
+
+export function useDeletePropertyMutation() {
+  return Urql.useMutation<
+    DeletePropertyMutation,
+    DeletePropertyMutationVariables
+  >(DeletePropertyDocument);
+}
 export const LoginDocument = gql`
   mutation Login($options: UsernamePasswordInput!) {
     login(options: $options) {
@@ -431,6 +534,48 @@ export function useRegisterMutation() {
     RegisterDocument
   );
 }
+export const UpdatePropertyDocument = gql`
+  mutation UpdateProperty($options: UpdatePropertyInput!, $id: Int!) {
+    updateProperty(options: $options, id: $id) {
+      id
+      title
+      creator {
+        id
+        email
+        fullName
+        picture
+        createdAt
+        updatedAt
+      }
+      propertyType
+      mainImage
+      description
+      propertyType
+      longitude
+      latitude
+      amenities
+      reviews {
+        id
+        title
+        body
+        creator {
+          id
+          email
+          fullName
+        }
+      }
+      createdAt
+      updatedAt
+    }
+  }
+`;
+
+export function useUpdatePropertyMutation() {
+  return Urql.useMutation<
+    UpdatePropertyMutation,
+    UpdatePropertyMutationVariables
+  >(UpdatePropertyDocument);
+}
 export const MeDocument = gql`
   query Me {
     me {
@@ -446,33 +591,36 @@ export function useMeQuery(
   return Urql.useQuery<MeQuery>({ query: MeDocument, ...options });
 }
 export const PropertiesDocument = gql`
-  query Properties {
-    properties {
-      id
-      title
-      propertyType
-      mainImage
-      description
-      pricePerNight
-      latitude
-      amenities
-      longitude
-      createdAt
-      updatedAt
-      creator {
-        id
-        email
-        picture
-        fullName
-      }
-      reviews {
+  query Properties($limit: Int!, $cursor: String) {
+    properties(limit: $limit, cursor: $cursor) {
+      hasMore
+      properties {
         id
         title
-        body
+        propertyType
+        mainImage
+        description
+        pricePerNight
+        latitude
+        amenities
+        longitude
+        createdAt
+        updatedAt
         creator {
           id
           email
+          picture
           fullName
+        }
+        reviews {
+          id
+          title
+          body
+          creator {
+            id
+            email
+            fullName
+          }
         }
       }
     }

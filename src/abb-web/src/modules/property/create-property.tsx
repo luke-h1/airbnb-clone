@@ -21,6 +21,7 @@ const CreatePropertyPage = () => {
             propertyType: '',
             mainImage: '',
             pricePerNight: 0,
+            description: '',
             latitude: 0,
             longitude: 0,
             amenities: [],
@@ -44,6 +45,12 @@ const CreatePropertyPage = () => {
                 name="propertyType"
                 placeholder="Flat, House, Bungalow..."
                 label="propertyType"
+                type="text"
+              />
+              <InputField
+                name="description"
+                placeholder="Description of property"
+                label="description"
                 type="text"
               />
               <InputField

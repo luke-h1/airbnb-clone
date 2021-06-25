@@ -3,7 +3,7 @@ import {
 } from 'type-graphql';
 
 @InputType()
-export class CreatePropertyInput {
+export class UpdatePropertyInput {
   @Field(() => String)
   title: string;
 

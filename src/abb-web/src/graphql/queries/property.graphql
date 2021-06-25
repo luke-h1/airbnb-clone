@@ -1,4 +1,4 @@
-query Property($id: Int!) {
+query Property($id: Int!, ) {
   property(id: $id) {
       id
       title

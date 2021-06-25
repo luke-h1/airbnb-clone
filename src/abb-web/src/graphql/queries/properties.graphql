@@ -1,5 +1,7 @@
-query Properties {
-  properties {
+query Properties($limit: Int!, $cursor: String) {
+  properties(limit: $limit, cursor: $cursor) {
+      hasMore
+      properties {
       id
       title
       propertyType
@@ -29,4 +31,5 @@ query Properties {
       }
     
     }
+  } 
 } 
