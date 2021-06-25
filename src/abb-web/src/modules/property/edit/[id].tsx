@@ -122,20 +122,24 @@ const EditPropertyPage = () => {
                 label="amenities"
                 type="text"
               />
-              <Flex direction='column' justifyContent='center' alignItems='center'>
-              <Box 
-                mt={4}
-                mb={6}
-                as={Button}
-                isLoading={isSubmitting}
-                spinnerPlacement="start"
-                loadingText="Loading"
-                disabled={isSubmitting}
-                type="submit"
-                colorScheme="teal"
+              <Flex
+                direction="column"
+                justifyContent="center"
+                alignItems="center"
               >
-                Update Property
-              </Box>
+                <Box
+                  mt={4}
+                  mb={6}
+                  as={Button}
+                  isLoading={isSubmitting}
+                  spinnerPlacement="start"
+                  loadingText="Loading"
+                  disabled={isSubmitting}
+                  type="submit"
+                  colorScheme="teal"
+                >
+                  Update Property
+                </Box>
               </Flex>
             </Form>
           )}
