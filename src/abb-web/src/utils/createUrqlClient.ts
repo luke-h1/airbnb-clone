@@ -1,4 +1,4 @@
-/* eslint-disable no-underscore-dangle */
+/* eslint-disable */
 import { Cache, cacheExchange, Resolver } from '@urql/exchange-graphcache';
 import {
   dedupExchange,
@@ -14,6 +14,7 @@ import {
   MeDocument,
   RegisterMutation,
   MeQuery,
+  DeletePropertyMutationVariables,
 } from '../generated/graphql';
 import { CustomUpdateQuery } from './CustomUpdateQuery';
 import { isServer } from './isServer';
@@ -139,6 +140,12 @@ export const createUrqlClient = (ssrExchange: any, ctx: any) => {
                 _result,
                 () => ({ me: null }),
               );
+            },
+            deleteProperty: (_result, args, cache, info) => {
+              cache.invalidate({
+                __typename: 'Property',
+                id: (args as DeletePropertyMutationVariables).id,
+              });
             },
           },
         },
