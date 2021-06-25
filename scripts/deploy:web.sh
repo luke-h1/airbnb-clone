@@ -10,7 +10,7 @@ npm run lint
 npm run tsc 
 npm run build 
 vc -f 
-echo "✅ Succesfully deployed web to dev"
+echo "✅ Succesfully deployed frontend to dev"
 
 elif [[ $response =~ ^([pP][rR][oO][dD])$ ]]; then
 echo "🚀 Deploying frontend to production"
