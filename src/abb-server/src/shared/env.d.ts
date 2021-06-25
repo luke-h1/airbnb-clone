@@ -1,6 +1,6 @@
 declare namespace NodeJS {
   interface ProcessEnv {
-    TEST_DATABASE_URL: string;
+    DATABASE_URL: string;
     REDIS_URL: string;
     PORT: string;
     COOKIE_SECRET: string;
@@ -9,7 +9,7 @@ declare namespace NodeJS {
     CLOUDINARY_CLOUD_NAME: string;
     CLOUDINARY_API_KEY: string;
     CLOUDINARY_API_SECRET: string;
-    MAIL_HOST: any;
+    MAIL_HOST: string;
     MAIL_PORT: string;
     MAIL_USERNAME: string;
     MAIL_PASSWORD: string;

@@ -4,7 +4,7 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "gen-env": "gen-env-types .env -o src/env.d.ts -e .",
+    "gen-env": "gen-env-types .env -o src/shared/env.d.ts -e .",
     "build": "rimraf dist && tsc -p tsconfig.json",
     "start": "NODE_ENV=production node dist/index.js",
     "lint": "eslint --ext .ts,.tsx,.js,.jsx src --fix",

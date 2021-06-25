@@ -1,4 +1,4 @@
-import { CreatePropertyInput } from '../resolvers/property/CreatePropertyInput';
+import { CreatePropertyInput } from '../../resolvers/property/inputs/CreatePropertyInput';
 
 export const validateProperty = (options: CreatePropertyInput) => {
   if (!options.title) {
