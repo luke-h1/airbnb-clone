@@ -1,5 +1,7 @@
 # Full stack GraphQL airbnb clone 
 
+A Fullstack GraphQL Airbnb Clone with Next.js and React Native.
+
 ### Structure 
 This project is made up of 4 areas that share code using <a href='https://lerna.js.org/' target="_blank">Lerna</a>
 
@@ -43,6 +45,9 @@ This project is made up of 4 areas that share code using <a href='https://lerna.
 
 
 ### App: 
+
+
+### Features: 
 
 
 ### Inspirations 
