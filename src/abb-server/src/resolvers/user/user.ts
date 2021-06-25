@@ -16,11 +16,11 @@ import { getConnection } from 'typeorm';
 import { User } from '../../entities/User';
 import { MyContext } from '../../shared/types';
 
-import { UsernamePasswordInput } from './UsernamePasswordInput';
-import { validateRegister } from '../../shared/validateRegister';
+import { UsernamePasswordInput } from './inputs/UsernamePasswordInput';
+import { validateRegister } from '../../validation/user/validateRegister';
 import { COOKIE_NAME, FORGET_PASSWORD_PREFIX } from '../../shared/constants';
 import { sendPasswordResetMail } from '../../utils/mail/sendPasswordResetMail';
-import { UserRegisterInput } from './UserRegisterInput';
+import { UserRegisterInput } from './inputs/UserRegisterInput';
 
 @ObjectType()
 class FieldError {

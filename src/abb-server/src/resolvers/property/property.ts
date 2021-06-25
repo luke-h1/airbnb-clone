@@ -16,10 +16,10 @@ import { getConnection } from 'typeorm';
 import { User } from '../../entities/User';
 import { isAuth } from '../../middleware/isAuth';
 import { MyContext } from '../../shared/types';
-import { validateProperty } from '../../shared/validateProperty';
+import { validateProperty } from '../../validation/property/validateProperty';
 import { Property } from '../../entities/Property';
-import { CreatePropertyInput } from './CreatePropertyInput';
-import { UpdatePropertyInput } from './UpdatePropertyInput';
+import { CreatePropertyInput } from './inputs/CreatePropertyInput';
+import { UpdatePropertyInput } from './inputs/UpdatePropertyInput';
 
 @ObjectType()
 class PropertyFieldError {
