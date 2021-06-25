@@ -51,6 +51,7 @@ const index: React.FC<{}> = () => {
               mainImage={p.mainImage}
               amenities={p.amenities}
               creator={p.creator}
+              creatorId={p.creator.id}
               pricePerNight={p.pricePerNight}
             />
           )))}
@@ -63,19 +64,22 @@ const index: React.FC<{}> = () => {
                 onClick={() => {
                   setVariables({
                     limit: variables.limit,
-                    cursor: data.properties.properties[data.properties.properties.length - 1].createdAt,
+                    cursor:
+                      data.properties.properties[
+                        data.properties.properties.length - 1
+                      ].createdAt,
                   });
                 }}
-
               >
                 Load More
               </Box>
             </Flex>
-
-          ) : ''}
+          ) : (
+            ''
+          )}
         </>
       )}
     </IndexWrapper>
   );
 };
-export default withUrqlClient(createUrqlClient, { ssr: false })(index);
+export default withUrqlClient(createUrqlClient, { ssr: true })(index);

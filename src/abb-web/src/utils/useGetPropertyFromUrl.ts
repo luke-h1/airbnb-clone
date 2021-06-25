@@ -6,7 +6,6 @@ export const useGetPropertyFromUrl = () => {
   return usePropertyQuery({
     pause: intId === -1,
     variables: {
-      // @ts-ignore
       id: intId,
     },
   });

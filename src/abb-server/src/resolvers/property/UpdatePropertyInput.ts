@@ -4,27 +4,27 @@ import {
 
 @InputType()
 export class UpdatePropertyInput {
-    @Field(() => String)
-    title: string;
+  @Field(() => String)
+  title: string;
 
-    @Field(() => String)
-    propertyType: string;
+  @Field(() => String)
+  propertyType: string;
 
-    @Field(() => String)
-    description: string;
+  @Field(() => String)
+  description: string;
 
-    @Field(() => String)
-    mainImage: string;
+  @Field(() => String)
+  mainImage: string;
 
-    @Field(() => Int)
-    pricePerNight: number;
+  @Field(() => Int)
+  pricePerNight: number;
 
-    @Field(() => Float)
-    latitude: number;
+  @Field(() => Float)
+  latitude: number;
 
-    @Field(() => Float)
-    longitude: number;
+  @Field(() => Float)
+  longitude: number;
 
-    @Field(() => [String])
-    amenities: string[];
+  @Field(() => [String])
+  amenities: string[];
 }

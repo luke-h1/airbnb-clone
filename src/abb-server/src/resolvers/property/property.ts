@@ -33,7 +33,7 @@ class PropertyFieldError {
 @ObjectType()
 class PaginatedProperties {
   @Field(() => [Property])
-  properties: Property[]
+  properties: Property[];
 
   @Field()
   hasMore: boolean;
@@ -91,7 +91,7 @@ export class PropertyResolver {
     const properties = await getConnection().query(
       `
         SELECT p.* from "properties" p 
-        ${cursor ? `where p."createdAt" < $2` : ""} 
+        ${cursor ? `where p."createdAt" < $2` : ''} 
         ORDER BY p."createdAt" DESC
         LIMIT $1
       `,

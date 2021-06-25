@@ -1,7 +1,10 @@
 /* eslint-disable no-underscore-dangle */
 import { Cache, cacheExchange, Resolver } from '@urql/exchange-graphcache';
 import {
-  dedupExchange, Exchange, fetchExchange, stringifyVariables,
+  dedupExchange,
+  Exchange,
+  fetchExchange,
+  stringifyVariables,
 } from 'urql';
 import { pipe, tap } from 'wonka';
 import Router from 'next/router';
@@ -36,7 +39,7 @@ function invalidateAllProperties(cache: Cache) {
   });
 }
 
-const cursorPagination = ():Resolver => {
+const cursorPagination = (): Resolver => {
   return (_parent, fieldArgs, cache, info) => {
     const { parentKey: entityKey, fieldName } = info;
     const allFields = cache.inspectFields(entityKey);
@@ -54,7 +57,7 @@ const cursorPagination = ():Resolver => {
     // eslint-disable-next-line no-param-reassign
     info.partial = !isItInTheCache;
     let hasMore = true;
-    const results:string[] = [];
+    const results: string[] = [];
     fieldInfos.forEach((fi) => {
       const key = cache.resolve(entityKey, fi.fieldKey) as string;
       const data = cache.resolve(key, 'properties') as string[];
@@ -68,7 +71,6 @@ const cursorPagination = ():Resolver => {
       __typename: 'PaginatedProperties',
       hasMore,
       properties: results,
-
     };
   };
 };

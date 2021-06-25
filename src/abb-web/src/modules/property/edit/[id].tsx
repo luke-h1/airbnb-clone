@@ -69,7 +69,7 @@ const EditPropertyPage = () => {
               options: { ...values },
               id: intId,
             });
-            router.push(`/property/${intId}`)
+            router.push(`/property/${intId}`);
           }}
         >
           {({ isSubmitting }) => (
@@ -122,7 +122,7 @@ const EditPropertyPage = () => {
                 label="amenities"
                 type="text"
               />
-                <Box
+              <Box
                 mt={4}
                 mb={6}
                 as={Button}
@@ -142,6 +142,6 @@ const EditPropertyPage = () => {
     </>
   );
 };
-export default withUrqlClient(createUrqlClient, { ssr: false })(
+export default withUrqlClient(createUrqlClient, { ssr: true })(
   EditPropertyPage
 );
