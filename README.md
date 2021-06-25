@@ -5,7 +5,7 @@ A Fullstack GraphQL Airbnb Clone with Next.js and React Native.
 ### Structure 
 This project is made up of 4 areas that share code using <a href='https://lerna.js.org/' target="_blank">Lerna</a>
 
-* Server - GraphQL, Typescript & PostgreSQL backend 
+* Server - GraphQL, Typescript server 
 * app - React Native app 
 * web - Next.js frontend website
 * common - Common functionality used across the server, app & web 
@@ -30,7 +30,7 @@ This project is made up of 4 areas that share code using <a href='https://lerna.
 * copy the `.env.example ` to `.env` (`cp .env.example .env`).
 * Fill out the `.env` file with your own values
 * to start the backend: `cd src/abb-server && npm run watch`. This will transpile Typescript down to common JS. Run `npm run dev` to start the backend server. 
-* 
+
 ### Running backend Migrations 
 
 * The backend contains 2 commands which are responsible for dealing with migrations. 
