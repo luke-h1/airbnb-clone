@@ -10,7 +10,8 @@ import {
   Stack,
   Heading,
   SimpleGrid,
-  HStack,
+
+  Grid,
   VStack,
   Text,
   Icon,
@@ -107,14 +108,14 @@ const SingleProperty: React.FC<{}> = () => {
           <SimpleGrid columns={{ base: 1, md: 2, lg: 4 }} spacing={10}>
             {data.property.amenities
               && data.property.amenities.map((p) => (
-                <HStack align="top">
+                <Grid templateColumns="repeat(5, 1fr)" gap={6}>
                   <Box color="green.400" px={2}>
                     <Icon as={CheckIcon} />
                   </Box>
                   <VStack align="start">
                     <Text fontWeight={600}>{p}</Text>
                   </VStack>
-                </HStack>
+                </Grid>
               ))}
           </SimpleGrid>
         </Container>
