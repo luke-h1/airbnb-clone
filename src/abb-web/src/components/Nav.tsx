@@ -32,7 +32,7 @@ const StyledLink = styled(Link)`
   font-size: 16px;
 `;
 
-const NavLink = ({ children, href }: { children: ReactNode, href: string }) => (
+const NavLink = ({ children, href }: { children: ReactNode; href: string }) => (
   <Link
     as={NextLink}
     px={2}
@@ -62,7 +62,7 @@ const Nav = () => {
     router.reload();
   };
 
-  let links: { name: string, href: string }[] = [];
+  let links: { name: string; href: string }[] = [];
 
   if (fetching) {
     //   user is not logged in
@@ -72,7 +72,6 @@ const Nav = () => {
       {
         name: 'Login',
         href: '/login',
-
       },
       {
         name: 'Register',
@@ -93,7 +92,6 @@ const Nav = () => {
         name: 'My properties',
         href: '/me/properties',
       },
-
     ];
   }
 
@@ -116,19 +114,16 @@ const Nav = () => {
                 </a>
               </NavLink>
             </Box>
-            <HStack
-              as="nav"
-              spacing={4}
-              display={{ base: 'none', md: 'flex' }}
-            >
-              {links && links.map((l) => (
-                <NavLink href={l.href}>{l.name}</NavLink>
-              ))}
+            <HStack as="nav" spacing={4} display={{ base: 'none', md: 'flex' }}>
+              {links
+                && links.map((l) => <NavLink href={l.href}>{l.name}</NavLink>)}
             </HStack>
           </HStack>
           <Flex alignItems="center">
             <Menu>
-              <StyledLink href="/">{data?.me?.email && data?.me?.email}</StyledLink>
+              <StyledLink href="/">
+                {data?.me?.email && data?.me?.email}
+              </StyledLink>
 
               <MenuButton
                 as={Button}
@@ -137,23 +132,19 @@ const Nav = () => {
                 cursor="pointer"
               >
                 {data?.me?.picture && (
-                  <Avatar
-                    size="sm"
-                    src={data.me.picture}
-                  />
-
+                  <Avatar size="sm" src={data.me.picture} />
                 )}
               </MenuButton>
               <MenuList>
-                {links && links.map((l) => (
-                  <MenuItem>
-                    <NavLink href={l.href}>{l.name}</NavLink>
-                  </MenuItem>
-                ))}
+                {links
+                  && links.map((l) => (
+                    <MenuItem>
+                      <NavLink href={l.href}>{l.name}</NavLink>
+                    </MenuItem>
+                  ))}
                 <MenuDivider />
                 {data?.me?.email && logoutFetching ? (
                   <Loader size="sm" />
-
                 ) : (
                   <button onClick={handleLogout} type="button">
                     logout
@@ -167,9 +158,8 @@ const Nav = () => {
         {isOpen ? (
           <Box pb={4} display={{ md: 'none' }}>
             <Stack as="nav" spacing={4}>
-              {links && links.map((l) => (
-                <NavLink href={l.href}>{l.name}</NavLink>
-              ))}
+              {links
+                && links.map((l) => <NavLink href={l.href}>{l.name}</NavLink>)}
             </Stack>
           </Box>
         ) : null}
