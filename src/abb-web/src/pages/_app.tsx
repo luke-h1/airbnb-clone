@@ -10,7 +10,7 @@ function MyApp({ Component, pageProps }: AppProps) {
   return (
     <ChakraProvider>
       <Reset />
-      <Nav />
+      <Nav {...pageProps} />
       <Component {...pageProps} />
       <Footer />
     </ChakraProvider>
