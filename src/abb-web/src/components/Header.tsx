@@ -36,7 +36,7 @@ const HeaderSearch = styled.div`
     color: #000;
     text-decoration: none;
     font-size: 14px;
-    &:hover { 
+    &:hover {
       cursor: pointer;
     }
   }
