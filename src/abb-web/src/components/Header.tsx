@@ -146,12 +146,9 @@ const Header: React.FC<HeaderProps> = () => {
           </a>
         </Link>
         <ImgWrapper>
-          {
-            (data?.me
-              .picture && (
-              <Image src={data.me.picture} alt="tes" width={50} height={50} />
-            ))
-          }
+          {data?.me.picture && (
+            <Image src={data.me.picture} alt="tes" width={50} height={50} />
+          )}
         </ImgWrapper>
         {logoutFetching ? (
           <Loader size="sm" />
