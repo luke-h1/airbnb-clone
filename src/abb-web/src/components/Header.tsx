@@ -11,7 +11,6 @@ import Image from 'next/image';
 import { Loader } from './Loader';
 
 const StyledHeader = styled.header`
-  background: #f5f5f5;
   height: 80px;
   width: 100vw;
   padding: 0 24px;
@@ -47,6 +46,7 @@ const HeaderNavigation = styled.div`
   display: flex;
   justify-content: flex-end;
   .button {
+    background: transparent;
     border: none;
     display: flex;
     align-items: center;
@@ -57,6 +57,18 @@ const HeaderNavigation = styled.div`
     height: 48px;
     border-radius: 22px;
     cursor: pointer;
+    &-language {
+      img {
+        &:first-child {
+          width: 16px;
+          height: 16px;
+        }
+        &:last-child {
+          width: 9px;
+          height: 6px;
+          margin-left: 6px;
+        }
+      }
     }
     &-account {
       border: 1px solid ${baseColors.greyMed};
@@ -67,7 +79,17 @@ const HeaderNavigation = styled.div`
       &:hover {
         box-shadow: 0 2px 4px rgba(0, 0, 0, 0.18);
       }
-    
+      img {
+        &:first-child {
+          height: 16px;
+          width: 16px;
+        }
+        &:last-child {
+          width: 30px;
+          height: 30px;
+          margin-left: 12px;
+        }
+      }
     }
   }
 `;
@@ -81,6 +103,13 @@ const ImgWrapper = styled.span`
     border-radius: 30px;
     object-fit: cover;
   }
+`;
+
+const StyledA = styled.a`
+font-size: 15px;
+&:hover { 
+  cursor: pointer;
+}
 `;
 
 const Header: React.FC<{}> = () => {
@@ -145,10 +174,10 @@ const Header: React.FC<{}> = () => {
     authLinks = (
       <>
         <Link href="/property/create-property">
-          <a>Create Property</a>
+          <StyledA>Create Property</StyledA>
         </Link>
         <Link href="/account">
-          <a>View account</a>
+          <StyledA>View account</StyledA>
         </Link>
       </>
     );
