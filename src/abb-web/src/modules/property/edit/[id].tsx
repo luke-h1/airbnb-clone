@@ -12,8 +12,10 @@ import { withUrqlClient } from 'next-urql';
 import { useRouter } from 'next/router';
 import React from 'react';
 import { Loader } from '@src/components/Loader';
+import { useIsAuth } from '@src/utils/useIsAuth';
 
 const EditPropertyPage = () => {
+  useIsAuth();
   const router = useRouter();
   const intId = useGetIntId();
   const [, updateProperty] = useUpdatePropertyMutation();
@@ -151,6 +153,6 @@ const EditPropertyPage = () => {
     </>
   );
 };
-export default withUrqlClient(createUrqlClient, { ssr: true })(
+export default withUrqlClient(createUrqlClient, { ssr: false })(
   EditPropertyPage
 );

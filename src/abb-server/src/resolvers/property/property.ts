@@ -111,6 +111,7 @@ export class PropertyResolver {
   }
 
   @Mutation(() => Property, { nullable: true })
+  @UseMiddleware(isAuth)
   async updateProperty(
     @Arg('options') options: UpdatePropertyInput,
     @Arg('id', () => Int) id: number,
