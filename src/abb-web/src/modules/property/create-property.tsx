@@ -10,7 +10,7 @@ import { useRouter } from 'next/router';
 import React from 'react';
 
 const CreatePropertyPage = () => {
-  useIsAuth()
+  useIsAuth();
   const router = useRouter();
   const [, createProperty] = useCreatePropertyMutation();
   return (

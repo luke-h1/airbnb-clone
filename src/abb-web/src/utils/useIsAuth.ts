@@ -1,6 +1,5 @@
-/* eslint-disable prefer-template */
 import { useEffect } from 'react';
-import Router, { useRouter } from 'next/router';
+import { useRouter } from 'next/router';
 import { useMeQuery } from '../generated/graphql';
 
 export const useIsAuth = () => {
@@ -10,5 +9,5 @@ export const useIsAuth = () => {
     if (!fetching && !data?.me) {
       router.replace('/login');
     }
-  }, [fetching, data, Router]);
+  }, [fetching, data, router]);
 };
