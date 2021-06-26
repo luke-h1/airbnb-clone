@@ -11,7 +11,7 @@ import Image from 'next/image';
 import { Loader } from './Loader';
 
 const StyledHeader = styled.header`
-  background: #F5F5F5;
+  background: #f5f5f5;
   height: 80px;
   width: 100vw;
   padding: 0 24px;

@@ -34,9 +34,7 @@ const Footer = () => {
             <Box>
               <Image src="/images/airbnb.svg" width={50} height={50} />
             </Box>
-            <Text fontSize="sm">
-              © 2021 Airbnb clone
-            </Text>
+            <Text fontSize="sm">© 2021 Airbnb clone</Text>
           </Stack>
           <Stack align="flex-start">
             <ListHeader>About</ListHeader>
