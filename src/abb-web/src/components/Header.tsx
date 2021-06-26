@@ -35,8 +35,9 @@ const HeaderSearch = styled.div`
     margin: 0 10px 0 10px;
     color: #000;
     text-decoration: none;
-    &:hover {
-      box-shadow: 0 2px 4px rgba(0, 0, 0, 0.18);
+    font-size: 14px;
+    &:hover { 
+      cursor: pointer;
     }
   }
 `;
@@ -76,9 +77,6 @@ const HeaderNavigation = styled.div`
       border-radius: 22px;
       padding: 5px 5px 5px 12px;
       transition: box-shadow 0.2s ease;
-      &:hover {
-        box-shadow: 0 2px 4px rgba(0, 0, 0, 0.18);
-      }
       img {
         &:first-child {
           height: 16px;
@@ -103,13 +101,6 @@ const ImgWrapper = styled.span`
     border-radius: 30px;
     object-fit: cover;
   }
-`;
-
-const StyledA = styled.a`
-font-size: 15px;
-&:hover { 
-  cursor: pointer;
-}
 `;
 
 const Header: React.FC<{}> = () => {
@@ -174,10 +165,10 @@ const Header: React.FC<{}> = () => {
     authLinks = (
       <>
         <Link href="/property/create-property">
-          <StyledA>Create Property</StyledA>
+          <a>Create Property</a>
         </Link>
         <Link href="/account">
-          <StyledA>View account</StyledA>
+          <a>View account</a>
         </Link>
       </>
     );
