@@ -25,8 +25,8 @@ const errorExchange: Exchange =
     return pipe(
       forward(ops$),
       tap(({ error }) => {
-        if (error?.message.includes('Not Authenticated')) {
-          Router.replace('/login');
+        if (error?.message.includes('Not Authenticated!')) {
+          Router.push('/login');
         }
       })
     );
