@@ -82,4 +82,4 @@ const index: React.FC<{}> = () => {
     </IndexWrapper>
   );
 };
-export default withUrqlClient(createUrqlClient, { ssr: true })(index);
+export default withUrqlClient(createUrqlClient, { ssr: false })(index);

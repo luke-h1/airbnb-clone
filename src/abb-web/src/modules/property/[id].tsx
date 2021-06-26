@@ -10,7 +10,6 @@ import {
   Stack,
   Heading,
   SimpleGrid,
-
   Grid,
   VStack,
   Text,
@@ -134,7 +133,6 @@ const SingleProperty: React.FC<{}> = () => {
                   src="https://images.unsplash.com/photo-1517841905240-472988babdf9?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=334&q=80"
                   alt="avatar"
                 />
-
                 <Flex alignItems="center" px={6} py={3} bg="gray.900">
                   <Text
                     as="h1"

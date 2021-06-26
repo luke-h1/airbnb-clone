@@ -10,8 +10,6 @@ import { createUrqlClient } from '@src/utils/createUrqlClient';
 import Image from 'next/image';
 import { Loader } from './Loader';
 
-interface HeaderProps {}
-
 const StyledHeader = styled.header`
   height: 80px;
   width: 100vw;
@@ -37,8 +35,9 @@ const HeaderSearch = styled.div`
     margin: 0 10px 0 10px;
     color: #000;
     text-decoration: none;
+    font-size: 14px;
     &:hover {
-      box-shadow: 0 2px 4px rgba(0, 0, 0, 0.18);
+      cursor: pointer;
     }
   }
 `;
@@ -78,9 +77,6 @@ const HeaderNavigation = styled.div`
       border-radius: 22px;
       padding: 5px 5px 5px 12px;
       transition: box-shadow 0.2s ease;
-      &:hover {
-        box-shadow: 0 2px 4px rgba(0, 0, 0, 0.18);
-      }
       img {
         &:first-child {
           height: 16px;
@@ -99,13 +95,15 @@ const HeaderNavigation = styled.div`
 const ImgWrapper = styled.span`
   width: 50px;
   height: 50px;
+  margin: 0 15px 0 16px;
   img {
     width: 100%;
+    border-radius: 30px;
     object-fit: cover;
   }
 `;
 
-const Header: React.FC<HeaderProps> = () => {
+const Header: React.FC<{}> = () => {
   const router = useRouter();
   const [{ fetching: logoutFetching }, logout] = useLogoutMutation();
   const [{ data, fetching }] = useMeQuery({
@@ -147,7 +145,12 @@ const Header: React.FC<HeaderProps> = () => {
         </Link>
         <ImgWrapper>
           {data?.me.picture && (
-            <Image src={data.me.picture} alt="tes" width={50} height={50} />
+            <Image
+              src={data.me.picture}
+              alt={`${data.me.firstName}'s profle picture`}
+              width={50}
+              height={50}
+            />
           )}
         </ImgWrapper>
         {logoutFetching ? (

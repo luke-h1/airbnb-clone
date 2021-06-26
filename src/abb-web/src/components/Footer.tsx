@@ -1,93 +1,76 @@
-import React from 'react';
-import styled from '@emotion/styled';
-import { baseColors } from '@src/styles/Variables';
+import { ReactNode } from 'react';
 
-interface FooterProps {}
+import {
+  Box,
+  Container,
+  Link,
+  SimpleGrid,
+  Stack,
+  Text,
+  useColorModeValue,
+} from '@chakra-ui/react';
+import Image from 'next/image';
 
-const StyledFooter = styled.footer`
-  background: ${baseColors.greyLight};
-  border-top: 1px solid ${baseColors.greyMed};
-  padding: 30px 0;
-  .container {
-    display: flex;
-    max-width: 1200px;
-    margin: auto;
-    justify-content: space-between;
-  }
-  h4 {
-    text-transform: uppercase;
-    font-size: 12px;
-  }
-`;
-
-const UnorderedList = styled.ul`
-  list-style-type: none;
-  padding-left: 0;
-`;
-
-const ListItem = styled.li`
-  margin-bottom: '15px';
-  margin-top: '15px';
-  line-height: 15px;
-  padding-top: 15px;
-  /* font-family: 'Circular Book' */
-`;
-
-const Footer: React.FC<FooterProps> = () => {
+const ListHeader = ({ children }: { children: ReactNode }) => {
   return (
-    <StyledFooter>
-      <div className="container">
-        <div>
-          <h4>ABOUT</h4>
-          <UnorderedList>
-            <ListItem>How Airbnb works</ListItem>
-            <ListItem>Airbnb Plus</ListItem>
-            <ListItem>Airbnb for Work</ListItem>
-            <ListItem>Founders' Letter</ListItem>
-            <ListItem>Newsroom</ListItem>
-            <ListItem>Airbnb Luxe</ListItem>
-            <ListItem>Made possible by Hosts</ListItem>
-            <ListItem>Investors</ListItem>
-            <ListItem>HotelTonight</ListItem>
-            <ListItem>Careers</ListItem>
-          </UnorderedList>
-        </div>
-        <div>
-          <h4>COMMUNITY</h4>
-          <UnorderedList>
-            <ListItem>Diversity & Belonging</ListItem>
-            <ListItem>Airbnb Associates</ListItem>
-            <ListItem>Gift cards</ListItem>
-            <ListItem>Against Discrimination</ListItem>
-            <ListItem>FrontListItemne Stays</ListItem>
-            <ListItem>Airbnb.org</ListItem>
-            <ListItem>AccessibiListItemty</ListItem>
-            <ListItem>Guest Referrals</ListItem>
-          </UnorderedList>
-        </div>
-        <div>
-          <h4>HOST</h4>
-          <UnorderedList>
-            <ListItem>Host your home</ListItem>
-            <ListItem>Responsible hosting</ListItem>
-            <ListItem>Host an OnListItemne Experience</ListItem>
-            <ListItem>Resource Center</ListItem>
-            <ListItem>Host an Experience</ListItem>
-            <ListItem>Community Center</ListItem>
-          </UnorderedList>
-        </div>
-        <div>
-          <h4>SUPPORT</h4>
-          <UnorderedList>
-            <ListItem>Our COVID-19 Response</ListItem>
-            <ListItem>Neighborhood Support</ListItem>
-            <ListItem>Help Center</ListItem>
-            <ListItem>Trust & Safety</ListItem>
-            <ListItem>Cancellation options</ListItem>
-          </UnorderedList>
-        </div>
-      </div>
-    </StyledFooter>
+    <Text fontWeight="500" fontSize="lg" mb={2}>
+      {children}
+    </Text>
+  );
+};
+
+const Footer = () => {
+  return (
+    <Box
+      bg={useColorModeValue('gray.50', 'gray.900')}
+      color={useColorModeValue('gray.700', 'gray.200')}
+    >
+      <Container as={Stack} maxW="6xl" py={10}>
+        <SimpleGrid
+          templateColumns={{ sm: '1fr 1fr', md: '2fr 1fr 1fr 1fr 1fr' }}
+          spacing={8}
+        >
+          <Stack spacing={6}>
+            <Box>
+              <Image src="/images/airbnb.svg" width={50} height={50} />
+            </Box>
+            <Text fontSize="sm">© 2021 Airbnb clone</Text>
+          </Stack>
+          <Stack align="flex-start">
+            <ListHeader>About</ListHeader>
+            <Link href="#">How Airbnb works</Link>
+            <Link href="#">Airbnb Plus</Link>
+            <Link href="#">Airbnb for Work</Link>
+            <Link href="#">Founders' Letter</Link>
+            <Link href="#">Newsroom</Link>
+          </Stack>
+          <Stack align="flex-start">
+            <ListHeader>Community</ListHeader>
+            <Link href="#">Diversity & Belonging</Link>
+            <Link href="#">Airbnb Associates</Link>
+            <Link href="#">Gift cards</Link>
+            <Link href="#">Against Discrimination</Link>
+            <Link href="#">Airbnb.org</Link>
+          </Stack>
+          <Stack align="flex-start">
+            <ListHeader>Host</ListHeader>
+            <Link href="#">Host your home</Link>
+            <Link href="#">Responsible hosting</Link>
+            <Link href="#">Resource Center</Link>
+            <Link href="#">Host an Experience</Link>
+            <Link href="#">Host an Experience</Link>
+          </Stack>
+          <Stack align="flex-start">
+            <ListHeader>Follow Us</ListHeader>
+            <Link href="#">Facebook</Link>
+            <Link href="#">Twitter</Link>
+            <Link href="#">Dribbble</Link>
+            <Link href="#">Instagram</Link>
+            <Link href="#">LinkedIn</Link>
+          </Stack>
+        </SimpleGrid>
+      </Container>
+    </Box>
   );
 };
 export default Footer;
