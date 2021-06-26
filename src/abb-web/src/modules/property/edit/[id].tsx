@@ -15,7 +15,7 @@ import { Loader } from '@src/components/Loader';
 import { useIsAuth } from '@src/utils/useIsAuth';
 
 const EditPropertyPage = () => {
-  useIsAuth()
+  useIsAuth();
   const router = useRouter();
   const intId = useGetIntId();
   const [, updateProperty] = useUpdatePropertyMutation();

@@ -3,12 +3,14 @@ import { Flex } from '@src/components/Flex';
 import { InputField } from '@src/components/InputField';
 import { useCreatePropertyMutation } from '@src/generated/graphql';
 import { createUrqlClient } from '@src/utils/createUrqlClient';
+import { useIsAuth } from '@src/utils/useIsAuth';
 import { Formik, Form } from 'formik';
 import { withUrqlClient } from 'next-urql';
 import { useRouter } from 'next/router';
 import React from 'react';
 
 const CreatePropertyPage = () => {
+  useIsAuth()
   const router = useRouter();
   const [, createProperty] = useCreatePropertyMutation();
   return (
