@@ -2,7 +2,7 @@ import { usePropertiesQuery } from '@src/generated/graphql';
 import { createUrqlClient } from '@src/utils/createUrqlClient';
 import { withUrqlClient } from 'next-urql';
 import React, { useState } from 'react';
-import Card from '@src/components/Card';
+import Card from '@src/components/Card/Card';
 import styled from '@emotion/styled';
 import { Loader } from '@src/components/Loader';
 import { Box, Flex, Button } from '@chakra-ui/react';
