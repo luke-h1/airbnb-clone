@@ -10,9 +10,8 @@ import { createUrqlClient } from '@src/utils/createUrqlClient';
 import Image from 'next/image';
 import { Loader } from './Loader';
 
-interface HeaderProps {}
-
 const StyledHeader = styled.header`
+  background: #F5F5F5;
   height: 80px;
   width: 100vw;
   padding: 0 24px;
@@ -48,7 +47,6 @@ const HeaderNavigation = styled.div`
   display: flex;
   justify-content: flex-end;
   .button {
-    background: transparent;
     border: none;
     display: flex;
     align-items: center;
@@ -59,18 +57,6 @@ const HeaderNavigation = styled.div`
     height: 48px;
     border-radius: 22px;
     cursor: pointer;
-    &-language {
-      img {
-        &:first-child {
-          width: 16px;
-          height: 16px;
-        }
-        &:last-child {
-          width: 9px;
-          height: 6px;
-          margin-left: 6px;
-        }
-      }
     }
     &-account {
       border: 1px solid ${baseColors.greyMed};
@@ -81,17 +67,7 @@ const HeaderNavigation = styled.div`
       &:hover {
         box-shadow: 0 2px 4px rgba(0, 0, 0, 0.18);
       }
-      img {
-        &:first-child {
-          height: 16px;
-          width: 16px;
-        }
-        &:last-child {
-          width: 30px;
-          height: 30px;
-          margin-left: 12px;
-        }
-      }
+    
     }
   }
 `;
@@ -99,13 +75,15 @@ const HeaderNavigation = styled.div`
 const ImgWrapper = styled.span`
   width: 50px;
   height: 50px;
+  margin: 0 15px 0 16px;
   img {
     width: 100%;
+    border-radius: 30px;
     object-fit: cover;
   }
 `;
 
-const Header: React.FC<HeaderProps> = () => {
+const Header: React.FC<{}> = () => {
   const router = useRouter();
   const [{ fetching: logoutFetching }, logout] = useLogoutMutation();
   const [{ data, fetching }] = useMeQuery({
@@ -147,7 +125,12 @@ const Header: React.FC<HeaderProps> = () => {
         </Link>
         <ImgWrapper>
           {data?.me.picture && (
-            <Image src={data.me.picture} alt="tes" width={50} height={50} />
+            <Image
+              src={data.me.picture}
+              alt={`${data.me.firstName}'s profle picture`}
+              width={50}
+              height={50}
+            />
           )}
         </ImgWrapper>
         {logoutFetching ? (
