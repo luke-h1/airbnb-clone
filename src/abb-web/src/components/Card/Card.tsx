@@ -1,6 +1,7 @@
 import React from 'react';
-import ListingStyles from './CardStyles';
-import EditDeleteButtons from './EditDeleteButtons';
+import Link from 'next/link';
+import { ListingStyles, StyledImage } from './CardStyles';
+import EditDeleteButtons from '../EditDeleteButtons';
 
 export interface PropertyProps {
   id: number;
@@ -26,15 +27,18 @@ const Card: React.FC<PropertyProps> = ({
   return (
     <ListingStyles>
       <div className="listings__item" key={id}>
-        <div className="listings__image">
-          <button type="button">
-            <img src="/icons/chevronLeft.svg" alt="left" />
-          </button>
-          <button type="button">
-            <img src="/icons/chevronRight.svg" alt="right" />
-          </button>
-          <img src={mainImage} alt="" />
-        </div>
+        <Link href={`/property/${id}`}>
+          <div className="listings__image">
+            <StyledImage
+              src={mainImage}
+              alt=""
+              width={300}
+              height={200}
+              placeholder="blur"
+              blurDataURL={mainImage}
+            />
+          </div>
+        </Link>
         <div className="listings__content">
           <div className="listings__title">
             <div className="listings__icon__text">

@@ -148,7 +148,7 @@ const SingleProperty: React.FC<{}> = () => {
 
                 <Box py={4} px={6}>
                   <Text as="h1" fontSize="xl" fontWeight="bold">
-                    Property review by, {r.user.fullName}
+                    Property review by, {r.creator.fullName}
                   </Text>
 
                   <Text as="p" py={2}>

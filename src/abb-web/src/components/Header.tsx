@@ -7,6 +7,7 @@ import { useRouter } from 'next/router';
 import { isServer } from '@src/utils/isServer';
 import { withUrqlClient } from 'next-urql';
 import { createUrqlClient } from '@src/utils/createUrqlClient';
+import Image from 'next/image';
 import { Loader } from './Loader';
 
 interface HeaderProps {}
@@ -145,7 +146,9 @@ const Header: React.FC<HeaderProps> = () => {
           </a>
         </Link>
         <ImgWrapper>
-          <img src={data.me?.picture && data.me.picture} alt="tes" />
+          {data?.me.picture && (
+            <Image src={data.me.picture} alt="tes" width={50} height={50} />
+          )}
         </ImgWrapper>
         {logoutFetching ? (
           <Loader size="sm" />

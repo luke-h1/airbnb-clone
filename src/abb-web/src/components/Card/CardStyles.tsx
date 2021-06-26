@@ -1,7 +1,12 @@
 import { baseColors, fonts, fontWeights } from '@src/styles/Variables';
 import styled from '@emotion/styled';
+import Image from 'next/image';
 
-const ListingStyles = styled.div`
+export const StyledImage = styled(Image)`
+  cursor: pointer;
+`;
+
+export const ListingStyles = styled.div`
   .listings {
     &__details {
       display: flex;
@@ -181,4 +186,3 @@ const ListingStyles = styled.div`
     }
   }
 `;
-export default ListingStyles;
