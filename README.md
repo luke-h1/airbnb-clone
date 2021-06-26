@@ -19,6 +19,7 @@ This project is made up of 4 areas that share code using <a href='https://lerna.
 * Ensure Postgres is installed & is running (see backend section for more details)
 * Ensure Redis is installed & is running (see backend section for more details)
 * Ensure your postgres user has superuser access on the `abb-clone` DB
+* Run `npm ci && npm run bootstrap` in the root of the project to bootstrap the packages, install all their dependencies and link any cross-dependencies.
 
 
 ### Backend: 
@@ -26,7 +27,6 @@ This project is made up of 4 areas that share code using <a href='https://lerna.
 * [Install postgres](https://www.postgresql.org/download/)
 * [Install Redis (stable)](https://redis.io/download)
 * Create a blank postgres database called `abb-clone`
-* run `npm ci && npm run bootstrap` in the root of the project to install dependencies 
 * copy the `.env.example ` to `.env` (`cp .env.example .env`).
 * Fill out the `.env` file with your own values
 * to start the backend: `cd src/abb-server && npm run watch`. This will transpile Typescript down to common JS. Run `npm run dev` to start the backend server. 
