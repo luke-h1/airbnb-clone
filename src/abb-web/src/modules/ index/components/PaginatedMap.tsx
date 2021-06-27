@@ -1,5 +1,7 @@
 import { PaginatedProperties } from '@src/generated/graphql';
-import React, { memo } from 'react';
+import { LatLngExpression } from 'leaflet';
+import React, { memo, useState } from 'react';
+
 import {
   MapContainer, TileLayer, Marker, Popup,
 } from 'react-leaflet';
@@ -8,23 +10,24 @@ interface Props {
   properties?: PaginatedProperties;
 }
 
-const position: [number, number] = [51.505, -0.09];
-
 const Map: React.FC<Props> = ({ properties }) => {
+  const [position] = useState<LatLngExpression>([53.48095, -2.23743]);
   return (
     <MapContainer
       center={position}
       zoom={13}
       scrollWheelZoom
-      style={{ height: '100vw', width: '100vh' }}
+      style={{ height: '70vw', width: '63vh' }}
     >
       <TileLayer
         attribution='&copy; <a href="http://osm.org/copyright">OpenStreetMap</a> contributors'
         url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
       />
       {properties!.properties.map((p) => (
-        <Marker position={[p.longitude, p.latitude]}>
-          <Popup>{p.title}</Popup>
+        <Marker position={[p.latitude, p.longitude]}>
+          <Popup>
+            {p.title} £{p.pricePerNight}/per night
+          </Popup>
         </Marker>
       ))}
     </MapContainer>
