@@ -1,32 +1,19 @@
 /* eslint-disable */
 import { LatLngExpression } from 'leaflet';
-import React, {
-  memo,
-  useRef,
-  useState,
-  useMemo,
-  useCallback,
-  useEffect,
-} from 'react';
+import React, { memo, useRef, useState, useMemo, useCallback } from 'react';
 
 import { MapContainer, TileLayer, Marker, Popup } from 'react-leaflet';
 
 const CreateMap: React.FC<{}> = () => {
-  const [position, setPosition] = useState<LatLngExpression>([
-    53.48095, -2.23743,
-  ]); // manc
+  const [position, setPosition] = useState<LatLngExpression>([0, 0]); // manc
   const [draggable, setDraggable] = useState<boolean>(false);
-
-  useEffect(() => {
-    console.log(position);
-  }, [position]);
 
   const DraggableMarker = () => {
     const markerRef = useRef(null);
     const eventHandlers = useMemo(
       () => ({
         dragend() {
-          const marker = markerRef.current;
+          const marker = markerRef.current as any;
           if (marker !== null) {
             setPosition(marker.getLatLng());
           }

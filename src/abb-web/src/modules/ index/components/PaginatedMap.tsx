@@ -17,15 +17,17 @@ const Map: React.FC<Props> = ({ properties }) => {
       center={position}
       zoom={13}
       scrollWheelZoom
-      style={{ height: '100vw', width: '100vh' }}
+      style={{ height: '70vw', width: '63vh' }}
     >
       <TileLayer
         attribution='&copy; <a href="http://osm.org/copyright">OpenStreetMap</a> contributors'
         url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
       />
       {properties!.properties.map((p) => (
-        <Marker position={[p.longitude, p.latitude]}>
-          <Popup>{p.title}</Popup>
+        <Marker position={[p.latitude, p.longitude]}>
+          <Popup>
+            {p.title} £{p.pricePerNight}/per night
+          </Popup>
         </Marker>
       ))}
     </MapContainer>

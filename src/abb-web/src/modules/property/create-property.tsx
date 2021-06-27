@@ -8,16 +8,13 @@ import { Formik, Form } from 'formik';
 import { withUrqlClient } from 'next-urql';
 import { useRouter } from 'next/router';
 import React from 'react';
-import dynamic from 'next/dynamic';
-
-const CreateMap = dynamic(() => import('./components/CreateMap'), {
-  ssr: false,
-});
+import { toPropertyErrorMap } from '@src/utils/toErrorMap';
 
 const CreatePropertyPage = () => {
   useIsAuth();
   const router = useRouter();
   const [, createProperty] = useCreatePropertyMutation();
+
   return (
     <>
       <h1>Create Property</h1>
@@ -29,13 +26,16 @@ const CreatePropertyPage = () => {
             mainImage: '',
             pricePerNight: 0,
             description: '',
-            latitude: 0,
-            longitude: 0,
+            latitude: 53.48095,
+            longitude: -2.23743,
             amenities: [],
           }}
           onSubmit={async (values, { setErrors }) => {
             const res = await createProperty({ options: values });
-            if (res.data?.createProperty) {
+            console.log(res.data);
+            if (res.data?.createProperty.errors) {
+              setErrors(toPropertyErrorMap(res.data.createProperty.errors));
+            } else {
               router.push('/');
             }
           }}
@@ -99,9 +99,7 @@ const CreatePropertyPage = () => {
           )}
         </Formik>
         <GridItem colSpan={1} colStart={2}>
-          <Box minW="840px">
-            <CreateMap />
-          </Box>
+          <Box minW="840px">{/* <CreateMap latLng={} /> */}</Box>
         </GridItem>
       </SimpleGrid>
     </>
