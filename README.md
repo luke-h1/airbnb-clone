@@ -31,11 +31,11 @@ This project is made up of 4 areas that share code using <a href='https://lerna.
 * Fill out the `.env` file with your own values
 * to start the backend: `cd src/abb-server && npm run watch`. This will transpile Typescript down to common JS. Run `npm run dev` to start the backend server. 
 
-### Running backend Migrations 
+    ### Migrations 
 
-* The backend contains 2 commands which are responsible for dealing with migrations. 
-* The first one is responsible for generating a migration based on changes made to the `entities` folder. `typeorm migration:generate -n <NAME>`. 
-* The second one is responsible for running the generated migrations. `typeorm migration:run`
+    * The backend contains 2 commands which are responsible for dealing with migrations. 
+    * The first one is responsible for generating a migration based on changes made to the `entities` folder. `typeorm migration:generate -n <NAME>`. 
+    * The second one is responsible for running the generated migrations. `typeorm migration:run`
 
 
 ### Frontend: 

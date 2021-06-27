@@ -16,7 +16,7 @@ import { createSchema } from './shared/createSchema';
 import { Review } from './entities/Review';
 
 const main = async () => {
-  await createConnection({
+  const conn = await createConnection({
     type: 'postgres',
     url: process.env.DATABASE_URL,
     logging: !__prod__,
@@ -24,7 +24,9 @@ const main = async () => {
     migrations: [path.join(__dirname, './migrations/*')],
     entities: [User, Property, Review],
   });
-  // await conn.runMigrations();
+  if (process.env.NODE_ENV === 'production') {
+    await conn.runMigrations();
+  }
   const app = express();
 
   const RedisStore = connectRedis(session);
