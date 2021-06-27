@@ -20,10 +20,7 @@
   },
   "lint-staged": {
     "*.{ts,tsx,js,jsx}": [
-      "eslint"
-    ],
-    "*.{scss,css}": [
-      "stylelint"
+      "eslint --fix --quiet"
     ],
     "*.{js,jsx,ts,tsx,css,scss,html}": [
       "prettier --write"

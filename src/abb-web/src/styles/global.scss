@@ -6,7 +6,7 @@
   --pink: #ff385c;
 }
 
-.inputStyles { 
+.inputStyles {
   width: 100% !important;
   border: none !important;
   outline: none !important;
@@ -22,19 +22,20 @@
   appearance: none !important;
 }
 
-.form-wrapper { 
-    cursor: text !important;
-    display: flex !important;
-    height: 56px !important;
-    width: 100% !important;
-    margin: 0px !important;
-    border: none transparent !important;
-    color: rgb(34, 34, 34) !important;
-    background-color: transparent !important;
-    border-radius: 0px !important;
-    box-shadow: none !important;
-    font-family: Circular, -apple-system, BlinkMacSystemFont, Roboto, "Helvetica Neue", sans-serif !important;
-    font-size: 16px !important;
-    line-height: 20px !important;
-    font-weight: 400 !important;
+.form-wrapper {
+  cursor: text !important;
+  display: flex !important;
+  height: 56px !important;
+  width: 100% !important;
+  margin: 0px !important;
+  border: none transparent !important;
+  color: rgb(34, 34, 34) !important;
+  background-color: transparent !important;
+  border-radius: 0px !important;
+  box-shadow: none !important;
+  font-family: Circular, -apple-system, BlinkMacSystemFont, Roboto,
+    'Helvetica Neue', sans-serif !important;
+  font-size: 16px !important;
+  line-height: 20px !important;
+  font-weight: 400 !important;
 }
