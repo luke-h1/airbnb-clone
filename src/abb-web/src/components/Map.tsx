@@ -1,42 +1,11 @@
+import { PaginatedProperties } from '@src/generated/graphql';
 import React, { memo } from 'react';
 import {
   MapContainer, TileLayer, Marker, Popup,
 } from 'react-leaflet';
 
-interface _Property {
-  hasMore: boolean;
-  properties: {
-    id: number;
-    title: string;
-    propertyType: string;
-    mainImage: string;
-    description: string;
-    pricePerNight: number;
-    latitude: number;
-    longitude: number;
-    createdAt: number;
-    updatedAt: number;
-    creator: {
-      id: number;
-      email: string;
-      picture: string;
-      fullName: string;
-    };
-    reviews: {
-      id: number;
-      title: string;
-      body: string;
-      creator: {
-        id: number;
-        email: string;
-        fullName: string;
-      };
-    };
-  };
-}
-
 interface Props {
-  properties?: _Property[];
+  properties?: PaginatedProperties;
 }
 
 const position: [number, number] = [51.505, -0.09];
