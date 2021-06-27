@@ -1,57 +1,71 @@
+/* eslint-disable */
 import { LatLngExpression } from 'leaflet';
-import React, { memo, useState } from 'react';
-import {
-  MapContainer,
-  TileLayer,
-  Marker,
-  Popup,
-  useMapEvents,
-} from 'react-leaflet';
-import { Text } from '@chakra-ui/react';
+import React, {
+  memo,
+  useRef,
+  useState,
+  useMemo,
+  useCallback,
+  useEffect,
+} from 'react';
+
+import { MapContainer, TileLayer, Marker, Popup } from 'react-leaflet';
 
 const CreateMap: React.FC<{}> = () => {
   const [position, setPosition] = useState<LatLngExpression>([
     53.48095, -2.23743,
   ]); // manc
+  const [draggable, setDraggable] = useState<boolean>(false);
 
-  const GetLoc = () => {
-    const map = useMapEvents({
-      click() {
-        map.locate();
-      },
-      locationfound(e) {
-        setPosition(e.latlng as any);
-        map.flyTo(e.latlng, map.getZoom());
-      },
-    });
-    return position === null ? null : (
-      <Marker position={position}>
-        <Popup>You are here</Popup>
+  useEffect(() => {
+    console.log(position);
+  }, [position]);
+
+  const DraggableMarker = () => {
+    const markerRef = useRef(null);
+    const eventHandlers = useMemo(
+      () => ({
+        dragend() {
+          const marker = markerRef.current;
+          if (marker !== null) {
+            setPosition(marker.getLatLng());
+          }
+        },
+      }),
+      []
+    );
+    return (
+      <Marker
+        draggable={draggable}
+        eventHandlers={eventHandlers}
+        position={position}
+        ref={markerRef}
+      >
+        <Popup minWidth={90}>
+          <span onClick={toggleDraggable}>
+            {draggable
+              ? 'Marker is draggable'
+              : 'Click here to make marker draggable'}
+          </span>
+        </Popup>
       </Marker>
     );
   };
+  const toggleDraggable = useCallback(() => setDraggable((d) => !d), []);
 
   return (
-    <>
-      <Text as="h2" fontSize="20px" mb={2}>
-        Pick your property from the map
-      </Text>
-      <MapContainer
-        center={position}
-        zoom={9}
-        scrollWheelZoom
-        style={{ height: '35vw', width: '75vh' }}
-      >
-        <TileLayer
-          attribution='&copy; <a href="http://osm.org/copyright">OpenStreetMap</a> contributors'
-          url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
-        />
-        {/* <Marker position={[p.longitude, p.latitude]}>
-          <Popup>{p.title}</Popup>
-        </Marker> */}
-        <GetLoc />
-      </MapContainer>
-    </>
+    <MapContainer
+      center={position}
+      zoom={13}
+      scrollWheelZoom
+      style={{ height: '35vw', width: '75vh' }}
+    >
+      <TileLayer
+        attribution='&copy; <a href="http://osm.org/copyright">OpenStreetMap</a> contributors'
+        url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
+      />
+      <DraggableMarker />
+    </MapContainer>
   );
 };
 export default memo(CreateMap);

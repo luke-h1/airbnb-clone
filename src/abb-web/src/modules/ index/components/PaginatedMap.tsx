@@ -1,5 +1,7 @@
 import { PaginatedProperties } from '@src/generated/graphql';
-import React, { memo } from 'react';
+import { LatLngExpression } from 'leaflet';
+import React, { memo, useState } from 'react';
+
 import {
   MapContainer, TileLayer, Marker, Popup,
 } from 'react-leaflet';
@@ -8,9 +10,8 @@ interface Props {
   properties?: PaginatedProperties;
 }
 
-const position: [number, number] = [51.505, -0.09];
-
 const Map: React.FC<Props> = ({ properties }) => {
+  const [position] = useState<LatLngExpression>([53.48095, -2.23743]);
   return (
     <MapContainer
       center={position}

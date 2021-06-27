@@ -1,6 +1,5 @@
 /* eslint-disable */
 import { Box, GridItem, SimpleGrid } from '@chakra-ui/react';
-import { Flex } from '@src/components/Flex';
 import { InputField } from '@src/components/InputField';
 import { useCreatePropertyMutation } from '@src/generated/graphql';
 import { createUrqlClient } from '@src/utils/createUrqlClient';
@@ -11,7 +10,7 @@ import { useRouter } from 'next/router';
 import React from 'react';
 import dynamic from 'next/dynamic';
 
-const CreateMap = dynamic(() => import('./components/CreateMap'), {
+const CreateMap = dynamic(() => import('./components/CreateMap2'), {
   ssr: false,
 });
 
