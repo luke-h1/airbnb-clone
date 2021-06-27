@@ -5,6 +5,7 @@
     "eslint": "^7.27.0",
     "husky": "^6.0.0",
     "lerna": "^4.0.0",
+    "lint-staged": "^11.0.0",
     "prettier": "^2.3.0"
   },
   "scripts": {
@@ -16,5 +17,16 @@
     "build": "lerna run build",
     "clean": "lerna clean -y",
     "prepare": "husky install"
+  },
+  "lint-staged": {
+    "*.{ts,tsx,js,jsx}": [
+      "eslint"
+    ],
+    "*.{scss,css}": [
+      "stylelint"
+    ],
+    "*.{js,jsx,ts,tsx,css,scss,html}": [
+      "prettier --write"
+    ]
   }
 }

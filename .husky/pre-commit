@@ -1,4 +1,5 @@
 #!/bin/sh
 . "$(dirname "$0")/_/husky.sh"
-lerna run format
-lerna run lint
+# lerna run format
+# lerna run lint
+npx lint-staged
