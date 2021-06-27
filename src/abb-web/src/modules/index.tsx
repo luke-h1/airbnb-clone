@@ -7,11 +7,11 @@ import styled from '@emotion/styled';
 import { Loader } from '@src/components/Loader';
 import { Box, Flex, Button } from '@chakra-ui/react';
 
-// import dynamic from 'next/dynamic';
+import dynamic from 'next/dynamic';
 
-// const MapBlockInternal = dynamic(() => import('@src/components/Map'), {
-//   ssr: false,
-// });
+const Map = dynamic(() => import('@src/components/Map'), {
+  ssr: false,
+});
 
 const IndexWrapper = styled.div`
   /* position: relative; */
@@ -32,6 +32,7 @@ const index: React.FC<{}> = () => {
   });
 
   const [{ data, error, fetching }] = usePropertiesQuery({ variables });
+
   return (
     <IndexWrapper>
       {error ? error.message : null}
@@ -55,6 +56,8 @@ const index: React.FC<{}> = () => {
               pricePerNight={p.pricePerNight}
             />
           )))}
+          <Map properties={data!.properties as any} />
+
           {data?.properties.hasMore ? (
             <Flex direction="column" justify="left" alignItems="center">
               <Box
