@@ -3,46 +3,45 @@ import {
   MapContainer, TileLayer, Marker, Popup,
 } from 'react-leaflet';
 
-// interface _Property {
-//   hasMore: boolean;
-//   properties: {
-//     id: number;
-//     title: string;
-//     propertyType: string;
-//     mainImage: string;
-//     description: string;
-//     pricePerNight: number;
-//     latitude: number;
-//     longitude: number;
-//     createdAt: number;
-//     updatedAt: number;
-//     creator: {
-//       id: number;
-//       email: string;
-//       picture: string;
-//       fullName: string;
-//     }
-//     reviews: {
-//       id: number;
-//       title: string;
-//       body: string;
-//       creator: {
-//         id: number;
-//         email: string;
-//         fullName: string;
-//       }
-//     }
-//   }
-// }
+interface _Property {
+  hasMore: boolean;
+  properties: {
+    id: number;
+    title: string;
+    propertyType: string;
+    mainImage: string;
+    description: string;
+    pricePerNight: number;
+    latitude: number;
+    longitude: number;
+    createdAt: number;
+    updatedAt: number;
+    creator: {
+      id: number;
+      email: string;
+      picture: string;
+      fullName: string;
+    };
+    reviews: {
+      id: number;
+      title: string;
+      body: string;
+      creator: {
+        id: number;
+        email: string;
+        fullName: string;
+      };
+    };
+  };
+}
 
-// interface Props {
-//   properties?: _Property[]
-// }
+interface Props {
+  properties?: _Property[];
+}
 
 const position: [number, number] = [51.505, -0.09];
 
-const Map: React.FC<{}> = ({ properties }: any) => {
-  console.log(properties);
+const Map: React.FC<Props> = ({ properties }) => {
   return (
     <MapContainer
       center={position}
@@ -56,9 +55,7 @@ const Map: React.FC<{}> = ({ properties }: any) => {
       />
       {properties!.properties.map((p) => (
         <Marker position={[p.longitude, p.latitude]}>
-          <Popup>
-            A pretty CSS3 popup. <br /> Easily customizable.
-          </Popup>
+          <Popup>{p.title}</Popup>
         </Marker>
       ))}
     </MapContainer>
