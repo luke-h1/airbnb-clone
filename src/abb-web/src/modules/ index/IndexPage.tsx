@@ -10,7 +10,7 @@ import {
 
 import dynamic from 'next/dynamic';
 
-const Map = dynamic(() => import('@src/components/Map'), {
+const Map = dynamic(() => import('./components/PaginatedMap'), {
   ssr: false,
 });
 
@@ -33,7 +33,6 @@ const index: React.FC<{}> = () => {
   });
 
   const [{ data, error, fetching }] = usePropertiesQuery({ variables });
-
   return (
     <>
       {error ? error.message : null}
