@@ -7,6 +7,7 @@ import express from 'express';
 import session from 'express-session';
 import { createConnection } from 'typeorm';
 import path from 'path';
+import { graphqlUploadExpress } from 'graphql-upload';
 import { __prod__ } from './shared/constants';
 import { createUserLoader } from './Loaders/UserLoader';
 import { redis } from './redis';
@@ -37,6 +38,8 @@ const main = async () => {
       credentials: true,
     }),
   );
+  app.use(graphqlUploadExpress({ maxFileSize: 10000000, maxFiles: 10 }));
+
   app.set('trust-proxy', 1);
   app.use(
     session({
@@ -59,7 +62,7 @@ const main = async () => {
 
   const apolloServer = new ApolloServer({
     playground: process.env.NODE_ENV !== 'production',
-    uploads: true,
+    uploads: false, // disabled since we're using graphql-upload
     schema: await createSchema(),
     context: ({ req, res }) => ({
       req,
