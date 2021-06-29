@@ -8,6 +8,7 @@ import {
   ManyToOne,
   PrimaryGeneratedColumn,
 } from 'typeorm';
+import { Property } from './Property';
 import { User } from './User';
 
 @ObjectType()
@@ -21,8 +22,17 @@ export class Review extends BaseEntity {
   @Column()
   creatorId: number;
 
+  @Field(() => Int)
+  @Column()
+  propertyId: number;
+
+  @Field(() => Property)
+  @ManyToOne(() => Property, (property) => property.reviews)
+  @JoinColumn({ name: 'propertyId' })
+  property: User;
+
   @Field(() => User)
-  @ManyToOne(() => User, (user) => user.reviews)
+  @ManyToOne(() => User, (property) => property.reviews)
   @JoinColumn({ name: 'creatorId' })
   creator: User;
 
