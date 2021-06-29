@@ -8,24 +8,6 @@ import {
   Box, Flex, Button, GridItem, SimpleGrid,
 } from '@chakra-ui/react';
 
-import dynamic from 'next/dynamic';
-
-const Map = dynamic(() => import('./components/PaginatedMap'), {
-  ssr: false,
-});
-
-/* const IndexWrapper = styled.div`
-  position: relative;
-  padding-top: 80px;
-  min-height: calc(100vh - 80px);
-  width: 840px;
-  padding: 60px 24px 0;
-  h1 {
-    font-size: 34px;
-    margin-top: 18px;
-  }
-`;
-*/
 const index: React.FC<{}> = () => {
   const [variables, setVariables] = useState({
     limit: 15,
@@ -81,9 +63,7 @@ const index: React.FC<{}> = () => {
           </Box>
           <></>
           <GridItem colSpan={1} colStart={2}>
-            <Box minW="840px">
-              <Map properties={data!.properties as any} />
-            </Box>
+            <Box minW="840px" />
           </GridItem>
         </SimpleGrid>
       )}
