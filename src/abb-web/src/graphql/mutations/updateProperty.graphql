@@ -14,8 +14,7 @@ mutation UpdateProperty($options: UpdatePropertyInput!, $id: Int!) {
     mainImage
     description
     propertyType
-    longitude
-    latitude
+    address
     amenities
     reviews {
       id

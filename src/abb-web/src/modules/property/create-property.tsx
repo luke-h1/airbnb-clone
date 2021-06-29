@@ -26,8 +26,7 @@ const CreatePropertyPage = () => {
             mainImage: '',
             pricePerNight: 0,
             description: '',
-            latitude: 53.48095,
-            longitude: -2.23743,
+            address: '',
             amenities: [],
           }}
           onSubmit={async (values, { setErrors }) => {
@@ -67,6 +66,7 @@ const CreatePropertyPage = () => {
                   label="mainImage"
                   type="text"
                 />
+
                 <InputField
                   name="pricePerNight"
                   placeholder="Price per night"
@@ -74,17 +74,12 @@ const CreatePropertyPage = () => {
                   type="number"
                 />
                 <InputField
-                  name="latitude"
-                  placeholder="latitude"
-                  label="latitude"
-                  type="number"
+                  name="address"
+                  placeholder="address"
+                  label="address"
+                  type="text"
                 />
-                <InputField
-                  name="longitude"
-                  placeholder="longitude"
-                  label="longitude"
-                  type="number"
-                />
+
                 <InputField
                   name="amenities"
                   placeholder="amenities"
@@ -99,7 +94,7 @@ const CreatePropertyPage = () => {
           )}
         </Formik>
         <GridItem colSpan={1} colStart={2}>
-          <Box minW="840px">{/* <CreateMap latLng={} /> */}</Box>
+          <Box minW="840px"></Box>
         </GridItem>
       </SimpleGrid>
     </>

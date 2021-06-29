@@ -123,8 +123,7 @@ export class PropertyResolver {
       description,
       mainImage,
       pricePerNight,
-      latitude,
-      longitude,
+      address,
       amenities,
     } = options;
     const result = await getConnection()
@@ -136,8 +135,7 @@ export class PropertyResolver {
         description,
         mainImage,
         pricePerNight,
-        latitude,
-        longitude,
+        address,
         amenities,
       })
       .where('id = :id and creatorId = :creatorId', {

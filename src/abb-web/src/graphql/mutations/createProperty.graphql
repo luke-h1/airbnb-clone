@@ -11,9 +11,8 @@ mutation CreateProperty($options: CreatePropertyInput!) {
       mainImage
       description
       pricePerNight
-      latitude
+      address
       amenities
-      longitude
       createdAt
       updatedAt
       creator {

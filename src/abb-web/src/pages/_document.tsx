@@ -13,6 +13,7 @@ export default class MyDocument extends Document {
             integrity="sha512-xodZBNTC5n17Xt2atTPuE1HxjVMSvLVW9ocqUKLsCC5CXdbqCmblAshOMAS6/keqq/sMZMZ19scR4PsZChSR7A=="
             crossOrigin=""
           />
+
           <link href="/icons/favicon-16x16.png" rel="shortcut icon" />
           <link href="site.webmanifest" rel="manifest" />
           <link

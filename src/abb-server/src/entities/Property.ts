@@ -48,12 +48,8 @@ export class Property extends BaseEntity {
   pricePerNight: number;
 
   @Field()
-  @Column('double precision')
-  latitude: number;
-
-  @Field()
-  @Column('double precision')
-  longitude: number;
+  @Column('varchar', { length: 50 })
+  address: string;
 
   @Field(() => [String])
   @Column('text', { array: true })

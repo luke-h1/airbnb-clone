@@ -8,9 +8,8 @@ query Properties($limit: Int!, $cursor: String) {
       mainImage
       description
       pricePerNight
-      latitude
+      address
       amenities
-      longitude
       createdAt
       updatedAt
       creator {

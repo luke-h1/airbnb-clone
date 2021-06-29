@@ -19,11 +19,8 @@ export class UpdatePropertyInput {
   @Field(() => Int)
   pricePerNight: number;
 
-  @Field(() => Float)
-  latitude: number;
-
-  @Field(() => Float)
-  longitude: number;
+  @Field(() => String)
+  address: string;
 
   @Field(() => [String])
   amenities: string[];

@@ -6,9 +6,8 @@ query Property($id: Int!, ) {
       mainImage
       description
       pricePerNight
-      latitude
+      address
       amenities
-      longitude
       createdAt
       updatedAt
       creator {

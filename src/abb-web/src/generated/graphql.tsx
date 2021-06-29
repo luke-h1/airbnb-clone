@@ -24,8 +24,7 @@ export type CreatePropertyInput = {
   description: Scalars['String'];
   mainImage: Scalars['String'];
   pricePerNight: Scalars['Int'];
-  latitude: Scalars['Float'];
-  longitude: Scalars['Float'];
+  address: Scalars['String'];
   amenities: Array<Scalars['String']>;
 };
 
@@ -92,8 +91,7 @@ export type Property = {
   mainImage: Scalars['String'];
   description: Scalars['String'];
   pricePerNight: Scalars['Int'];
-  latitude: Scalars['Float'];
-  longitude: Scalars['Float'];
+  address: Scalars['String'];
   amenities: Array<Scalars['String']>;
   reviews?: Maybe<Array<Review>>;
   createdAt: Scalars['String'];
@@ -117,7 +115,6 @@ export type Query = {
   __typename?: 'Query';
   properties: PaginatedProperties;
   property: Property;
-  hello: Scalars['String'];
   me?: Maybe<User>;
 };
 
@@ -134,6 +131,8 @@ export type Review = {
   __typename?: 'Review';
   id: Scalars['Int'];
   creatorId: Scalars['Int'];
+  propertyId: Scalars['Int'];
+  property: Property;
   creator: User;
   title: Scalars['String'];
   body: Scalars['String'];
@@ -145,8 +144,7 @@ export type UpdatePropertyInput = {
   description: Scalars['String'];
   mainImage: Scalars['String'];
   pricePerNight: Scalars['Int'];
-  latitude: Scalars['Float'];
-  longitude: Scalars['Float'];
+  address: Scalars['String'];
   amenities: Array<Scalars['String']>;
 };
 
@@ -221,9 +219,8 @@ export type CreatePropertyMutation = { __typename?: 'Mutation' } & {
         | 'mainImage'
         | 'description'
         | 'pricePerNight'
-        | 'latitude'
+        | 'address'
         | 'amenities'
-        | 'longitude'
         | 'createdAt'
         | 'updatedAt'
       > & {
@@ -295,8 +292,7 @@ export type UpdatePropertyMutation = { __typename?: 'Mutation' } & {
       | 'propertyType'
       | 'mainImage'
       | 'description'
-      | 'longitude'
-      | 'latitude'
+      | 'address'
       | 'amenities'
       | 'createdAt'
       | 'updatedAt'
@@ -347,9 +343,8 @@ export type PropertiesQuery = { __typename?: 'Query' } & {
           | 'mainImage'
           | 'description'
           | 'pricePerNight'
-          | 'latitude'
+          | 'address'
           | 'amenities'
-          | 'longitude'
           | 'createdAt'
           | 'updatedAt'
         > & {
@@ -388,9 +383,8 @@ export type PropertyQuery = { __typename?: 'Query' } & {
     | 'mainImage'
     | 'description'
     | 'pricePerNight'
-    | 'latitude'
+    | 'address'
     | 'amenities'
-    | 'longitude'
     | 'createdAt'
     | 'updatedAt'
   > & {
@@ -453,9 +447,8 @@ export const CreatePropertyDocument = gql`
         mainImage
         description
         pricePerNight
-        latitude
+        address
         amenities
-        longitude
         createdAt
         updatedAt
         creator {
@@ -551,8 +544,7 @@ export const UpdatePropertyDocument = gql`
       mainImage
       description
       propertyType
-      longitude
-      latitude
+      address
       amenities
       reviews {
         id
@@ -601,9 +593,8 @@ export const PropertiesDocument = gql`
         mainImage
         description
         pricePerNight
-        latitude
+        address
         amenities
-        longitude
         createdAt
         updatedAt
         creator {
@@ -644,9 +635,8 @@ export const PropertyDocument = gql`
       mainImage
       description
       pricePerNight
-      latitude
+      address
       amenities
-      longitude
       createdAt
       updatedAt
       creator {

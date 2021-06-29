@@ -25,19 +25,11 @@ export const validateProperty = (options: CreatePropertyInput) => {
       },
     ];
   }
-  if (!options.latitude) {
+  if (!options.address) {
     return [
       {
-        field: 'latitude',
-        message: 'latitude is a required field',
-      },
-    ];
-  }
-  if (!options.longitude) {
-    return [
-      {
-        field: 'longitude',
-        message: 'longitude is a required field',
+        field: 'address',
+        message: 'address is a required field',
       },
     ];
   }

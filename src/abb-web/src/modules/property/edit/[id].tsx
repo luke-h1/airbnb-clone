@@ -62,8 +62,7 @@ const EditPropertyPage = () => {
             mainImage: data.property.mainImage,
             pricePerNight: data.property.pricePerNight,
             description: data.property.description,
-            latitude: data.property.latitude,
-            longitude: data.property.longitude,
+            address: data.property.address,
             amenities: data.property.amenities,
           }}
           onSubmit={async (values, { setErrors }) => {
@@ -107,15 +106,9 @@ const EditPropertyPage = () => {
                 type="number"
               />
               <InputField
-                name="latitude"
-                placeholder="latitude"
-                label="latitude"
-                type="number"
-              />
-              <InputField
-                name="longitude"
-                placeholder="longitude"
-                label="longitude"
+                name="address"
+                placeholder="address"
+                label="address"
                 type="number"
               />
               <InputField
