@@ -84,14 +84,6 @@ const Nav = () => {
         name: 'Create Property',
         href: '/property/create-property',
       },
-      {
-        name: 'View Account',
-        href: '/me/account',
-      },
-      {
-        name: 'My properties',
-        href: '/me/properties',
-      },
     ];
   }
 
