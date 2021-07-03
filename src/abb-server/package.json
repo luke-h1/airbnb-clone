@@ -55,6 +55,7 @@
     "@types/jest": "^26.0.23",
     "apollo-server-express": "^2.23.0",
     "argon2": "^0.28.2",
+    "aws-sdk": "^2.939.0",
     "axios": "^0.21.1",
     "connect-redis": "^6.0.0",
     "cors": "^2.8.5",

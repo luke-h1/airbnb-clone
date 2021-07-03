@@ -38,6 +38,8 @@ const main = async () => {
       credentials: true,
     }),
   );
+
+  // images
   app.use(graphqlUploadExpress({ maxFileSize: 10000000, maxFiles: 10 }));
 
   app.set('trust-proxy', 1);
