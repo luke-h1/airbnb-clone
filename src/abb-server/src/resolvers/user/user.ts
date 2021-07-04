@@ -13,9 +13,9 @@ import {
   Root,
 } from 'type-graphql';
 import { getConnection } from 'typeorm';
+import { handleFileUpload } from '../../utils/image/s3';
 import { User } from '../../entities/User';
 import { MyContext } from '../../shared/types';
-
 import { UsernamePasswordInput } from './inputs/UsernamePasswordInput';
 import { validateRegister } from '../../validation/user/validateRegister';
 import { COOKIE_NAME, FORGET_PASSWORD_PREFIX } from '../../shared/constants';
@@ -157,6 +157,8 @@ export class UserResolver {
     const hashedPassword = await argon2.hash(options.password);
     let user;
     try {
+      const image = options.picture ?? (await handleFileUpload(options.picture));
+      console.log(image);
       const result = await getConnection()
         .createQueryBuilder()
         .insert()
