@@ -17,7 +17,7 @@ interface FormValues {
   lastName: string;
   email: string;
   password: string;
-  picture: string;
+  picture: '';
 }
 
 const RegisterPage = () => {

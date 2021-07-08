@@ -1,6 +1,10 @@
 /* eslint-disable no-shadow */
 import { v4 } from 'uuid';
 import argon2 from 'argon2';
+
+// @TODO LUKE: create new upload image resolver for users
+// run two mutations and create new DB column userImages
+
 import {
   Arg,
   Ctx,
