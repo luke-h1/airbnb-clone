@@ -7,6 +7,10 @@
       "es6",
       "esnext.asynciterable"
     ],
+    "paths": {
+      "@src/*": ["src/*"],
+      "@common/*": ["../abb-common/src/*"]
+    },
     "strict": true,
     "esModuleInterop": true,
     "rootDir": "src",

@@ -1,5 +1,5 @@
 {
-  "packages": ["src/abb-server", "src/abb-web", "src/abb-common"],
+  "packages": ["packages/abb-server", "packages/abb-common", "packages/abb-web", "packages/abb-app"],
   "version": "0.0.0",
   "npmClient": "npm",
   "useWorkspaces": false
