@@ -157,7 +157,7 @@ export class UserResolver {
     const hashedPassword = await argon2.hash(options.password);
     let user;
     try {
-      const image = options.picture ?? (await handleFileUpload(options.picture));
+      const image = await handleFileUpload(options.picture);
       console.log(image);
       const result = await getConnection()
         .createQueryBuilder()
@@ -168,7 +168,7 @@ export class UserResolver {
           lastName: options.lastName,
           email: options.email,
           password: hashedPassword,
-          picture: options.picture ?? options.picture,
+          picture: options.picture && options.picture,
         })
         .returning('*')
         .execute();

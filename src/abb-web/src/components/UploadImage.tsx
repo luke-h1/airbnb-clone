@@ -16,10 +16,12 @@ const getColor = (props: any) => {
 };
 
 const Container = styled.div`
-  flex: 1;
+  width: 30%;
   display: flex;
   flex-direction: column;
   align-items: center;
+  justify-content: center;
+  place-items: center;
   padding: 20px;
   border-width: 2px;
   border-radius: 2px;
@@ -67,17 +69,14 @@ const errorStyle = {
 const UploadImage = () => {
   const [preview, setPreview] = useState('');
   const [errors, setErrors] = useState('');
-  const onDrop = useCallback(
-    async ([file]) => {
-      if (file) {
-        setPreview(URL.createObjectURL(file));
-        // upload file here
-      } else {
-        setErrors('something went wrong check file size');
-      }
-    },
-    [],
-  );
+  const onDrop = useCallback(async ([file]) => {
+    if (file) {
+      setPreview(URL.createObjectURL(file));
+      // upload file here
+    } else {
+      setErrors('something went wrong check file size');
+    }
+  }, []);
   const {
     getRootProps,
     getInputProps,
@@ -97,9 +96,7 @@ const UploadImage = () => {
     </div>
   );
   return (
-    <Container
-      {...getRootProps({ isDragActive, isDragAccept, isDragReject })}
-    >
+    <Container {...getRootProps({ isDragActive, isDragAccept, isDragReject })}>
       <input {...getInputProps()} />
       {isDragActive ? (
         <p>Drop the files here ...</p>
@@ -108,14 +105,14 @@ const UploadImage = () => {
       )}
       {preview && <aside style={thumbsContainer}>{thumb}</aside>}
       {errors && <span style={errorStyle}>{errors}</span>}
-      {data && data.uploadFile && (
+      {/* {data && data.uploadFile && (
         <input
           type="hidden"
           name="avatarUrl"
           value={data.uploadFile.Location}
           ref={register}
         />
-      )}
+      )} */}
     </Container>
   );
 };

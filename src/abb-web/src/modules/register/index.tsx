@@ -1,4 +1,4 @@
-import { Form, Formik } from 'formik';
+import { Field, Form, Formik } from 'formik';
 import { withUrqlClient } from 'next-urql';
 import { useRouter } from 'next/router';
 import React from 'react';
@@ -10,6 +10,7 @@ import Link from 'next/link';
 import {
   Flex, Text, Button, Box,
 } from '@chakra-ui/react';
+import UploadImage from '@src/components/UploadImage';
 
 interface FormValues {
   firstName: string;
@@ -61,12 +62,21 @@ const RegisterPage = () => {
               label="password"
               type="password"
             />
-            <InputField
-              name="picture"
-              placeholder="picture"
-              label="picture"
-              type="picture"
-            />
+            <Flex
+              mt={5}
+              mb={5}
+              direction="column"
+              justifyContent="center"
+              alignItems="center"
+            >
+              <Field
+                name="picture"
+                placeholder="picture"
+                label="picture"
+                type="picture"
+                component={UploadImage}
+              />
+            </Flex>
             <Flex
               direction="column"
               justifyContent="center"
@@ -78,6 +88,7 @@ const RegisterPage = () => {
               <Link href="/login">
                 <Box
                   mb={6}
+                  width="30%"
                   as={Button}
                   isLoading={isSubmitting}
                   spinnerPlacement="start"
@@ -90,6 +101,7 @@ const RegisterPage = () => {
                 </Box>
               </Link>
               <Box
+                width="30%"
                 as={Button}
                 isLoading={isSubmitting}
                 spinnerPlacement="start"
