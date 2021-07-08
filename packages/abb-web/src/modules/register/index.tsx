@@ -6,10 +6,7 @@ import { InputField } from 'src/components/InputField';
 import { useRegisterMutation } from 'src/generated/graphql';
 import { createUrqlClient } from 'src/utils/createUrqlClient';
 import { toErrorMap } from 'src/utils/toErrorMap';
-import Link from 'next/link';
-import {
-  Flex, Text, Button, Box,
-} from '@chakra-ui/react';
+import { Flex, Button, Box } from '@chakra-ui/react';
 import UploadImage from '@src/components/UploadImage';
 
 interface FormValues {
@@ -82,24 +79,6 @@ const RegisterPage = () => {
               justifyContent="center"
               alignItems="center"
             >
-              <Text as="h3" fontSize="17px" mb={4}>
-                Already have an account ?
-              </Text>
-              <Link href="/login">
-                <Box
-                  mb={6}
-                  width="30%"
-                  as={Button}
-                  isLoading={isSubmitting}
-                  spinnerPlacement="start"
-                  loadingText="Loading"
-                  disabled={isSubmitting}
-                  type="submit"
-                  colorScheme="teal"
-                >
-                  Login
-                </Box>
-              </Link>
               <Box
                 width="30%"
                 as={Button}

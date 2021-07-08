@@ -4,7 +4,8 @@ import argon2 from 'argon2';
 
 // @TODO LUKE: create new upload image resolver for users
 // run two mutations and create new DB column userImages
-
+// associate user id to image so we know which one to fetch
+// images inserted as empty string at the mo
 import {
   Arg,
   Ctx,
@@ -161,7 +162,7 @@ export class UserResolver {
     const hashedPassword = await argon2.hash(options.password);
     let user;
     try {
-      const image = await handleFileUpload(options.picture);
+      const image = options.picture ? handleFileUpload(options.picture) : '';
       console.log(image);
       const result = await getConnection()
         .createQueryBuilder()
@@ -172,7 +173,7 @@ export class UserResolver {
           lastName: options.lastName,
           email: options.email,
           password: hashedPassword,
-          picture: options.picture && options.picture,
+          picture: image as string,
         })
         .returning('*')
         .execute();
