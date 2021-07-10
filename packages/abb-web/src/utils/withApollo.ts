@@ -24,8 +24,8 @@ let apolloClient: ApolloClient<NormalizedCacheObject> | undefined;
 
 const createApolloClient = (headers: IncomingHttpHeaders | null = null) => {
   // isomorphic fetch for passing the cookies along with each GraphQL request
-  const enhancedFetch = (url: RequestInfo, init: RequestInit) => {
-    return fetch(url, {
+  const enhancedFetch = async (url: RequestInfo, init: RequestInit) => {
+    const response = await fetch(url, {
       ...init,
       headers: {
         ...init.headers,
@@ -33,7 +33,8 @@ const createApolloClient = (headers: IncomingHttpHeaders | null = null) => {
         // here we pass the cookie along for each request
         Cookie: headers?.cookie ?? '',
       },
-    }).then((response) => response);
+    });
+    return response;
   };
 
   return new ApolloClient({

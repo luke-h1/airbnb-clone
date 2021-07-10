@@ -66,15 +66,15 @@ const errorStyle = {
 };
 
 const Upload = () => {
+  const [upload] = useUploadImageMutation();
   const [preview, setPreview] = useState();
   const [errors, setErrors] = useState();
-  const [, uploadFile] = useUploadImageMutation();
   const onDrop = useCallback(
     async ([file]) => {
       if (file) {
         // @ts-ignore
         setPreview(URL.createObjectURL(file));
-        uploadFile({ file });
+        upload({ variables: { file } });
       } else {
         setErrors(
           // @ts-ignore
@@ -82,7 +82,7 @@ const Upload = () => {
         );
       }
     },
-    [uploadFile],
+    [upload],
   );
   const {
     getRootProps,
