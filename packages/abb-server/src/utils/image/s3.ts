@@ -1,5 +1,4 @@
 import 'dotenv-safe/config';
-import { v4 } from 'uuid';
 
 const AWS = require('aws-sdk');
 
@@ -32,32 +31,32 @@ export const S3DefaultParams = {
 };
 
 // actual upload to s3 happens here
-export const handleFileUpload = async (file: any) => {
-  console.log(file);
-  console.log('typeof file', typeof file);
-  const { createReadStream, filename } = await file;
+// export const handleFileUpload = async (file) => {
+//   console.log(file);
+//   console.log('typeof file', typeof file);
+//   // const { createReadStream, filename }: FileUpload = await file;
 
-  const key = v4();
+//   const key = v4();
 
-  return new Promise((resolve, reject) => {
-    S3.upload(
-      {
-        ...S3DefaultParams,
-        Body: createReadStream(),
-        Key: `${key}/${filename}`,
-        Bucket: process.env.AWS_BUCKET_NAME,
-      },
-      (e, data) => {
-        console.log(e);
-        console.log(data);
-        if (e) {
-          console.log('error uploading...', e);
-          reject(e);
-        } else {
-          console.log('successfully uploaded file...', data);
-          resolve(data);
-        }
-      },
-    );
-  });
-};
+//   return new Promise((resolve, reject) => {
+//     S3.upload(
+//       {
+//         ...S3DefaultParams,
+//         Body: createReadStream(),
+//         Key: `${key}/${filename}`,
+//         Bucket: process.env.AWS_BUCKET_NAME,
+//       },
+//       (e, data) => {
+//         console.log(e);
+//         console.log(data);
+//         if (e) {
+//           console.log('error uploading...', e);
+//           reject(e);
+//         } else {
+//           console.log('successfully uploaded file...', data);
+//           resolve(data);
+//         }
+//       },
+//     );
+//   });
+// };

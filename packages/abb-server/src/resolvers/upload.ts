@@ -3,12 +3,7 @@ import {
   Resolver, Arg, Mutation, ObjectType, Field,
 } from 'type-graphql';
 import { v4 } from 'uuid';
-import {
-  handleFileUpload,
-  S3DefaultParams,
-  S3,
-  AWSCONFIG,
-} from '../utils/image/s3';
+import { S3DefaultParams, S3 } from '../utils/image/s3';
 
 ObjectType();
 class ImgResp {
@@ -40,7 +35,7 @@ export class ImageResolver {
           Key: `${key}/${filename}`,
           Bucket: process.env.AWS_BUCKET_NAME,
         },
-        (e, data) => {
+        (e: unknown, data) => {
           console.log(e);
           console.log(data);
           if (e) {
