@@ -7,7 +7,7 @@ export interface PropertyProps {
   id: number;
   title: string;
   propertyType: string;
-  mainImage: string;
+  image: string;
   amenities: string[];
   pricePerNight: number;
   creator: { fullName: string };
@@ -18,7 +18,7 @@ const Card: React.FC<PropertyProps> = ({
   id,
   title,
   propertyType,
-  mainImage,
+  image,
   amenities,
   creator,
   pricePerNight,
@@ -30,12 +30,12 @@ const Card: React.FC<PropertyProps> = ({
         <Link href={`/property/${id}`}>
           <div className="listings__image">
             <StyledImage
-              src={mainImage}
+              src={image}
               alt=""
               width={300}
               height={200}
               placeholder="blur"
-              blurDataURL={mainImage}
+              blurDataURL={image}
             />
           </div>
         </Link>

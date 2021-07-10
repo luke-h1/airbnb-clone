@@ -17,11 +17,11 @@ export const validateProperty = (options: CreatePropertyInput) => {
       },
     ];
   }
-  if (!options.mainImage) {
+  if (!options.image) {
     return [
       {
-        field: 'mainImage',
-        message: 'mainImage is a required field',
+        field: 'image',
+        message: 'image is a required field',
       },
     ];
   }

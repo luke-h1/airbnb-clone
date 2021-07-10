@@ -4,5 +4,5 @@ fragment RegularUser on User {
   fullName
   firstName
   lastName
-  picture
+  image
 }

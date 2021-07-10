@@ -9,9 +9,6 @@ export class UserRegisterInput {
   lastName: string;
 
   @Field()
-  picture: string;
-
-  @Field()
   email: string;
 
   @Field()

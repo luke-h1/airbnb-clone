@@ -6,12 +6,12 @@ mutation UpdateProperty($options: UpdatePropertyInput!, $id: Int!) {
       id
       email
       fullName
-      picture
+      image
       createdAt
       updatedAt
     }
     propertyType
-    mainImage
+    image
     description
     propertyType
     address

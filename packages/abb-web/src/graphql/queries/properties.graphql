@@ -5,7 +5,7 @@ query Properties($limit: Int!, $cursor: String) {
       id
       title
       propertyType
-      mainImage
+      image
       description
       pricePerNight
       address
@@ -15,7 +15,7 @@ query Properties($limit: Int!, $cursor: String) {
       creator {
         id
         email
-        picture
+        image
         fullName
       }
       reviews {

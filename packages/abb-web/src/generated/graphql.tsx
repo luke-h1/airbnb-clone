@@ -24,7 +24,7 @@ export type CreatePropertyInput = {
   title: Scalars['String'];
   propertyType: Scalars['String'];
   description: Scalars['String'];
-  mainImage: Scalars['String'];
+  image: Scalars['String'];
   pricePerNight: Scalars['Int'];
   address: Scalars['String'];
   amenities: Array<Scalars['String']>;
@@ -76,6 +76,7 @@ export type MutationForgotPasswordArgs = {
 };
 
 export type MutationRegisterArgs = {
+  image: Scalars['Upload'];
   options: UserRegisterInput;
 };
 
@@ -95,7 +96,7 @@ export type Property = {
   title: Scalars['String'];
   creatorId: Scalars['Int'];
   propertyType: Scalars['String'];
-  mainImage: Scalars['String'];
+  image: Scalars['String'];
   description: Scalars['String'];
   pricePerNight: Scalars['Int'];
   address: Scalars['String'];
@@ -149,7 +150,7 @@ export type UpdatePropertyInput = {
   title: Scalars['String'];
   propertyType: Scalars['String'];
   description: Scalars['String'];
-  mainImage: Scalars['String'];
+  image: Scalars['String'];
   pricePerNight: Scalars['Int'];
   address: Scalars['String'];
   amenities: Array<Scalars['String']>;
@@ -160,7 +161,7 @@ export type User = {
   id: Scalars['Int'];
   email: Scalars['String'];
   firstName: Scalars['String'];
-  picture?: Maybe<Scalars['String']>;
+  image?: Maybe<Scalars['String']>;
   lastName: Scalars['String'];
   properties: Array<Property>;
   reviews: Array<Review>;
@@ -172,7 +173,6 @@ export type User = {
 export type UserRegisterInput = {
   firstName: Scalars['String'];
   lastName: Scalars['String'];
-  picture: Scalars['String'];
   email: Scalars['String'];
   password: Scalars['String'];
 };
@@ -195,7 +195,7 @@ export type RegularErrorFragment = { __typename?: 'FieldError' } & Pick<
 
 export type RegularUserFragment = { __typename?: 'User' } & Pick<
   User,
-  'id' | 'email' | 'fullName' | 'firstName' | 'lastName' | 'picture'
+  'id' | 'email' | 'fullName' | 'firstName' | 'lastName' | 'image'
 >;
 
 export type RegularUserResponseFragment = { __typename?: 'UserResponse' } & {
@@ -232,7 +232,7 @@ export type CreatePropertyMutation = { __typename?: 'Mutation' } & {
         | 'id'
         | 'title'
         | 'propertyType'
-        | 'mainImage'
+        | 'image'
         | 'description'
         | 'pricePerNight'
         | 'address'
@@ -242,7 +242,7 @@ export type CreatePropertyMutation = { __typename?: 'Mutation' } & {
       > & {
           creator: { __typename?: 'User' } & Pick<
             User,
-            'id' | 'email' | 'picture' | 'fullName'
+            'id' | 'email' | 'image' | 'fullName'
           >;
           reviews?: Maybe<
             Array<
@@ -288,6 +288,7 @@ export type LogoutMutation = { __typename?: 'Mutation' } & Pick<
 
 export type RegisterMutationVariables = Exact<{
   options: UserRegisterInput;
+  image: Scalars['Upload'];
 }>;
 
 export type RegisterMutation = { __typename?: 'Mutation' } & {
@@ -306,7 +307,7 @@ export type UpdatePropertyMutation = { __typename?: 'Mutation' } & {
       | 'id'
       | 'title'
       | 'propertyType'
-      | 'mainImage'
+      | 'image'
       | 'description'
       | 'address'
       | 'amenities'
@@ -315,7 +316,7 @@ export type UpdatePropertyMutation = { __typename?: 'Mutation' } & {
     > & {
         creator: { __typename?: 'User' } & Pick<
           User,
-          'id' | 'email' | 'fullName' | 'picture' | 'createdAt' | 'updatedAt'
+          'id' | 'email' | 'fullName' | 'image' | 'createdAt' | 'updatedAt'
         >;
         reviews?: Maybe<
           Array<
@@ -356,7 +357,7 @@ export type PropertiesQuery = { __typename?: 'Query' } & {
           | 'id'
           | 'title'
           | 'propertyType'
-          | 'mainImage'
+          | 'image'
           | 'description'
           | 'pricePerNight'
           | 'address'
@@ -366,7 +367,7 @@ export type PropertiesQuery = { __typename?: 'Query' } & {
         > & {
             creator: { __typename?: 'User' } & Pick<
               User,
-              'id' | 'email' | 'picture' | 'fullName'
+              'id' | 'email' | 'image' | 'fullName'
             >;
             reviews?: Maybe<
               Array<
@@ -396,7 +397,7 @@ export type PropertyQuery = { __typename?: 'Query' } & {
     | 'id'
     | 'title'
     | 'propertyType'
-    | 'mainImage'
+    | 'image'
     | 'description'
     | 'pricePerNight'
     | 'address'
@@ -406,7 +407,7 @@ export type PropertyQuery = { __typename?: 'Query' } & {
   > & {
       creator: { __typename?: 'User' } & Pick<
         User,
-        'id' | 'email' | 'picture' | 'fullName'
+        'id' | 'email' | 'image' | 'fullName'
       >;
       reviews?: Maybe<
         Array<
@@ -434,7 +435,7 @@ export const RegularUserFragmentDoc = gql`
     fullName
     firstName
     lastName
-    picture
+    image
   }
 `;
 export const RegularUserResponseFragmentDoc = gql`
@@ -508,7 +509,7 @@ export const CreatePropertyDocument = gql`
         id
         title
         propertyType
-        mainImage
+        image
         description
         pricePerNight
         address
@@ -518,7 +519,7 @@ export const CreatePropertyDocument = gql`
         creator {
           id
           email
-          picture
+          image
           fullName
         }
         reviews {
@@ -719,8 +720,8 @@ export type LogoutMutationOptions = Apollo.BaseMutationOptions<
   LogoutMutationVariables
 >;
 export const RegisterDocument = gql`
-  mutation Register($options: UserRegisterInput!) {
-    register(options: $options) {
+  mutation Register($options: UserRegisterInput!, $image: Upload!) {
+    register(options: $options, image: $image) {
       ...RegularUserResponse
     }
   }
@@ -745,6 +746,7 @@ export type RegisterMutationFn = Apollo.MutationFunction<
  * const [registerMutation, { data, loading, error }] = useRegisterMutation({
  *   variables: {
  *      options: // value for 'options'
+ *      image: // value for 'image'
  *   },
  * });
  */
@@ -775,12 +777,12 @@ export const UpdatePropertyDocument = gql`
         id
         email
         fullName
-        picture
+        image
         createdAt
         updatedAt
       }
       propertyType
-      mainImage
+      image
       description
       propertyType
       address
@@ -891,7 +893,7 @@ export const PropertiesDocument = gql`
         id
         title
         propertyType
-        mainImage
+        image
         description
         pricePerNight
         address
@@ -901,7 +903,7 @@ export const PropertiesDocument = gql`
         creator {
           id
           email
-          picture
+          image
           fullName
         }
         reviews {
@@ -974,7 +976,7 @@ export const PropertyDocument = gql`
       id
       title
       propertyType
-      mainImage
+      image
       description
       pricePerNight
       address
@@ -984,7 +986,7 @@ export const PropertyDocument = gql`
       creator {
         id
         email
-        picture
+        image
         fullName
       }
       reviews {

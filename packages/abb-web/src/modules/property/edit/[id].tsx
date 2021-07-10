@@ -58,7 +58,7 @@ const EditPropertyPage = () => {
           initialValues={{
             title: data.property.title,
             propertyType: data.property.propertyType,
-            mainImage: data.property.mainImage,
+            image: data.property.image,
             pricePerNight: data.property.pricePerNight,
             description: data.property.description,
             address: data.property.address,
@@ -97,9 +97,9 @@ const EditPropertyPage = () => {
                 type="text"
               />
               <InputField
-                name="mainImage"
+                name="image"
                 placeholder="A catchy image for your property"
-                label="mainImage"
+                label="image"
                 type="text"
               />
               <InputField

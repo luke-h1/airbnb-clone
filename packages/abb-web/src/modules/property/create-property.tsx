@@ -20,7 +20,7 @@ const CreatePropertyPage = () => {
           initialValues={{
             title: '',
             propertyType: '',
-            mainImage: '',
+            image: '',
             pricePerNight: 0,
             description: '',
             address: '',
@@ -62,9 +62,9 @@ const CreatePropertyPage = () => {
                   type="text"
                 />
                 <InputField
-                  name="mainImage"
+                  name="image"
                   placeholder="A catchy image for your property"
-                  label="mainImage"
+                  label="image"
                   type="text"
                 />
 

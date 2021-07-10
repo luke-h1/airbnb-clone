@@ -8,7 +8,7 @@ mutation CreateProperty($options: CreatePropertyInput!) {
       id
       title
       propertyType
-      mainImage
+      image
       description
       pricePerNight
       address
@@ -18,7 +18,7 @@ mutation CreateProperty($options: CreatePropertyInput!) {
       creator {
         id
         email
-        picture
+        image
         fullName
       }
       reviews {

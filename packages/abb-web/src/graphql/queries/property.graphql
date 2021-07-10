@@ -3,7 +3,7 @@ query Property($id: Int!, ) {
       id
       title
       propertyType
-      mainImage
+      image
       description
       pricePerNight
       address
@@ -13,7 +13,7 @@ query Property($id: Int!, ) {
       creator {
         id
         email
-        picture
+        image
         fullName
       }
       reviews {

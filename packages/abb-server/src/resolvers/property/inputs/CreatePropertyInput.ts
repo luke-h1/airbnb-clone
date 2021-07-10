@@ -12,7 +12,7 @@ export class CreatePropertyInput {
   description: string;
 
   @Field(() => String)
-  mainImage: string;
+  image: string;
 
   @Field(() => Int)
   pricePerNight: number;

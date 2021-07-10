@@ -45,7 +45,7 @@ const SingleProperty: React.FC<{}> = () => {
       <SimpleGrid columns={{ base: 1, md: 2 }} spacing={0} mb={10}>
         <Flex bg="brand.400">
           <Image
-            src={data.property.mainImage}
+            src={data.property.image}
             alt="3 women looking at a laptop"
             fit="cover"
             w="full"

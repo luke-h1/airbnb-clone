@@ -37,7 +37,7 @@ export class Property extends BaseEntity {
 
   @Field(() => String)
   @Column()
-  mainImage: string;
+  image: string;
 
   @Field(() => String)
   @Column()

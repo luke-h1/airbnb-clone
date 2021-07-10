@@ -121,9 +121,7 @@ const Nav = () => {
                 variant="link"
                 cursor="pointer"
               >
-                {data?.me?.picture && (
-                  <Avatar size="sm" src={data.me.picture} />
-                )}
+                {data?.me?.image && <Avatar size="sm" src={data.me.image} />}
               </MenuButton>
               <MenuList>
                 {links

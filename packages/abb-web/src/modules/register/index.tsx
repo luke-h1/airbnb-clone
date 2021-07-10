@@ -1,4 +1,4 @@
-import { Field, Form, Formik } from 'formik';
+import { Form, Formik } from 'formik';
 import { useRouter } from 'next/router';
 import React from 'react';
 import { InputField } from 'src/components/InputField';
@@ -9,14 +9,13 @@ import {
 } from 'src/generated/graphql';
 import { toErrorMap } from 'src/utils/toErrorMap';
 import { Flex, Button, Box } from '@chakra-ui/react';
-import UploadImage from '@src/components/UploadImage';
 
 interface FormValues {
   firstName: string;
   lastName: string;
   email: string;
   password: string;
-  picture: '';
+  image: '';
 }
 
 const RegisterPage = () => {
@@ -29,13 +28,21 @@ const RegisterPage = () => {
         initialValues={{
           firstName: '',
           lastName: '',
-          picture: '',
+          image: '',
           email: '',
           password: '',
         }}
         onSubmit={async (values, { setErrors }) => {
           const res = await register({
-            variables: { options: values },
+            variables: {
+              options: {
+                firstName: values.firstName,
+                lastName: values.lastName,
+                email: values.email,
+                password: values.password,
+              },
+              image: values.image,
+            },
             update: (cache, { data }) => {
               cache.writeQuery<MeQuery>({
                 query: MeDocument,
@@ -78,15 +85,7 @@ const RegisterPage = () => {
               direction="column"
               justifyContent="center"
               alignItems="center"
-            >
-              <Field
-                name="picture"
-                placeholder="picture"
-                label="picture"
-                type="picture"
-                component={UploadImage}
-              />
-            </Flex>
+            />
             <Flex
               direction="column"
               justifyContent="center"

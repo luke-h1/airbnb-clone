@@ -5,7 +5,7 @@ import argon2 from 'argon2';
 // @TODO LUKE: create new upload image resolver for users
 // run two mutations and create new DB column userImages
 // associate user id to image so we know which one to fetch
-// images inserted as empty string at the mo
+// images inserted as empty string at the mo and to avoid orphaned s3 image
 import {
   Arg,
   Ctx,
@@ -18,7 +18,8 @@ import {
   Root,
 } from 'type-graphql';
 import { getConnection } from 'typeorm';
-import { handleFileUpload } from '../../utils/image/s3';
+import { FileUpload, GraphQLUpload } from 'graphql-upload';
+import { S3, S3DefaultParams } from '../../utils/image/s3';
 import { User } from '../../entities/User';
 import { MyContext } from '../../shared/types';
 import { UsernamePasswordInput } from './inputs/UsernamePasswordInput';
@@ -153,6 +154,8 @@ export class UserResolver {
   @Mutation(() => UserResponse)
   async register(
     @Arg('options') options: UserRegisterInput,
+    @Arg('image', () => GraphQLUpload)
+      { createReadStream, filename }: FileUpload,
     @Ctx() { req }: MyContext,
   ): Promise<UserResponse> {
     const errors = validateRegister(options);
@@ -162,8 +165,26 @@ export class UserResolver {
     const hashedPassword = await argon2.hash(options.password);
     let user;
     try {
-      const image = options.picture ? handleFileUpload(options.picture) : '';
-      console.log(image);
+      let imageUrl: string = '';
+      await S3.upload(
+        {
+          ...S3DefaultParams,
+          Body: createReadStream(),
+          Key: `${v4}-${filename}`,
+          Bucket: process.env.AWS_BUCKET_NAME,
+        },
+        (e: unknown, data: unknown) => {
+          console.log(e);
+          console.log(data);
+          if (e) {
+            console.log('error uploading...', e);
+            throw new Error(e);
+          } else {
+            console.log('successfully uploaded file...', data);
+            imageUrl = data.Location;
+          }
+        },
+      );
       const result = await getConnection()
         .createQueryBuilder()
         .insert()
@@ -173,7 +194,7 @@ export class UserResolver {
           lastName: options.lastName,
           email: options.email,
           password: hashedPassword,
-          picture: image as string,
+          image: imageUrl,
         })
         .returning('*')
         .execute();
