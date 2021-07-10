@@ -24,7 +24,11 @@ import { User } from '../../entities/User';
 import { MyContext } from '../../shared/types';
 import { UsernamePasswordInput } from './inputs/UsernamePasswordInput';
 import { validateRegister } from '../../validation/user/validateRegister';
-import { COOKIE_NAME, FORGET_PASSWORD_PREFIX } from '../../shared/constants';
+import {
+  COOKIE_NAME,
+  FORGET_PASSWORD_PREFIX,
+  S3UserImageKey,
+} from '../../shared/constants';
 import { sendPasswordResetMail } from '../../utils/mail/sendPasswordResetMail';
 import { UserRegisterInput } from './inputs/UserRegisterInput';
 
@@ -170,7 +174,7 @@ export class UserResolver {
         {
           ...S3DefaultParams,
           Body: createReadStream(),
-          Key: `${v4}-${filename}`,
+          Key: `${S3UserImageKey}/${filename}-${v4()}`,
           Bucket: process.env.AWS_BUCKET_NAME,
         },
         (e: unknown, data: unknown) => {
