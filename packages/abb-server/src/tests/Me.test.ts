@@ -5,7 +5,7 @@ import faker from 'faker';
 import { testConn } from '../test-utils/testConn';
 import { gCall } from '../test-utils/gCall';
 import { User } from '../entities/User';
-import { redis } from '../redis';
+import { redis } from '../shared/redis';
 
 let conn: Connection;
 beforeAll(async () => {

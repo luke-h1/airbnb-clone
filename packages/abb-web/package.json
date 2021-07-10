@@ -21,6 +21,7 @@
     "@emotion/styled": "^11.3.0",
     "@fontsource/lato": "^4.4.5",
     "@urql/exchange-graphcache": "^4.0.0",
+    "@urql/exchange-multipart-fetch": "^0.1.12",
     "cross-env": "^7.0.3",
     "cross-fetch": "^3.1.4",
     "date-fns": "^2.22.1",

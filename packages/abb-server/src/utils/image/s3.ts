@@ -5,7 +5,7 @@ const AWS = require('aws-sdk');
 
 // set public access to s3 bucket to true (for now)
 
-AWS.config.update({
+export const AWSCONFIG = AWS.config.update({
   signatureVersion: 's3v4',
   accessKeyId: process.env.AWS_ACCESS_KEY_ID,
   secretAccessKey: process.env.AWS_SECRET_ACCESS_KEY,
@@ -22,7 +22,7 @@ export const S3 = new AWS.S3({
   },
 });
 
-const S3DefaultParams = {
+export const S3DefaultParams = {
   ACL: 'public-read',
   Bucket: process.env.AWS_BUCKET_NAME,
   Conditions: [
@@ -33,6 +33,8 @@ const S3DefaultParams = {
 
 // actual upload to s3 happens here
 export const handleFileUpload = async (file: any) => {
+  console.log(file);
+  console.log('typeof file', typeof file);
   const { createReadStream, filename } = await file;
 
   const key = v4();
@@ -46,6 +48,8 @@ export const handleFileUpload = async (file: any) => {
         Bucket: process.env.AWS_BUCKET_NAME,
       },
       (e, data) => {
+        console.log(e);
+        console.log(data);
         if (e) {
           console.log('error uploading...', e);
           reject(e);

@@ -10,7 +10,7 @@ import path from 'path';
 import { graphqlUploadExpress } from 'graphql-upload';
 import { __prod__ } from './shared/constants';
 import { createUserLoader } from './Loaders/UserLoader';
-import { redis } from './redis';
+import { redis } from './shared/redis';
 import { Property } from './entities/Property';
 import { User } from './entities/User';
 import { createSchema } from './shared/createSchema';
@@ -62,7 +62,7 @@ const main = async () => {
 
   const apolloServer = new ApolloServer({
     playground: process.env.NODE_ENV !== 'production',
-    uploads: false, // disabled since we're using graphql-upload
+    uploads: false, // disable apollo uploads
     schema: await createSchema(),
     context: ({ req, res }) => ({
       req,

@@ -1,6 +1,7 @@
 import React, { useCallback, useState } from 'react';
 import { useDropzone } from 'react-dropzone';
 import styled from '@emotion/styled';
+import { useUploadImageMutation } from '@src/generated/graphql';
 
 const getColor = (props: any) => {
   if (props.isDragAccept) {
@@ -16,12 +17,10 @@ const getColor = (props: any) => {
 };
 
 const Container = styled.div`
-  width: 30%;
+  flex: 1;
   display: flex;
   flex-direction: column;
   align-items: center;
-  justify-content: center;
-  place-items: center;
   padding: 20px;
   border-width: 2px;
   border-radius: 2px;
@@ -66,17 +65,25 @@ const errorStyle = {
   fontSize: '0.75rem',
 };
 
-const UploadImage = () => {
-  const [preview, setPreview] = useState('');
-  const [errors, setErrors] = useState('');
-  const onDrop = useCallback(async ([file]) => {
-    if (file) {
-      setPreview(URL.createObjectURL(file));
-      // upload file here
-    } else {
-      setErrors('something went wrong check file size');
-    }
-  }, []);
+const Upload = () => {
+  const [preview, setPreview] = useState();
+  const [errors, setErrors] = useState();
+  const [, uploadFile] = useUploadImageMutation();
+  const onDrop = useCallback(
+    async ([file]) => {
+      if (file) {
+        // @ts-ignore
+        setPreview(URL.createObjectURL(file));
+        uploadFile({ file });
+      } else {
+        setErrors(
+          // @ts-ignore
+          'Something went wrong. Check file type and size (max. 2 MB)',
+        );
+      }
+    },
+    [uploadFile],
+  );
   const {
     getRootProps,
     getInputProps,
@@ -86,8 +93,9 @@ const UploadImage = () => {
   } = useDropzone({
     onDrop,
     accept: 'image/jpeg, image/png',
-    maxSize: 2048000, // 2mb
+    maxSize: 2048000,
   });
+
   const thumb = (
     <div style={thumbStyle}>
       <div style={thumbInner}>
@@ -95,8 +103,11 @@ const UploadImage = () => {
       </div>
     </div>
   );
+
   return (
-    <Container {...getRootProps({ isDragActive, isDragAccept, isDragReject })}>
+    <Container
+      {...getRootProps({ isDragActive, isDragAccept, isDragReject })}
+    >
       <input {...getInputProps()} />
       {isDragActive ? (
         <p>Drop the files here ...</p>
@@ -116,4 +127,5 @@ const UploadImage = () => {
     </Container>
   );
 };
-export default UploadImage;
+
+export default Upload;

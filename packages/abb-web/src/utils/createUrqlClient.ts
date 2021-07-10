@@ -8,6 +8,8 @@ import {
 } from 'urql';
 import { pipe, tap } from 'wonka';
 import Router from 'next/router';
+import { multipartFetchExchange } from '@urql/exchange-multipart-fetch';
+
 import {
   LoginMutation,
   LogoutMutation,
@@ -155,6 +157,7 @@ export const createUrqlClient = (ssrExchange: any, ctx: any) => {
       errorExchange,
       ssrExchange,
       fetchExchange,
+      multipartFetchExchange,
     ],
   };
 };
