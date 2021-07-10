@@ -105,9 +105,7 @@ const Upload = () => {
   );
 
   return (
-    <Container
-      {...getRootProps({ isDragActive, isDragAccept, isDragReject })}
-    >
+    <Container {...getRootProps({ isDragActive, isDragAccept, isDragReject })}>
       <input {...getInputProps()} />
       {isDragActive ? (
         <p>Drop the files here ...</p>

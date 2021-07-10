@@ -3,9 +3,7 @@ import { createUrqlClient } from '@src/utils/createUrqlClient';
 import { withUrqlClient } from 'next-urql';
 import React from 'react';
 
-interface imageProps {
-
-}
+interface imageProps {}
 
 const image: React.FC<imageProps> = () => {
   return <UploadImage />;
