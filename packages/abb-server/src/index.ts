@@ -8,7 +8,7 @@ import session from 'express-session';
 import { createConnection } from 'typeorm';
 import path from 'path';
 import { graphqlUploadExpress } from 'graphql-upload';
-import { __prod__ } from './shared/constants';
+import { constants } from './shared/constants';
 import { createUserLoader } from './Loaders/UserLoader';
 import { redis } from './shared/redis';
 import { Property } from './entities/Property';
@@ -20,8 +20,8 @@ const main = async () => {
   const conn = await createConnection({
     type: 'postgres',
     url: process.env.DATABASE_URL,
-    logging: !__prod__,
-    synchronize: !__prod__,
+    logging: !constants.__prod__,
+    synchronize: !constants.__prod__,
     migrations: [path.join(__dirname, './migrations/*')],
     entities: [User, Property, Review],
   });
@@ -51,8 +51,8 @@ const main = async () => {
         maxAge: 1000 * 60 * 60 * 24 * 7, // 7 days (set to 2 days on prod)
         httpOnly: true,
         sameSite: 'lax', // csrf
-        secure: __prod__, // cookie only works in https
-        domain: __prod__ ? 'deployed-api' : undefined,
+        secure: constants.__prod__, // cookie only works in https
+        domain: constants.__prod__ ? 'deployed-api' : undefined,
       },
       saveUninitialized: false,
       secret: process.env.COOKIE_SECRET!,

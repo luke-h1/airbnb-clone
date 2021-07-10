@@ -24,11 +24,7 @@ import { User } from '../../entities/User';
 import { MyContext } from '../../shared/types';
 import { UsernamePasswordInput } from './inputs/UsernamePasswordInput';
 import { validateRegister } from '../../validation/user/validateRegister';
-import {
-  COOKIE_NAME,
-  FORGET_PASSWORD_PREFIX,
-  S3UserImageKey,
-} from '../../shared/constants';
+import { constants } from '../../shared/constants';
 import { sendPasswordResetMail } from '../../utils/mail/sendPasswordResetMail';
 import { UserRegisterInput } from './inputs/UserRegisterInput';
 
@@ -85,7 +81,7 @@ export class UserResolver {
         ],
       };
     }
-    const key = FORGET_PASSWORD_PREFIX + token;
+    const key = constants.FORGET_PASSWORD_PREFIX + token;
     const userId = await redis.get(key);
     if (!userId) {
       return {
@@ -134,7 +130,7 @@ export class UserResolver {
     const token = v4();
 
     await redis.set(
-      FORGET_PASSWORD_PREFIX + token,
+      constants.FORGET_PASSWORD_PREFIX + token,
       user.id,
       'ex',
       1000 * 60 * 60 * 24 * 2, // 2 days to reset their password
@@ -174,7 +170,7 @@ export class UserResolver {
         {
           ...S3DefaultParams,
           Body: createReadStream(),
-          Key: `${S3UserImageKey}/${filename}-${v4()}`,
+          Key: `${constants.S3UserImageKey}/${filename}-${v4()}`,
           Bucket: process.env.AWS_BUCKET_NAME,
         },
         (e: unknown, data: unknown) => {
@@ -263,7 +259,7 @@ export class UserResolver {
   @Mutation(() => Boolean)
   logout(@Ctx() { req, res }: MyContext) {
     return new Promise((resolve) => req.session.destroy((e: any) => {
-      res.clearCookie(COOKIE_NAME);
+      res.clearCookie(constants.COOKIE_NAME);
       if (e) {
         console.log('LOGOUT ERROR', e);
         resolve(false);

@@ -1,6 +1,6 @@
 import { Redis } from 'ioredis';
 import { v4 } from 'uuid';
-import { FORGET_PASSWORD_PREFIX } from '../../shared/constants';
+import { constants } from '../../shared/constants';
 
 export const createForgotPasswordLink = async (
   url: string,
@@ -9,7 +9,7 @@ export const createForgotPasswordLink = async (
 ) => {
   const id = v4();
   await redis.set(
-    `${FORGET_PASSWORD_PREFIX}${id}`,
+    `${constants.FORGET_PASSWORD_PREFIX}${id}`,
     userId,
     'ex',
     1000 * 60 * 60 * 24 * 3, // user has 3 days to reset their password
