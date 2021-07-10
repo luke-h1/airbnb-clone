@@ -15,8 +15,8 @@ const EditDeleteButtons: React.FC<EditDeleteButtonProps> = ({
   id,
   creatorId,
 }) => {
-  const [{ fetching }, deleteProperty] = useDeletePropertyMutation();
-  const [{ data: meData }] = useMeQuery();
+  const [deleteProperty, { loading }] = useDeletePropertyMutation();
+  const { data: meData } = useMeQuery();
 
   if (meData?.me?.id !== creatorId) {
     return null;
@@ -28,7 +28,7 @@ const EditDeleteButtons: React.FC<EditDeleteButtonProps> = ({
           <FaUserEdit fontSize="15px" />
         </Box>
       </Link>
-      {fetching ? (
+      {loading ? (
         <Box ml={5} type="button" as={Button}>
           <Loader size="md" />
         </Box>
@@ -39,7 +39,13 @@ const EditDeleteButtons: React.FC<EditDeleteButtonProps> = ({
           type="button"
           colorScheme="teal"
           onClick={() => {
-            deleteProperty({ id });
+            deleteProperty({
+              variables: { id },
+              update: (cache) => {
+                // Property:23
+                cache.evict({ id: `Property:${id}` });
+              },
+            });
           }}
         >
           <MdDelete fontSize="15px" />

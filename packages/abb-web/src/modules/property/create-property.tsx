@@ -1,11 +1,8 @@
-/* eslint-disable */
 import { Box, GridItem, SimpleGrid } from '@chakra-ui/react';
 import { InputField } from '@src/components/InputField';
 import { useCreatePropertyMutation } from '@src/generated/graphql';
-import { createUrqlClient } from '@src/utils/createUrqlClient';
 import { useIsAuth } from '@src/utils/useIsAuth';
 import { Formik, Form } from 'formik';
-import { withUrqlClient } from 'next-urql';
 import { useRouter } from 'next/router';
 import React from 'react';
 import { toPropertyErrorMap } from '@src/utils/toErrorMap';
@@ -13,7 +10,7 @@ import { toPropertyErrorMap } from '@src/utils/toErrorMap';
 const CreatePropertyPage = () => {
   useIsAuth();
   const router = useRouter();
-  const [, createProperty] = useCreatePropertyMutation();
+  const [createProperty] = useCreatePropertyMutation();
 
   return (
     <>
@@ -30,8 +27,12 @@ const CreatePropertyPage = () => {
             amenities: [],
           }}
           onSubmit={async (values, { setErrors }) => {
-            const res = await createProperty({ options: values });
-            console.log(res.data);
+            const res = await createProperty({
+              variables: { options: values },
+              update: (cache) => {
+                cache.evict({ fieldName: 'properties:{}' });
+              },
+            });
             if (res.data?.createProperty.errors) {
               setErrors(toPropertyErrorMap(res.data.createProperty.errors));
             } else {
@@ -94,12 +95,10 @@ const CreatePropertyPage = () => {
           )}
         </Formik>
         <GridItem colSpan={1} colStart={2}>
-          <Box minW="840px"></Box>
+          <Box minW="840px" />
         </GridItem>
       </SimpleGrid>
     </>
   );
 };
-export default withUrqlClient(createUrqlClient, { ssr: false })(
-  CreatePropertyPage
-);
+export default CreatePropertyPage;

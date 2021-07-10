@@ -1,10 +1,12 @@
 import { Field, Form, Formik } from 'formik';
-import { withUrqlClient } from 'next-urql';
 import { useRouter } from 'next/router';
 import React from 'react';
 import { InputField } from 'src/components/InputField';
-import { useRegisterMutation } from 'src/generated/graphql';
-import { createUrqlClient } from 'src/utils/createUrqlClient';
+import {
+  MeDocument,
+  MeQuery,
+  useRegisterMutation,
+} from 'src/generated/graphql';
 import { toErrorMap } from 'src/utils/toErrorMap';
 import { Flex, Button, Box } from '@chakra-ui/react';
 import UploadImage from '@src/components/UploadImage';
@@ -18,7 +20,7 @@ interface FormValues {
 }
 
 const RegisterPage = () => {
-  const [, register] = useRegisterMutation();
+  const [register] = useRegisterMutation();
   const router = useRouter();
   return (
     <>
@@ -32,7 +34,18 @@ const RegisterPage = () => {
           password: '',
         }}
         onSubmit={async (values, { setErrors }) => {
-          const res = await register({ options: values });
+          const res = await register({
+            variables: { options: values },
+            update: (cache, { data }) => {
+              cache.writeQuery<MeQuery>({
+                query: MeDocument,
+                data: {
+                  __typename: 'Query',
+                  me: data?.register.user,
+                },
+              });
+            },
+          });
           if (res.data?.register.errors) {
             setErrors(toErrorMap(res.data.register.errors));
           } else {
@@ -98,4 +111,4 @@ const RegisterPage = () => {
     </>
   );
 };
-export default withUrqlClient(createUrqlClient, { ssr: false })(RegisterPage);
+export default RegisterPage;

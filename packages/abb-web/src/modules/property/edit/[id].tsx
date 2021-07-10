@@ -1,14 +1,13 @@
-/* eslint-disable */
-import { Button, Flex, Text, Box, SimpleGrid } from '@chakra-ui/react';
+import {
+  Button, Flex, Text, Box, SimpleGrid,
+} from '@chakra-ui/react';
 import { InputField } from '@src/components/InputField';
 import {
   usePropertyQuery,
   useUpdatePropertyMutation,
 } from '@src/generated/graphql';
-import { createUrqlClient } from '@src/utils/createUrqlClient';
 import { useGetIntId } from '@src/utils/useGetIntId';
 import { Formik, Form } from 'formik';
-import { withUrqlClient } from 'next-urql';
 import { useRouter } from 'next/router';
 import React from 'react';
 import { Loader } from '@src/components/Loader';
@@ -18,8 +17,8 @@ const EditPropertyPage = () => {
   useIsAuth();
   const router = useRouter();
   const intId = useGetIntId();
-  const [, updateProperty] = useUpdatePropertyMutation();
-  const [{ data, fetching }] = usePropertyQuery({
+  const [updateProperty] = useUpdatePropertyMutation();
+  const { data, loading } = usePropertyQuery({
     /**
      * If id =-1 we know we're on server side
      * pause until id is not -1
@@ -27,13 +26,13 @@ const EditPropertyPage = () => {
      * if is present, fetch property, prefill form with fields
      * else not found
      */
-    pause: intId === -1,
+    skip: intId === -1,
     variables: {
       id: intId,
     },
   });
 
-  if (fetching) {
+  if (loading) {
     return (
       <Flex direction="column" alignItems="center" justifyContent="center">
         <Loader size="md" />
@@ -65,10 +64,14 @@ const EditPropertyPage = () => {
             address: data.property.address,
             amenities: data.property.amenities,
           }}
-          onSubmit={async (values, { setErrors }) => {
+          onSubmit={async (values) => {
             await updateProperty({
-              options: { ...values },
-              id: intId,
+              variables: {
+                id: intId,
+                options: {
+                  ...values,
+                },
+              },
             });
             router.push(`/property/${intId}`);
           }}
@@ -146,6 +149,4 @@ const EditPropertyPage = () => {
     </>
   );
 };
-export default withUrqlClient(createUrqlClient, { ssr: false })(
-  EditPropertyPage
-);
+export default EditPropertyPage;

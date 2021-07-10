@@ -1,7 +1,5 @@
 import { usePropertiesQuery } from '@src/generated/graphql';
-import { createUrqlClient } from '@src/utils/createUrqlClient';
-import { withUrqlClient } from 'next-urql';
-import React, { useState } from 'react';
+import React from 'react';
 import Card from '@src/components/Card/Card';
 import { Loader } from '@src/components/Loader';
 import {
@@ -9,16 +7,19 @@ import {
 } from '@chakra-ui/react';
 
 const index: React.FC<{}> = () => {
-  const [variables, setVariables] = useState({
-    limit: 15,
-    cursor: null as null | string,
+  const {
+    data, error, loading, fetchMore, variables,
+  } = usePropertiesQuery({
+    variables: {
+      limit: 15,
+      cursor: null,
+    },
+    notifyOnNetworkStatusChange: true,
   });
-
-  const [{ data, error, fetching }] = usePropertiesQuery({ variables });
   return (
     <>
       {error ? error.message : null}
-      {!data && fetching ? (
+      {!data && loading ? (
         <>
           <Loader size="xl" />
         </>
@@ -45,12 +46,14 @@ const index: React.FC<{}> = () => {
                   type="submit"
                   colorScheme="teal"
                   onClick={() => {
-                    setVariables({
-                      limit: variables.limit,
-                      cursor:
-                        data.properties.properties[
-                          data.properties.properties.length - 1
-                        ].createdAt,
+                    fetchMore({
+                      variables: {
+                        limit: variables?.limit,
+                        cursor:
+                          data.properties.properties[
+                            data.properties.properties.length - 1
+                          ].createdAt,
+                      },
                     });
                   }}
                 >
@@ -70,4 +73,4 @@ const index: React.FC<{}> = () => {
     </>
   );
 };
-export default withUrqlClient(createUrqlClient, { ssr: false })(index);
+export default index;

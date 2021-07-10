@@ -5,15 +5,21 @@ import Nav from '@src/components/Nav';
 import { Reset } from '@src/styles/Global';
 import '@fontsource/lato';
 import { ChakraProvider } from '@chakra-ui/react';
+import { useApollo } from '@src/utils/withApollo';
+import { ApolloProvider } from '@apollo/client';
 
 function MyApp({ Component, pageProps }: AppProps) {
+  const apolloClient = useApollo(pageProps);
+
   return (
-    <ChakraProvider>
-      <Reset />
-      <Nav {...pageProps} />
-      <Component {...pageProps} />
-      <Footer />
-    </ChakraProvider>
+    <ApolloProvider client={apolloClient}>
+      <ChakraProvider>
+        <Reset />
+        <Nav {...pageProps} />
+        <Component {...pageProps} />
+        <Footer />
+      </ChakraProvider>
+    </ApolloProvider>
   );
 }
 export default MyApp;

@@ -17,8 +17,6 @@ import {
   Stack,
 } from '@chakra-ui/react';
 import { HamburgerIcon, CloseIcon } from '@chakra-ui/icons';
-import { withUrqlClient } from 'next-urql';
-import { createUrqlClient } from '@src/utils/createUrqlClient';
 import NextLink from 'next/link';
 import { useRouter } from 'next/router';
 import { useLogoutMutation, useMeQuery } from '@src/generated/graphql';
@@ -52,9 +50,9 @@ const NavLink = ({ children, href }: { children: ReactNode; href: string }) => (
 const Nav = () => {
   const { isOpen, onOpen, onClose } = useDisclosure();
   const router = useRouter();
-  const [{ fetching: logoutFetching }, logout] = useLogoutMutation();
-  const [{ data, fetching }] = useMeQuery({
-    pause: isServer(),
+  const [logout, { loading: logoutLoading }] = useLogoutMutation();
+  const { data, loading } = useMeQuery({
+    skip: isServer(),
   });
 
   const handleLogout = async () => {
@@ -64,7 +62,7 @@ const Nav = () => {
 
   let links: { name: string; href: string }[] = [];
 
-  if (fetching) {
+  if (loading) {
     //   user is not logged in
   }
   if (!data?.me) {
@@ -135,7 +133,7 @@ const Nav = () => {
                     </MenuItem>
                   ))}
                 <MenuDivider />
-                {data?.me?.email && logoutFetching ? (
+                {data?.me?.email && logoutLoading ? (
                   <Loader size="sm" />
                 ) : (
                   <button onClick={handleLogout} type="button">
@@ -159,4 +157,4 @@ const Nav = () => {
     </>
   );
 };
-export default withUrqlClient(createUrqlClient, { ssr: false })(Nav);
+export default Nav;

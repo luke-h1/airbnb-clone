@@ -1,8 +1,5 @@
-/* eslint-disable prefer-spread */
 import React from 'react';
-import { createUrqlClient } from '@src/utils/createUrqlClient';
 import { useGetPropertyFromUrl } from '@src/utils/useGetPropertyFromUrl';
-import { withUrqlClient } from 'next-urql';
 import { Loader } from '@src/components/Loader';
 
 import {
@@ -21,8 +18,8 @@ import {
 import { CheckIcon } from '@chakra-ui/icons';
 
 const SingleProperty: React.FC<{}> = () => {
-  const [{ data, error, fetching }] = useGetPropertyFromUrl();
-  if (fetching) {
+  const { data, error, loading } = useGetPropertyFromUrl();
+  if (loading) {
     return (
       <Flex
         direction="column"
@@ -161,4 +158,4 @@ const SingleProperty: React.FC<{}> = () => {
     </>
   );
 };
-export default withUrqlClient(createUrqlClient, { ssr: false })(SingleProperty);
+export default SingleProperty;

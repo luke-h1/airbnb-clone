@@ -1,10 +1,8 @@
 import { Form, Formik } from 'formik';
-import { withUrqlClient } from 'next-urql';
 import { useRouter } from 'next/router';
 import React from 'react';
 import { InputField } from 'src/components/InputField';
-import { useLoginMutation } from 'src/generated/graphql';
-import { createUrqlClient } from 'src/utils/createUrqlClient';
+import { MeDocument, MeQuery, useLoginMutation } from 'src/generated/graphql';
 import { toErrorMap } from 'src/utils/toErrorMap';
 import Link from 'next/link';
 import {
@@ -17,7 +15,7 @@ interface FormValues {
 }
 
 const RegisterPage = () => {
-  const [, login] = useLoginMutation();
+  const [login] = useLoginMutation();
   const router = useRouter();
   return (
     <>
@@ -28,7 +26,19 @@ const RegisterPage = () => {
           password: '',
         }}
         onSubmit={async (values, { setErrors }) => {
-          const res = await login({ options: values });
+          const res = await login({
+            variables: { options: values },
+            update: (cache, { data }) => {
+              cache.writeQuery<MeQuery>({
+                query: MeDocument,
+                data: {
+                  __typename: 'Query',
+                  me: data?.login.user,
+                },
+              });
+              cache.evict({ fieldName: 'properties:{}' });
+            },
+          });
           if (res.data?.login.errors) {
             setErrors(toErrorMap(res.data.login.errors));
           } else {
@@ -87,4 +97,4 @@ const RegisterPage = () => {
     </>
   );
 };
-export default withUrqlClient(createUrqlClient, { ssr: false })(RegisterPage);
+export default RegisterPage;
