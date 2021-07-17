@@ -24,7 +24,6 @@ export type CreatePropertyInput = {
   title: Scalars['String'];
   propertyType: Scalars['String'];
   description: Scalars['String'];
-  image: Scalars['String'];
   pricePerNight: Scalars['Int'];
   address: Scalars['String'];
   amenities: Array<Scalars['String']>;
@@ -38,7 +37,6 @@ export type FieldError = {
 
 export type Mutation = {
   __typename?: 'Mutation';
-  uploadImage: Scalars['Boolean'];
   createProperty: PropertyResponse;
   updateProperty?: Maybe<Property>;
   deleteProperty: Scalars['Boolean'];
@@ -49,11 +47,8 @@ export type Mutation = {
   logout: Scalars['Boolean'];
 };
 
-export type MutationUploadImageArgs = {
-  file: Scalars['Upload'];
-};
-
 export type MutationCreatePropertyArgs = {
+  image: Scalars['Upload'];
   options: CreatePropertyInput;
 };
 
@@ -203,17 +198,9 @@ export type RegularUserResponseFragment = { __typename?: 'UserResponse' } & {
   user?: Maybe<{ __typename?: 'User' } & RegularUserFragment>;
 };
 
-export type UploadImageMutationVariables = Exact<{
-  file: Scalars['Upload'];
-}>;
-
-export type UploadImageMutation = { __typename?: 'Mutation' } & Pick<
-  Mutation,
-  'uploadImage'
->;
-
 export type CreatePropertyMutationVariables = Exact<{
   options: CreatePropertyInput;
+  image: Scalars['Upload'];
 }>;
 
 export type CreatePropertyMutation = { __typename?: 'Mutation' } & {
@@ -230,9 +217,9 @@ export type CreatePropertyMutation = { __typename?: 'Mutation' } & {
       { __typename?: 'Property' } & Pick<
         Property,
         | 'id'
+        | 'image'
         | 'title'
         | 'propertyType'
-        | 'image'
         | 'description'
         | 'pricePerNight'
         | 'address'
@@ -450,66 +437,18 @@ export const RegularUserResponseFragmentDoc = gql`
   ${RegularErrorFragmentDoc}
   ${RegularUserFragmentDoc}
 `;
-export const UploadImageDocument = gql`
-  mutation UploadImage($file: Upload!) {
-    uploadImage(file: $file)
-  }
-`;
-export type UploadImageMutationFn = Apollo.MutationFunction<
-  UploadImageMutation,
-  UploadImageMutationVariables
->;
-
-/**
- * __useUploadImageMutation__
- *
- * To run a mutation, you first call `useUploadImageMutation` within a React component and pass it any options that fit your needs.
- * When your component renders, `useUploadImageMutation` returns a tuple that includes:
- * - A mutate function that you can call at any time to execute the mutation
- * - An object with fields that represent the current status of the mutation's execution
- *
- * @param baseOptions options that will be passed into the mutation, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options-2;
- *
- * @example
- * const [uploadImageMutation, { data, loading, error }] = useUploadImageMutation({
- *   variables: {
- *      file: // value for 'file'
- *   },
- * });
- */
-export function useUploadImageMutation(
-  baseOptions?: Apollo.MutationHookOptions<
-    UploadImageMutation,
-    UploadImageMutationVariables
-  >
-) {
-  const options = { ...defaultOptions, ...baseOptions };
-  return Apollo.useMutation<UploadImageMutation, UploadImageMutationVariables>(
-    UploadImageDocument,
-    options
-  );
-}
-export type UploadImageMutationHookResult = ReturnType<
-  typeof useUploadImageMutation
->;
-export type UploadImageMutationResult =
-  Apollo.MutationResult<UploadImageMutation>;
-export type UploadImageMutationOptions = Apollo.BaseMutationOptions<
-  UploadImageMutation,
-  UploadImageMutationVariables
->;
 export const CreatePropertyDocument = gql`
-  mutation CreateProperty($options: CreatePropertyInput!) {
-    createProperty(options: $options) {
+  mutation CreateProperty($options: CreatePropertyInput!, $image: Upload!) {
+    createProperty(options: $options, image: $image) {
       errors {
         field
         message
       }
       property {
         id
+        image
         title
         propertyType
-        image
         description
         pricePerNight
         address
@@ -555,6 +494,7 @@ export type CreatePropertyMutationFn = Apollo.MutationFunction<
  * const [createPropertyMutation, { data, loading, error }] = useCreatePropertyMutation({
  *   variables: {
  *      options: // value for 'options'
+ *      image: // value for 'image'
  *   },
  * });
  */

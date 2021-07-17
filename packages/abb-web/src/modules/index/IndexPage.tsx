@@ -32,7 +32,7 @@ const index: React.FC<{}> = () => {
                 id={p.id}
                 title={p.title}
                 propertyType={p.propertyType}
-                image={p.image}
+                image={p.image && p.image}
                 amenities={p.amenities}
                 creator={p.creator}
                 creatorId={p.creator.id}

@@ -62,6 +62,7 @@ export class PropertyResolver {
   @UseMiddleware(isAuth)
   async createProperty(
     @Arg('options') options: CreatePropertyInput,
+    @Ctx() { req }: MyContext,
     @Arg('image', () => GraphQLUpload)
       { createReadStream, filename }: FileUpload,
   ): Promise<PropertyResponse> {
@@ -80,6 +81,7 @@ export class PropertyResolver {
       .into(Property)
       .values({
         ...options,
+        creatorId: req.session.userId,
         image: image.Location,
       })
       .returning('*')

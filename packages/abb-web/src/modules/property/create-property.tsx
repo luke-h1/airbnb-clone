@@ -7,6 +7,16 @@ import { useRouter } from 'next/router';
 import React from 'react';
 import { toPropertyErrorMap } from '@src/utils/toErrorMap';
 
+interface FormValues {
+  title: string;
+  propertyType: string;
+  image: string;
+  pricePerNight: number;
+  description: string;
+  address: string;
+  amenities: string[];
+}
+
 const CreatePropertyPage = () => {
   useIsAuth();
   const router = useRouter();
@@ -16,7 +26,7 @@ const CreatePropertyPage = () => {
     <>
       <h1>Create Property</h1>
       <SimpleGrid minChildWidth="120px" spacing="40px">
-        <Formik
+        <Formik<FormValues>
           initialValues={{
             title: '',
             propertyType: '',
@@ -28,11 +38,22 @@ const CreatePropertyPage = () => {
           }}
           onSubmit={async (values, { setErrors }) => {
             const res = await createProperty({
-              variables: { options: values },
+              variables: {
+                options: {
+                  title: values.title,
+                  propertyType: values.propertyType,
+                  pricePerNight: values.pricePerNight,
+                  description: values.description,
+                  address: values.address,
+                  amenities: values.amenities,
+                },
+                image: values.image,
+              },
               update: (cache) => {
                 cache.evict({ fieldName: 'properties:{}' });
               },
             });
+
             if (res.data?.createProperty.errors) {
               setErrors(toPropertyErrorMap(res.data.createProperty.errors));
             } else {
@@ -40,7 +61,7 @@ const CreatePropertyPage = () => {
             }
           }}
         >
-          {({ isSubmitting }) => (
+          {({ isSubmitting, setFieldValue }) => (
             <Box minW="840px">
               <Form>
                 <InputField
@@ -63,9 +84,16 @@ const CreatePropertyPage = () => {
                 />
                 <InputField
                   name="image"
-                  placeholder="A catchy image for your property"
+                  placeholder="image"
                   label="image"
-                  type="text"
+                  type="file"
+                  id="image"
+                  value={undefined}
+                  required
+                  onChange={(e) => {
+                    // @ts-ignore
+                    setFieldValue('image', e.currentTarget.files[0]);
+                  }}
                 />
 
                 <InputField

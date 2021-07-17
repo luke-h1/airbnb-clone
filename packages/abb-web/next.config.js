@@ -24,6 +24,6 @@ module.exports = {
     ],
   },
   images: {
-    domains: ['images.unsplash.com', 'pbs.twimg.com'],
+    domains: ['abb-clone-images.s3.eu-west-2.amazonaws.com'],
   },
 };

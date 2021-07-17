@@ -1,6 +1,6 @@
 import React from 'react';
 import Link from 'next/link';
-import { ListingStyles, StyledImage } from './CardStyles';
+import { ListingStyles } from './CardStyles';
 import EditDeleteButtons from '../EditDeleteButtons';
 
 export interface PropertyProps {
@@ -29,22 +29,21 @@ const Card: React.FC<PropertyProps> = ({
       <div className="listings__item" key={id}>
         <Link href={`/property/${id}`}>
           <div className="listings__image">
-            <StyledImage
-              src={image}
-              alt=""
-              width={300}
-              height={200}
-              placeholder="blur"
-              blurDataURL={image}
-            />
+            <img src={image} alt={title} />
           </div>
         </Link>
         <div className="listings__content">
           <div className="listings__title">
             <div className="listings__icon__text">
-              <span className="greyText">{propertyType}</span>
+              <span className="greyText">
+                Property Type: <br />
+                {propertyType}
+              </span>
               <h2>{title}</h2>
-              <h3>Posted by {creator.fullName}</h3>
+              <h3>
+                Posted by <br />
+                {creator.fullName}
+              </h3>
             </div>
             <div className="listings__title__icon">
               <button type="button">
@@ -57,8 +56,6 @@ const Card: React.FC<PropertyProps> = ({
           <div className="listings__description">
             {amenities
               && amenities.map((a) => <span className="greyText">{a}</span>)}
-            {/* <span className="greyText"> 2 Guests . 1 Bedroom </span>
-            <span className="greyText"> Kitchen . Wifi . Heating </span> */}
           </div>
           <div className="listings__details">
             {/* <div className="listings__rating">
@@ -74,9 +71,6 @@ const Card: React.FC<PropertyProps> = ({
               </div>
 
               <EditDeleteButtons id={id} creatorId={creatorId} />
-              {/* <div className="listings__price__total">
-                  <span>$56 total</span>
-                </div> */}
             </div>
           </div>
         </div>
