@@ -37,7 +37,7 @@ mutation Register($options: UserRegisterInput!, $image: Upload!) {
   }
 }
 `;
-// change code so it's easier to test this
+// TODO: change code so it's easier to test this
 
 describe('Register', () => {
   const userImage = faker.random.image();
