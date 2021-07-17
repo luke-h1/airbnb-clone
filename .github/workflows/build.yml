@@ -45,7 +45,7 @@ jobs:
         run: cd packages/abb-server && npm run build 
 
       - name: build common
-        run: cd packages/abb-common && npm run common
+        run: cd packages/abb-common && npm run build
 
       - name: build app
         run: cd packages/abb-app && npm run build
