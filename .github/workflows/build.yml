@@ -38,10 +38,10 @@ jobs:
 
       - name: build frontend 
       - run: npm run build 
-      working-directory: ./packages/abb-web
+      - working-directory: ./packages/abb-web
 
       - name: build backend 
       - run: npm run build 
-      working-directory: ./packages/abb-server
+      - working-directory: ./packages/abb-server
 
 
