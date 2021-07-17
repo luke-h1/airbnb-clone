@@ -30,7 +30,7 @@ const meQuery = `
 `;
 
 describe('me', () => {
-  it('get user', async () => {
+  it('me query returns current logged in user', async () => {
     const user = await User.create({
       email: faker.internet.email(),
       firstName: faker.name.firstName(),
@@ -44,7 +44,6 @@ describe('me', () => {
       userId: user.id,
     });
 
-    console.log(response);
     expect(response).toMatchObject({
       data: {
         me: {
@@ -54,7 +53,7 @@ describe('me', () => {
       },
     });
   });
-  it('return null', async () => {
+  it('me query returns null when user enters bad data for register', async () => {
     await User.create({
       email: faker.internet.email(),
       firstName: faker.name.firstName(),
@@ -66,6 +65,7 @@ describe('me', () => {
     const response = await gCall({
       source: meQuery,
     });
+    console.log('response', response);
     expect(response).toMatchObject({
       data: {
         me: null,
