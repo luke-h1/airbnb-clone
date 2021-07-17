@@ -2,7 +2,19 @@ import 'dotenv-safe/config';
 
 const AWS = require('aws-sdk');
 
-// set public access to s3 bucket to true (for now)
+// set public access to s3 bucket to true
+export type S3Object = {
+  Etag: string;
+  Location: string;
+  Key: string;
+  Bucket: string;
+};
+export type UploadedFileResponse = {
+  filename: string;
+  mimetype: string;
+  encoding: string;
+  url: string;
+};
 
 export const AWSCONFIG = AWS.config.update({
   signatureVersion: 's3v4',

@@ -19,7 +19,7 @@ import {
 } from 'type-graphql';
 import { getConnection } from 'typeorm';
 import { FileUpload, GraphQLUpload } from 'graphql-upload';
-import { S3, S3DefaultParams } from '../../utils/image/s3';
+import { S3, S3DefaultParams, S3Object } from '../../utils/image/s3';
 import { User } from '../../entities/User';
 import { MyContext } from '../../shared/types';
 import { UsernamePasswordInput } from './inputs/UsernamePasswordInput';
@@ -173,16 +173,17 @@ export class UserResolver {
           Key: `${constants.S3UserImageKey}/${filename}-${v4()}`,
           Bucket: process.env.AWS_BUCKET_NAME,
         },
-        (e: unknown, data: unknown) => {
+        (e: unknown, data: S3Object) => {
           console.log(e);
           console.log(data);
           if (e) {
             console.log('error uploading...', e);
-            throw new Error(e);
           } else {
             console.log('successfully uploaded file...', data);
             imageUrl = data.Location;
+            console.log('IMAGE URL IS:', imageUrl);
           }
+          return imageUrl;
         },
       );
       const result = await getConnection()

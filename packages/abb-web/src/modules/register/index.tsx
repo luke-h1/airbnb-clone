@@ -60,7 +60,7 @@ const RegisterPage = () => {
           }
         }}
       >
-        {({ isSubmitting }) => (
+        {({ isSubmitting, setFieldValue }) => (
           <Form>
             <InputField
               name="firstName"
@@ -78,6 +78,19 @@ const RegisterPage = () => {
               placeholder="Password"
               label="password"
               type="password"
+            />
+            <InputField
+              name="image"
+              placeholder="image"
+              label="image"
+              type="file"
+              id="image"
+              value={undefined}
+              required
+              onChange={(e) => {
+                // @ts-ignore
+                setFieldValue('image', e.currentTarget.files[0]);
+              }}
             />
             <Flex
               mt={5}
