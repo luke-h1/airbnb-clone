@@ -1,0 +1,32 @@
+mutation UpdateProperty($options: UpdatePropertyInput!, $id: Int!) {
+  updateProperty(options: $options, id: $id) {
+    id
+    title
+    creator {
+      id
+      email
+      fullName
+      image
+      createdAt
+      updatedAt
+    }
+    propertyType
+  
+    description
+    propertyType
+    address
+    amenities
+    reviews {
+      id
+      title
+      body
+      creator {
+        id
+        email
+        fullName
+      }
+    }
+    createdAt
+    updatedAt
+  }
+}
