@@ -16,6 +16,7 @@
     "bootstrap:install": "lerna bootstrap --force-local",
     "build": "lerna run build",
     "clean": "lerna clean -y",
+    "ci:local": "sh scripts/ci:local.sh",
     "prepare": "husky install"
   },
   "lint-staged": {

@@ -1,5 +1,5 @@
 #!/bin/bash
-cd ..
+npm run clean
 npm ci 
 npm run bootstrap
 npm run format
