@@ -35,11 +35,7 @@ This project is made up of 4 areas that share code using <a href='https://lerna.
     * The backend contains 2 commands which are responsible for dealing with migrations. 
     * The first one is responsible for generating a migration based on changes made to the `entities` folder. `typeorm migration:generate -n <NAME>`. 
     * The second one is responsible for running the generated migrations. `typeorm migration:run`
-    * In development we auto-synchronize any updates made to the database. This is to avoid having to manually run migrations everytime we make schema changes. When in a production setting we run migrations manully (if there are any model changes to be made) by using the following logic: 
-    ```
-    process.env.NODE_ENV === 'production' ?? (await conn.runMigrations());
-    ```
-
+    * If you want to learn more about how TypeORM works checkout the [docs](https://typeorm.io/#/)
 
 ### Frontend: 
 * copy the `.env.example ` to `.env`. `cp .env.example .env`. 
