@@ -12,18 +12,28 @@ jobs:
 
     strategy:
       matrix:
-        node-version: [10.x, 12.x, 14.x, 15.x]
+        node-version: [12.x, 14.x]
 
     steps:
       - name: Checkout
-        uses: actions/checkout@v2
+        uses: luke-h1/checkout@v2.3.4
 
-      - name: Use Node.js ${{ matrix.node-version }}
-        uses: actions/setup-node@v2
+      - name: Cache
+        uses: luke-h1/cache@v2.1.3
+        with:
+          path: |
+            ~/cache
+            ~/.dts/
+            !~/cache/exclude
+            **/node_modules
+          key: ${{ runner.os }}-${{ hashFiles('**/lockfiles') }}
+
+      - name: Use (Volta) Node.js ${{ matrix.node-version }}
+        uses: luke-h1/action@v1.6.0
         with:
           node-version: ${{ matrix.node-version }}
-      
-      - name: Install root dependencies 
+
+      - name: Install dependencies 
       - run: npm ci 
 
       - name: bootstrap 
@@ -45,3 +55,11 @@ jobs:
       - name: build backend 
       - run: npm run build 
       - working-directory: ./packages/abb-server
+
+      - name: build common 
+      - run: npm run build 
+      - working-directory: ./packages/abb-common
+
+      - name: build app 
+      - run: npm run build 
+      - working-directory: ./packages/abb-app
