@@ -127,6 +127,7 @@ export class PropertyResolver {
     return Property.findOne(id);
   }
 
+  // TODO: set image here
   @Mutation(() => Property, { nullable: true })
   @UseMiddleware(isAuth)
   async updateProperty(
@@ -138,7 +139,7 @@ export class PropertyResolver {
       title,
       propertyType,
       description,
-      image,
+
       pricePerNight,
       address,
       amenities,
@@ -150,7 +151,6 @@ export class PropertyResolver {
         title,
         propertyType,
         description,
-        image,
         pricePerNight,
         address,
         amenities,

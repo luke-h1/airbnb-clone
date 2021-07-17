@@ -145,7 +145,6 @@ export type UpdatePropertyInput = {
   title: Scalars['String'];
   propertyType: Scalars['String'];
   description: Scalars['String'];
-  image: Scalars['String'];
   pricePerNight: Scalars['Int'];
   address: Scalars['String'];
   amenities: Array<Scalars['String']>;
@@ -294,7 +293,6 @@ export type UpdatePropertyMutation = { __typename?: 'Mutation' } & {
       | 'id'
       | 'title'
       | 'propertyType'
-      | 'image'
       | 'description'
       | 'address'
       | 'amenities'
@@ -722,7 +720,6 @@ export const UpdatePropertyDocument = gql`
         updatedAt
       }
       propertyType
-      image
       description
       propertyType
       address

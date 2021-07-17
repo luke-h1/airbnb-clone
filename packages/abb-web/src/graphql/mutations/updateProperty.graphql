@@ -11,7 +11,7 @@ mutation UpdateProperty($options: UpdatePropertyInput!, $id: Int!) {
       updatedAt
     }
     propertyType
-    image
+  
     description
     propertyType
     address

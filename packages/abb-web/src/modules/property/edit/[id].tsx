@@ -67,16 +67,23 @@ const EditPropertyPage = () => {
           onSubmit={async (values) => {
             await updateProperty({
               variables: {
-                id: intId,
                 options: {
-                  ...values,
+                  title: values.title,
+                  propertyType: values.propertyType,
+                  pricePerNight: values.pricePerNight,
+                  description: values.description,
+                  address: values.address,
+                  amenities: values.amenities,
                 },
+                // image: values.image,
+                id: intId,
               },
             });
+
             router.push(`/property/${intId}`);
           }}
         >
-          {({ isSubmitting }) => (
+          {({ isSubmitting, setFieldValue }) => (
             <Form>
               <InputField
                 name="title"
@@ -98,9 +105,16 @@ const EditPropertyPage = () => {
               />
               <InputField
                 name="image"
-                placeholder="A catchy image for your property"
+                placeholder="image"
                 label="image"
-                type="text"
+                type="file"
+                id="image"
+                value={undefined}
+                required
+                onChange={(e) => {
+                  // @ts-ignore
+                  setFieldValue('image', e.currentTarget.files[0]);
+                }}
               />
               <InputField
                 name="pricePerNight"
