@@ -32,10 +32,13 @@ This project is made up of 4 areas that share code using <a href='https://lerna.
 * to start the backend: `cd src/abb-server && npm run watch`. This will transpile Typescript down to common JS. Run `npm run dev` to start the backend server. 
 
     ### Migrations 
-
     * The backend contains 2 commands which are responsible for dealing with migrations. 
     * The first one is responsible for generating a migration based on changes made to the `entities` folder. `typeorm migration:generate -n <NAME>`. 
     * The second one is responsible for running the generated migrations. `typeorm migration:run`
+    * In development we auto-synchronize any updates made to the database. This is to avoid having to manually run migrations everytime we make schema changes. When in a production setting we run migrations manully (if there are any model changes to be made) by using the following logic: 
+    ```
+    process.env.NODE_ENV === 'production' ?? (await conn.runMigrations());
+    ```
 
 
 ### Frontend: 
@@ -45,10 +48,18 @@ This project is made up of 4 areas that share code using <a href='https://lerna.
 
 
 ### App: 
+* copy the `.env.example ` to `.env`. `cp .env.example .env`. 
+* Fill out the `.env` file with your own values
+* run `npm run start` to start the expo app
 
-
-### Features: 
-
+### Features
+* Protected routes (web, app & backend)
+* register, login & logout (web & app)
+* CRUD properties (web & app)
+* CRUD user (web & app)
+* CRUD reviews (web & app)
+* image uploads to S3
+* Deployment via AWS EKS fargate and Vercel
 
 ### Inspirations 
 * [benawad](https://github.com/benawad)
