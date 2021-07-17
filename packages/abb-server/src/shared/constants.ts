@@ -5,4 +5,5 @@ export namespace constants {
   export const redisSessionPrefix = 'sess:';
   export const userSessionIdPrefix = 'userSids:';
   export const S3UserImageKey = 'abb-userImages';
+  export const S3PropertyImageKey = 'abb-propertyImages';
 }

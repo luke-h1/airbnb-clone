@@ -11,9 +11,6 @@ export class CreatePropertyInput {
   @Field(() => String)
   description: string;
 
-  @Field(() => String)
-  image: string;
-
   @Field(() => Int)
   pricePerNight: number;
 

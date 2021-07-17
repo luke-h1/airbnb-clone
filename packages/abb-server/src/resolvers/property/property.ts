@@ -13,6 +13,8 @@ import {
   UseMiddleware,
 } from 'type-graphql';
 import { getConnection } from 'typeorm';
+import { FileUpload, GraphQLUpload } from 'graphql-upload';
+import { constants } from '../../shared/constants';
 import { User } from '../../entities/User';
 import { isAuth } from '../../middleware/isAuth';
 import { MyContext } from '../../shared/types';
@@ -20,6 +22,7 @@ import { validateProperty } from '../../validation/property/validateProperty';
 import { Property } from '../../entities/Property';
 import { CreatePropertyInput } from './inputs/CreatePropertyInput';
 import { UpdatePropertyInput } from './inputs/UpdatePropertyInput';
+import { Upload } from '../../utils/image/upload';
 
 @ObjectType()
 class PropertyFieldError {
@@ -59,17 +62,29 @@ export class PropertyResolver {
   @UseMiddleware(isAuth)
   async createProperty(
     @Arg('options') options: CreatePropertyInput,
-    @Ctx() { req }: MyContext,
+    @Arg('image', () => GraphQLUpload)
+      { createReadStream, filename }: FileUpload,
   ): Promise<PropertyResponse> {
     const errors = validateProperty(options);
     if (errors) {
       return { errors };
     }
-    console.log(req.session.userId);
-    const property = await Property.create({
-      ...options,
-      creatorId: req.session.userId,
-    }).save();
+    const image = await Upload(
+      createReadStream,
+      filename,
+      constants.S3PropertyImageKey,
+    );
+    const result = await getConnection()
+      .createQueryBuilder()
+      .insert()
+      .into(Property)
+      .values({
+        ...options,
+        image: image.Location,
+      })
+      .returning('*')
+      .execute();
+    const property = result.raw[0];
     return {
       property,
     };

@@ -17,14 +17,6 @@ export const validateProperty = (options: CreatePropertyInput) => {
       },
     ];
   }
-  if (!options.image) {
-    return [
-      {
-        field: 'image',
-        message: 'image is a required field',
-      },
-    ];
-  }
   if (!options.address) {
     return [
       {

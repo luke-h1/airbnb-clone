@@ -20,7 +20,6 @@ import {
 import { getConnection } from 'typeorm';
 import { FileUpload, GraphQLUpload } from 'graphql-upload';
 import { Upload } from '../../utils/image/upload';
-import { S3, S3DefaultParams, S3Object } from '../../utils/image/s3';
 import { User } from '../../entities/User';
 import { MyContext } from '../../shared/types';
 import { UsernamePasswordInput } from './inputs/UsernamePasswordInput';
@@ -61,7 +60,8 @@ export class UserResolver {
   @FieldResolver(() => String)
   fullName(@Root() user: User) {
     if (user) {
-      return user.firstName + user.lastName;
+      // eslint-disable-next-line prefer-template
+      return user.firstName + '' + user.lastName;
     }
     return null;
   }
@@ -171,8 +171,6 @@ export class UserResolver {
         filename,
         constants.S3UserImageKey,
       );
-      console.log('image', image);
-      // image isn't being set on the user for some reason
       const result = await getConnection()
         .createQueryBuilder()
         .insert()

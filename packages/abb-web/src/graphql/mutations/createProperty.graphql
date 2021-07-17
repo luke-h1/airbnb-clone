@@ -1,14 +1,14 @@
-mutation CreateProperty($options: CreatePropertyInput!) { 
-  createProperty(options: $options) {
+mutation CreateProperty($options: CreatePropertyInput!, $image: Upload!) { 
+  createProperty(options: $options, image: $image) {
     errors {
       field
       message
     }
     property {
       id
+      image
       title
       propertyType
-      image
       description
       pricePerNight
       address
