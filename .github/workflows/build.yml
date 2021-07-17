@@ -21,27 +21,27 @@ jobs:
         with:
           node-version: ${{ matrix.node-version }}
 
-      - name: Install root dependencies 
-      - run: npm ci 
+    - name: Install root dependencies 
+    - run: npm ci 
 
-      - name: bootstrap 
-      - run: npm run bootstrap 
+    - name: bootstrap 
+    - run: npm run bootstrap 
 
-      - name: bootstrap prod 
-      - run: npm run bootstrap:prod 
+    - name: bootstrap prod 
+    - run: npm run bootstrap:prod 
 
-      - name: format
-      - run: npm run format 
+    - name: format
+    - run: npm run format 
 
-      - name: lint 
-      - run: npm run lint 
+    - name: lint 
+    - run: npm run lint 
 
-      - name: build frontend 
-      - run: npm run build 
-      - working-directory: ./packages/abb-web
+    - name: build frontend 
+    - run: npm run build 
+    - working-directory: ./packages/abb-web
 
-      - name: build backend 
-      - run: npm run build 
-      - working-directory: ./packages/abb-server
+    - name: build backend 
+    - run: npm run build 
+    - working-directory: ./packages/abb-server
 
 
