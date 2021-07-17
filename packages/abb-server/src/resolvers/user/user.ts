@@ -19,6 +19,7 @@ import {
 } from 'type-graphql';
 import { getConnection } from 'typeorm';
 import { FileUpload, GraphQLUpload } from 'graphql-upload';
+import { Upload } from '../../utils/image/upload';
 import { S3, S3DefaultParams, S3Object } from '../../utils/image/s3';
 import { User } from '../../entities/User';
 import { MyContext } from '../../shared/types';
@@ -165,27 +166,13 @@ export class UserResolver {
     const hashedPassword = await argon2.hash(options.password);
     let user;
     try {
-      let imageUrl: string = '';
-      await S3.upload(
-        {
-          ...S3DefaultParams,
-          Body: createReadStream(),
-          Key: `${constants.S3UserImageKey}/${filename}-${v4()}`,
-          Bucket: process.env.AWS_BUCKET_NAME,
-        },
-        (e: unknown, data: S3Object) => {
-          console.log(e);
-          console.log(data);
-          if (e) {
-            console.log('error uploading...', e);
-          } else {
-            console.log('successfully uploaded file...', data);
-            imageUrl = data.Location;
-            console.log('IMAGE URL IS:', imageUrl);
-          }
-          return imageUrl;
-        },
+      const image = await Upload(
+        createReadStream,
+        filename,
+        constants.S3UserImageKey,
       );
+      console.log('image', image);
+      // image isn't being set on the user for some reason
       const result = await getConnection()
         .createQueryBuilder()
         .insert()
@@ -195,7 +182,7 @@ export class UserResolver {
           lastName: options.lastName,
           email: options.email,
           password: hashedPassword,
-          image: imageUrl,
+          image: image.Location,
         })
         .returning('*')
         .execute();
