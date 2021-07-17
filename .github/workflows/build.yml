@@ -8,7 +8,6 @@ on:
 
 jobs:
   build:
-
     runs-on: ubuntu-latest
 
     strategy:
@@ -17,28 +16,29 @@ jobs:
 
     steps:
       - uses: actions/checkout@v2
+     
       - name: Build ${{ matrix.node-version }}
         uses: actions/setup-node@v2
         with:
           node-version: ${{ matrix.node-version }}
 
-        - name: install dependencies 
-        - run: npm ci
+      - name: install dependencies 
+      - run: npm ci
 
-        - name: boostrap 
-        - run: npm run bootstrap
+      - name: boostrap 
+      - run: npm run bootstrap
 
-        - name: boostrap:prod
-        - run: npm run bootstrap:prod
+      - name: boostrap:prod
+      - run: npm run bootstrap:prod
 
-        - name: build frontend
-        - run: cd packages/abb-web && npm run build 
+      - name: build frontend
+      - run: cd packages/abb-web && npm run build 
 
-        - name: build backend
-        - run: cd packages/abb-server && npm run build 
+      - name: build backend
+      - run: cd packages/abb-server && npm run build 
 
-        - name: build common
-        - run: cd packages/abb-common && npm run build 
+      - name: build common
+      - run: cd packages/abb-common && npm run build 
 
-        - name: build app
-        - run: cd packages/abb-app && npm run build 
+      - name: build app
+      - run: cd packages/abb-app && npm run build 
