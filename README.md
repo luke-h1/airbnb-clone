@@ -58,7 +58,7 @@ This project is made up of 4 areas that share code using <a href='https://lerna.
 * Deployment via AWS EKS fargate and Vercel
 
 
-### Tech stack 
+# Tech stack 
 * AWS 
 * Docker
 * Lerna
