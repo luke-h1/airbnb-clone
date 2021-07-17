@@ -71,7 +71,6 @@ This project is made up of 4 areas that share code using <a href='https://lerna.
 - [GraphQL-upload](https://www.npmjs.com/package/graphql-upload)
 - [AWS-SDK](https://www.npmjs.com/package/aws-sdk)
 - [Dokku](https://dokku.com/)
-
 - [Jest](https://jestjs.io/)
 
 ## Frontend 
