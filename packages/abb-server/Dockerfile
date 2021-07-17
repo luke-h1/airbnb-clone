@@ -5,7 +5,6 @@ WORKDIR /usr/src/app
 
 COPY package*.json ./
 
-
 RUN npm ci
 
 COPY . . 
@@ -26,6 +25,8 @@ COPY .env.production .env
 RUN npm ci --production 
 
 COPY --from=builder /usr/src/app/dist ./dist 
+
+ENV NODE_ENV production
 
 EXPOSE 4000
 
