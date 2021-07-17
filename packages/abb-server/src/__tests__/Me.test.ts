@@ -1,19 +1,20 @@
 /* eslint-disable no-undef */
 import { Connection } from 'typeorm';
 import faker from 'faker';
-
 import { testConn } from '../test-utils/testConn';
+import { redis } from '../shared/redis';
 import { gCall } from '../test-utils/gCall';
 import { User } from '../entities/User';
-import { redis } from '../shared/redis';
 
 let conn: Connection;
 beforeAll(async () => {
+  // @ts-ignore
   conn = await testConn();
   if (redis.status === 'end') {
     await redis.connect();
   }
 });
+
 afterAll(async () => {
   await conn.close();
   redis.disconnect();
@@ -29,9 +30,12 @@ const meQuery = `
 `;
 
 describe('me', () => {
-  it('get user', async () => {
+  it('me query returns current logged in user', async () => {
     const user = await User.create({
       email: faker.internet.email(),
+      firstName: faker.name.firstName(),
+      lastName: faker.name.lastName(),
+      image: faker.random.image(),
       password: faker.internet.password(),
     }).save();
 
@@ -40,7 +44,6 @@ describe('me', () => {
       userId: user.id,
     });
 
-    console.log(response);
     expect(response).toMatchObject({
       data: {
         me: {
@@ -50,15 +53,19 @@ describe('me', () => {
       },
     });
   });
-  it('return null', async () => {
+  it('me query returns null when user enters bad data for register', async () => {
     await User.create({
       email: faker.internet.email(),
+      firstName: faker.name.firstName(),
+      lastName: faker.name.lastName(),
+      image: faker.random.image(),
       password: faker.internet.password(),
     }).save();
 
     const response = await gCall({
       source: meQuery,
     });
+    console.log('response', response);
     expect(response).toMatchObject({
       data: {
         me: null,

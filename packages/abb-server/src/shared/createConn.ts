@@ -1,0 +1,15 @@
+import { join } from 'path';
+import { Property } from 'src/entities/Property';
+import { Review } from 'src/entities/Review';
+import { User } from 'src/entities/User';
+import { createConnection } from 'typeorm';
+import { constants } from './constants';
+
+export const createConn = async () => createConnection({
+  type: 'postgres',
+  url: process.env.DATABASE_URL,
+  logging: !constants.__prod__,
+  synchronize: !constants.__prod__,
+  migrations: [join(__dirname, './migrations/*')],
+  entities: [User, Property, Review],
+});
