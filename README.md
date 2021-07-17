@@ -57,6 +57,32 @@ This project is made up of 4 areas that share code using <a href='https://lerna.
 * image uploads to S3
 * Deployment via AWS EKS fargate and Vercel
 
+
+### Tech stack 
+* AWS 
+* Docker
+* Lerna
+## Backend
+- [Graphql](https://graphql.org/)
+- [TypeORM](https://typeorm.io/#/)
+- [DataLoader](https://github.com/graphql/dataloader)
+- [Redis](https://redis.io/)
+- [PostgreSQL](https://www.postgresql.org/)
+- [GraphQL-upload](https://www.npmjs.com/package/graphql-upload)
+- [AWS-SDK](https://www.npmjs.com/package/aws-sdk)
+- [Dokku](https://dokku.com/)
+
+- [Jest](https://jestjs.io/)
+
+## Frontend 
+- [Next](https://github.com/vercel/next.js)
+- [Emotion](https://github.com/emotion-js/emotion)
+- [Graphql-Codegen](https://www.graphql-code-generator.com/)
+- [Typescript](https://github.com/Microsoft/TypeScript)
+- [Vercel](https://vercel.com/)
+
+## App 
+
 ### Inspirations 
 * [benawad](https://github.com/benawad)
 * [Ania Kubów](https://twitter.com/ania_kubow)
