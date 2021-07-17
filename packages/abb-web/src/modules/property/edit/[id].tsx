@@ -35,7 +35,7 @@ const EditPropertyPage = () => {
   if (loading) {
     return (
       <Flex direction="column" alignItems="center" justifyContent="center">
-        <Loader size="md" />
+        <Loader />
       </Flex>
     );
   }

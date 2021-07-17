@@ -132,7 +132,7 @@ const Nav = () => {
                   ))}
                 <MenuDivider />
                 {data?.me?.email && logoutLoading ? (
-                  <Loader size="sm" />
+                  <Loader />
                 ) : (
                   <button onClick={handleLogout} type="button">
                     logout

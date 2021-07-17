@@ -28,7 +28,7 @@ const SingleProperty: React.FC<{}> = () => {
         justifyContent="center"
         alignItems="center"
       >
-        <Loader size="xl" />
+        <Loader />
       </Flex>
     );
   }

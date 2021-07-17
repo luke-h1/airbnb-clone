@@ -30,7 +30,7 @@ const EditDeleteButtons: React.FC<EditDeleteButtonProps> = ({
       </Link>
       {loading ? (
         <Box ml={5} type="button" as={Button}>
-          <Loader size="md" />
+          <Loader />
         </Box>
       ) : (
         <Box

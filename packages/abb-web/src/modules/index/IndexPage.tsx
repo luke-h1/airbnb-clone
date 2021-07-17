@@ -21,7 +21,7 @@ const index: React.FC<{}> = () => {
       {error ? error.message : null}
       {!data && loading ? (
         <>
-          <Loader size="xl" />
+          <Loader />
         </>
       ) : (
         <SimpleGrid minChildWidth="120px" spacing="40px">
