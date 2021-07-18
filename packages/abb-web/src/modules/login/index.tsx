@@ -5,9 +5,6 @@ import { InputField } from 'src/components/InputField';
 import { MeDocument, MeQuery, useLoginMutation } from 'src/generated/graphql';
 import { toErrorMap } from 'src/utils/toErrorMap';
 import Link from 'next/link';
-import {
-  Flex, Text, Button, Box,
-} from '@chakra-ui/react';
 
 interface FormValues {
   email: string;
@@ -48,6 +45,7 @@ const RegisterPage = () => {
       >
         {({ isSubmitting }) => (
           <Form>
+            {isSubmitting && <p>submitting</p>}
             <InputField name="email" placeholder="Email" label="email" />
             <InputField
               name="password"
@@ -55,42 +53,27 @@ const RegisterPage = () => {
               label="password"
               type="password"
             />
-            <Flex
-              direction="column"
-              justifyContent="center"
-              alignItems="center"
-            >
-              <Text as="h3" fontSize="17px" mb={4} mt={4}>
-                Don't have an account ?
-              </Text>
-              <Link href="/register">
-                <Box
-                  mb={6}
-                  as={Button}
-                  isLoading={isSubmitting}
-                  spinnerPlacement="start"
-                  loadingText="Loading"
-                  disabled={isSubmitting}
+            <div className="flex flex-col align-center">
+              <a>
+                <button
+                  className="bg-blue-500 hover:bg-blue-400 text-white font-bold py-2 px-4 border-b-4 border-blue-700 hover:border-blue-500 rounded"
                   type="submit"
-                  colorScheme="teal"
                 >
-                  Register
-                </Box>
+                  Login
+                </button>
+              </a>
+              <h3>Don't have an account ?</h3>
+              <Link href="/register">
+                <a>
+                  <button
+                    className="bg-blue-500 hover:bg-blue-400 text-white font-bold py-2 px-4 border-b-4 border-blue-700 hover:border-blue-500 rounded"
+                    type="button"
+                  >
+                    Register
+                  </button>
+                </a>
               </Link>
-              <Box
-                mt={4}
-                mb={6}
-                as={Button}
-                isLoading={isSubmitting}
-                spinnerPlacement="start"
-                loadingText="Loading"
-                disabled={isSubmitting}
-                type="submit"
-                colorScheme="teal"
-              >
-                Login
-              </Box>
-            </Flex>
+            </div>
           </Form>
         )}
       </Formik>
