@@ -1,41 +1,33 @@
 import React, { InputHTMLAttributes } from 'react';
 import { useField } from 'formik';
-import {
-  FormControl,
-  FormLabel,
-  Input,
-  FormErrorMessage,
-  Textarea,
-} from '@chakra-ui/react';
-import { Wrapper } from '@src/components/Wrapper';
 
 type InputFieldProps = InputHTMLAttributes<HTMLInputElement> & {
   label: string;
   name: string;
-  textarea?: boolean;
 };
 
 // '' => false
 // 'error message stuff' => true
 
-export const InputField: React.FC<InputFieldProps> = ({
-  label,
-  textarea,
-  size: _,
-  ...props
-}) => {
-  let InputOrTextarea = Input;
-  if (textarea) {
-    InputOrTextarea = Textarea as any;
-  }
+export const InputField: React.FC<InputFieldProps> = ({ label, ...props }) => {
   const [field, { error }] = useField(props);
   return (
-    <Wrapper>
-      <FormControl isInvalid={!!error}>
-        <FormLabel htmlFor={field.name}>{label}</FormLabel>
-        <InputOrTextarea {...field} {...props} id={field.name} />
-        {error ? <FormErrorMessage>{error}</FormErrorMessage> : null}
-      </FormControl>
-    </Wrapper>
+    <>
+      <div className="mb-4">
+        <label
+          className="block text-gray-700 text-sm font-bold mb-2"
+          htmlFor={field.name}
+        >
+          {label}
+        </label>
+        <input
+          className="input border border-gray-400 appearance-none rounded w-full px-3 py-3 pt-5 pb-2 focus focus:border-indigo-600 focus:outline-none active:outline-none active:border-indigo-600"
+          id={field.name}
+          {...field}
+          {...props}
+        />
+        {error ? <p className="text-red-500 text-xs italic">{error}</p> : null}
+      </div>
+    </>
   );
 };

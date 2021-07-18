@@ -1,8 +1,8 @@
 import { join } from 'path';
-import { Property } from 'src/entities/Property';
-import { Review } from 'src/entities/Review';
-import { User } from 'src/entities/User';
 import { createConnection } from 'typeorm';
+import { Review } from '../entities/Review';
+import { User } from '../entities/User';
+import { Property } from '../entities/Property';
 import { constants } from './constants';
 
 export const createConn = async () => createConnection({
