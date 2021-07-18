@@ -1,14 +1,11 @@
 import { Form, Formik } from 'formik';
-import { useRouter } from 'next/router';
 import React from 'react';
 import { InputField } from 'src/components/InputField';
-import {
-  MeDocument,
-  MeQuery,
-  useRegisterMutation,
-} from 'src/generated/graphql';
+import { useRegisterMutation } from 'src/generated/graphql';
 import { toErrorMap } from 'src/utils/toErrorMap';
-import { Flex, Button, Box } from '@chakra-ui/react';
+import { withUrqlClient } from 'next-urql';
+import { createUrqlClient } from '@src/utils/createUrqlClient';
+import Link from 'next/link';
 
 interface FormValues {
   firstName: string;
@@ -19,8 +16,7 @@ interface FormValues {
 }
 
 const RegisterPage = () => {
-  const [register] = useRegisterMutation();
-  const router = useRouter();
+  const [, register] = useRegisterMutation();
   return (
     <>
       <h1 className="title">Welcome to AirBnb</h1>
@@ -34,29 +30,18 @@ const RegisterPage = () => {
         }}
         onSubmit={async (values, { setErrors }) => {
           const res = await register({
-            variables: {
-              options: {
-                firstName: values.firstName,
-                lastName: values.lastName,
-                email: values.email,
-                password: values.password,
-              },
-              image: values.image,
+            options: {
+              firstName: values.firstName,
+              lastName: values.lastName,
+              email: values.email,
+              password: values.password,
             },
-            update: (cache, { data }) => {
-              cache.writeQuery<MeQuery>({
-                query: MeDocument,
-                data: {
-                  __typename: 'Query',
-                  me: data?.register.user,
-                },
-              });
-            },
+            image: values.image,
           });
           if (res.data?.register.errors) {
             setErrors(toErrorMap(res.data.register.errors));
           } else {
-            router.push('/');
+            // router.push('/');
           }
         }}
       >
@@ -92,35 +77,34 @@ const RegisterPage = () => {
                 setFieldValue('image', e.currentTarget.files[0]);
               }}
             />
-            <Flex
-              mt={5}
-              mb={5}
-              direction="column"
-              justifyContent="center"
-              alignItems="center"
-            />
-            <Flex
-              direction="column"
-              justifyContent="center"
-              alignItems="center"
-            >
-              <Box
-                width="30%"
-                as={Button}
-                isLoading={isSubmitting}
-                spinnerPlacement="start"
-                loadingText="Loading"
-                disabled={isSubmitting}
-                type="submit"
-                colorScheme="teal"
-              >
-                Register
-              </Box>
-            </Flex>
+            <div className="flex flex-col align-center">
+              <a>
+                <button
+                  className="bg-blue-500 hover:bg-blue-400 text-white font-bold py-2 px-4 border-b-4 border-blue-700 hover:border-blue-500 rounded"
+                  type="submit"
+                  disabled={isSubmitting}
+                >
+                  Register
+                </button>
+              </a>
+            </div>
+            <div>
+              <h3>Already have an account?</h3>
+              <Link href="/login">
+                <a>
+                  <button
+                    className="bg-blue-500 hover:bg-blue-400 text-white font-bold py-2 px-4 border-b-4 border-blue-700 hover:border-blue-500 rounded"
+                    type="button"
+                  >
+                    login
+                  </button>
+                </a>
+              </Link>
+            </div>
           </Form>
         )}
       </Formik>
     </>
   );
 };
-export default RegisterPage;
+export default withUrqlClient(createUrqlClient, { ssr: false })(RegisterPage);

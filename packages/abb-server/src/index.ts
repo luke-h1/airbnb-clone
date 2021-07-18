@@ -1,5 +1,6 @@
 import 'reflect-metadata';
 import { ApolloServer } from 'apollo-server-express';
+
 import connectRedis from 'connect-redis';
 import cors from 'cors';
 import 'dotenv-safe/config';
@@ -26,7 +27,7 @@ const main = async () => {
   );
 
   // images
-  app.use(graphqlUploadExpress({ maxFileSize: 10, maxFiles: 10 }));
+  app.use(graphqlUploadExpress({ maxFileSize: 10000, maxFiles: 10 }));
 
   app.set('trust-proxy', 1);
   app.use(

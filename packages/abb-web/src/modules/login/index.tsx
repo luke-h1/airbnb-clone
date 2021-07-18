@@ -2,12 +2,11 @@ import { Form, Formik } from 'formik';
 import { useRouter } from 'next/router';
 import React from 'react';
 import { InputField } from 'src/components/InputField';
-import { MeDocument, MeQuery, useLoginMutation } from 'src/generated/graphql';
+import { useLoginMutation } from 'src/generated/graphql';
 import { toErrorMap } from 'src/utils/toErrorMap';
 import Link from 'next/link';
-import {
-  Flex, Text, Button, Box,
-} from '@chakra-ui/react';
+import { withUrqlClient } from 'next-urql';
+import { createUrqlClient } from '@src/utils/createUrqlClient';
 
 interface FormValues {
   email: string;
@@ -15,7 +14,7 @@ interface FormValues {
 }
 
 const RegisterPage = () => {
-  const [login] = useLoginMutation();
+  const [, login] = useLoginMutation();
   const router = useRouter();
   return (
     <>
@@ -26,19 +25,7 @@ const RegisterPage = () => {
           password: '',
         }}
         onSubmit={async (values, { setErrors }) => {
-          const res = await login({
-            variables: { options: values },
-            update: (cache, { data }) => {
-              cache.writeQuery<MeQuery>({
-                query: MeDocument,
-                data: {
-                  __typename: 'Query',
-                  me: data?.login.user,
-                },
-              });
-              cache.evict({ fieldName: 'properties:{}' });
-            },
-          });
+          const res = await login({ options: values });
           if (res.data?.login.errors) {
             setErrors(toErrorMap(res.data.login.errors));
           } else {
@@ -55,46 +42,32 @@ const RegisterPage = () => {
               label="password"
               type="password"
             />
-            <Flex
-              direction="column"
-              justifyContent="center"
-              alignItems="center"
-            >
-              <Text as="h3" fontSize="17px" mb={4} mt={4}>
-                Don't have an account ?
-              </Text>
-              <Link href="/register">
-                <Box
-                  mb={6}
-                  as={Button}
-                  isLoading={isSubmitting}
-                  spinnerPlacement="start"
-                  loadingText="Loading"
+            <div className="flex flex-col align-center">
+              <a>
+                <button
+                  className="bg-blue-500 hover:bg-blue-400 text-white font-bold py-2 px-4 border-b-4 border-blue-700 hover:border-blue-500 rounded"
+                  type="button"
                   disabled={isSubmitting}
-                  type="submit"
-                  colorScheme="teal"
                 >
-                  Register
-                </Box>
+                  Login
+                </button>
+              </a>
+              <h3>Don't have an account ?</h3>
+              <Link href="/register">
+                <a>
+                  <button
+                    className="bg-blue-500 hover:bg-blue-400 text-white font-bold py-2 px-4 border-b-4 border-blue-700 hover:border-blue-500 rounded"
+                    type="button"
+                  >
+                    Register
+                  </button>
+                </a>
               </Link>
-              <Box
-                mt={4}
-                mb={6}
-                as={Button}
-                isLoading={isSubmitting}
-                spinnerPlacement="start"
-                loadingText="Loading"
-                disabled={isSubmitting}
-                type="submit"
-                colorScheme="teal"
-              >
-                Login
-              </Box>
-            </Flex>
+            </div>
           </Form>
         )}
       </Formik>
     </>
   );
 };
-export default RegisterPage;
+export default withUrqlClient(createUrqlClient, { ssr: false })(RegisterPage);

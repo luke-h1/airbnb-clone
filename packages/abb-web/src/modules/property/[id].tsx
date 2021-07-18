@@ -1,161 +1,48 @@
 import React from 'react';
 import { useGetPropertyFromUrl } from '@src/utils/useGetPropertyFromUrl';
 import { Loader } from '@src/components/Loader';
-
-import {
-  Box,
-  Stack,
-  Heading,
-  SimpleGrid,
-  Grid,
-  VStack,
-  Text,
-  Icon,
-  Container,
-  Flex,
-  Image,
-} from '@chakra-ui/react';
-import { CheckIcon } from '@chakra-ui/icons';
+import { createUrqlClient } from '@src/utils/createUrqlClient';
+import { withUrqlClient } from 'next-urql';
+import Link from 'next/link';
 
 const SingleProperty: React.FC<{}> = () => {
-  const { data, error, loading } = useGetPropertyFromUrl();
-  if (loading) {
-    return (
-      <Flex
-        direction="column"
-        minH="50vh"
-        py={10}
-        justifyContent="center"
-        alignItems="center"
-      >
-        <Loader />
-      </Flex>
-    );
+  const [{ data, error, fetching }] = useGetPropertyFromUrl();
+  if (fetching) {
+    return <Loader />;
   }
   if (error) {
-    return <div>{error.message}</div>;
+    return <p className="text-4xl">{error.message}</p>;
   }
 
   if (!data?.property) {
-    return <p>no property found with that id </p>;
+    return (
+      <>
+        <p>no property found with that id</p>
+        <Link href="/">
+          <a>Go Home</a>
+        </Link>
+      </>
+    );
   }
 
   return (
     <>
-      <SimpleGrid columns={{ base: 1, md: 2 }} spacing={0} mb={10}>
-        <Flex bg="brand.400">
-          <Image
+      <section className="text-gray-600 body-font">
+        <div className="container mx-auto flex px-5 py-24 items-center justify-center flex-col">
+          <img
+            className="lg:w-2/6 md:w-3/6 w-5/6 mb-10 object-cover object-center rounded"
+            alt="hero"
             src={data.property.image}
-            alt="3 women looking at a laptop"
-            fit="cover"
-            w="full"
-            h={{ base: 64, md: 'full' }}
-            loading="lazy"
           />
-        </Flex>
-        <Flex
-          direction="column"
-          alignItems="start"
-          justifyContent="center"
-          px={{ base: 4, md: 8, lg: 20 }}
-          py={24}
-          zIndex={3}
-        >
-          <Text
-            as="span"
-            fontSize="lg"
-            textTransform="uppercase"
-            fontWeight="extrabold"
-            mb={2}
-          >
-            {data.property.title} Hosted by {data.property.creator.fullName}{' '}
-          </Text>
-          <Text
-            as="h1"
-            mb={4}
-            fontSize={{ base: '4xl', md: '4xl', lg: '5xl' }}
-            fontWeight="bold"
-            lineHeight="shorter"
-            textShadow="2px 0 currentcolor"
-          >
-            Property description goes here
-          </Text>
-          <Text
-            as="p"
-            pr={{ base: 0, lg: 16 }}
-            mb={4}
-            fontSize="lg"
-            letterSpacing="wider"
-          >
-            Take a look at the amenities below to see what's up for grabs
-          </Text>
-        </Flex>
-      </SimpleGrid>
-      {/* Amenities section */}
-      <Box p={4} mb={20}>
-        <Stack spacing={4} as={Container} maxW="3xl" textAlign="center">
-          <Heading fontSize="3xl">Amenitites</Heading>
-          <Text color="gray.600" fontSize="xl">
-            From wifi to cleaning supplies, here’s what this property has
-          </Text>
-        </Stack>
-
-        <Container maxW="6xl" mt={10}>
-          <SimpleGrid columns={{ base: 1, md: 2, lg: 4 }} spacing={10}>
-            {data.property.amenities
-              && data.property.amenities.map((p) => (
-                <Grid templateColumns="repeat(5, 1fr)" gap={6}>
-                  <Box color="green.400" px={2}>
-                    <Icon as={CheckIcon} />
-                  </Box>
-                  <VStack align="start">
-                    <Text fontWeight={600}>{p}</Text>
-                  </VStack>
-                </Grid>
-              ))}
-          </SimpleGrid>
-        </Container>
-      </Box>
-      {/* Reviews */}
-      <SimpleGrid columns={2} spacingX="40px" spacingY="20px">
-        {data.property.reviews
-          && data.property.reviews.map((r) => (
-            <Flex p={50} w="full" alignItems="center" justifyContent="center">
-              <Box w="sm" mx="auto" shadow="lg" rounded="lg" overflow="hidden">
-                <Image
-                  w="full"
-                  h={56}
-                  fit="cover"
-                  objectPosition="center"
-                  src="https://images.unsplash.com/photo-1517841905240-472988babdf9?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=334&q=80"
-                  alt="avatar"
-                />
-                <Flex alignItems="center" px={6} py={3} bg="gray.900">
-                  <Text
-                    as="h1"
-                    mx={3}
-                    color="white"
-                    fontWeight="bold"
-                    fontSize="lg"
-                  >
-                    {r.title}
-                  </Text>
-                </Flex>
-
-                <Box py={4} px={6}>
-                  <Text as="h1" fontSize="xl" fontWeight="bold">
-                    Property review by, {r.creator.fullName}
-                  </Text>
-
-                  <Text as="p" py={2}>
-                    {r.body}
-                  </Text>
-                </Box>
-              </Box>
-            </Flex>
-          ))}
-      </SimpleGrid>
+          <div className="text-center lg:w-2/3 w-full">
+            <h1 className="title-font sm:text-4xl text-3xl mb-4 font-medium text-gray-900">
+              {data.property.title}
+            </h1>
+            <p className="mb-8 leading-relaxed">{data.property.description}</p>
+          </div>
+        </div>
+      </section>
     </>
   );
 };
-export default SingleProperty;
+export default withUrqlClient(createUrqlClient, { ssr: false })(SingleProperty);

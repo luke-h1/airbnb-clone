@@ -1,58 +1,15 @@
-import { ReactNode } from 'react';
-import {
-  Box,
-  Flex,
-  Avatar,
-  HStack,
-  Link,
-  IconButton,
-  Button,
-  Menu,
-  MenuButton,
-  MenuList,
-  MenuItem,
-  MenuDivider,
-  useDisclosure,
-  useColorModeValue,
-  Stack,
-} from '@chakra-ui/react';
-import { HamburgerIcon, CloseIcon } from '@chakra-ui/icons';
-import NextLink from 'next/link';
+import { withUrqlClient } from 'next-urql';
+import { createUrqlClient } from '@src/utils/createUrqlClient';
 import { useRouter } from 'next/router';
 import { useLogoutMutation, useMeQuery } from '@src/generated/graphql';
 import { isServer } from '@src/utils/isServer';
-import Image from 'next/image';
-import styled from '@emotion/styled';
-import { Loader } from './Loader';
-
-const StyledLink = styled(Link)`
-  margin-right: 15px;
-  font-size: 16px;
-`;
-
-const NavLink = ({ children, href }: { children: ReactNode; href: string }) => (
-  <Link
-    as={NextLink}
-    px={2}
-    py={1}
-    rounded="md"
-    cursor="pointer"
-    _hover={{
-      textDecoration: 'none',
-      bg: useColorModeValue('gray.200', 'gray.700'),
-    }}
-    href={href}
-  >
-    {children}
-  </Link>
-);
+import Link from 'next/link';
 
 const Nav = () => {
-  const { isOpen, onOpen, onClose } = useDisclosure();
   const router = useRouter();
-  const [logout, { loading: logoutLoading }] = useLogoutMutation();
-  const { data, loading } = useMeQuery({
-    skip: isServer(),
+  const [{ fetching: logoutFetching }, logout] = useLogoutMutation();
+  const [{ data, fetching }] = useMeQuery({
+    pause: isServer(),
   });
 
   const handleLogout = async () => {
@@ -62,7 +19,7 @@ const Nav = () => {
 
   let links: { name: string; href: string }[] = [];
 
-  if (loading) {
+  if (fetching) {
     //   user is not logged in
   }
   if (!data?.me) {
@@ -82,77 +39,48 @@ const Nav = () => {
         name: 'Create Property',
         href: '/property/create-property',
       },
+      {
+        name: 'My Profile',
+        href: '/me',
+      },
     ];
   }
 
   return (
     <>
-      <Box bg={useColorModeValue('gray.100', 'gray.900')} px={4} zIndex="100">
-        <Flex h={16} alignItems="center" justifyContent="space-between">
-          <IconButton
-            size="md"
-            icon={isOpen ? <CloseIcon /> : <HamburgerIcon />}
-            aria-label="Open Menu"
-            display={{ md: 'none' }}
-            onClick={isOpen ? onClose : onOpen}
+      <header className="text-gray-600 body-font">
+        <div className="container mx-auto flex flex-wrap p-5 flex-col md:flex-row items-center">
+          <img
+            src="/images/airbnb.svg"
+            style={{ width: '30px', height: '30px' }}
+            alt="logo"
           />
-          <HStack spacing={8} alignItems="center">
-            <Box>
-              <NavLink href="/">
-                <a style={{ cursor: 'pointer' }}>
-                  <Image src="/images/airbnb.svg" width={30} height={50} />
-                </a>
-              </NavLink>
-            </Box>
-            <HStack as="nav" spacing={4} display={{ base: 'none', md: 'flex' }}>
-              {links
-                && links.map((l) => <NavLink href={l.href}>{l.name}</NavLink>)}
-            </HStack>
-          </HStack>
-          <Flex alignItems="center">
-            <Menu>
-              <StyledLink href="/">
-                {data?.me?.email && data?.me?.email}
-              </StyledLink>
-
-              <MenuButton
-                as={Button}
-                rounded="full"
-                variant="link"
-                cursor="pointer"
-              >
-                {data?.me?.image && <Avatar size="sm" src={data.me.image} />}
-              </MenuButton>
-              <MenuList>
-                {links
-                  && links.map((l) => (
-                    <MenuItem>
-                      <NavLink href={l.href}>{l.name}</NavLink>
-                    </MenuItem>
-                  ))}
-                <MenuDivider />
-                {data?.me?.email && logoutLoading ? (
-                  <Loader />
-                ) : (
-                  <button onClick={handleLogout} type="button">
-                    logout
-                  </button>
-                )}
-              </MenuList>
-            </Menu>
-          </Flex>
-        </Flex>
-
-        {isOpen ? (
-          <Box pb={4} display={{ md: 'none' }}>
-            <Stack as="nav" spacing={4}>
-              {links
-                && links.map((l) => <NavLink href={l.href}>{l.name}</NavLink>)}
-            </Stack>
-          </Box>
-        ) : null}
-      </Box>
+          <Link href="/">
+            <a>
+              <span className="ml-3 text-xl">Airbnb</span>
+            </a>
+          </Link>
+          <nav className="md:ml-auto flex flex-wrap items-center text-base justify-center">
+            {links
+              && links.map((l) => (
+                <Link href={l.href}>
+                  <a className="ml-2 mr-2">{l.name}</a>
+                </Link>
+              ))}
+          </nav>
+          {data?.me && (
+            <button
+              className="inline-flex items-center bg-gray-100 border-0 py-1 px-3 focus:outline-none hover:bg-gray-200 rounded text-base mt-4 md:mt-0"
+              type="button"
+              onClick={() => handleLogout()}
+              disabled={logoutFetching}
+            >
+              Logout
+            </button>
+          )}
+        </div>
+      </header>
     </>
   );
 };
-export default Nav;
+export default withUrqlClient(createUrqlClient, { ssr: false })(Nav);
