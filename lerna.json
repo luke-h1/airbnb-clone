@@ -1,5 +1,13 @@
 {
-  "packages": ["packages/*"],
+  "packages": [
+    "packages/abb-server",
+    "packages/abb-web",
+    "packages/abb-common",
+    "packages/abb-app"
+  ],
+  "bootstrapConfig": {
+    "ignorePeerDeps": true
+  },
   "version": "0.0.0",
   "npmClient": "npm",
   "useWorkspaces": false
