@@ -5,8 +5,10 @@
     "packages/abb-common",
     "packages/abb-app"
   ],
-  "bootstrapConfig": {
-    "ignorePeerDeps": true
+  "command": {
+    "bootstrap": {
+      "ignore": ["packages/abb-web"]
+    }
   },
   "version": "0.0.0",
   "npmClient": "npm",
