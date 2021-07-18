@@ -1,6 +1,5 @@
 import { join } from 'path';
 import { createConnection } from 'typeorm';
-import { Review } from '../entities/Review';
 import { User } from '../entities/User';
 import { Property } from '../entities/Property';
 import { constants } from './constants';
@@ -11,5 +10,5 @@ export const createConn = async () => createConnection({
   logging: !constants.__prod__,
   synchronize: !constants.__prod__,
   migrations: [join(__dirname, './migrations/*')],
-  entities: [User, Property, Review],
+  entities: [User, Property],
 });
