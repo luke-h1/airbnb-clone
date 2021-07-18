@@ -1,16 +1,9 @@
 {
   "packages": [
     "packages/abb-server",
-    "packages/abb-web",
     "packages/abb-common",
     "packages/abb-app"
   ],
-  "command": {
-    "bootstrap": {
-      "ignore": ["packages/abb-web"]
-    }
-  },
   "version": "0.0.0",
-  "npmClient": "npm",
-  "useWorkspaces": false
+  "npmClient": "npm"
 }

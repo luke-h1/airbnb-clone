@@ -11,7 +11,7 @@
   "scripts": {
     "lint": "lerna run lint",
     "format": "lerna run format",
-    "bootstrap": "lerna bootstrap --ci --force-local",
+    "bootstrap": "lerna bootstrap --ci --force-local && cd packages/abb-web && npm ci --legacy-peer-deps && cd ../../",
     "bootstrap:prod": "lerna bootstrap --ci --force-local -- --only=prod",
     "bootstrap:install": "lerna bootstrap --force-local",
     "build": "lerna run build",
