@@ -10,6 +10,7 @@
   },
   "scripts": {
     "lint": "lerna run lint",
+    "tsc": "lerna run tsc",
     "format": "lerna run format",
     "bootstrap": "lerna bootstrap --ci --force-local",
     "bootstrap:prod": "lerna bootstrap --ci --force-local -- --only=prod",

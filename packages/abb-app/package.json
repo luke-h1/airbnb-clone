@@ -23,6 +23,7 @@
     "typescript": "~4.0.0"
   },
   "scripts": {
+    "tsc": "tsc",
     "start": "expo start",
     "android": "expo start --android",
     "ios": "expo start --ios",
