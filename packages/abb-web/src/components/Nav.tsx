@@ -1,5 +1,3 @@
-import { withUrqlClient } from 'next-urql';
-import { createUrqlClient } from '@src/utils/createUrqlClient';
 import { useRouter } from 'next/router';
 import { useLogoutMutation, useMeQuery } from '@src/generated/graphql';
 import { isServer } from '@src/utils/isServer';
@@ -7,9 +5,9 @@ import Link from 'next/link';
 
 const Nav = () => {
   const router = useRouter();
-  const [{ fetching: logoutFetching }, logout] = useLogoutMutation();
-  const [{ data, fetching }] = useMeQuery({
-    pause: isServer(),
+  const [logout, { loading: logoutLoading }] = useLogoutMutation();
+  const { data, loading } = useMeQuery({
+    skip: isServer(),
   });
 
   const handleLogout = async () => {
@@ -19,7 +17,7 @@ const Nav = () => {
 
   let links: { name: string; href: string }[] = [];
 
-  if (fetching) {
+  if (loading) {
     //   user is not logged in
   }
   if (!data?.me) {
@@ -73,7 +71,7 @@ const Nav = () => {
               className="inline-flex items-center bg-gray-100 border-0 py-1 px-3 focus:outline-none hover:bg-gray-200 rounded text-base mt-4 md:mt-0"
               type="button"
               onClick={() => handleLogout()}
-              disabled={logoutFetching}
+              disabled={logoutLoading}
             >
               Logout
             </button>
@@ -83,4 +81,4 @@ const Nav = () => {
     </>
   );
 };
-export default withUrqlClient(createUrqlClient, { ssr: false })(Nav);
+export default Nav;

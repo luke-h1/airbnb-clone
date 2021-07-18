@@ -1,13 +1,11 @@
 import React from 'react';
 import { useGetPropertyFromUrl } from '@src/utils/useGetPropertyFromUrl';
 import { Loader } from '@src/components/Loader';
-import { createUrqlClient } from '@src/utils/createUrqlClient';
-import { withUrqlClient } from 'next-urql';
 import Link from 'next/link';
 
 const SingleProperty: React.FC<{}> = () => {
-  const [{ data, error, fetching }] = useGetPropertyFromUrl();
-  if (fetching) {
+  const { data, error, loading } = useGetPropertyFromUrl();
+  if (loading) {
     return <Loader />;
   }
   if (error) {
@@ -45,4 +43,4 @@ const SingleProperty: React.FC<{}> = () => {
     </>
   );
 };
-export default withUrqlClient(createUrqlClient, { ssr: false })(SingleProperty);
+export default SingleProperty;

@@ -2,7 +2,6 @@
 import { Cache, cacheExchange, Resolver } from '@urql/exchange-graphcache';
 import {
   dedupExchange,
-  defaultExchanges,
   Exchange,
   fetchExchange,
   stringifyVariables,
@@ -31,7 +30,6 @@ const errorExchange: Exchange =
         if (error?.message.includes('Not Authenticated!')) {
           Router.push('/login');
         }
-        console.log(error);
       })
     );
   };

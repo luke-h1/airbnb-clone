@@ -2,17 +2,25 @@ import type { AppProps } from 'next/app';
 import '@src/styles/global.scss';
 import Footer from '@src/components/Footer';
 import Nav from '@src/components/Nav';
+import { Reset } from '@src/styles/Global';
 import '@fontsource/lato';
-import '@src/styles/index.css';
 import Container from '@src/components/Container';
+import { useApollo } from '@src/utils/withApollo';
+import { ApolloProvider } from '@apollo/client';
+import '@src/styles/index.css';
 
 function MyApp({ Component, pageProps }: AppProps) {
+  const apolloClient = useApollo(pageProps);
+
   return (
-    <Container>
-      <Nav {...pageProps} />
-      <Component {...pageProps} />
-      <Footer />
-    </Container>
+    <ApolloProvider client={apolloClient}>
+      <Container>
+        <Reset />
+        <Nav {...pageProps} />
+        <Component {...pageProps} />
+        <Footer />
+      </Container>
+    </ApolloProvider>
   );
 }
 export default MyApp;

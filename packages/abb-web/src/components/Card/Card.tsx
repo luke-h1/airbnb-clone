@@ -20,6 +20,7 @@ const Card: React.FC<PropertyProps> = ({
   propertyType,
   image,
   amenities,
+  creator,
   pricePerNight,
   creatorId,
 }) => {
@@ -34,8 +35,15 @@ const Card: React.FC<PropertyProps> = ({
         <div className="listings__content">
           <div className="listings__title">
             <div className="listings__icon__text">
-              <span className="greyText">{propertyType}</span>
+              <span className="greyText">
+                Property Type: <br />
+                {propertyType}
+              </span>
               <h2>{title}</h2>
+              <h3>
+                Posted by <br />
+                {creator.fullName}
+              </h3>
             </div>
             <div className="listings__title__icon">
               <button type="button">
@@ -50,6 +58,12 @@ const Card: React.FC<PropertyProps> = ({
               && amenities.map((a) => <span className="greyText">{a}</span>)}
           </div>
           <div className="listings__details">
+            {/* <div className="listings__rating">
+              <img src="/icons/star.svg" alt="Star" />
+              <span>
+                5 <span>(14)</span>
+              </span>
+            </div> */}
             <div className="listings__price">
               <div className="listings__price__night">
                 £{pricePerNight}

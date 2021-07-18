@@ -9,6 +9,7 @@ import {
   PrimaryGeneratedColumn,
   UpdateDateColumn,
 } from 'typeorm';
+import { Review } from './Review';
 import { User } from './User';
 
 @ObjectType()
@@ -53,6 +54,10 @@ export class Property extends BaseEntity {
   @Field(() => [String])
   @Column('text', { array: true })
   amenities: string[];
+
+  @Field(() => [Review], { nullable: true })
+  @ManyToOne(() => Review, (review) => review.creator)
+  reviews: Review[];
 
   @Field(() => String)
   @CreateDateColumn()

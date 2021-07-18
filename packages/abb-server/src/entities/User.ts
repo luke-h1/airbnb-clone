@@ -9,6 +9,7 @@ import {
   UpdateDateColumn,
 } from 'typeorm';
 import { Property } from './Property';
+import { Review } from './Review';
 
 @ObjectType()
 @Entity('users')
@@ -39,6 +40,10 @@ export class User extends BaseEntity {
   @Field(() => [Property])
   @OneToMany(() => Property, (p) => p.creator)
   properties: Property[];
+
+  @Field(() => [Review])
+  @OneToMany(() => Review, (r) => r.creator)
+  reviews: Review[];
 
   @Field(() => String)
   @CreateDateColumn()

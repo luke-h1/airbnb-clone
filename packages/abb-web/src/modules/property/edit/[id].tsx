@@ -9,16 +9,14 @@ import { useRouter } from 'next/router';
 import React from 'react';
 import { Loader } from '@src/components/Loader';
 import { useIsAuth } from '@src/utils/useIsAuth';
-import { withUrqlClient } from 'next-urql';
-import { createUrqlClient } from '@src/utils/createUrqlClient';
 import Link from 'next/link';
 
 const EditPropertyPage = () => {
   useIsAuth();
   const router = useRouter();
   const intId = useGetIntId();
-  const [, updateProperty] = useUpdatePropertyMutation();
-  const [{ data, fetching }] = usePropertyQuery({
+  const [updateProperty] = useUpdatePropertyMutation();
+  const { data, loading } = usePropertyQuery({
     /**
      * If id =-1 we know we're on server side
      * pause until id is not -1
@@ -26,13 +24,13 @@ const EditPropertyPage = () => {
      * if is present, fetch property, prefill form with fields
      * else not found
      */
-    pause: intId === -1,
+    skip: intId === -1,
     variables: {
       id: intId,
     },
   });
 
-  if (fetching) {
+  if (loading) {
     return <Loader />;
   }
 
@@ -148,6 +146,4 @@ const EditPropertyPage = () => {
     </>
   );
 };
-export default withUrqlClient(createUrqlClient, { ssr: false })(
-  EditPropertyPage,
-);
+export default EditPropertyPage;

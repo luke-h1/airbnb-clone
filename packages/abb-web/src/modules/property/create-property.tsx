@@ -5,8 +5,6 @@ import { Formik, Form } from 'formik';
 import { useRouter } from 'next/router';
 import React from 'react';
 import { toPropertyErrorMap } from '@src/utils/toErrorMap';
-import { withUrqlClient } from 'next-urql';
-import { createUrqlClient } from '@src/utils/createUrqlClient';
 
 interface FormValues {
   title: string;
@@ -21,7 +19,7 @@ interface FormValues {
 const CreatePropertyPage = () => {
   useIsAuth();
   const router = useRouter();
-  const [, createProperty] = useCreatePropertyMutation();
+  const [createProperty] = useCreatePropertyMutation();
 
   return (
     <>
@@ -38,21 +36,27 @@ const CreatePropertyPage = () => {
         }}
         onSubmit={async (values, { setErrors }) => {
           const res = await createProperty({
-            options: {
-              title: values.title,
-              propertyType: values.propertyType,
-              pricePerNight: values.pricePerNight,
-              description: values.description,
-              address: values.address,
-              amenities: values.amenities,
+            variables: {
+              options: {
+                title: values.title,
+                propertyType: values.propertyType,
+                pricePerNight: values.pricePerNight,
+                description: values.description,
+                address: values.address,
+                amenities: values.amenities,
+              },
+              image: values.image,
             },
-            image: values.image,
+            update: (cache) => {
+              cache.evict({ fieldName: 'properties:{}' });
+            },
           });
-          console.log(res.data);
+
           if (res.data?.createProperty.errors) {
             setErrors(toPropertyErrorMap(res.data.createProperty.errors));
+          } else {
+            router.push('/');
           }
-          router.push('/');
         }}
       >
         {({ isSubmitting, setFieldValue }) => (
@@ -119,6 +123,4 @@ const CreatePropertyPage = () => {
     </>
   );
 };
-export default withUrqlClient(createUrqlClient, { ssr: false })(
-  CreatePropertyPage,
-);
+export default CreatePropertyPage;
