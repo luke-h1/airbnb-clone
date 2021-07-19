@@ -26,7 +26,6 @@ jobs:
       - name: Install dependencies
         run: npm ci
 
-
       - name: bootstrap
         run: npm run bootstrap
 
