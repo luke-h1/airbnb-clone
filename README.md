@@ -8,7 +8,6 @@ This project is made up of 4 areas that share code using <a href='https://lerna.
 * Server - GraphQL, Typescript server 
 * app - React Native app 
 * web - Next.js frontend website
-* common - Common functionality used across the server, app & web 
 
 
 ## Getting started with local development 
