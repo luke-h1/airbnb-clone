@@ -10,7 +10,7 @@ function MyApp({ Component, pageProps }: AppProps) {
   return (
     <Container>
       <Reset />
-      <Nav />
+      <Nav {...pageProps} />
       <Component {...pageProps} />
     </Container>
   );

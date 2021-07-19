@@ -10,13 +10,10 @@ const index: React.FC<{}> = () => {
     cursor: null as null | string,
   });
 
-  const [{ data, error, fetching }] = usePropertiesQuery({ variables });
+  const [{ data, error }] = usePropertiesQuery({ variables });
   return (
     <div>
       {error ? <p className="text-4xl">{error.message}</p> : null}
-      {!data && fetching && (
-        <p className="text-3xl text-center">No Properties available</p>
-      )}
       <div>
         {data?.properties.properties.map((p) => (!p ? (
           <p className="text-4xl">No properties</p>
