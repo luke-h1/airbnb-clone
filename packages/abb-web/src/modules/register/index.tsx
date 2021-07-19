@@ -1,4 +1,6 @@
+import { createUrqlClient } from '@src/utils/createUrqlClient';
 import { Form, Formik } from 'formik';
+import { withUrqlClient } from 'next-urql';
 import { useRouter } from 'next/router';
 import React from 'react';
 import { InputField } from 'src/components/InputField';
@@ -18,7 +20,7 @@ interface FormValues {
 }
 
 const RegisterPage = () => {
-  const [register] = useRegisterMutation();
+  const [, register] = useRegisterMutation();
   const router = useRouter();
   return (
     <>
@@ -59,7 +61,7 @@ const RegisterPage = () => {
           }
         }}
       >
-        {({ setFieldValue }) => (
+        {({ setFieldValue, isSubmitting }) => (
           <Form>
             <InputField
               name="firstName"
@@ -91,11 +93,13 @@ const RegisterPage = () => {
                 setFieldValue('image', e.currentTarget.files[0]);
               }}
             />
-            <button type="submit">register</button>
+            <button type="submit" disabled={isSubmitting}>
+              register
+            </button>
           </Form>
         )}
       </Formik>
     </>
   );
 };
-export default RegisterPage;
+export default withUrqlClient(createUrqlClient, { ssr: false })(RegisterPage);

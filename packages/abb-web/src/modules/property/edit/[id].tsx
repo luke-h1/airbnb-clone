@@ -10,13 +10,15 @@ import React from 'react';
 import { Loader } from '@src/components/Loader';
 import { useIsAuth } from '@src/utils/useIsAuth';
 import Link from 'next/link';
+import { withUrqlClient } from 'next-urql';
+import { createUrqlClient } from '@src/utils/createUrqlClient';
 
 const EditPropertyPage = () => {
   useIsAuth();
   const router = useRouter();
   const intId = useGetIntId();
-  const [updateProperty] = useUpdatePropertyMutation();
-  const { data, loading } = usePropertyQuery({
+  const [, updateProperty] = useUpdatePropertyMutation();
+  const [{ data, loading }] = usePropertyQuery({
     /**
      * If id =-1 we know we're on server side
      * pause until id is not -1
@@ -146,4 +148,6 @@ const EditPropertyPage = () => {
     </>
   );
 };
-export default EditPropertyPage;
+export default withUrqlClient(createUrqlClient, { ssr: false })(
+  EditPropertyPage,
+);

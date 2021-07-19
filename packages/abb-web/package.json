@@ -15,19 +15,12 @@
     "gen": "graphql-codegen --config codegen.yml"
   },
   "dependencies": {
-    "@apollo/client": "^3.3.21",
-    "@apollo/link-error": "*",
-    "@apollo/react-common": "^3.1.4",
-    "@apollo/react-hooks": "^4.0.0",
-    "@chakra-ui/icons": "^1.0.13",
-    "@chakra-ui/react": "^1.6.4",
     "@emotion/react": "^11.4.0",
     "@emotion/styled": "^11.3.0",
     "@fontsource/lato": "^4.4.5",
     "@headlessui/react": "^1.3.0",
     "@urql/exchange-graphcache": "^4.0.0",
     "@urql/exchange-multipart-fetch": "^0.1.12",
-    "apollo-upload-client": "^16.0.0",
     "cross-env": "^7.0.3",
     "cross-fetch": "^3.1.4",
     "date-fns": "^2.22.1",
@@ -58,14 +51,12 @@
     "@graphql-codegen/cli": "^1.21.6",
     "@graphql-codegen/typescript": "^1.22.4",
     "@graphql-codegen/typescript-operations": "^1.18.3",
-    "@graphql-codegen/typescript-react-apollo": "^2.3.0",
     "@graphql-codegen/typescript-urql": "^2.0.6",
     "@testing-library/dom": "^8.0.0",
     "@testing-library/jest-dom": "^5.12.0",
     "@testing-library/react": "^12.0.0",
     "@testing-library/react-hooks": "^7.0.0",
     "@testing-library/user-event": "^13.1.6",
-    "@types/apollo-upload-client": "^14.1.0",
     "@types/jest": "^26.0.23",
     "@types/node": "^16.0.0",
     "@types/react": "^17.0.4",
@@ -92,11 +83,9 @@
     "jest-resolve": "^27.0.4",
     "jest-serializer-html": "^7.0.0",
     "jest-watch-typeahead": "^0.6.3",
-    "leaflet": "^1.7.1",
     "polished": "^4.1.2",
     "postcss": "^8.3.5",
     "prettier": "^2.2.1",
-    "react-leaflet": "^3.2.0",
     "sass": "^1.34.1",
     "tailwindcss": "^2.2.4",
     "typescript": "^4.3.5"
@@ -158,7 +147,7 @@
   },
   "jest-junit": {
     "ancestorSeparator": " › ",
-    "suiteName": "Frontend Jest tests",
+    "suiteName": "Frontend unit tests",
     "outputName": "junit-frontend.xml"
   }
 }

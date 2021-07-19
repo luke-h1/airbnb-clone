@@ -1,1 +1,1 @@
-export { default } from '@src/modules/index/IndexPage';
+export { default } from '@src/modules/index/Index';
