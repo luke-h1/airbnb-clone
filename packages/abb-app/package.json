@@ -38,7 +38,7 @@
     "android": "expo start --android",
     "ios": "expo start --ios",
     "web": "expo start --web",
-    "tsc": "tsc",
+    "build": "tsc",
     "eject": "expo eject"
   },
   "private": true

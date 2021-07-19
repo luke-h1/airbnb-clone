@@ -30,7 +30,6 @@ jobs:
       - name: bootstrap
         run: npm run bootstrap
 
-
       - name: format
         run: npm run format
 
@@ -39,9 +38,6 @@ jobs:
 
       - name: build backend
         run: cd packages/abb-server && npm run build 
-
-      - name: build common
-        run: cd packages/abb-common && npm run build
 
       - name: build app
         run: cd packages/abb-app && npm run build
