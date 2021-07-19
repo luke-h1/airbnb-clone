@@ -1,0 +1,3 @@
+mutation DeleteProperty($id: Int!){
+  deleteProperty(id: $id)
+}

@@ -1,9 +1,11 @@
 {
+  "extends": "../tsconfig.json",
   "compilerOptions": {
     "target": "es6",
+    "baseUrl": ".",
     "lib": ["dom", "dom.iterable", "esnext"],
     "paths": {
-      "@src/*": ["src/*"],
+      "@src/*": ["./src/*"],
       "@common/*": ["../abb-common/src/*"]
     },
     "allowJs": true,
@@ -24,8 +26,6 @@
     "resolveJsonModule": true,
     "isolatedModules": true,
     "jsx": "preserve",
-    "rootDir": "./src",
-    "baseUrl": "."
   },
   "include": ["next-env.d.ts", "**/*.ts", "**/*.tsx"],
   "exclude": ["node_modules"],

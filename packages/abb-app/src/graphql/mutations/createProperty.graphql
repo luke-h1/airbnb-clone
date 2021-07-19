@@ -1,0 +1,36 @@
+mutation CreateProperty($options: CreatePropertyInput!, $image: Upload!) { 
+  createProperty(options: $options, image: $image) {
+    errors {
+      field
+      message
+    }
+    property {
+      id
+      image
+      title
+      propertyType
+      description
+      pricePerNight
+      address
+      amenities
+      createdAt
+      updatedAt
+      creator {
+        id
+        email
+        image
+        fullName
+      }
+      reviews {
+        id
+        title
+        body
+        creator {
+          id
+          email
+          fullName
+        }
+      }
+    }
+  }
+}
