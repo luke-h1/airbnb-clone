@@ -28,12 +28,14 @@ This project is made up of 3 areas that share code using <a href='https://lerna.
 * copy the `.env.example ` to `.env` (`cp .env.example .env`).
 * Fill out the `.env` file with your own values
 * to start the backend: `cd src/abb-server && npm run watch`. This will transpile Typescript down to common JS. Run `npm run dev` to start the backend server.
+* create programatic access user on AWS and give it access to the s3 bucket you create
+* create s3 bucket on AWS with public access allowed 
+
     ### Migrations 
     * The backend contains 2 commands which are responsible for dealing with migrations. 
     * The first one is responsible for generating a migration based on changes made to the `entities` folder. `typeorm migration:generate -n <NAME>`. 
     * The second one is responsible for running the generated migrations. `typeorm migration:run`
     * If you want to learn more about how TypeORM works checkout the [docs](https://typeorm.io/#/)
-
 ### Frontend: 
 * copy the `.env.example ` to `.env`. `cp .env.example .env`. 
 * Fill out the `.env` file with your own values
