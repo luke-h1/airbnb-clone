@@ -1,4 +1,5 @@
 {
+	"name": "abb-app",	
 	"main": "node_modules/expo/AppEntry.js",
 	"jest": {
 		"preset": "jest-expo"
