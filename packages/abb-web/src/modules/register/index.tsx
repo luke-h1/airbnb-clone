@@ -8,7 +8,6 @@ import {
   useRegisterMutation,
 } from 'src/generated/graphql';
 import { toErrorMap } from 'src/utils/toErrorMap';
-import { Flex, Button, Box } from '@chakra-ui/react';
 
 interface FormValues {
   firstName: string;
@@ -60,7 +59,7 @@ const RegisterPage = () => {
           }
         }}
       >
-        {({ isSubmitting, setFieldValue }) => (
+        {({ setFieldValue }) => (
           <Form>
             <InputField
               name="firstName"
@@ -92,31 +91,7 @@ const RegisterPage = () => {
                 setFieldValue('image', e.currentTarget.files[0]);
               }}
             />
-            <Flex
-              mt={5}
-              mb={5}
-              direction="column"
-              justifyContent="center"
-              alignItems="center"
-            />
-            <Flex
-              direction="column"
-              justifyContent="center"
-              alignItems="center"
-            >
-              <Box
-                width="30%"
-                as={Button}
-                isLoading={isSubmitting}
-                spinnerPlacement="start"
-                loadingText="Loading"
-                disabled={isSubmitting}
-                type="submit"
-                colorScheme="teal"
-              >
-                Register
-              </Box>
-            </Flex>
+            <button type="submit">register</button>
           </Form>
         )}
       </Formik>

@@ -96,7 +96,7 @@ export class PropertyResolver {
   async properties(
     @Arg('limit', () => Int) limit: number,
     @Arg('cursor', () => String, { nullable: true }) cursor: string | null,
-  ): Promise<PaginatedProperties> {
+  ): Promise<PaginatedProperties | null> {
     const realLimit = Math.min(50, limit);
     const realLimitPlusOne = realLimit + 1;
     const replacements: any[] = [realLimitPlusOne];
@@ -110,12 +110,12 @@ export class PropertyResolver {
         SELECT p.* from "properties" p 
         ${cursor ? `where p."createdAt" < $2` : ''} 
         ORDER BY p."createdAt" DESC
-        LIMIT $1
+        LIMIT $1w
       `,
       replacements,
     );
     return {
-      properties: properties.slice(0, realLimit),
+      properties: properties.slice(0, realLimit) || null,
       hasMore: properties.length === realLimitPlusOne,
     };
   }
