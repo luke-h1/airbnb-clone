@@ -6,9 +6,6 @@ declare namespace NodeJS {
     COOKIE_SECRET: string;
     CORS_ORIGIN: string;
     FRONTEND_HOST: string;
-    CLOUDINARY_CLOUD_NAME: string;
-    CLOUDINARY_API_KEY: string;
-    CLOUDINARY_API_SECRET: string;
     MAIL_HOST: string;
     MAIL_PORT: string;
     MAIL_USERNAME: string;
