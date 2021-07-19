@@ -133,17 +133,23 @@ export class PropertyResolver {
   async updateProperty(
     @Arg('options') options: UpdatePropertyInput,
     @Arg('id', () => Int) id: number,
+    @Arg('image', () => GraphQLUpload)
+      { createReadStream, filename }: FileUpload,
     @Ctx() { req }: MyContext,
   ): Promise<Property | null> {
     const {
       title,
       propertyType,
       description,
-
       pricePerNight,
       address,
       amenities,
     } = options;
+    const image = await Upload(
+      createReadStream,
+      filename,
+      constants.S3PropertyImageKey,
+    );
     const result = await getConnection()
       .createQueryBuilder()
       .update(Property)
@@ -153,6 +159,7 @@ export class PropertyResolver {
         description,
         pricePerNight,
         address,
+        image: image.Location,
         amenities,
       })
       .where('id = :id and creatorId = :creatorId', {
