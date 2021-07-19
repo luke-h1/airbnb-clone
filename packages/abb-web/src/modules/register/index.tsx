@@ -1,12 +1,10 @@
+import { createUrqlClient } from '@src/utils/createUrqlClient';
 import { Form, Formik } from 'formik';
+import { withUrqlClient } from 'next-urql';
 import { useRouter } from 'next/router';
 import React from 'react';
 import { InputField } from 'src/components/InputField';
-import {
-  MeDocument,
-  MeQuery,
-  useRegisterMutation,
-} from 'src/generated/graphql';
+import { useRegisterMutation } from 'src/generated/graphql';
 import { toErrorMap } from 'src/utils/toErrorMap';
 
 interface FormValues {
@@ -18,7 +16,7 @@ interface FormValues {
 }
 
 const RegisterPage = () => {
-  const [register] = useRegisterMutation();
+  const [, register] = useRegisterMutation();
   const router = useRouter();
   return (
     <>
@@ -33,24 +31,13 @@ const RegisterPage = () => {
         }}
         onSubmit={async (values, { setErrors }) => {
           const res = await register({
-            variables: {
-              options: {
-                firstName: values.firstName,
-                lastName: values.lastName,
-                email: values.email,
-                password: values.password,
-              },
-              image: values.image,
+            options: {
+              firstName: values.firstName,
+              lastName: values.lastName,
+              email: values.email,
+              password: values.password,
             },
-            update: (cache, { data }) => {
-              cache.writeQuery<MeQuery>({
-                query: MeDocument,
-                data: {
-                  __typename: 'Query',
-                  me: data?.register.user,
-                },
-              });
-            },
+            image: values.image,
           });
           if (res.data?.register.errors) {
             setErrors(toErrorMap(res.data.register.errors));
@@ -59,7 +46,7 @@ const RegisterPage = () => {
           }
         }}
       >
-        {({ setFieldValue }) => (
+        {({ setFieldValue, isSubmitting }) => (
           <Form>
             <InputField
               name="firstName"
@@ -91,11 +78,13 @@ const RegisterPage = () => {
                 setFieldValue('image', e.currentTarget.files[0]);
               }}
             />
-            <button type="submit">register</button>
+            <button type="submit" disabled={isSubmitting}>
+              register
+            </button>
           </Form>
         )}
       </Formik>
     </>
   );
 };
-export default RegisterPage;
+export default withUrqlClient(createUrqlClient, { ssr: false })(RegisterPage);

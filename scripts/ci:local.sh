@@ -2,7 +2,7 @@
 npm run clean
 npm ci 
 npm run bootstrap
+npm run bootstrap:prod 
 npm run format
 npm run lint 
-npm run build 
-npm run bootstrap:prod
+npm run build

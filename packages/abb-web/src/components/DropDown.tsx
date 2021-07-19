@@ -1,22 +1,26 @@
 import React from 'react';
 import { Menu, Transition } from '@headlessui/react';
-import { ChevronDownIcon } from '@chakra-ui/icons';
 import Link from 'next/link';
 import { useLogoutMutation, User } from '@src/generated/graphql';
 import { useRouter } from 'next/router';
 
 interface DropDownProps {
   links: { href: string; name: string }[];
-  me?: {
-    __typename?: 'User' | undefined;
-} & {
-    __typename?: 'User' | undefined;
-} & Pick<User, 'image' | 'id' | 'email' | 'fullName' | 'firstName' | 'lastName'> | null
+  me?:
+    | ({
+        __typename?: 'User' | undefined;
+      } & {
+        __typename?: 'User' | undefined;
+      } & Pick<
+          User,
+          'image' | 'id' | 'email' | 'fullName' | 'firstName' | 'lastName'
+        >)
+    | null;
 }
 
 const DropDown: React.FC<DropDownProps> = ({ links, me }) => {
   const router = useRouter();
-  const [logout] = useLogoutMutation();
+  const [, logout] = useLogoutMutation();
 
   const handleLogout = async () => {
     await logout();
@@ -41,7 +45,6 @@ const DropDown: React.FC<DropDownProps> = ({ links, me }) => {
                 stroke: 'currentColor',
                 strokeWidth: 3,
                 overflow: 'visible',
-
               }}
             >
               <g fill="none" fillRule="nonzero">
@@ -50,11 +53,6 @@ const DropDown: React.FC<DropDownProps> = ({ links, me }) => {
                 <path d="m2 8h28" />
               </g>
             </svg>
-            <ChevronDownIcon
-              className="w-5 h-5 ml-2 -mr-1 text-violet-200 hover:text-violet-100"
-              aria-hidden="true"
-            />
-
           </Menu.Button>
         </div>
         <Transition
@@ -66,39 +64,40 @@ const DropDown: React.FC<DropDownProps> = ({ links, me }) => {
           leaveFrom="transform opacity-100 scale-100"
           leaveTo="transform opacity-0 scale-95"
         >
-          <Menu.Items
-            className="absolute right-0 w-56 mt-2 origin-top-right bg-white divide-y divide-gray-100 rounded-md shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none"
-          >
-            {links && links.map((l) => (
-              <div className="px-1 py-1">
-                <Menu.Item>
-                  {({ active }) => (
-                    <button
-                      className={`${
-                        active ? 'bg-violet-500 text-white' : 'text-gray-900'
-                      } group flex rounded-md items-center w-full px-2 py-2 text-sm`}
-                      type="button"
-                    >
-                      <Link href={l.href}><a>{l.name}</a></Link>
-                    </button>
-                  )}
-                </Menu.Item>
-              </div>
-            ))}
+          <Menu.Items className="absolute right-0 w-56 mt-2 origin-top-right bg-white divide-y divide-gray-100 rounded-md shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none">
+            {links
+              && links.map((l) => (
+                <div className="px-1 py-1">
+                  <Menu.Item>
+                    {({ active }) => (
+                      <button
+                        className={`${
+                          active ? 'bg-violet-500 text-white' : 'text-gray-900'
+                        } group flex rounded-md items-center w-full px-2 py-2 text-sm`}
+                        type="button"
+                      >
+                        <Link href={l.href}>
+                          <a>{l.name}</a>
+                        </Link>
+                      </button>
+                    )}
+                  </Menu.Item>
+                </div>
+              ))}
             {me?.firstName && (
-            <Menu.Item>
-              {({ active }) => (
-                <button
-                  className={`${
-                    active ? 'bg-violet-500 text-white' : 'text-gray-900'
-                  } group flex rounded-md items-center w-full px-2 py-2 text-sm`}
-                  type="button"
-                  onClick={handleLogout}
-                >
-                  Logout
-                </button>
-              )}
-            </Menu.Item>
+              <Menu.Item>
+                {({ active }) => (
+                  <button
+                    className={`${
+                      active ? 'bg-violet-500 text-white' : 'text-gray-900'
+                    } group flex rounded-md items-center w-full px-2 py-2 text-sm`}
+                    type="button"
+                    onClick={handleLogout}
+                  >
+                    Logout
+                  </button>
+                )}
+              </Menu.Item>
             )}
           </Menu.Items>
         </Transition>

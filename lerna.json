@@ -1,7 +1,8 @@
 {
   "packages": [
     "packages/abb-server",
-    "packages/abb-app"
+    "packages/abb-app",
+    "packages/abb-web"
   ],
   "version": "0.0.0",
   "npmClient": "npm",

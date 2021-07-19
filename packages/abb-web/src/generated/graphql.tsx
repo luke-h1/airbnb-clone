@@ -1,5 +1,5 @@
-import { gql } from '@apollo/client';
-import * as Apollo from '@apollo/client';
+import gql from 'graphql-tag';
+import * as Urql from 'urql';
 export type Maybe<T> = T | null;
 export type Exact<T extends { [key: string]: unknown }> = {
   [K in keyof T]: T[K];
@@ -8,7 +8,7 @@ export type MakeOptional<T, K extends keyof T> = Omit<T, K> &
   { [SubKey in K]?: Maybe<T[SubKey]> };
 export type MakeMaybe<T, K extends keyof T> = Omit<T, K> &
   { [SubKey in K]: Maybe<T[SubKey]> };
-const defaultOptions = {};
+export type Omit<T, K extends keyof T> = Pick<T, Exclude<keyof T, K>>;
 /** All built-in and custom scalars, mapped to their actual values */
 export type Scalars = {
   ID: string;
@@ -53,6 +53,7 @@ export type MutationCreatePropertyArgs = {
 };
 
 export type MutationUpdatePropertyArgs = {
+  image: Scalars['Upload'];
   id: Scalars['Int'];
   options: UpdatePropertyInput;
 };
@@ -284,6 +285,7 @@ export type RegisterMutation = { __typename?: 'Mutation' } & {
 export type UpdatePropertyMutationVariables = Exact<{
   options: UpdatePropertyInput;
   id: Scalars['Int'];
+  image: Scalars['Upload'];
 }>;
 
 export type UpdatePropertyMutation = { __typename?: 'Mutation' } & {
@@ -473,98 +475,25 @@ export const CreatePropertyDocument = gql`
     }
   }
 `;
-export type CreatePropertyMutationFn = Apollo.MutationFunction<
-  CreatePropertyMutation,
-  CreatePropertyMutationVariables
->;
 
-/**
- * __useCreatePropertyMutation__
- *
- * To run a mutation, you first call `useCreatePropertyMutation` within a React component and pass it any options that fit your needs.
- * When your component renders, `useCreatePropertyMutation` returns a tuple that includes:
- * - A mutate function that you can call at any time to execute the mutation
- * - An object with fields that represent the current status of the mutation's execution
- *
- * @param baseOptions options that will be passed into the mutation, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options-2;
- *
- * @example
- * const [createPropertyMutation, { data, loading, error }] = useCreatePropertyMutation({
- *   variables: {
- *      options: // value for 'options'
- *      image: // value for 'image'
- *   },
- * });
- */
-export function useCreatePropertyMutation(
-  baseOptions?: Apollo.MutationHookOptions<
+export function useCreatePropertyMutation() {
+  return Urql.useMutation<
     CreatePropertyMutation,
     CreatePropertyMutationVariables
-  >
-) {
-  const options = { ...defaultOptions, ...baseOptions };
-  return Apollo.useMutation<
-    CreatePropertyMutation,
-    CreatePropertyMutationVariables
-  >(CreatePropertyDocument, options);
+  >(CreatePropertyDocument);
 }
-export type CreatePropertyMutationHookResult = ReturnType<
-  typeof useCreatePropertyMutation
->;
-export type CreatePropertyMutationResult =
-  Apollo.MutationResult<CreatePropertyMutation>;
-export type CreatePropertyMutationOptions = Apollo.BaseMutationOptions<
-  CreatePropertyMutation,
-  CreatePropertyMutationVariables
->;
 export const DeletePropertyDocument = gql`
   mutation DeleteProperty($id: Int!) {
     deleteProperty(id: $id)
   }
 `;
-export type DeletePropertyMutationFn = Apollo.MutationFunction<
-  DeletePropertyMutation,
-  DeletePropertyMutationVariables
->;
 
-/**
- * __useDeletePropertyMutation__
- *
- * To run a mutation, you first call `useDeletePropertyMutation` within a React component and pass it any options that fit your needs.
- * When your component renders, `useDeletePropertyMutation` returns a tuple that includes:
- * - A mutate function that you can call at any time to execute the mutation
- * - An object with fields that represent the current status of the mutation's execution
- *
- * @param baseOptions options that will be passed into the mutation, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options-2;
- *
- * @example
- * const [deletePropertyMutation, { data, loading, error }] = useDeletePropertyMutation({
- *   variables: {
- *      id: // value for 'id'
- *   },
- * });
- */
-export function useDeletePropertyMutation(
-  baseOptions?: Apollo.MutationHookOptions<
+export function useDeletePropertyMutation() {
+  return Urql.useMutation<
     DeletePropertyMutation,
     DeletePropertyMutationVariables
-  >
-) {
-  const options = { ...defaultOptions, ...baseOptions };
-  return Apollo.useMutation<
-    DeletePropertyMutation,
-    DeletePropertyMutationVariables
-  >(DeletePropertyDocument, options);
+  >(DeletePropertyDocument);
 }
-export type DeletePropertyMutationHookResult = ReturnType<
-  typeof useDeletePropertyMutation
->;
-export type DeletePropertyMutationResult =
-  Apollo.MutationResult<DeletePropertyMutation>;
-export type DeletePropertyMutationOptions = Apollo.BaseMutationOptions<
-  DeletePropertyMutation,
-  DeletePropertyMutationVariables
->;
 export const LoginDocument = gql`
   mutation Login($options: UsernamePasswordInput!) {
     login(options: $options) {
@@ -573,90 +502,21 @@ export const LoginDocument = gql`
   }
   ${RegularUserResponseFragmentDoc}
 `;
-export type LoginMutationFn = Apollo.MutationFunction<
-  LoginMutation,
-  LoginMutationVariables
->;
 
-/**
- * __useLoginMutation__
- *
- * To run a mutation, you first call `useLoginMutation` within a React component and pass it any options that fit your needs.
- * When your component renders, `useLoginMutation` returns a tuple that includes:
- * - A mutate function that you can call at any time to execute the mutation
- * - An object with fields that represent the current status of the mutation's execution
- *
- * @param baseOptions options that will be passed into the mutation, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options-2;
- *
- * @example
- * const [loginMutation, { data, loading, error }] = useLoginMutation({
- *   variables: {
- *      options: // value for 'options'
- *   },
- * });
- */
-export function useLoginMutation(
-  baseOptions?: Apollo.MutationHookOptions<
-    LoginMutation,
-    LoginMutationVariables
-  >
-) {
-  const options = { ...defaultOptions, ...baseOptions };
-  return Apollo.useMutation<LoginMutation, LoginMutationVariables>(
-    LoginDocument,
-    options
-  );
+export function useLoginMutation() {
+  return Urql.useMutation<LoginMutation, LoginMutationVariables>(LoginDocument);
 }
-export type LoginMutationHookResult = ReturnType<typeof useLoginMutation>;
-export type LoginMutationResult = Apollo.MutationResult<LoginMutation>;
-export type LoginMutationOptions = Apollo.BaseMutationOptions<
-  LoginMutation,
-  LoginMutationVariables
->;
 export const LogoutDocument = gql`
   mutation Logout {
     logout
   }
 `;
-export type LogoutMutationFn = Apollo.MutationFunction<
-  LogoutMutation,
-  LogoutMutationVariables
->;
 
-/**
- * __useLogoutMutation__
- *
- * To run a mutation, you first call `useLogoutMutation` within a React component and pass it any options that fit your needs.
- * When your component renders, `useLogoutMutation` returns a tuple that includes:
- * - A mutate function that you can call at any time to execute the mutation
- * - An object with fields that represent the current status of the mutation's execution
- *
- * @param baseOptions options that will be passed into the mutation, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options-2;
- *
- * @example
- * const [logoutMutation, { data, loading, error }] = useLogoutMutation({
- *   variables: {
- *   },
- * });
- */
-export function useLogoutMutation(
-  baseOptions?: Apollo.MutationHookOptions<
-    LogoutMutation,
-    LogoutMutationVariables
-  >
-) {
-  const options = { ...defaultOptions, ...baseOptions };
-  return Apollo.useMutation<LogoutMutation, LogoutMutationVariables>(
-    LogoutDocument,
-    options
+export function useLogoutMutation() {
+  return Urql.useMutation<LogoutMutation, LogoutMutationVariables>(
+    LogoutDocument
   );
 }
-export type LogoutMutationHookResult = ReturnType<typeof useLogoutMutation>;
-export type LogoutMutationResult = Apollo.MutationResult<LogoutMutation>;
-export type LogoutMutationOptions = Apollo.BaseMutationOptions<
-  LogoutMutation,
-  LogoutMutationVariables
->;
 export const RegisterDocument = gql`
   mutation Register($options: UserRegisterInput!, $image: Upload!) {
     register(options: $options, image: $image) {
@@ -665,50 +525,19 @@ export const RegisterDocument = gql`
   }
   ${RegularUserResponseFragmentDoc}
 `;
-export type RegisterMutationFn = Apollo.MutationFunction<
-  RegisterMutation,
-  RegisterMutationVariables
->;
 
-/**
- * __useRegisterMutation__
- *
- * To run a mutation, you first call `useRegisterMutation` within a React component and pass it any options that fit your needs.
- * When your component renders, `useRegisterMutation` returns a tuple that includes:
- * - A mutate function that you can call at any time to execute the mutation
- * - An object with fields that represent the current status of the mutation's execution
- *
- * @param baseOptions options that will be passed into the mutation, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options-2;
- *
- * @example
- * const [registerMutation, { data, loading, error }] = useRegisterMutation({
- *   variables: {
- *      options: // value for 'options'
- *      image: // value for 'image'
- *   },
- * });
- */
-export function useRegisterMutation(
-  baseOptions?: Apollo.MutationHookOptions<
-    RegisterMutation,
-    RegisterMutationVariables
-  >
-) {
-  const options = { ...defaultOptions, ...baseOptions };
-  return Apollo.useMutation<RegisterMutation, RegisterMutationVariables>(
-    RegisterDocument,
-    options
+export function useRegisterMutation() {
+  return Urql.useMutation<RegisterMutation, RegisterMutationVariables>(
+    RegisterDocument
   );
 }
-export type RegisterMutationHookResult = ReturnType<typeof useRegisterMutation>;
-export type RegisterMutationResult = Apollo.MutationResult<RegisterMutation>;
-export type RegisterMutationOptions = Apollo.BaseMutationOptions<
-  RegisterMutation,
-  RegisterMutationVariables
->;
 export const UpdatePropertyDocument = gql`
-  mutation UpdateProperty($options: UpdatePropertyInput!, $id: Int!) {
-    updateProperty(options: $options, id: $id) {
+  mutation UpdateProperty(
+    $options: UpdatePropertyInput!
+    $id: Int!
+    $image: Upload!
+  ) {
+    updateProperty(options: $options, id: $id, image: $image) {
       id
       title
       creator {
@@ -739,50 +568,13 @@ export const UpdatePropertyDocument = gql`
     }
   }
 `;
-export type UpdatePropertyMutationFn = Apollo.MutationFunction<
-  UpdatePropertyMutation,
-  UpdatePropertyMutationVariables
->;
 
-/**
- * __useUpdatePropertyMutation__
- *
- * To run a mutation, you first call `useUpdatePropertyMutation` within a React component and pass it any options that fit your needs.
- * When your component renders, `useUpdatePropertyMutation` returns a tuple that includes:
- * - A mutate function that you can call at any time to execute the mutation
- * - An object with fields that represent the current status of the mutation's execution
- *
- * @param baseOptions options that will be passed into the mutation, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options-2;
- *
- * @example
- * const [updatePropertyMutation, { data, loading, error }] = useUpdatePropertyMutation({
- *   variables: {
- *      options: // value for 'options'
- *      id: // value for 'id'
- *   },
- * });
- */
-export function useUpdatePropertyMutation(
-  baseOptions?: Apollo.MutationHookOptions<
+export function useUpdatePropertyMutation() {
+  return Urql.useMutation<
     UpdatePropertyMutation,
     UpdatePropertyMutationVariables
-  >
-) {
-  const options = { ...defaultOptions, ...baseOptions };
-  return Apollo.useMutation<
-    UpdatePropertyMutation,
-    UpdatePropertyMutationVariables
-  >(UpdatePropertyDocument, options);
+  >(UpdatePropertyDocument);
 }
-export type UpdatePropertyMutationHookResult = ReturnType<
-  typeof useUpdatePropertyMutation
->;
-export type UpdatePropertyMutationResult =
-  Apollo.MutationResult<UpdatePropertyMutation>;
-export type UpdatePropertyMutationOptions = Apollo.BaseMutationOptions<
-  UpdatePropertyMutation,
-  UpdatePropertyMutationVariables
->;
 export const MeDocument = gql`
   query Me {
     me {
@@ -792,36 +584,11 @@ export const MeDocument = gql`
   ${RegularUserFragmentDoc}
 `;
 
-/**
- * __useMeQuery__
- *
- * To run a query within a React component, call `useMeQuery` and pass it any options that fit your needs.
- * When your component renders, `useMeQuery` returns an object from Apollo Client that contains loading, error, and data properties
- * you can use to render your UI.
- *
- * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
- *
- * @example
- * const { data, loading, error } = useMeQuery({
- *   variables: {
- *   },
- * });
- */
 export function useMeQuery(
-  baseOptions?: Apollo.QueryHookOptions<MeQuery, MeQueryVariables>
+  options: Omit<Urql.UseQueryArgs<MeQueryVariables>, 'query'> = {}
 ) {
-  const options = { ...defaultOptions, ...baseOptions };
-  return Apollo.useQuery<MeQuery, MeQueryVariables>(MeDocument, options);
+  return Urql.useQuery<MeQuery>({ query: MeDocument, ...options });
 }
-export function useMeLazyQuery(
-  baseOptions?: Apollo.LazyQueryHookOptions<MeQuery, MeQueryVariables>
-) {
-  const options = { ...defaultOptions, ...baseOptions };
-  return Apollo.useLazyQuery<MeQuery, MeQueryVariables>(MeDocument, options);
-}
-export type MeQueryHookResult = ReturnType<typeof useMeQuery>;
-export type MeLazyQueryHookResult = ReturnType<typeof useMeLazyQuery>;
-export type MeQueryResult = Apollo.QueryResult<MeQuery, MeQueryVariables>;
 export const PropertiesDocument = gql`
   query Properties($limit: Int!, $cursor: String) {
     properties(limit: $limit, cursor: $cursor) {
@@ -858,55 +625,14 @@ export const PropertiesDocument = gql`
   }
 `;
 
-/**
- * __usePropertiesQuery__
- *
- * To run a query within a React component, call `usePropertiesQuery` and pass it any options that fit your needs.
- * When your component renders, `usePropertiesQuery` returns an object from Apollo Client that contains loading, error, and data properties
- * you can use to render your UI.
- *
- * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
- *
- * @example
- * const { data, loading, error } = usePropertiesQuery({
- *   variables: {
- *      limit: // value for 'limit'
- *      cursor: // value for 'cursor'
- *   },
- * });
- */
 export function usePropertiesQuery(
-  baseOptions: Apollo.QueryHookOptions<
-    PropertiesQuery,
-    PropertiesQueryVariables
-  >
+  options: Omit<Urql.UseQueryArgs<PropertiesQueryVariables>, 'query'> = {}
 ) {
-  const options = { ...defaultOptions, ...baseOptions };
-  return Apollo.useQuery<PropertiesQuery, PropertiesQueryVariables>(
-    PropertiesDocument,
-    options
-  );
+  return Urql.useQuery<PropertiesQuery>({
+    query: PropertiesDocument,
+    ...options,
+  });
 }
-export function usePropertiesLazyQuery(
-  baseOptions?: Apollo.LazyQueryHookOptions<
-    PropertiesQuery,
-    PropertiesQueryVariables
-  >
-) {
-  const options = { ...defaultOptions, ...baseOptions };
-  return Apollo.useLazyQuery<PropertiesQuery, PropertiesQueryVariables>(
-    PropertiesDocument,
-    options
-  );
-}
-export type PropertiesQueryHookResult = ReturnType<typeof usePropertiesQuery>;
-export type PropertiesLazyQueryHookResult = ReturnType<
-  typeof usePropertiesLazyQuery
->;
-export type PropertiesQueryResult = Apollo.QueryResult<
-  PropertiesQuery,
-  PropertiesQueryVariables
->;
 export const PropertyDocument = gql`
   query Property($id: Int!) {
     property(id: $id) {
@@ -940,48 +666,8 @@ export const PropertyDocument = gql`
   }
 `;
 
-/**
- * __usePropertyQuery__
- *
- * To run a query within a React component, call `usePropertyQuery` and pass it any options that fit your needs.
- * When your component renders, `usePropertyQuery` returns an object from Apollo Client that contains loading, error, and data properties
- * you can use to render your UI.
- *
- * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
- *
- * @example
- * const { data, loading, error } = usePropertyQuery({
- *   variables: {
- *      id: // value for 'id'
- *   },
- * });
- */
 export function usePropertyQuery(
-  baseOptions: Apollo.QueryHookOptions<PropertyQuery, PropertyQueryVariables>
+  options: Omit<Urql.UseQueryArgs<PropertyQueryVariables>, 'query'> = {}
 ) {
-  const options = { ...defaultOptions, ...baseOptions };
-  return Apollo.useQuery<PropertyQuery, PropertyQueryVariables>(
-    PropertyDocument,
-    options
-  );
+  return Urql.useQuery<PropertyQuery>({ query: PropertyDocument, ...options });
 }
-export function usePropertyLazyQuery(
-  baseOptions?: Apollo.LazyQueryHookOptions<
-    PropertyQuery,
-    PropertyQueryVariables
-  >
-) {
-  const options = { ...defaultOptions, ...baseOptions };
-  return Apollo.useLazyQuery<PropertyQuery, PropertyQueryVariables>(
-    PropertyDocument,
-    options
-  );
-}
-export type PropertyQueryHookResult = ReturnType<typeof usePropertyQuery>;
-export type PropertyLazyQueryHookResult = ReturnType<
-  typeof usePropertyLazyQuery
->;
-export type PropertyQueryResult = Apollo.QueryResult<
-  PropertyQuery,
-  PropertyQueryVariables
->;
