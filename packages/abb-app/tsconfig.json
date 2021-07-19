@@ -1,20 +1,13 @@
 {
   "compilerOptions": {
-    "target": "es6",
+    "experimentalDecorators": true,
+    "target": "es5",
     "module": "commonjs",
     "jsx": "react-native",
-    "lib": [
-      "es6",
-      "esnext.asynciterable"
-    ],
-    "paths": {
-      "@src/*": ["src/*"],
-      "@common/*": ["../abb-common/src/*"]
-    },
+    "lib": ["es6", "esnext.asynciterable"],
     "strict": true,
-    "noEmit": true,
     "esModuleInterop": true,
-    "rootDir": "./src",
+    "rootDir": "src",
     "forceConsistentCasingInFileNames": true,
     "noImplicitReturns": true,
     "noImplicitThis": true,
@@ -23,6 +16,7 @@
     "suppressImplicitAnyIndexErrors": true,
     "noUnusedLocals": true,
     "skipLibCheck": true,
-    "baseUrl": "."
+    "baseUrl": ".",
+    "allowSyntheticDefaultImports": true
   }
 }
