@@ -26,7 +26,7 @@ const index: React.FC<{}> = () => {
             image={p.image && p.image}
             amenities={p.amenities}
             owner={p.owner}
-            ownerId={p.creator.id}
+            ownerId={p.owner.id}
             pricePerNight={p.pricePerNight}
           />
         )))}
