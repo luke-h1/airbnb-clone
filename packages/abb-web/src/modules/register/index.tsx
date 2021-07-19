@@ -4,11 +4,7 @@ import { withUrqlClient } from 'next-urql';
 import { useRouter } from 'next/router';
 import React from 'react';
 import { InputField } from 'src/components/InputField';
-import {
-  MeDocument,
-  MeQuery,
-  useRegisterMutation,
-} from 'src/generated/graphql';
+import { useRegisterMutation } from 'src/generated/graphql';
 import { toErrorMap } from 'src/utils/toErrorMap';
 
 interface FormValues {
@@ -35,24 +31,13 @@ const RegisterPage = () => {
         }}
         onSubmit={async (values, { setErrors }) => {
           const res = await register({
-            variables: {
-              options: {
-                firstName: values.firstName,
-                lastName: values.lastName,
-                email: values.email,
-                password: values.password,
-              },
-              image: values.image,
+            options: {
+              firstName: values.firstName,
+              lastName: values.lastName,
+              email: values.email,
+              password: values.password,
             },
-            update: (cache, { data }) => {
-              cache.writeQuery<MeQuery>({
-                query: MeDocument,
-                data: {
-                  __typename: 'Query',
-                  me: data?.register.user,
-                },
-              });
-            },
+            image: values.image,
           });
           if (res.data?.register.errors) {
             setErrors(toErrorMap(res.data.register.errors));

@@ -18,7 +18,7 @@ const EditPropertyPage = () => {
   const router = useRouter();
   const intId = useGetIntId();
   const [, updateProperty] = useUpdatePropertyMutation();
-  const [{ data, loading }] = usePropertyQuery({
+  const [{ data, fetching }] = usePropertyQuery({
     /**
      * If id =-1 we know we're on server side
      * pause until id is not -1
@@ -26,13 +26,13 @@ const EditPropertyPage = () => {
      * if is present, fetch property, prefill form with fields
      * else not found
      */
-    skip: intId === -1,
+    pause: intId === -1,
     variables: {
       id: intId,
     },
   });
 
-  if (loading) {
+  if (fetching) {
     return <Loader />;
   }
 
@@ -62,18 +62,16 @@ const EditPropertyPage = () => {
         }}
         onSubmit={async (values) => {
           await updateProperty({
-            variables: {
-              options: {
-                title: values.title,
-                propertyType: values.propertyType,
-                pricePerNight: values.pricePerNight,
-                description: values.description,
-                address: values.address,
-                amenities: values.amenities,
-              },
-              // image: values.image,
-              id: intId,
+            options: {
+              title: values.title,
+              propertyType: values.propertyType,
+              pricePerNight: values.pricePerNight,
+              description: values.description,
+              address: values.address,
+              amenities: values.amenities,
             },
+            image: values.image,
+            id: intId,
           });
 
           router.push(`/property/${intId}`);

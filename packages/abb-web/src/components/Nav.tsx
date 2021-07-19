@@ -6,13 +6,13 @@ import { createUrqlClient } from '@src/utils/createUrqlClient';
 import DropDown from './DropDown';
 
 const Nav = () => {
-  const { data, loading } = useMeQuery({
-    skip: isServer(),
+  const [{ data, fetching }] = useMeQuery({
+    pause: isServer(),
   });
 
   let links: { name: string; href: string }[] = [];
 
-  if (loading) {
+  if (fetching) {
     //   user is not logged in
   }
   if (!data?.me) {

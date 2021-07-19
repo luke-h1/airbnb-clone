@@ -36,7 +36,10 @@ const CreatePropertyPage = () => {
           amenities: [],
         }}
         onSubmit={async (values, { setErrors }) => {
-          const res = await createProperty({ options: values });
+          const res = await createProperty({
+            options: values,
+            image: values.image,
+          });
           if (res.data?.createProperty.errors) {
             setErrors(toPropertyErrorMap(res.data.createProperty.errors));
           } else {
