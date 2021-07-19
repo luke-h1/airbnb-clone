@@ -30,8 +30,6 @@ jobs:
       - name: bootstrap
         run: npm run bootstrap
 
-      - name: tsc 
-        run: npm run tsc
 
       - name: format
         run: npm run format
