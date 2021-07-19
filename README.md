@@ -2,6 +2,15 @@
 
 A Fullstack GraphQL Airbnb Clone with Next.js and React Native.
 
+
+### Structure 
+This project is made up of 3 areas that share code using <a href='https://lerna.js.org/' target="_blank">Lerna</a>
+
+* Server - GraphQL, Typescript server 
+* app - React Native app 
+* web - Next.js frontend website
+
+
 ## Getting started with local development 
 
 ### Prerequisites
@@ -13,7 +22,6 @@ A Fullstack GraphQL Airbnb Clone with Next.js and React Native.
 * Run `npm ci && npm run bootstrap` in the root of the project to bootstrap the packages, install all their dependencies and link any cross-dependencies.
 
 ### Backend: 
-
 * [Install postgres](https://www.postgresql.org/download/)
 * [Install Redis (stable)](https://redis.io/download)
 * Create a blank postgres database called `abb-clone`
