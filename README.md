@@ -53,7 +53,6 @@ This project is made up of 4 areas that share code using <a href='https://lerna.
 * register, login & logout (web & app)
 * CRUD properties (web & app)
 * CRUD user (web & app)
-* CRUD reviews (web & app)
 * image uploads to S3
 * Deployment via AWS EKS fargate and Vercel
 
