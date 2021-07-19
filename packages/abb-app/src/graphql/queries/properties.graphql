@@ -1,0 +1,34 @@
+query Properties($limit: Int!, $cursor: String) {
+  properties(limit: $limit, cursor: $cursor) {
+      hasMore
+      properties {
+      id
+      title
+      propertyType
+      image
+      description
+      pricePerNight
+      address
+      amenities
+      createdAt
+      updatedAt
+      creator {
+        id
+        email
+        image
+        fullName
+      }
+      reviews {
+        id
+        title
+        body
+        creator {
+          id
+          email
+          fullName
+        }
+      }
+    
+    }
+  } 
+} 

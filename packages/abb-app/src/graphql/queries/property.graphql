@@ -1,0 +1,30 @@
+query Property($id: Int!, ) {
+  property(id: $id) {
+      id
+      title
+      propertyType
+      image
+      description
+      pricePerNight
+      address
+      amenities
+      createdAt
+      updatedAt
+      creator {
+        id
+        email
+        image
+        fullName
+      }
+      reviews {
+        id
+        title
+        body
+        creator {
+          id
+          email
+          fullName
+        }
+      }
+  }
+} 

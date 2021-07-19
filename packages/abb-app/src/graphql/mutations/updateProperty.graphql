@@ -1,0 +1,32 @@
+mutation UpdateProperty($options: UpdatePropertyInput!, $id: Int!, $image: Upload!) {
+  updateProperty(options: $options, id: $id, image: $image) {
+    id
+    title
+    creator {
+      id
+      email
+      fullName
+      image
+      createdAt
+      updatedAt
+    }
+    propertyType
+  
+    description
+    propertyType
+    address
+    amenities
+    reviews {
+      id
+      title
+      body
+      creator {
+        id
+        email
+        fullName
+      }
+    }
+    createdAt
+    updatedAt
+  }
+}
