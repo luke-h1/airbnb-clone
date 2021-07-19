@@ -27,7 +27,7 @@ jobs:
         run: npm ci
 
       - name: tsc 
-        run: tsc
+        run: npm run tsc
 
       - name: format
         run: npm run format
