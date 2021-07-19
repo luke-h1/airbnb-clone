@@ -19,7 +19,7 @@ import {
 import { getConnection } from 'typeorm';
 import { FileUpload, GraphQLUpload } from 'graphql-upload';
 import { v4 } from 'uuid';
-import { sendEthEmail } from 'src/shared/mail/EthMail';
+import { sendEthEmail } from '../../shared/mail/EthMail';
 import { Upload } from '../../utils/image/upload';
 import { User } from '../../entities/User';
 import { MyContext } from '../../shared/types';

@@ -5,17 +5,17 @@ import { Loader } from './Loader';
 
 interface EditDeleteButtonProps {
   id: number;
-  creatorId: number;
+  ownerId: number;
 }
 
 const EditDeleteButtons: React.FC<EditDeleteButtonProps> = ({
   id,
-  creatorId,
+  ownerId,
 }) => {
   const [{ fetching }, deleteProperty] = useDeletePropertyMutation();
   const [{ data: meData }] = useMeQuery();
 
-  if (meData?.me?.id !== creatorId) {
+  if (meData?.me?.id !== ownerId) {
     return null;
   }
   return (

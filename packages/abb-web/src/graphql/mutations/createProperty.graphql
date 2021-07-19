@@ -15,21 +15,11 @@ mutation CreateProperty($options: CreatePropertyInput!, $image: Upload!) {
       amenities
       createdAt
       updatedAt
-      creator {
+      owner {
         id
         email
         image
         fullName
-      }
-      reviews {
-        id
-        title
-        body
-        creator {
-          id
-          email
-          fullName
-        }
       }
     }
   }

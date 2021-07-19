@@ -10,8 +10,8 @@ export interface PropertyProps {
   image: string;
   amenities: string[];
   pricePerNight: number;
-  creator: { fullName: string };
-  creatorId: number;
+  owner: { fullName: string };
+  ownerId: number;
 }
 
 const Card: React.FC<PropertyProps> = ({
@@ -20,9 +20,9 @@ const Card: React.FC<PropertyProps> = ({
   propertyType,
   image,
   amenities,
-  creator,
+  owner,
   pricePerNight,
-  creatorId,
+  ownerId,
 }) => {
   return (
     <ListingStyles>
@@ -42,7 +42,7 @@ const Card: React.FC<PropertyProps> = ({
               <h2>{title}</h2>
               <h3>
                 Posted by <br />
-                {creator.fullName}
+                {owner.fullName}
               </h3>
             </div>
             <div className="listings__title__icon">
@@ -70,7 +70,7 @@ const Card: React.FC<PropertyProps> = ({
                 <span>/ night</span>
               </div>
 
-              <EditDeleteButtons id={id} creatorId={creatorId} />
+              <EditDeleteButtons id={id} ownerId={ownerId} />
             </div>
           </div>
         </div>

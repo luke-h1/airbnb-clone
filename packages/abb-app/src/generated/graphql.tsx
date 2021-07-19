@@ -90,7 +90,7 @@ export type Property = {
   __typename?: 'Property';
   id: Scalars['Int'];
   title: Scalars['String'];
-  creatorId: Scalars['Int'];
+  ownerId: Scalars['Int'];
   propertyType: Scalars['String'];
   image: Scalars['String'];
   description: Scalars['String'];
@@ -134,7 +134,7 @@ export type QueryPropertyArgs = {
 export type Review = {
   __typename?: 'Review';
   id: Scalars['Int'];
-  creatorId: Scalars['Int'];
+  ownerId: Scalars['Int'];
   propertyId: Scalars['Int'];
   property: Property;
   creator: User;

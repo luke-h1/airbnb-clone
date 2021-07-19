@@ -12,23 +12,12 @@ query Properties($limit: Int!, $cursor: String) {
       amenities
       createdAt
       updatedAt
-      creator {
+      owner {
         id
         email
         image
         fullName
       }
-      reviews {
-        id
-        title
-        body
-        creator {
-          id
-          email
-          fullName
-        }
-      }
-    
     }
   } 
 } 

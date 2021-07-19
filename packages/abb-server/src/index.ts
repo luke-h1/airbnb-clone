@@ -5,27 +5,16 @@ import cors from 'cors';
 import 'dotenv-safe/config';
 import express from 'express';
 import session from 'express-session';
-import { createConnection } from 'typeorm';
-import path from 'path';
 import { graphqlUploadExpress } from 'graphql-upload';
 import { constants } from './shared/constants';
 import { createUserLoader } from './Loaders/UserLoader';
 import { redis } from './shared/redis';
-import { Property } from './entities/Property';
-import { User } from './entities/User';
 import { createSchema } from './shared/createSchema';
-import { Review } from './entities/Review';
+import { createConn } from './shared/createConn';
 
 const main = async () => {
-  const conn = await createConnection({
-    type: 'postgres',
-    url: process.env.DATABASE_URL,
-    logging: !constants.__prod__,
-    synchronize: !constants.__prod__,
-    migrations: [path.join(__dirname, './migrations/*')],
-    entities: [User, Property, Review],
-  });
-  process.env.NODE_ENV === 'production' ?? (await conn.runMigrations());
+  const conn = await createConn();
+  await conn.runMigrations();
   const app = express();
 
   const RedisStore = connectRedis(session);

@@ -54,8 +54,8 @@ class PropertyResponse {
 @Resolver(Property)
 export class PropertyResolver {
   @FieldResolver(() => User)
-  creator(@Root() property: Property, @Ctx() { userLoader }: MyContext) {
-    return userLoader.load(property.creatorId);
+  owner(@Root() property: Property, @Ctx() { userLoader }: MyContext) {
+    return userLoader.load(property.ownerId);
   }
 
   @Mutation(() => PropertyResponse)
@@ -81,7 +81,7 @@ export class PropertyResolver {
       .into(Property)
       .values({
         ...options,
-        creatorId: req.session.userId,
+        ownerId: req.session.userId,
         image: image.Location,
       })
       .returning('*')
@@ -162,9 +162,9 @@ export class PropertyResolver {
         image: image.Location,
         amenities,
       })
-      .where('id = :id and creatorId = :creatorId', {
+      .where('id = :id and ownerId = :ownerId', {
         id,
-        creatorId: req.session.userId,
+        ownerId: req.session.userId,
       })
       .returning('*')
       .execute();
@@ -177,7 +177,7 @@ export class PropertyResolver {
     @Arg('id', () => Int) id: number,
     @Ctx() { req }: MyContext,
   ): Promise<boolean> {
-    await Property.delete({ id, creatorId: req.session.userId });
+    await Property.delete({ id, ownerId: req.session.userId });
     return true;
   }
 }

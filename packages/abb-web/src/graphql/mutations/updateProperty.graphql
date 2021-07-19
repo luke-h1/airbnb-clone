@@ -2,7 +2,7 @@ mutation UpdateProperty($options: UpdatePropertyInput!, $id: Int!, $image: Uploa
   updateProperty(options: $options, id: $id, image: $image) {
     id
     title
-    creator {
+    owner {
       id
       email
       fullName
@@ -11,21 +11,10 @@ mutation UpdateProperty($options: UpdatePropertyInput!, $id: Int!, $image: Uploa
       updatedAt
     }
     propertyType
-  
     description
     propertyType
     address
     amenities
-    reviews {
-      id
-      title
-      body
-      creator {
-        id
-        email
-        fullName
-      }
-    }
     createdAt
     updatedAt
   }
