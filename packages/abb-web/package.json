@@ -7,6 +7,7 @@
     "build": "next build",
     "test": "exit 0",
     "test:all": "jest",
+    "tsc": "tsc",
     "start": "next start",
     "lint": "eslint \"./src/**/*.{js, jsx,ts,tsx}\" --quiet --fix && eslint \"./**/*.{js, jsx,ts,tsx}\" --quiet --fix",
     "format": "prettier --write \"**/*.{ts,tsx}\"",

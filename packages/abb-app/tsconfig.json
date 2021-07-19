@@ -1,6 +1,6 @@
 {
   "compilerOptions": {
-    "target": "es5",
+    "target": "es6",
     "module": "commonjs",
     "jsx": "react-native",
     "lib": [
@@ -12,8 +12,9 @@
       "@common/*": ["../abb-common/src/*"]
     },
     "strict": true,
+    "noEmit": true,
     "esModuleInterop": true,
-    "rootDir": "src",
+    "rootDir": "./src",
     "forceConsistentCasingInFileNames": true,
     "noImplicitReturns": true,
     "noImplicitThis": true,
