@@ -8,6 +8,17 @@ This project is made up of 2 areas that share code using <a href='https://lerna.
 * Server - GraphQL, Typescript server 
 * web - Next.js frontend website
 
+### Features 
+* Create & delete properties 
+* login/signup 
+* upload user & property images 
+
+
+### tech stack
+* graphQL
+* TypeGrapQL 
+* Node
+* Next.js 
 
 ## Getting started with local development 
 
@@ -39,10 +50,6 @@ This project is made up of 2 areas that share code using <a href='https://lerna.
 * Fill out the `.env` file with your own values
 * run `npm run dev` to start the frontend
 
-### Features 
-* Create & delete properties 
-* login/signup 
-* upload user & property images 
 
 ### Inspirations 
 * [benawad](https://github.com/benawad)
