@@ -39,6 +39,11 @@ This project is made up of 2 areas that share code using <a href='https://lerna.
 * Fill out the `.env` file with your own values
 * run `npm run dev` to start the frontend
 
+### Features 
+* Create & delete properties 
+* login/signup 
+* upload user & property images 
+
 ### Inspirations 
 * [benawad](https://github.com/benawad)
 * [Ania Kubów](https://twitter.com/ania_kubow)
