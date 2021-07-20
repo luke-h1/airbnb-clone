@@ -4,7 +4,6 @@
     "lib": ["dom", "dom.iterable", "esnext"],
     "paths": {
       "@src/*": ["src/*"],
-      "@common/*": ["../abb-common/src/*"]
     },
     "allowJs": true,
     "skipLibCheck": true,

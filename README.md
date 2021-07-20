@@ -4,10 +4,9 @@ A Fullstack GraphQL Airbnb Clone with Next.js and React Native.
 
 
 ### Structure 
-This project is made up of 3 areas that share code using <a href='https://lerna.js.org/' target="_blank">Lerna</a>
+This project is made up of 2 areas that share code using <a href='https://lerna.js.org/' target="_blank">Lerna</a>
 
 * Server - GraphQL, Typescript server 
-* app - React Native app 
 * web - Next.js frontend website
 
 
@@ -40,11 +39,6 @@ This project is made up of 3 areas that share code using <a href='https://lerna.
 * copy the `.env.example ` to `.env`. `cp .env.example .env`. 
 * Fill out the `.env` file with your own values
 * run `npm run dev` to start the frontend
-
-### App: 
-* copy the `.env.example ` to `.env`. `cp .env.example .env`. 
-* Fill out the `.env` file with your own values
-* run `npm run start` to start the expo app.
 
 ### Inspirations 
 * [benawad](https://github.com/benawad)
