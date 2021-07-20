@@ -14,18 +14,16 @@ import { redis } from './shared/redis';
 import { Property } from './entities/Property';
 import { User } from './entities/User';
 import { createSchema } from './shared/createSchema';
-import { Review } from './entities/Review';
 
 const main = async () => {
-  const conn = await createConnection({
+  await createConnection({
     type: 'postgres',
     url: process.env.DATABASE_URL,
     logging: !constants.__prod__,
     synchronize: !constants.__prod__,
     migrations: [path.join(__dirname, './migrations/*')],
-    entities: [User, Property, Review],
+    entities: [User, Property],
   });
-  process.env.NODE_ENV === 'production' ?? (await conn.runMigrations());
   const app = express();
 
   const RedisStore = connectRedis(session);

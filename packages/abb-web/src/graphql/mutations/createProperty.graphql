@@ -21,16 +21,6 @@ mutation CreateProperty($options: CreatePropertyInput!, $image: Upload!) {
         image
         fullName
       }
-      reviews {
-        id
-        title
-        body
-        creator {
-          id
-          email
-          fullName
-        }
-      }
     }
   }
 }

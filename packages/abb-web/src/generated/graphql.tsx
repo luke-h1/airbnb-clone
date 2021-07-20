@@ -40,8 +40,6 @@ export type Mutation = {
   createProperty: PropertyResponse;
   updateProperty?: Maybe<Property>;
   deleteProperty: Scalars['Boolean'];
-  changePassword: UserResponse;
-  forgotPassword: Scalars['Boolean'];
   register: UserResponse;
   login: UserResponse;
   logout: Scalars['Boolean'];
@@ -53,21 +51,13 @@ export type MutationCreatePropertyArgs = {
 };
 
 export type MutationUpdatePropertyArgs = {
+  image: Scalars['Upload'];
   id: Scalars['Int'];
   options: UpdatePropertyInput;
 };
 
 export type MutationDeletePropertyArgs = {
   id: Scalars['Int'];
-};
-
-export type MutationChangePasswordArgs = {
-  newPassword: Scalars['String'];
-  token: Scalars['String'];
-};
-
-export type MutationForgotPasswordArgs = {
-  email: Scalars['String'];
 };
 
 export type MutationRegisterArgs = {
@@ -96,7 +86,6 @@ export type Property = {
   pricePerNight: Scalars['Int'];
   address: Scalars['String'];
   amenities: Array<Scalars['String']>;
-  reviews?: Maybe<Array<Review>>;
   createdAt: Scalars['String'];
   updatedAt: Scalars['String'];
   creator: User;
@@ -130,17 +119,6 @@ export type QueryPropertyArgs = {
   id: Scalars['Int'];
 };
 
-export type Review = {
-  __typename?: 'Review';
-  id: Scalars['Int'];
-  creatorId: Scalars['Int'];
-  propertyId: Scalars['Int'];
-  property: Property;
-  creator: User;
-  title: Scalars['String'];
-  body: Scalars['String'];
-};
-
 export type UpdatePropertyInput = {
   title: Scalars['String'];
   propertyType: Scalars['String'];
@@ -158,7 +136,6 @@ export type User = {
   image?: Maybe<Scalars['String']>;
   lastName: Scalars['String'];
   properties: Array<Property>;
-  reviews: Array<Review>;
   createdAt: Scalars['String'];
   updatedAt: Scalars['String'];
   fullName: Scalars['String'];
@@ -230,19 +207,6 @@ export type CreatePropertyMutation = { __typename?: 'Mutation' } & {
             User,
             'id' | 'email' | 'image' | 'fullName'
           >;
-          reviews?: Maybe<
-            Array<
-              { __typename?: 'Review' } & Pick<
-                Review,
-                'id' | 'title' | 'body'
-              > & {
-                  creator: { __typename?: 'User' } & Pick<
-                    User,
-                    'id' | 'email' | 'fullName'
-                  >;
-                }
-            >
-          >;
         }
     >;
   };
@@ -284,6 +248,7 @@ export type RegisterMutation = { __typename?: 'Mutation' } & {
 export type UpdatePropertyMutationVariables = Exact<{
   options: UpdatePropertyInput;
   id: Scalars['Int'];
+  image: Scalars['Upload'];
 }>;
 
 export type UpdatePropertyMutation = { __typename?: 'Mutation' } & {
@@ -302,19 +267,6 @@ export type UpdatePropertyMutation = { __typename?: 'Mutation' } & {
         creator: { __typename?: 'User' } & Pick<
           User,
           'id' | 'email' | 'fullName' | 'image' | 'createdAt' | 'updatedAt'
-        >;
-        reviews?: Maybe<
-          Array<
-            { __typename?: 'Review' } & Pick<
-              Review,
-              'id' | 'title' | 'body'
-            > & {
-                creator: { __typename?: 'User' } & Pick<
-                  User,
-                  'id' | 'email' | 'fullName'
-                >;
-              }
-          >
         >;
       }
   >;
@@ -354,19 +306,6 @@ export type PropertiesQuery = { __typename?: 'Query' } & {
               User,
               'id' | 'email' | 'image' | 'fullName'
             >;
-            reviews?: Maybe<
-              Array<
-                { __typename?: 'Review' } & Pick<
-                  Review,
-                  'id' | 'title' | 'body'
-                > & {
-                    creator: { __typename?: 'User' } & Pick<
-                      User,
-                      'id' | 'email' | 'fullName'
-                    >;
-                  }
-              >
-            >;
           }
       >;
     };
@@ -393,16 +332,6 @@ export type PropertyQuery = { __typename?: 'Query' } & {
       creator: { __typename?: 'User' } & Pick<
         User,
         'id' | 'email' | 'image' | 'fullName'
-      >;
-      reviews?: Maybe<
-        Array<
-          { __typename?: 'Review' } & Pick<Review, 'id' | 'title' | 'body'> & {
-              creator: { __typename?: 'User' } & Pick<
-                User,
-                'id' | 'email' | 'fullName'
-              >;
-            }
-        >
       >;
     };
 };
@@ -458,16 +387,6 @@ export const CreatePropertyDocument = gql`
           email
           image
           fullName
-        }
-        reviews {
-          id
-          title
-          body
-          creator {
-            id
-            email
-            fullName
-          }
         }
       }
     }
@@ -707,8 +626,12 @@ export type RegisterMutationOptions = Apollo.BaseMutationOptions<
   RegisterMutationVariables
 >;
 export const UpdatePropertyDocument = gql`
-  mutation UpdateProperty($options: UpdatePropertyInput!, $id: Int!) {
-    updateProperty(options: $options, id: $id) {
+  mutation UpdateProperty(
+    $options: UpdatePropertyInput!
+    $id: Int!
+    $image: Upload!
+  ) {
+    updateProperty(options: $options, id: $id, image: $image) {
       id
       title
       creator {
@@ -724,16 +647,6 @@ export const UpdatePropertyDocument = gql`
       propertyType
       address
       amenities
-      reviews {
-        id
-        title
-        body
-        creator {
-          id
-          email
-          fullName
-        }
-      }
       createdAt
       updatedAt
     }
@@ -759,6 +672,7 @@ export type UpdatePropertyMutationFn = Apollo.MutationFunction<
  *   variables: {
  *      options: // value for 'options'
  *      id: // value for 'id'
+ *      image: // value for 'image'
  *   },
  * });
  */
@@ -843,16 +757,6 @@ export const PropertiesDocument = gql`
           image
           fullName
         }
-        reviews {
-          id
-          title
-          body
-          creator {
-            id
-            email
-            fullName
-          }
-        }
       }
     }
   }
@@ -925,16 +829,6 @@ export const PropertyDocument = gql`
         email
         image
         fullName
-      }
-      reviews {
-        id
-        title
-        body
-        creator {
-          id
-          email
-          fullName
-        }
       }
     }
   }

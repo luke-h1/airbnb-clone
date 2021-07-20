@@ -1,5 +1,5 @@
-mutation UpdateProperty($options: UpdatePropertyInput!, $id: Int!) {
-  updateProperty(options: $options, id: $id) {
+mutation UpdateProperty($options: UpdatePropertyInput!, $id: Int!, $image: Upload!) {
+  updateProperty(options: $options, id: $id, image: $image) {
     id
     title
     creator {
@@ -11,21 +11,10 @@ mutation UpdateProperty($options: UpdatePropertyInput!, $id: Int!) {
       updatedAt
     }
     propertyType
-  
     description
     propertyType
     address
     amenities
-    reviews {
-      id
-      title
-      body
-      creator {
-        id
-        email
-        fullName
-      }
-    }
     createdAt
     updatedAt
   }

@@ -18,17 +18,6 @@ query Properties($limit: Int!, $cursor: String) {
         image
         fullName
       }
-      reviews {
-        id
-        title
-        body
-        creator {
-          id
-          email
-          fullName
-        }
-      }
-    
     }
   } 
 } 
