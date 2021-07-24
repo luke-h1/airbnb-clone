@@ -18,13 +18,13 @@ interface FormValues {
 }
 
 const Register: React.FC<RegisterProps> = () => {
-  const { register, user } = useContext(AuthContext);
+  const authContext = useContext(AuthContext);
   const router = useRouter();
   useEffect(() => {
-    if (user !== null) {
+    if (authContext.user !== null) {
       router.push('/');
     }
-  }, [user]);
+  }, [authContext.user]);
   return (
     <>
       <h1 className="title">Welcome to Airbnb</h1>
@@ -37,7 +37,7 @@ const Register: React.FC<RegisterProps> = () => {
           password: '',
         }}
         onSubmit={async (values, { setErrors }) => {
-          register({ options: values });
+          authContext.register({ options: values });
         }}
       >
         {({ setFieldValue }) => (

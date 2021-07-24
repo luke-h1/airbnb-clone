@@ -4,6 +4,7 @@ import React, { useState, createContext } from 'react';
 import { User } from '../types/User';
 import userService from '../services/user';
 import { loginOpts, registerOpts } from './types/user';
+import { isTargetLikeServerless } from 'next/dist/next-server/server/config';
 
 export const AuthContext = createContext<{
   user: User;
