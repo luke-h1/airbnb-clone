@@ -1,7 +1,6 @@
 import { User } from '@src/types/User';
 import React, { useState, createContext } from 'react';
-import axios from 'axios';
-import { API_URL } from '@src/utils/url';
+import userService from '@src/services/user';
 import { loginOpts, registerOpts } from './types/user';
 
 export const AuthContext = createContext<{
@@ -24,54 +23,35 @@ interface AuthProviderProps {
 
 const AuthProvider: React.FC<AuthProviderProps> = ({ children }) => {
   const [user, setUser] = useState<User>(null);
+
+  const login = async ({ options }: { options: loginOpts }) => {
+    const res = await userService.login({ options });
+    console.log(res.data);
+  };
+
+  const logout = async () => {
+    await userService.logout();
+    setUser(null);
+  };
+
+  const me = async () => {
+    const res = await userService.me();
+    console.log(res.data);
+  };
+
+  const register = async ({ options }: { options: registerOpts }) => {
+    const res = await userService.register({ options });
+    console.log(res.data);
+  };
+
   return (
     <AuthContext.Provider
       value={{
         user,
-        login: async ({ options }) => {
-          const res = await axios({
-            method: 'POST',
-            url: `${API_URL}/api/users/login`,
-            headers: {
-              'Content-Type': 'application/json',
-            },
-            data: options,
-          });
-          console.log(res.data);
-        },
-
-        logout: async () => {
-          const res = await axios({
-            method: 'GET',
-            url: `${API_URL}/api/users/logout`,
-            headers: {
-              'Content-Type': 'application/json',
-            },
-          });
-          setUser(null);
-        },
-        me: async () => {
-          const res = await axios({
-            method: 'GET',
-            url: `${API_URL}/api/users`,
-            headers: {
-              'Content-Type': 'application/json',
-              // TODO get auth
-            },
-          });
-          console.log(res.data);
-        },
-        register: async ({ options }) => {
-          const res = await axios({
-            method: 'POST',
-            url: `${API_URL}/api/users/register`,
-            headers: {
-              'Content-Type': 'application/json',
-            },
-            data: options,
-          });
-          console.log(res.data);
-        },
+        login,
+        logout,
+        me,
+        register,
       }}
     >
       {children}

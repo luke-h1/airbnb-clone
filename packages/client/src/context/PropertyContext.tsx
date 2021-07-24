@@ -26,7 +26,7 @@ interface PropertyProviderProps {
   children: React.ReactNode;
 }
 
-const PropertyProvider: React.FC<PropertyProviderProps> = ({ children }) => {
+const PropertyProvider: React.FC<PropertyProviderProps> = async ({ children }) => {
   const [property, setProperty] = useState<Property>(null);
   const [properties, setProperties] = useState<Properties[]>([]);
   return (
@@ -34,7 +34,7 @@ const PropertyProvider: React.FC<PropertyProviderProps> = ({ children }) => {
       value={{
         property,
         properties,
-        getProperties: async () => {
+        getProperties: () => {
           const res = await axios({
             method: 'GET',
             url: `${API_URL}/api/properties`,
@@ -43,7 +43,7 @@ const PropertyProvider: React.FC<PropertyProviderProps> = ({ children }) => {
             },
           });
         },
-        createProperty: async ({ options }) => {
+        createProperty: ({ options }) => {
           const res = await axios({
             method: 'POST',
             url: `${API_URL}/api/properties`,
@@ -53,7 +53,7 @@ const PropertyProvider: React.FC<PropertyProviderProps> = ({ children }) => {
             },
           });
         },
-        updateProperty: async ({ options, id }) => {
+        updateProperty: ({ options, id }) => {
           const res = await axios({
             method: 'PUT',
             url: `${API_URL}/api/properties/${id}`,
@@ -63,7 +63,7 @@ const PropertyProvider: React.FC<PropertyProviderProps> = ({ children }) => {
             },
           });
         },
-        getProperty: async ({ id }) => {
+        getProperty: ({ id }) => {
           const res = await axios({
             method: 'GET',
             url: `${API_URL}/api/properties/${id}`,

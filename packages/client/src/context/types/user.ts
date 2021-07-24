@@ -5,7 +5,7 @@ export interface loginOpts {
 
 export interface registerOpts {
   firstName: string;
-  lastname: string;
+  lastName: string;
   image: string;
   email: string;
   password: string;
