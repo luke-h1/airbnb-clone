@@ -1,6 +1,6 @@
-import { loginOpts, registerOpts } from '@src/context/types/user';
-import { API_URL } from '@src/utils/url';
 import axios from 'axios';
+import { loginOpts, registerOpts } from '../context/types/user';
+import { API_URL } from '../utils/url';
 
 const userService = {
   login({ options }: { options: loginOpts }) {
@@ -11,6 +11,7 @@ const userService = {
         'Content-Type': 'application/json',
       },
       data: options,
+      withCredentials: true,
     });
   },
 
@@ -21,6 +22,7 @@ const userService = {
       headers: {
         'Content-Type': 'application/json',
       },
+      withCredentials: true,
     });
   },
   me() {
@@ -31,6 +33,7 @@ const userService = {
         'Content-Type': 'application/json',
         // TODO get auth
       },
+      withCredentials: true,
     });
   },
   register({ options }: { options: registerOpts }) {
@@ -41,6 +44,7 @@ const userService = {
         'Content-Type': 'application/json',
       },
       data: options,
+      withCredentials: true,
     });
   },
 };

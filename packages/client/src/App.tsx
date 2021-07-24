@@ -1,3 +1,4 @@
+/* eslint-disable */
 import React from 'react';
 import Container from './components/Container';
 import AuthProvider from './context/AuthContext';

@@ -1,8 +1,7 @@
-import propertyService from '@src/services/property';
-import type { Properties, Property } from '@src/types/Property';
-import { API_URL } from '@src/utils/url';
-import axios from 'axios';
+/* eslint-disable */
+import type { Properties, Property } from '../types/Property';
 import React, { createContext, useState } from 'react';
+import propertyService from '../services/property';
 import {
   createPropertyOpts, deletePropertyOpts, getPropertyOpts, updatePropertyOpts,
 } from './types/property';
@@ -10,7 +9,7 @@ import {
 export const PropertyContext = createContext<{
   getProperties:() => void;
   createProperty: ({ options }: { options: createPropertyOpts }) => void;
-  updateProperty: ({ options }: { options: updatePropertyOpts }) => void;
+  updateProperty: ({ options }: { options: updatePropertyOpts, id: number; }) => void;
   getProperty: ({ options }: { options: getPropertyOpts, id: number; }) => void;
   deleteProperty: ({ options }: { options: deletePropertyOpts, id: number }) => void;
   properties: Properties[];
@@ -29,7 +28,7 @@ interface PropertyProviderProps {
   children: React.ReactNode;
 }
 
-const PropertyProvider: React.FC<PropertyProviderProps> = async ({ children }) => {
+const PropertyProvider: React.FC<PropertyProviderProps> = ({ children }) => {
   const [property, setProperty] = useState<Property>(null);
   const [properties, setProperties] = useState<Properties[]>([]);
 

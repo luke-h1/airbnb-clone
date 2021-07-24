@@ -1,7 +1,7 @@
-import { InputField } from '@src/components/InputField';
-import { AuthContext } from '@src/context/AuthContext';
 import { Form, Formik } from 'formik';
 import React, { useContext } from 'react';
+import { InputField } from '../components/InputField';
+import { AuthContext } from '../context/AuthContext';
 
 interface FormValues {
     firstName: string;

@@ -1,6 +1,6 @@
-import { InputField } from '@src/components/InputField';
 import { Form, Formik } from 'formik';
 import React from 'react';
+import { InputField } from '../components/InputField';
 
 interface FormValues {
     email: string;

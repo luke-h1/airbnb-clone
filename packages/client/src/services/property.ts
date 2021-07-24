@@ -1,6 +1,7 @@
-import { createPropertyOpts, updatePropertyOpts } from '@src/context/types/property';
-import { API_URL } from '@src/utils/url';
+/* eslint-disable */
 import axios from 'axios';
+import { API_URL } from '../utils/url';
+import { createPropertyOpts, updatePropertyOpts } from '../context/types/property';
 
 const propertyService = {
   getProperties() {
@@ -10,6 +11,7 @@ const propertyService = {
       headers: {
         'Content-Type': 'application/json',
       },
+      withCredentials: true,
     });
   },
   createProperty({ options }: { options: createPropertyOpts }) {
@@ -20,6 +22,7 @@ const propertyService = {
         'Content-Type': 'application/json',
         // get auth
       },
+      withCredentials: true,
     });
   },
   updateProperty({ options, id }: { options: updatePropertyOpts, id: number }) {
@@ -30,6 +33,7 @@ const propertyService = {
         'Content-Type': 'application/json',
         // get auth
       },
+      withCredentials: true,
     });
   },
   getProperty({ id }: { id: number }) {
@@ -39,6 +43,8 @@ const propertyService = {
       headers: {
         'Content-Type': 'application/json',
       },
+      withCredentials: true,
+
     });
   },
   deleteProperty({ id }: { id: number }) {
@@ -49,6 +55,7 @@ const propertyService = {
         'Content-Type': 'application/json',
         // auth
       },
+      withCredentials: true,
     });
   },
 };

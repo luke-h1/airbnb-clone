@@ -1,6 +1,8 @@
-import { User } from '@src/types/User';
+/* eslint-disable */
+
 import React, { useState, createContext } from 'react';
-import userService from '@src/services/user';
+import { User } from '../types/User';
+import userService from '../services/user';
 import { loginOpts, registerOpts } from './types/user';
 
 export const AuthContext = createContext<{
