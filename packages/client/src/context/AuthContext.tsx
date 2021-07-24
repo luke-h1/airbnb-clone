@@ -48,6 +48,7 @@ const AuthProvider: React.FC<AuthProviderProps> = ({ children }) => {
               'Content-Type': 'application/json',
             },
           });
+          setUser(null);
         },
         me: async () => {
           const res = await axios({
@@ -58,6 +59,7 @@ const AuthProvider: React.FC<AuthProviderProps> = ({ children }) => {
               // TODO get auth
             },
           });
+          console.log(res.data);
         },
         register: async ({ options }) => {
           const res = await axios({
@@ -68,6 +70,7 @@ const AuthProvider: React.FC<AuthProviderProps> = ({ children }) => {
             },
             data: options,
           });
+          console.log(res.data);
         },
       }}
     >
