@@ -8,6 +8,7 @@ import session from 'express-session';
 import { createConnection } from 'typeorm';
 import path from 'path';
 import { graphqlUploadExpress } from 'graphql-upload';
+import multer from 'multer';
 import { constants } from './shared/constants';
 import { createUserLoader } from './Loaders/UserLoader';
 import { redis } from './shared/redis';
@@ -57,6 +58,8 @@ const main = async () => {
       resave: false,
     }),
   );
+  // console.log(path.join(path.resolve()))
+  app.use('/uploads', express.static(path.join(path.resolve(), '/uploads')));
 
   const apolloServer = new ApolloServer({
     playground: process.env.NODE_ENV !== 'production',
@@ -73,6 +76,8 @@ const main = async () => {
     app,
     cors: false,
   });
+
+  app.use(multer);
 
   app.listen(process.env.PORT, () => {
     console.log(`Server listening on localhost:${process.env.PORT}`);

@@ -14,13 +14,13 @@ import {
 } from 'type-graphql';
 import { getConnection } from 'typeorm';
 import { FileUpload, GraphQLUpload } from 'graphql-upload';
-import { Upload } from '../../utils/image/upload';
 import { User } from '../../entities/User';
 import { MyContext } from '../../shared/types';
 import { UsernamePasswordInput } from './inputs/UsernamePasswordInput';
 import { validateRegister } from '../../validation/user/validateRegister';
 import { constants } from '../../shared/constants';
 import { UserRegisterInput } from './inputs/UserRegisterInput';
+import { Upload } from '../../utils/image/upload';
 
 @ObjectType()
 class FieldError {
@@ -30,7 +30,6 @@ class FieldError {
   @Field()
   message: string;
 }
-
 @ObjectType()
 class UserResponse {
   @Field(() => [FieldError], { nullable: true })
