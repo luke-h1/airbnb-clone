@@ -97,6 +97,9 @@ export class UserResolver {
           email: options.email,
           password: hashedPassword,
           image: image.Location,
+          Bucket: image.Bucket,
+          Key: image.Key,
+          Etag: image.Etag,
         })
         .returning('*')
         .execute();

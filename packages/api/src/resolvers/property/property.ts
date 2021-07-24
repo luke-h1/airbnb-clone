@@ -83,6 +83,9 @@ export class PropertyResolver {
         ...options,
         creatorId: req.session.userId,
         image: image.Location,
+        Bucket: image.Bucket,
+        Key: image.Key,
+        Etag: image.Etag,
       })
       .returning('*')
       .execute();
