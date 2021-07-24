@@ -5,14 +5,13 @@ A Fullstack GraphQL Airbnb Clone with Next.js
 ### Structure 
 This project is made up of 2 areas that share code using <a href='https://lerna.js.org/' target="_blank">Lerna</a>
 
-* api - GraphQL, Typescript api 
+* api - GraphQL, Typescript API 
 * client - Next.js frontend 
 
 ### Features 
-* Create & delete properties 
+* CRUD properties 
 * login/signup 
 * upload user & property images 
-
 
 ### tech stack
 * graphQL
