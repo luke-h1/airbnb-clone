@@ -8,7 +8,8 @@ const me = async (req, res) => {
   if (!req.session.userId) {
     return null;
   }
-  return User.findOne(req.session.userId);
+  const user = await User.findOne(req.session.userId);
+  res.status(200).json({ user });
 };
 
 const register = async (req, res) => {
@@ -38,14 +39,14 @@ const register = async (req, res) => {
     user = result.raw[0];
   } catch (e) {
     if (e.code === '23505') {
-      return {
+      res.status(400).json({
         errors: [
           {
             field: 'email',
             message: 'email already taken',
           },
         ],
-      };
+      });
     }
   }
   // this will set a cookie on the user & log them in
@@ -59,27 +60,27 @@ const login = async (req, res) => {
 
   const user = await User.findOne({ where: { email } });
   if (!user) {
-    return {
+    res.status(400).json({
       errors: [
         {
           field: 'email',
           message: "That email doesn't exist",
         },
       ],
-    };
+    });
   }
-  const valid = await bcrypt.compare(user.password, password);
+  const valid = await bcrypt.compare(user!.password, password);
   if (!valid) {
-    return {
+    res.status(400).json({
       errors: [
         {
           field: 'password',
           message: 'Incorrect credentials',
         },
       ],
-    };
+    });
   }
-  req.session.userId = user.id;
+  req.session.userId = user!.id;
   res.status(200).json({ user });
 };
 
