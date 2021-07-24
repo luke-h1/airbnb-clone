@@ -5,26 +5,15 @@ import cors from 'cors';
 import 'dotenv-safe/config';
 import express from 'express';
 import session from 'express-session';
-import { createConnection } from 'typeorm';
-import path from 'path';
 import { graphqlUploadExpress } from 'graphql-upload';
-import multer from 'multer';
 import { constants } from './shared/constants';
 import { createUserLoader } from './Loaders/UserLoader';
 import { redis } from './shared/redis';
-import { Property } from './entities/Property';
-import { User } from './entities/User';
 import { createSchema } from './shared/createSchema';
+import { createConn } from './shared/createConn';
 
 const main = async () => {
-  await createConnection({
-    type: 'postgres',
-    url: process.env.DATABASE_URL,
-    logging: !constants.__prod__,
-    synchronize: !constants.__prod__,
-    migrations: [path.join(__dirname, './migrations/*')],
-    entities: [User, Property],
-  });
+  await createConn();
   const app = express();
 
   const RedisStore = connectRedis(session);
@@ -58,9 +47,6 @@ const main = async () => {
       resave: false,
     }),
   );
-  // console.log(path.join(path.resolve()))
-  app.use('/uploads', express.static(path.join(path.resolve(), '/uploads')));
-
   const apolloServer = new ApolloServer({
     playground: process.env.NODE_ENV !== 'production',
     uploads: false, // disable apollo uploads
@@ -76,8 +62,6 @@ const main = async () => {
     app,
     cors: false,
   });
-
-  app.use(multer);
 
   app.listen(process.env.PORT, () => {
     console.log(`Server listening on localhost:${process.env.PORT}`);
