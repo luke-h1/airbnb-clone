@@ -1,7 +1,7 @@
 import { createConnection } from 'typeorm';
 import path from 'path';
-import { Property } from 'src/entities/Property';
-import { User } from 'src/entities/User';
+import { Property } from '../entities/Property';
+import { User } from '../entities/User';
 import { constants } from './constants';
 
 export const createConn = () => createConnection({

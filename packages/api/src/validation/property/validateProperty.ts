@@ -1,6 +1,4 @@
-import { CreatePropertyInput } from '../../resolvers/property/inputs/CreatePropertyInput';
-
-export const validateProperty = (options: CreatePropertyInput) => {
+export const validateProperty = (options: any) => {
   if (!options.title) {
     return [
       {

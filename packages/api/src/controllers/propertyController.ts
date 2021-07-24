@@ -2,24 +2,6 @@ import { getConnection } from 'typeorm';
 import { validateProperty } from '../validation/property/validateProperty';
 import { Property } from '../entities/Property';
 
-class PropertyFieldError {
-  field: string;
-
-  message: string;
-}
-
-class PaginatedProperties {
-  properties: Property[];
-
-  hasMore: boolean;
-}
-
-class PropertyResponse {
-  errors?: PropertyFieldError[];
-
-  property?: Property;
-}
-
 const createProperty = async (req, res) => {
   const { options } = req.body;
   const errors = validateProperty(options);

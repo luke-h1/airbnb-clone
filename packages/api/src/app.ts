@@ -4,11 +4,18 @@ import cors from 'cors';
 import 'dotenv-safe/config';
 import express from 'express';
 import session from 'express-session';
+import bcrypt from 'bcryptjs';
+import { getConnection } from 'typeorm';
 import { constants } from './shared/constants';
 import { redis } from './shared/redis';
 import { createConn } from './shared/createConn';
 import userRoutes from './routes/userRoutes';
 import propertyRoutes from './routes/propertyRoutes';
+import { upload } from './utils/multer';
+import { validateRegister } from './validation/user/validateRegister';
+import { User } from './entities/User';
+import { validateProperty } from './validation/property/validateProperty';
+import { Property } from './entities/Property';
 
 const main = async () => {
   await createConn();
@@ -46,7 +53,6 @@ const main = async () => {
 
   app.use(express.json());
 
-  // in user and property routes need to put image middleware (upload.single('image'))
   app.use('/api/users', userRoutes);
   app.use('/api/properties', propertyRoutes);
 

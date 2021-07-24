@@ -31,7 +31,7 @@ const register = async (req, res) => {
         lastName: options.lastName,
         email: options.email,
         password: hashedPassword,
-        image,
+        image: '',
       })
       .returning('*')
       .execute();
