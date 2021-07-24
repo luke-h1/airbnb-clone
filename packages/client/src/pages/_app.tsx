@@ -1,15 +1,22 @@
 import '../styles/index.css';
-import type { AppProps } from 'next/app';
 import Container from '@src/components/Container';
 import Nav from '@src/components/Nav';
+import React from 'react';
+import PropertyProvider from '@src/context/PropertyContext';
+import AuthProvider from '@src/context/AuthContext';
 
-function MyApp({ Component, pageProps }: AppProps) {
+// @ts-ignore
+function MyApp({ Component, pageProps }) {
   return (
     <>
-      <Container>
-        <Nav />
-        <Component {...pageProps} />
-      </Container>
+      <AuthProvider>
+        <PropertyProvider>
+          <Container>
+            <Nav />
+            <Component {...pageProps} />
+          </Container>
+        </PropertyProvider>
+      </AuthProvider>
     </>
   );
 }

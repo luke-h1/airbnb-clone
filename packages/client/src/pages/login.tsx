@@ -5,20 +5,17 @@ import { useRouter } from 'next/router';
 import { InputField } from '../components/InputField';
 import { AuthContext } from '../context/AuthContext';
 
-interface RegisterProps {
+interface LoginProps {
 
 }
 
 interface FormValues {
-  firstName: string;
-  lastName: string;
-  image: string;
   email: string;
   password: string;
 }
 
-const Register: React.FC<RegisterProps> = () => {
-  const { register, user } = useContext(AuthContext);
+const Login: React.FC<LoginProps> = () => {
+  const { login, user } = useContext(AuthContext);
   const router = useRouter();
   useEffect(() => {
     if (user !== null) {
@@ -30,30 +27,15 @@ const Register: React.FC<RegisterProps> = () => {
       <h1 className="title">Welcome to Airbnb</h1>
       <Formik<FormValues>
         initialValues={{
-          firstName: '',
-          lastName: '',
-          image: '',
           email: '',
           password: '',
         }}
         onSubmit={async (values, { setErrors }) => {
-          register({ options: values });
+          login({ options: values });
         }}
       >
         {({ setFieldValue }) => (
           <Form>
-            <InputField
-              name="firstName"
-              placeholder="First Name"
-              label="First Name"
-              required
-            />
-            <InputField
-              name="lastName"
-              placeholder="Last Name"
-              label="Last Name"
-              required
-            />
             <InputField
               name="email"
               placeholder="Email"
@@ -67,21 +49,8 @@ const Register: React.FC<RegisterProps> = () => {
               type="password"
               required
             />
-            <InputField
-              name="image"
-              placeholder="image"
-              label="image"
-              type="file"
-              id="image"
-              value={undefined}
-              required
-              onChange={(e) => {
-                // @ts-ignore
-                setFieldValue('image', e.currentTarget.files[0]);
-              }}
-            />
             <button type="submit">
-              Register
+              Login
             </button>
           </Form>
         )}
@@ -89,4 +58,4 @@ const Register: React.FC<RegisterProps> = () => {
     </>
   );
 };
-export default Register;
+export default Login;

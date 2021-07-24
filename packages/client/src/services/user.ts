@@ -3,7 +3,7 @@ import { loginOpts, registerOpts } from '../context/types/user';
 import { API_URL } from '../utils/url';
 
 const userService = {
-  login({ options }: { options: loginOpts }) {
+  login(options: loginOpts) {
     return axios({
       method: 'POST',
       url: `${API_URL}/api/users/login`,
