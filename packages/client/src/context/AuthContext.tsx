@@ -42,8 +42,9 @@ const AuthProvider: React.FC<AuthProviderProps> = ({ children }) => {
   };
 
   const register = async ({ options }: { options: registerOpts }) => {
-    const res = await userService.register({ options });
-    console.log(res.data);
+    console.log(options)
+    const res = await userService.register(options);
+    setUser(res.data.user)
   };
 
   return (

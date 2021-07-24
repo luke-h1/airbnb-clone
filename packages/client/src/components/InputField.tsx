@@ -22,9 +22,9 @@ export const InputField: React.FC<InputFieldProps> = ({ label, ...props }) => {
         </label>
         <input
           className="input border border-gray-400 appearance-none rounded w-full px-3 py-3 pt-5 pb-2 focus focus:border-indigo-600 focus:outline-none active:outline-none active:border-indigo-600"
-          id={field.name}
-          {...field}
           {...props}
+          {...field}
+          id={field.name}
         />
         {error ? <p className="text-red-500 text-xs italic">{error}</p> : null}
       </div>

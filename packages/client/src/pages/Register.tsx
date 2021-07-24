@@ -1,18 +1,30 @@
+import React, { useContext, useEffect } from 'react';
 import { Form, Formik } from 'formik';
-import React, { useContext } from 'react';
+
+import { useRouter } from 'next/router';
 import { InputField } from '../components/InputField';
 import { AuthContext } from '../context/AuthContext';
 
-interface FormValues {
-    firstName: string;
-    lastName: string;
-    email: string;
-    password: string;
-    image: string;
-  }
+interface RegisterProps {
 
-const Register: React.FC = () => {
-  const { register } = useContext(AuthContext);
+}
+
+interface FormValues {
+  firstName: string;
+  lastName: string;
+  image: string;
+  email: string;
+  password: string;
+}
+
+const Register: React.FC<RegisterProps> = () => {
+  const { register, user } = useContext(AuthContext);
+  const router = useRouter();
+  useEffect(() => {
+    if (user !== null) {
+      router.push('/');
+    }
+  }, [user]);
   return (
     <>
       <h1 className="title">Welcome to Airbnb</h1>
@@ -25,7 +37,7 @@ const Register: React.FC = () => {
           password: '',
         }}
         onSubmit={async (values, { setErrors }) => {
-          const res = register({ options: values });
+          register({ options: values });
         }}
       >
         {({ isSubmitting, setFieldValue }) => (
@@ -34,18 +46,26 @@ const Register: React.FC = () => {
               name="firstName"
               placeholder="First Name"
               label="First Name"
+              required
             />
             <InputField
               name="lastName"
               placeholder="Last Name"
               label="Last Name"
+              required
             />
-            <InputField name="email" placeholder="Email" label="email" />
+            <InputField
+              name="email"
+              placeholder="Email"
+              label="email"
+              required
+            />
             <InputField
               name="password"
               placeholder="Password"
               label="password"
               type="password"
+              required
             />
             <InputField
               name="image"
@@ -60,13 +80,13 @@ const Register: React.FC = () => {
                 setFieldValue('image', e.currentTarget.files[0]);
               }}
             />
-            <button type="submit" disabled={isSubmitting}>Register</button>
+            <button type="submit">
+              Register
+            </button>
           </Form>
         )}
-
       </Formik>
     </>
-
   );
 };
 export default Register;

@@ -36,14 +36,14 @@ const userService = {
       withCredentials: true,
     });
   },
-  register({ options }: { options: registerOpts }) {
+  register(options: registerOpts) {
     return axios({
       method: 'POST',
       url: `${API_URL}/api/users/register`,
       headers: {
         'Content-Type': 'application/json',
       },
-      data: options,
+      data: { options },
       withCredentials: true,
     });
   },

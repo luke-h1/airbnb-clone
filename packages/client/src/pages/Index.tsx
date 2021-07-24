@@ -1,1 +1,7 @@
-export {};
+export default function Home() {
+  return (
+    <>
+    </>
+
+  );
+}
