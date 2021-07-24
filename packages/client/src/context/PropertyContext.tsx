@@ -1,15 +1,18 @@
+import propertyService from '@src/services/property';
 import type { Properties, Property } from '@src/types/Property';
 import { API_URL } from '@src/utils/url';
 import axios from 'axios';
 import React, { createContext, useState } from 'react';
-import { createPropertyOpts, deletePropertyOpts, getPropertyOpts, updatePropertyOpts } from './types/property';
+import {
+  createPropertyOpts, deletePropertyOpts, getPropertyOpts, updatePropertyOpts,
+} from './types/property';
 
 export const PropertyContext = createContext<{
   getProperties:() => void;
   createProperty: ({ options }: { options: createPropertyOpts }) => void;
   updateProperty: ({ options }: { options: updatePropertyOpts }) => void;
-  getProperty: ({ options }: { options: getPropertyOpts }) => void;
-  deleteProperty: ({ options }: { options: deletePropertyOpts }) => void;
+  getProperty: ({ options }: { options: getPropertyOpts, id: number; }) => void;
+  deleteProperty: ({ options }: { options: deletePropertyOpts, id: number }) => void;
   properties: Properties[];
   property: Property;
     }>({
@@ -29,60 +32,42 @@ interface PropertyProviderProps {
 const PropertyProvider: React.FC<PropertyProviderProps> = async ({ children }) => {
   const [property, setProperty] = useState<Property>(null);
   const [properties, setProperties] = useState<Properties[]>([]);
+
+  const getProperties = async () => {
+    const res = await propertyService.getProperties();
+    console.log(res.data);
+  };
+
+  const createProperty = async ({ options }: { options: createPropertyOpts }) => {
+    const res = await propertyService.createProperty({ options });
+    console.log(res.data);
+  };
+
+  const updateProperty = async ({ options, id }: { options: updatePropertyOpts; id: number; }) => {
+    const res = await propertyService.updateProperty({ options, id });
+    console.log(res.data);
+  };
+
+  const getProperty = async ({ id }: { id: number }) => {
+    const res = await propertyService.getProperty({ id });
+    console.log(res.data);
+  };
+
+  const deleteProperty = async ({ id }: { id: number }) => {
+    const res = await propertyService.deleteProperty({ id });
+    console.log(res.data);
+  };
+
   return (
     <PropertyContext.Provider
       value={{
         property,
         properties,
-        getProperties: () => {
-          const res = await axios({
-            method: 'GET',
-            url: `${API_URL}/api/properties`,
-            headers: {
-              'Content-Type': 'application/json',
-            },
-          });
-        },
-        createProperty: ({ options }) => {
-          const res = await axios({
-            method: 'POST',
-            url: `${API_URL}/api/properties`,
-            headers: {
-              'Content-Type': 'application/json',
-              // get auth
-            },
-          });
-        },
-        updateProperty: ({ options, id }) => {
-          const res = await axios({
-            method: 'PUT',
-            url: `${API_URL}/api/properties/${id}`,
-            headers: {
-              'Content-Type': 'application/json',
-              // get auth
-            },
-          });
-        },
-        getProperty: ({ id }) => {
-          const res = await axios({
-            method: 'GET',
-            url: `${API_URL}/api/properties/${id}`,
-            headers: {
-              'Content-Type': 'application/json',
-            },
-          });
-        },
-        deleteProperty: ({ id }) => {
-          const res = await axios({
-            method: 'DELETE',
-            url: `${API_URL}/api/properties/${id}`,
-            headers: {
-              'Content-Type': 'application/json',
-              // auth
-            },
-          });
-        },
-
+        getProperties,
+        createProperty,
+        updateProperty,
+        getProperty,
+        deleteProperty,
       }}
     >
       {children}
