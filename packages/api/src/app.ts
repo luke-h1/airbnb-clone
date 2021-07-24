@@ -4,11 +4,11 @@ import cors from 'cors';
 import 'dotenv-safe/config';
 import express from 'express';
 import session from 'express-session';
-import { createConnection } from 'typeorm';
-import path from 'path';
 import { constants } from './shared/constants';
 import { redis } from './shared/redis';
 import { createConn } from './shared/createConn';
+import userRoutes from './routes/userRoutes';
+import propertyRoutes from './routes/propertyRoutes';
 
 const main = async () => {
   await createConn();
@@ -43,6 +43,12 @@ const main = async () => {
       resave: false,
     }),
   );
+
+  app.use(express.json());
+
+  // in user and property routes need to put image middleware (upload.single('image'))
+  app.use('/api/users', userRoutes);
+  app.use('/api/properties', propertyRoutes);
 
   app.listen(process.env.PORT, () => {
     console.log(`Server listening on localhost:${process.env.PORT}`);
