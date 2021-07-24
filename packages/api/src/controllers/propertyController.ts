@@ -21,9 +21,7 @@ const createProperty = async (req, res) => {
     .returning('*')
     .execute();
   const property = result.raw[0];
-  return {
-    property,
-  };
+  res.status(201).json({ property });
 };
 
 const properties = async (req, res) => {
@@ -46,15 +44,16 @@ const properties = async (req, res) => {
     `,
     replacements,
   );
-  return {
+  res.status(200).json({
     properties: result.slice(0, realLimit),
     hasMore: result.length === realLimitPlusOne,
-  };
+  });
 };
 
 const property = async (req, res) => {
   const { id } = req.body;
-  return Property.findOne(id);
+  const singleProperty = await Property.findOne(id);
+  res.status(200).json({ singleProperty });
 };
 
 const updateProperty = async (req, res) => {
@@ -69,7 +68,6 @@ const updateProperty = async (req, res) => {
     address,
     amenities,
   } = options;
-
   const result = await getConnection()
     .createQueryBuilder()
     .update(Property)
@@ -88,13 +86,14 @@ const updateProperty = async (req, res) => {
     })
     .returning('*')
     .execute();
-  return result.raw[0];
+  const updatedProperty = result.raw[0];
+  res.status(204).json({ updatedProperty });
 };
 
 const deleteProperty = async (req, res) => {
   const { id } = req.body;
   await Property.delete({ id, creatorId: req.session.userId });
-  return true;
+  res.status(204).json({ ok: true });
 };
 
 export {

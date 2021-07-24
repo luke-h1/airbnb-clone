@@ -15,7 +15,7 @@ const register = async (req, res) => {
   const { options } = req.body;
   const errors = validateRegister(options);
   if (errors) {
-    return { errors };
+    res.status(400).json({ errors });
   }
 
   const hashedPassword = await bcrypt.hash(options.password, 10);
@@ -50,7 +50,7 @@ const register = async (req, res) => {
   }
   // this will set a cookie on the user & log them in
   req.session.userId = user.id;
-  return { user };
+  res.status(201).json({ user });
 };
 
 const login = async (req, res) => {
@@ -80,9 +80,7 @@ const login = async (req, res) => {
     };
   }
   req.session.userId = user.id;
-  return {
-    user,
-  };
+  res.status(200).json({ user });
 };
 
 const logout = async (req, res) => new Promise((resolve) => req.session.destroy((e: any) => {
@@ -93,6 +91,7 @@ const logout = async (req, res) => new Promise((resolve) => req.session.destroy(
     return;
   }
   resolve(true);
+  res.status(200).json({ ok: true });
 }));
 export {
   me, register, login, logout,
