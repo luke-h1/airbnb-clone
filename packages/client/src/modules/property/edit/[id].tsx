@@ -69,7 +69,7 @@ const EditPropertyPage = () => {
                 address: values.address,
                 amenities: values.amenities,
               },
-              // image: values.image,
+              image: values.image,
               id: intId,
             },
           });
