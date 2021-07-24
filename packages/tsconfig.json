@@ -22,8 +22,8 @@
       "resolveJsonModule": true,
       "baseUrl": ".",
       "paths": {
-        "@server/*": ["./abb-server/src/*"],
-        "@web/*": ["./abb-web/src/*"],
+        "@api/*": ["./api/src/*"],
+        "@client/*": ["./client/src/*"],
       },
       "sourceMap": true
     }
