@@ -8,7 +8,6 @@ import {
   InMemoryCache,
   NormalizedCacheObject,
 } from '@apollo/client';
-import { onError } from '@apollo/link-error';
 import { PaginatedProperties } from '@src/generated/graphql';
 import { createUploadLink } from 'apollo-upload-client';
 import merge from 'deepmerge';
@@ -41,13 +40,6 @@ const createApolloClient = (headers: IncomingHttpHeaders | null = null) => {
     // SSR only for Node.js
     ssrMode: typeof window === 'undefined',
     link: ApolloLink.from([
-      onError(({ graphQLErrors }) => {
-        if (graphQLErrors) {
-          graphQLErrors.forEach(({ message, locations, path }) => console.log(
-            `[GraphQL error]: Message: ${message}, Location: ${locations}, Path: ${path}`,
-          ));
-        }
-      }),
       createUploadLink({
         uri: process.env.NEXT_PUBLIC_API_URL,
         fetchOptions: {
