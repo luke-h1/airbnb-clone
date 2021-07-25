@@ -1,4 +1,4 @@
-mutation CreateProperty($options: CreatePropertyInput!, $image: Upload!) { 
+mutation CreateProperty($options: PropertyInput!, $image: Upload!) { 
   createProperty(options: $options, image: $image) {
     errors {
       field
@@ -13,6 +13,8 @@ mutation CreateProperty($options: CreatePropertyInput!, $image: Upload!) {
       pricePerNight
       address
       amenities
+      beds
+      bedrooms
       createdAt
       updatedAt
       creator {

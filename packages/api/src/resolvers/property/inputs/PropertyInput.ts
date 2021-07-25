@@ -1,7 +1,7 @@
 import { Field, InputType, Int } from 'type-graphql';
 
 @InputType()
-export class UpdatePropertyInput {
+export class PropertyInput {
   @Field(() => String)
   title: string;
 
@@ -13,6 +13,12 @@ export class UpdatePropertyInput {
 
   @Field(() => Int)
   pricePerNight: number;
+
+  @Field(() => Int)
+  beds: number;
+
+  @Field(() => Int)
+  bedrooms: number;
 
   @Field(() => String)
   address: string;

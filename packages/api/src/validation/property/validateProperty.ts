@@ -1,6 +1,6 @@
-import { CreatePropertyInput } from '../../resolvers/property/inputs/CreatePropertyInput';
+import { PropertyInput } from '../../resolvers/property/inputs/PropertyInput';
 
-export const validateProperty = (options: CreatePropertyInput) => {
+export const validateProperty = (options: PropertyInput) => {
   if (!options.title) {
     return [
       {
@@ -30,6 +30,22 @@ export const validateProperty = (options: CreatePropertyInput) => {
       {
         field: 'amenities',
         message: 'amenities is a required field',
+      },
+    ];
+  }
+  if (!options.bedrooms) {
+    return [
+      {
+        field: 'bedrooms',
+        message: 'bedrooms is a required field',
+      },
+    ];
+  }
+  if (!options.beds) {
+    return [
+      {
+        field: 'beds',
+        message: 'beds is a required field',
       },
     ];
   }
