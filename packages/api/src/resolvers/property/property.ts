@@ -95,6 +95,7 @@ export class PropertyResolver {
   async properties(
     @Arg('limit', () => Int) limit: number,
     @Arg('cursor', () => String, { nullable: true }) cursor: string | null,
+    @Ctx() { req }: MyContext,
   ): Promise<PaginatedProperties> {
     const realLimit = Math.min(50, limit);
     const realLimitPlusOne = realLimit + 1;
@@ -104,14 +105,17 @@ export class PropertyResolver {
       replacements.push(new Date(parseInt(cursor, 10)));
     }
 
+    // TODO: Change this SQL query before deploying
     const properties = await getConnection().query(
       `
-        SELECT p.* from "properties" p 
-        ${cursor ? `where p."createdAt" < $2` : ''} 
-        ORDER BY p."createdAt" DESC
-        LIMIT $1
-      `,
-      replacements,
+      SELECT p.* from "properties" p 
+      ${cursor ? `where p."createdAt" < $2` : ''} 
+      ORDER BY p."createdAt" DESC
+      LIMIT $1
+    `,
+      process.env.NODE_ENV === 'production'
+        ? [replacements, req.session.userId]
+        : replacements,
     );
     return {
       properties: properties.slice(0, realLimit),
@@ -126,7 +130,6 @@ export class PropertyResolver {
     return Property.findOne(id);
   }
 
-  // TODO: set image here
   @Mutation(() => Property, { nullable: true })
   @UseMiddleware(isAuth)
   async updateProperty(

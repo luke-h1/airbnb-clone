@@ -1,4 +1,4 @@
-import argon2 from 'argon2';
+import bcrypt from 'bcryptjs';
 import {
   Arg,
   Ctx,
@@ -77,7 +77,7 @@ export class UserResolver {
     if (errors) {
       return { errors };
     }
-    const hashedPassword = await argon2.hash(options.password);
+    const hashedPassword = await bcrypt.hash(options.password, 12);
     let user;
     try {
       const image = await Upload(
@@ -139,7 +139,7 @@ export class UserResolver {
         ],
       };
     }
-    const valid = await argon2.verify(user.password, password);
+    const valid = await bcrypt.compare(user.password, password);
     if (!valid) {
       return {
         errors: [

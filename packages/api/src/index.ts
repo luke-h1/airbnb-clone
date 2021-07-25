@@ -28,7 +28,6 @@ const main = async () => {
     }),
   );
 
-  // images
   app.use(graphqlUploadExpress({ maxFileSize: 10000000, maxFiles: 10 }));
 
   app.set('trust-proxy', 1);
@@ -39,11 +38,11 @@ const main = async () => {
         disableTouch: true,
       }),
       cookie: {
-        maxAge: 1000 * 60 * 60 * 24 * 7, // 7 days (set to 2 days on prod)
+        maxAge: 1000 * 60 * 60 * 24 * 4, // 4 days
         httpOnly: true,
         sameSite: 'lax', // csrf
-        secure: constants.__prod__, // cookie only works in https
-        domain: constants.__prod__ ? 'deployed-api' : undefined,
+        secure: constants.__prod__,
+        domain: constants.__prod__ ? 'api.airbb-clone-code.xyz' : undefined,
       },
       saveUninitialized: false,
       secret: process.env.COOKIE_SECRET!,
@@ -52,7 +51,7 @@ const main = async () => {
   );
   const apolloServer = new ApolloServer({
     playground: process.env.NODE_ENV !== 'production',
-    uploads: false, // disable apollo uploads
+    uploads: false,
     schema: await createSchema(),
     context: ({ req, res }) => ({
       req,
@@ -67,7 +66,9 @@ const main = async () => {
   });
 
   app.listen(process.env.PORT, () => {
-    console.log(`Server listening on localhost:${process.env.PORT}`);
+    console.log(
+      `Server listening on localhost:${process.env.PORT} in ${process.env.NODE_ENV} mode`,
+    );
   });
 };
 

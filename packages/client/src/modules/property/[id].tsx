@@ -15,12 +15,11 @@ const SingleProperty: React.FC<{}> = () => {
     return <p className="text-4xl">{error.message}</p>;
   }
 
-  if (!data?.property) {
-    router.push('/');
-  }
-
   useEffect(() => {
     if (meData?.me?.id !== data?.property.creator.id) {
+      router.push('/');
+    }
+    if (!data?.property) {
       router.push('/');
     }
   }, []);

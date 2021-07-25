@@ -8,7 +8,6 @@ import {
   InMemoryCache,
   NormalizedCacheObject,
 } from '@apollo/client';
-import { onError } from '@apollo/link-error';
 import { PaginatedProperties } from '@src/generated/graphql';
 import { createUploadLink } from 'apollo-upload-client';
 import merge from 'deepmerge';
@@ -41,22 +40,8 @@ const createApolloClient = (headers: IncomingHttpHeaders | null = null) => {
     // SSR only for Node.js
     ssrMode: typeof window === 'undefined',
     link: ApolloLink.from([
-      onError(({ graphQLErrors, networkError }) => {
-        if (graphQLErrors) {
-          graphQLErrors.forEach(({ message, locations, path }) => console.log(
-            `[GraphQL error]: Message: ${message}, Location: ${locations}, Path: ${path}`,
-          ));
-        }
-        if (networkError) {
-          console.log(
-            `[Network error]: ${networkError}. Backend is unreachable. Is it running?`,
-          );
-        }
-      }),
-      // this uses apollo-link-http under the hood, so all the options here come from that package
       createUploadLink({
         uri: process.env.NEXT_PUBLIC_API_URL,
-        // Make sure that CORS and cookies work
         fetchOptions: {
           mode: 'cors',
         },

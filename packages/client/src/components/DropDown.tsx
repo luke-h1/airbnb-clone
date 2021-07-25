@@ -77,7 +77,9 @@ const DropDown: React.FC<DropDownProps> = ({ links, me }) => {
                     {({ active }) => (
                       <button
                         className={`${
-                          active ? 'bg-violet-500 text-white' : 'text-gray-900'
+                          active
+                            ? 'bg-violet-500 text-gray-600'
+                            : 'text-gray-900'
                         } group flex rounded-md items-center w-full px-2 py-2 text-sm`}
                         type="button"
                       >
@@ -94,7 +96,7 @@ const DropDown: React.FC<DropDownProps> = ({ links, me }) => {
                 {({ active }) => (
                   <button
                     className={`${
-                      active ? 'bg-violet-500 text-white' : 'text-gray-900'
+                      active ? 'bg-violet-500 text-gray-600' : 'text-gray-900'
                     } group flex rounded-md items-center w-full px-2 py-2 text-sm`}
                     type="button"
                     onClick={handleLogout}

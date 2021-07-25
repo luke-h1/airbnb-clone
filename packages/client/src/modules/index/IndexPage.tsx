@@ -14,7 +14,7 @@ const index = () => {
     notifyOnNetworkStatusChange: true,
   });
   return (
-    <div className="p-10 grid grid-cols-1 sm:grid-cols-1 md:grid-cols-3 lg:grid-cols-3 xl:grid-cols-3 gap-5">
+    <div className="flex flex-col align-center items-center">
       {error ? <p className="text-4xl">{error.message}</p> : null}
       <div>
         {data?.properties.properties.map((p) => (!p ? (
@@ -22,7 +22,7 @@ const index = () => {
         ) : (
           <Link href={`/property/${p.id}`}>
             <a>
-              <div className="rounded overflow-hidden shadow-lg">
+              <div className="rounded overflow-hidden shadow-lg mb-4">
                 <img className="w-full" src={p.image} alt={p.title} />
                 <div className="px-6 py-4">
                   <div className="font-bold text-xl mb-2">{p.title}</div>
