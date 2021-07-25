@@ -38,7 +38,7 @@ const Nav = () => {
   }
 
   return (
-    <nav className=" bg-white w-full flex relative justify-between items-center mx-auto px-8 h-20">
+    <nav className="bg-white w-full flex relative justify-between items-center mx-auto px-8 h-20">
       <div className="inline-flex">
         <a className="_o6689fn" href="/">
           <div className="hidden md:block">

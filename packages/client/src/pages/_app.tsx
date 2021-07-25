@@ -13,9 +13,11 @@ function MyApp({ Component, pageProps }: AppProps) {
 
   return (
     <ApolloProvider client={apolloClient}>
+      <main className="max-w-4xl mx-auto mt- antialiased mb-6">
+        <Nav {...pageProps} />
+      </main>
       <Container>
         <Reset />
-        <Nav {...pageProps} />
         <Component {...pageProps} />
       </Container>
     </ApolloProvider>
