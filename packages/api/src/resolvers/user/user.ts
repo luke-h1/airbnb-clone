@@ -1,6 +1,4 @@
-/* eslint-disable no-shadow */
 import argon2 from 'argon2';
-
 import {
   Arg,
   Ctx,
@@ -14,7 +12,6 @@ import {
 } from 'type-graphql';
 import { getConnection } from 'typeorm';
 import { FileUpload, GraphQLUpload } from 'graphql-upload';
-import { localImageUpload } from '../../utils/image/local/fileSystem';
 import { User } from '../../entities/User';
 import { MyContext } from '../../shared/types';
 import { UsernamePasswordInput } from './inputs/UsernamePasswordInput';
@@ -83,13 +80,11 @@ export class UserResolver {
     const hashedPassword = await argon2.hash(options.password);
     let user;
     try {
-      // const image = await Upload(
-      //   createReadStream,
-      //   filename,
-      //   constants.S3UserImageKey,
-      // );
-      let image: string = '';
-      image = await localImageUpload(createReadStream, filename);
+      const image = await Upload(
+        createReadStream,
+        filename,
+        constants.S3UserImageKey,
+      );
 
       const result = await getConnection()
         .createQueryBuilder()
@@ -101,9 +96,6 @@ export class UserResolver {
           email: options.email,
           password: hashedPassword,
           image,
-          // Bucket: image.Bucket,
-          // Key: image.Key,
-          // Etag: image.Etag,
         })
         .returning('*')
         .execute();

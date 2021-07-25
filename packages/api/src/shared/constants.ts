@@ -1,5 +1,3 @@
-import path from 'path';
-
 export namespace constants {
   export const __prod__ = process.env.NODE_ENV === 'production';
   export const COOKIE_NAME = 'connect.sid';

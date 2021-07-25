@@ -133,7 +133,7 @@ export type User = {
   id: Scalars['Int'];
   email: Scalars['String'];
   firstName: Scalars['String'];
-  image?: Maybe<Scalars['String']>;
+  image: Scalars['String'];
   lastName: Scalars['String'];
   properties: Array<Property>;
   createdAt: Scalars['String'];

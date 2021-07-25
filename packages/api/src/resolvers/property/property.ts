@@ -82,10 +82,7 @@ export class PropertyResolver {
       .values({
         ...options,
         creatorId: req.session.userId,
-        image: image.Location,
-        Bucket: image.Bucket,
-        Key: image.Key,
-        Etag: image.Etag,
+        image,
       })
       .returning('*')
       .execute();
@@ -162,7 +159,7 @@ export class PropertyResolver {
         description,
         pricePerNight,
         address,
-        image: image.Location,
+        image,
         amenities,
       })
       .where('id = :id and creatorId = :creatorId', {

@@ -7,7 +7,7 @@ export const Upload = async (
   createReadStream: () => ReadStream,
   filename: string,
   key: string,
-) => new Promise<S3Object>((res, rej) => {
+) => new Promise<string>((res, rej) => {
   S3.upload(
     {
       ...S3DefaultParams,
@@ -23,8 +23,8 @@ export const Upload = async (
         return e;
       }
       console.log('✅ uploaded file', data);
-      res(data);
-      return data;
+      res(data.Location);
+      return data.Location;
     },
   );
 });
