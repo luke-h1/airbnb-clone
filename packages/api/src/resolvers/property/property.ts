@@ -105,17 +105,14 @@ export class PropertyResolver {
       replacements.push(new Date(parseInt(cursor, 10)));
     }
 
+    // TODO: Change this SQL query before deploying
     const properties = await getConnection().query(
       `
-        SELECT p.* from "properties" p 
-        ${cursor ? `where p."createdAt" < $2` : ''} 
-        ${
-  process.env.NODE_ENV === 'production'
-          ?? `AND WHERE p."creator.id" = $2`
-}
-        ORDER BY p."createdAt" DESC
-        LIMIT $1
-      `,
+      SELECT p.* from "properties" p 
+      ${cursor ? `where p."createdAt" < $2` : ''} 
+      ORDER BY p."createdAt" DESC
+      LIMIT $1
+    `,
       process.env.NODE_ENV === 'production'
         ? [replacements, req.session.userId]
         : replacements,
@@ -133,7 +130,6 @@ export class PropertyResolver {
     return Property.findOne(id);
   }
 
-  // TODO: set image here
   @Mutation(() => Property, { nullable: true })
   @UseMiddleware(isAuth)
   async updateProperty(

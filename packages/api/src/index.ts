@@ -66,7 +66,9 @@ const main = async () => {
   });
 
   app.listen(process.env.PORT, () => {
-    console.log(`Server listening on localhost:${process.env.PORT}`);
+    console.log(
+      `Server listening on localhost:${process.env.PORT} in ${process.env.NODE_ENV} mode`,
+    );
   });
 };
 
