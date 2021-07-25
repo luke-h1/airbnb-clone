@@ -95,6 +95,7 @@ export class PropertyResolver {
   async properties(
     @Arg('limit', () => Int) limit: number,
     @Arg('cursor', () => String, { nullable: true }) cursor: string | null,
+    @Ctx() { req }: MyContext,
   ): Promise<PaginatedProperties> {
     const realLimit = Math.min(50, limit);
     const realLimitPlusOne = realLimit + 1;
@@ -108,10 +109,16 @@ export class PropertyResolver {
       `
         SELECT p.* from "properties" p 
         ${cursor ? `where p."createdAt" < $2` : ''} 
+        ${
+  process.env.NODE_ENV === 'production'
+          ?? `AND WHERE p."creator.id" = $2`
+}
         ORDER BY p."createdAt" DESC
         LIMIT $1
       `,
-      replacements,
+      process.env.NODE_ENV === 'production'
+        ? [replacements, req.session.userId]
+        : replacements,
     );
     return {
       properties: properties.slice(0, realLimit),
