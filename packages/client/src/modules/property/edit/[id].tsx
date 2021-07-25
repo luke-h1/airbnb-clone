@@ -1,21 +1,25 @@
 import { InputField } from '@src/components/InputField';
 import {
+  useMeQuery,
   usePropertyQuery,
   useUpdatePropertyMutation,
 } from '@src/generated/graphql';
 import { useGetIntId } from '@src/utils/useGetIntId';
 import { Formik, Form } from 'formik';
 import { useRouter } from 'next/router';
-import React from 'react';
+import React, { useEffect } from 'react';
 import { Loader } from '@src/components/Loader';
 import { useIsAuth } from '@src/utils/useIsAuth';
 import Link from 'next/link';
 
 const EditPropertyPage = () => {
   useIsAuth();
+
   const router = useRouter();
   const intId = useGetIntId();
+  const { data: meData } = useMeQuery();
   const [updateProperty] = useUpdatePropertyMutation();
+
   const { data, loading } = usePropertyQuery({
     /**
      * If id =-1 we know we're on server side
@@ -45,6 +49,12 @@ const EditPropertyPage = () => {
   if (!data) {
     return null;
   }
+  useEffect(() => {
+    if (meData?.me?.id !== data.property.creator.id) {
+      router.push('/');
+    }
+  }, []);
+
   return (
     <>
       <h1>Update Property</h1>
@@ -61,7 +71,7 @@ const EditPropertyPage = () => {
           amenities: data.property.amenities,
         }}
         onSubmit={async (values) => {
-          const res = await updateProperty({
+          await updateProperty({
             variables: {
               options: {
                 title: values.title,
@@ -77,8 +87,6 @@ const EditPropertyPage = () => {
               id: intId,
             },
           });
-          console.log(res.data);
-
           router.push(`/property/${intId}`);
         }}
       >
