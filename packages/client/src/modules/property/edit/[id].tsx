@@ -59,7 +59,7 @@ const EditPropertyPage = () => {
           amenities: data.property.amenities,
         }}
         onSubmit={async (values) => {
-          await updateProperty({
+          const res = await updateProperty({
             variables: {
               options: {
                 title: values.title,
@@ -73,6 +73,7 @@ const EditPropertyPage = () => {
               id: intId,
             },
           });
+          console.log(res.data);
 
           router.push(`/property/${intId}`);
         }}
@@ -120,7 +121,7 @@ const EditPropertyPage = () => {
               name="address"
               placeholder="address"
               label="address"
-              type="number"
+              type="text"
             />
             <InputField
               name="amenities"
@@ -133,7 +134,7 @@ const EditPropertyPage = () => {
               <a>
                 <button
                   className="bg-blue-500 hover:bg-blue-400 text-white font-bold py-2 px-4 border-b-4 border-blue-700 hover:border-blue-500 rounded"
-                  type="button"
+                  type="submit"
                   disabled={isSubmitting}
                 >
                   Update Property

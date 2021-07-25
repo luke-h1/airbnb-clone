@@ -123,6 +123,7 @@ export type UpdatePropertyInput = {
   title: Scalars['String'];
   propertyType: Scalars['String'];
   description: Scalars['String'];
+  image: Scalars['String'];
   pricePerNight: Scalars['Int'];
   address: Scalars['String'];
   amenities: Array<Scalars['String']>;
