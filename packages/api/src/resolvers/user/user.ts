@@ -1,6 +1,4 @@
-/* eslint-disable no-shadow */
 import argon2 from 'argon2';
-
 import {
   Arg,
   Ctx,
@@ -20,7 +18,7 @@ import { UsernamePasswordInput } from './inputs/UsernamePasswordInput';
 import { validateRegister } from '../../validation/user/validateRegister';
 import { constants } from '../../shared/constants';
 import { UserRegisterInput } from './inputs/UserRegisterInput';
-import { Upload } from '../../utils/image/upload';
+import { Upload } from '../../utils/image/s3/upload';
 
 @ObjectType()
 class FieldError {
@@ -54,7 +52,7 @@ export class UserResolver {
   fullName(@Root() user: User) {
     if (user) {
       // eslint-disable-next-line prefer-template
-      return user.firstName + '' + user.lastName;
+      return user.firstName + ' ' + user.lastName;
     }
     return null;
   }
@@ -87,6 +85,7 @@ export class UserResolver {
         filename,
         constants.S3UserImageKey,
       );
+
       const result = await getConnection()
         .createQueryBuilder()
         .insert()
@@ -96,10 +95,7 @@ export class UserResolver {
           lastName: options.lastName,
           email: options.email,
           password: hashedPassword,
-          image: image.Location,
-          Bucket: image.Bucket,
-          Key: image.Key,
-          Etag: image.Etag,
+          image,
         })
         .returning('*')
         .execute();
