@@ -14,5 +14,6 @@ declare namespace NodeJS {
     AWS_SECRET_ACCESS_KEY: string;
     AWS_BUCKET_NAME: string;
     AWS_BUCKET_REGION: string;
+    FILE_STROAGE: string;
   }
 }

@@ -14,13 +14,14 @@ import {
 } from 'type-graphql';
 import { getConnection } from 'typeorm';
 import { FileUpload, GraphQLUpload } from 'graphql-upload';
+import { localImageUpload } from '../../utils/image/local/fileSystem';
 import { User } from '../../entities/User';
 import { MyContext } from '../../shared/types';
 import { UsernamePasswordInput } from './inputs/UsernamePasswordInput';
 import { validateRegister } from '../../validation/user/validateRegister';
 import { constants } from '../../shared/constants';
 import { UserRegisterInput } from './inputs/UserRegisterInput';
-import { Upload } from '../../utils/image/upload';
+import { Upload } from '../../utils/image/s3/upload';
 
 @ObjectType()
 class FieldError {
@@ -54,7 +55,7 @@ export class UserResolver {
   fullName(@Root() user: User) {
     if (user) {
       // eslint-disable-next-line prefer-template
-      return user.firstName + '' + user.lastName;
+      return user.firstName + ' ' + user.lastName;
     }
     return null;
   }
@@ -82,11 +83,14 @@ export class UserResolver {
     const hashedPassword = await argon2.hash(options.password);
     let user;
     try {
-      const image = await Upload(
-        createReadStream,
-        filename,
-        constants.S3UserImageKey,
-      );
+      // const image = await Upload(
+      //   createReadStream,
+      //   filename,
+      //   constants.S3UserImageKey,
+      // );
+      let image: string = '';
+      image = await localImageUpload(createReadStream, filename);
+
       const result = await getConnection()
         .createQueryBuilder()
         .insert()
@@ -96,10 +100,10 @@ export class UserResolver {
           lastName: options.lastName,
           email: options.email,
           password: hashedPassword,
-          image: image.Location,
-          Bucket: image.Bucket,
-          Key: image.Key,
-          Etag: image.Etag,
+          image,
+          // Bucket: image.Bucket,
+          // Key: image.Key,
+          // Etag: image.Etag,
         })
         .returning('*')
         .execute();

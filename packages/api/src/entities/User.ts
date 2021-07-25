@@ -25,9 +25,9 @@ export class User extends BaseEntity {
   @Column()
   firstName!: string;
 
-  @Field(() => String, { nullable: true })
+  @Field(() => String)
   @Column()
-  image?: string;
+  image: string;
 
   @Column({ nullable: true })
   Etag: string;

@@ -1,6 +1,6 @@
 import { ReadStream } from 'fs';
 import { v4 } from 'uuid';
-import { S3Object } from '../../interfaces/s3';
+import { S3Object } from '../../../interfaces/s3';
 import { S3, S3DefaultParams } from './s3';
 
 export const Upload = async (

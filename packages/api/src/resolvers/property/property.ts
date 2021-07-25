@@ -22,7 +22,7 @@ import { validateProperty } from '../../validation/property/validateProperty';
 import { Property } from '../../entities/Property';
 import { CreatePropertyInput } from './inputs/CreatePropertyInput';
 import { UpdatePropertyInput } from './inputs/UpdatePropertyInput';
-import { Upload } from '../../utils/image/upload';
+import { Upload } from '../../utils/image/s3/upload';
 
 @ObjectType()
 class PropertyFieldError {
