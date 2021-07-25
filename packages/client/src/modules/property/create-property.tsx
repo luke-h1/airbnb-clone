@@ -11,6 +11,9 @@ interface FormValues {
   propertyType: string;
   image: string;
   pricePerNight: number;
+  beds: number;
+  bedrooms: number;
+
   description: string;
   address: string;
   amenities: string[];
@@ -30,6 +33,8 @@ const CreatePropertyPage = () => {
           propertyType: '',
           image: '',
           pricePerNight: 0,
+          beds: 0,
+          bedrooms: 0,
           description: '',
           address: '',
           amenities: [],
@@ -42,6 +47,8 @@ const CreatePropertyPage = () => {
                 propertyType: values.propertyType,
                 pricePerNight: values.pricePerNight,
                 description: values.description,
+                beds: values.beds,
+                bedrooms: values.bedrooms,
                 address: values.address,
                 amenities: values.amenities,
               },
@@ -98,6 +105,18 @@ const CreatePropertyPage = () => {
                 name="pricePerNight"
                 placeholder="Price per night"
                 label="pricePerNight"
+                type="number"
+              />
+              <InputField
+                name="beds"
+                placeholder="Number of beds"
+                label="beds"
+                type="number"
+              />
+              <InputField
+                name="bedrooms"
+                placeholder="Number of bedrooms"
+                label="bedrooms"
                 type="number"
               />
               <InputField

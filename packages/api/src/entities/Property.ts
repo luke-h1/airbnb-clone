@@ -38,14 +38,13 @@ export class Property extends BaseEntity {
   @Column()
   image: string;
 
-  @Column({ nullable: true })
-  Etag: string;
+  @Field(() => Int)
+  @Column()
+  beds: number;
 
-  @Column({ nullable: true })
-  Key: string;
-
-  @Column({ nullable: true })
-  Bucket: string;
+  @Field(() => Int)
+  @Column()
+  bedrooms: number;
 
   @Field(() => String)
   @Column()

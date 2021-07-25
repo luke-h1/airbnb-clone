@@ -1,4 +1,4 @@
-mutation UpdateProperty($options: UpdatePropertyInput!, $id: Int!, $image: Upload!) {
+mutation UpdateProperty($options: PropertyInput!, $id: Int!, $image: Upload!) {
   updateProperty(options: $options, id: $id, image: $image) {
     id
     title
@@ -10,6 +10,8 @@ mutation UpdateProperty($options: UpdatePropertyInput!, $id: Int!, $image: Uploa
       createdAt
       updatedAt
     }
+    beds
+    bedrooms
     propertyType
     description
     propertyType

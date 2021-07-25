@@ -54,6 +54,8 @@ const EditPropertyPage = () => {
           propertyType: data.property.propertyType,
           image: data.property.image,
           pricePerNight: data.property.pricePerNight,
+          beds: data.property.beds,
+          bedrooms: data.property.bedrooms,
           description: data.property.description,
           address: data.property.address,
           amenities: data.property.amenities,
@@ -66,6 +68,8 @@ const EditPropertyPage = () => {
                 propertyType: values.propertyType,
                 pricePerNight: values.pricePerNight,
                 description: values.description,
+                beds: values.beds,
+                bedrooms: values.bedrooms,
                 address: values.address,
                 amenities: values.amenities,
               },
@@ -115,6 +119,18 @@ const EditPropertyPage = () => {
               name="pricePerNight"
               placeholder="Price per night"
               label="pricePerNight"
+              type="number"
+            />
+            <InputField
+              name="beds"
+              placeholder="Number of beds"
+              label="beds"
+              type="number"
+            />
+            <InputField
+              name="bedrooms"
+              placeholder="Number of bedrooms"
+              label="bedrooms"
               type="number"
             />
             <InputField

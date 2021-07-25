@@ -20,15 +20,6 @@ export type Scalars = {
   Upload: any;
 };
 
-export type CreatePropertyInput = {
-  title: Scalars['String'];
-  propertyType: Scalars['String'];
-  description: Scalars['String'];
-  pricePerNight: Scalars['Int'];
-  address: Scalars['String'];
-  amenities: Array<Scalars['String']>;
-};
-
 export type FieldError = {
   __typename?: 'FieldError';
   field: Scalars['String'];
@@ -47,13 +38,13 @@ export type Mutation = {
 
 export type MutationCreatePropertyArgs = {
   image: Scalars['Upload'];
-  options: CreatePropertyInput;
+  options: PropertyInput;
 };
 
 export type MutationUpdatePropertyArgs = {
   image: Scalars['Upload'];
   id: Scalars['Int'];
-  options: UpdatePropertyInput;
+  options: PropertyInput;
 };
 
 export type MutationDeletePropertyArgs = {
@@ -82,6 +73,8 @@ export type Property = {
   creatorId: Scalars['Int'];
   propertyType: Scalars['String'];
   image: Scalars['String'];
+  beds: Scalars['Int'];
+  bedrooms: Scalars['Int'];
   description: Scalars['String'];
   pricePerNight: Scalars['Int'];
   address: Scalars['String'];
@@ -95,6 +88,17 @@ export type PropertyFieldError = {
   __typename?: 'PropertyFieldError';
   field: Scalars['String'];
   message: Scalars['String'];
+};
+
+export type PropertyInput = {
+  title: Scalars['String'];
+  propertyType: Scalars['String'];
+  description: Scalars['String'];
+  pricePerNight: Scalars['Int'];
+  beds: Scalars['Int'];
+  bedrooms: Scalars['Int'];
+  address: Scalars['String'];
+  amenities: Array<Scalars['String']>;
 };
 
 export type PropertyResponse = {
@@ -117,16 +121,6 @@ export type QueryPropertiesArgs = {
 
 export type QueryPropertyArgs = {
   id: Scalars['Int'];
-};
-
-export type UpdatePropertyInput = {
-  title: Scalars['String'];
-  propertyType: Scalars['String'];
-  description: Scalars['String'];
-  image: Scalars['String'];
-  pricePerNight: Scalars['Int'];
-  address: Scalars['String'];
-  amenities: Array<Scalars['String']>;
 };
 
 export type User = {
@@ -176,7 +170,7 @@ export type RegularUserResponseFragment = { __typename?: 'UserResponse' } & {
 };
 
 export type CreatePropertyMutationVariables = Exact<{
-  options: CreatePropertyInput;
+  options: PropertyInput;
   image: Scalars['Upload'];
 }>;
 
@@ -201,6 +195,8 @@ export type CreatePropertyMutation = { __typename?: 'Mutation' } & {
         | 'pricePerNight'
         | 'address'
         | 'amenities'
+        | 'beds'
+        | 'bedrooms'
         | 'createdAt'
         | 'updatedAt'
       > & {
@@ -247,7 +243,7 @@ export type RegisterMutation = { __typename?: 'Mutation' } & {
 };
 
 export type UpdatePropertyMutationVariables = Exact<{
-  options: UpdatePropertyInput;
+  options: PropertyInput;
   id: Scalars['Int'];
   image: Scalars['Upload'];
 }>;
@@ -258,6 +254,8 @@ export type UpdatePropertyMutation = { __typename?: 'Mutation' } & {
       Property,
       | 'id'
       | 'title'
+      | 'beds'
+      | 'bedrooms'
       | 'propertyType'
       | 'description'
       | 'address'
@@ -297,6 +295,8 @@ export type PropertiesQuery = { __typename?: 'Query' } & {
           | 'propertyType'
           | 'image'
           | 'description'
+          | 'beds'
+          | 'bedrooms'
           | 'pricePerNight'
           | 'address'
           | 'amenities'
@@ -326,6 +326,8 @@ export type PropertyQuery = { __typename?: 'Query' } & {
     | 'description'
     | 'pricePerNight'
     | 'address'
+    | 'beds'
+    | 'bedrooms'
     | 'amenities'
     | 'createdAt'
     | 'updatedAt'
@@ -366,7 +368,7 @@ export const RegularUserResponseFragmentDoc = gql`
   ${RegularUserFragmentDoc}
 `;
 export const CreatePropertyDocument = gql`
-  mutation CreateProperty($options: CreatePropertyInput!, $image: Upload!) {
+  mutation CreateProperty($options: PropertyInput!, $image: Upload!) {
     createProperty(options: $options, image: $image) {
       errors {
         field
@@ -381,6 +383,8 @@ export const CreatePropertyDocument = gql`
         pricePerNight
         address
         amenities
+        beds
+        bedrooms
         createdAt
         updatedAt
         creator {
@@ -628,7 +632,7 @@ export type RegisterMutationOptions = Apollo.BaseMutationOptions<
 >;
 export const UpdatePropertyDocument = gql`
   mutation UpdateProperty(
-    $options: UpdatePropertyInput!
+    $options: PropertyInput!
     $id: Int!
     $image: Upload!
   ) {
@@ -643,6 +647,8 @@ export const UpdatePropertyDocument = gql`
         createdAt
         updatedAt
       }
+      beds
+      bedrooms
       propertyType
       description
       propertyType
@@ -747,6 +753,8 @@ export const PropertiesDocument = gql`
         propertyType
         image
         description
+        beds
+        bedrooms
         pricePerNight
         address
         amenities
@@ -822,6 +830,8 @@ export const PropertyDocument = gql`
       description
       pricePerNight
       address
+      beds
+      bedrooms
       amenities
       createdAt
       updatedAt

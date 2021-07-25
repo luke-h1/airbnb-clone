@@ -20,8 +20,7 @@ import { isAuth } from '../../middleware/isAuth';
 import { MyContext } from '../../shared/types';
 import { validateProperty } from '../../validation/property/validateProperty';
 import { Property } from '../../entities/Property';
-import { CreatePropertyInput } from './inputs/CreatePropertyInput';
-import { UpdatePropertyInput } from './inputs/UpdatePropertyInput';
+import { PropertyInput } from './inputs/PropertyInput';
 import { Upload } from '../../utils/image/s3/upload';
 
 @ObjectType()
@@ -61,7 +60,7 @@ export class PropertyResolver {
   @Mutation(() => PropertyResponse)
   @UseMiddleware(isAuth)
   async createProperty(
-    @Arg('options') options: CreatePropertyInput,
+    @Arg('options') options: PropertyInput,
     @Ctx() { req }: MyContext,
     @Arg('image', () => GraphQLUpload)
       { createReadStream, filename }: FileUpload,
@@ -131,7 +130,7 @@ export class PropertyResolver {
   @Mutation(() => Property, { nullable: true })
   @UseMiddleware(isAuth)
   async updateProperty(
-    @Arg('options') options: UpdatePropertyInput,
+    @Arg('options') options: PropertyInput,
     @Arg('id', () => Int) id: number,
     @Arg('image', () => GraphQLUpload)
       { createReadStream, filename }: FileUpload,
@@ -142,6 +141,8 @@ export class PropertyResolver {
       propertyType,
       description,
       pricePerNight,
+      beds,
+      bedrooms,
       address,
       amenities,
     } = options;
@@ -159,6 +160,8 @@ export class PropertyResolver {
         description,
         pricePerNight,
         address,
+        beds,
+        bedrooms,
         image,
         amenities,
       })
