@@ -69,7 +69,7 @@ export class PropertyResolver {
     if (errors) {
       return { errors };
     }
-    const image = await Upload(
+    const { image, imageFileName } = await Upload(
       createReadStream,
       filename,
       constants.S3PropertyImageKey,
@@ -81,7 +81,7 @@ export class PropertyResolver {
       .values({
         ...options,
         creatorId: req.session.userId,
-        imageFileName: filename,
+        imageFileName,
         image,
       })
       .returning('*')
@@ -150,7 +150,7 @@ export class PropertyResolver {
       address,
       amenities,
     } = options;
-    const image = await Upload(
+    const { image, imageFileName } = await Upload(
       createReadStream,
       filename,
       constants.S3PropertyImageKey,
@@ -167,6 +167,7 @@ export class PropertyResolver {
         beds,
         bedrooms,
         image,
+        imageFileName,
         amenities,
       })
       .where('id = :id and creatorId = :creatorId', {
@@ -184,9 +185,9 @@ export class PropertyResolver {
     @Arg('id', () => Int) id: number,
     @Ctx() { req }: MyContext,
   ): Promise<boolean> {
+    const property = await Property.findOne(id);
+    await Delete(property!.imageFileName);
     await Property.delete({ id, creatorId: req.session.userId });
-    const property = await Property.findOne({ id });
-    await Delete(`${constants.S3PropertyImageKey}/${property?.imageFileName}`);
     return true;
   }
 }

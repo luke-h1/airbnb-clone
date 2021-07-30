@@ -80,11 +80,13 @@ export class UserResolver {
     const hashedPassword = await bcrypt.hash(options.password, 12);
     let user;
     try {
-      const image = await Upload(
+      const { image, imageFileName } = await Upload(
         createReadStream,
         filename,
         constants.S3UserImageKey,
       );
+      console.log('image', image);
+      console.log('imageFileName', imageFileName);
 
       const result = await getConnection()
         .createQueryBuilder()
@@ -96,7 +98,7 @@ export class UserResolver {
           email: options.email,
           password: hashedPassword,
           image,
-          imageFileName: filename,
+          imageFileName,
         })
         .returning('*')
         .execute();

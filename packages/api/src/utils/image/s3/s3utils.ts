@@ -17,7 +17,7 @@ export const Upload = async (
   createReadStream: () => ReadStream,
   filename: string,
   key: string,
-) => new Promise<string>((res, rej) => {
+) => new Promise<{ image: string; imageFileName: string }>((res, rej) => {
   S3.upload(
     {
       ...S3DefaultParams,
@@ -33,14 +33,21 @@ export const Upload = async (
         return e;
       }
       console.log('✅ uploaded file', data);
-      res(data.Location);
-      return data.Location;
+      res({
+        image: data.Location,
+        imageFileName: data.Key,
+      });
+      return {
+        image: data.Location,
+        imageFileName: data.Key,
+      };
     },
   );
 });
 
 export const Delete = async (Key: string) => {
   const params = { Bucket: process.env.AWS_BUCKET_NAME, Key };
+  console.log('Key', Key);
   return new Promise((res, rej) => {
     s3.deleteObject(params, (e, data) => {
       if (e) {
@@ -49,6 +56,7 @@ export const Delete = async (Key: string) => {
         return false;
       }
       console.log(data);
+      console.log(`DELETE ${Key} FROM ${process.env.AWS_BUCKET_NAME}`);
       res(data);
       return true;
     });
