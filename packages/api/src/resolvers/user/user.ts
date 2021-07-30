@@ -18,7 +18,7 @@ import { UsernamePasswordInput } from './inputs/UsernamePasswordInput';
 import { validateRegister } from '../../validation/user/validateRegister';
 import { constants } from '../../shared/constants';
 import { UserRegisterInput } from './inputs/UserRegisterInput';
-import { Upload } from '../../utils/image/s3/upload';
+import { Upload } from '../../utils/image/s3/s3utils';
 
 @ObjectType()
 class FieldError {
@@ -96,6 +96,7 @@ export class UserResolver {
           email: options.email,
           password: hashedPassword,
           image,
+          imageFileName: filename,
         })
         .returning('*')
         .execute();

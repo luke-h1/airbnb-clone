@@ -21,7 +21,7 @@ import { MyContext } from '../../shared/types';
 import { validateProperty } from '../../validation/property/validateProperty';
 import { Property } from '../../entities/Property';
 import { PropertyInput } from './inputs/PropertyInput';
-import { Upload } from '../../utils/image/s3/upload';
+import { Delete, Upload } from '../../utils/image/s3/s3utils';
 
 @ObjectType()
 class PropertyFieldError {
@@ -81,6 +81,7 @@ export class PropertyResolver {
       .values({
         ...options,
         creatorId: req.session.userId,
+        imageFileName: filename,
         image,
       })
       .returning('*')
@@ -184,6 +185,8 @@ export class PropertyResolver {
     @Ctx() { req }: MyContext,
   ): Promise<boolean> {
     await Property.delete({ id, creatorId: req.session.userId });
+    const property = await Property.findOne({ id });
+    await Delete(`${constants.S3PropertyImageKey}/${property?.imageFileName}`);
     return true;
   }
 }

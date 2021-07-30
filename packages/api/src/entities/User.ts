@@ -31,6 +31,10 @@ export class User extends BaseEntity {
 
   @Field(() => String)
   @Column()
+  imageFileName: string;
+
+  @Field(() => String)
+  @Column()
   lastName!: string;
 
   @Column()
