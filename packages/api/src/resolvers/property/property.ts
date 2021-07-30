@@ -21,7 +21,7 @@ import { MyContext } from '../../shared/types';
 import { validateProperty } from '../../validation/property/validateProperty';
 import { Property } from '../../entities/Property';
 import { PropertyInput } from './inputs/PropertyInput';
-import { Upload } from '../../utils/image/s3/upload';
+import { Delete, Upload } from '../../utils/image/s3/s3utils';
 
 @ObjectType()
 class PropertyFieldError {
@@ -69,7 +69,7 @@ export class PropertyResolver {
     if (errors) {
       return { errors };
     }
-    const image = await Upload(
+    const { image, imageFileName } = await Upload(
       createReadStream,
       filename,
       constants.S3PropertyImageKey,
@@ -81,6 +81,7 @@ export class PropertyResolver {
       .values({
         ...options,
         creatorId: req.session.userId,
+        imageFileName,
         image,
       })
       .returning('*')
@@ -149,7 +150,7 @@ export class PropertyResolver {
       address,
       amenities,
     } = options;
-    const image = await Upload(
+    const { image, imageFileName } = await Upload(
       createReadStream,
       filename,
       constants.S3PropertyImageKey,
@@ -166,6 +167,7 @@ export class PropertyResolver {
         beds,
         bedrooms,
         image,
+        imageFileName,
         amenities,
       })
       .where('id = :id and creatorId = :creatorId', {
@@ -183,6 +185,8 @@ export class PropertyResolver {
     @Arg('id', () => Int) id: number,
     @Ctx() { req }: MyContext,
   ): Promise<boolean> {
+    const property = await Property.findOne(id);
+    await Delete(property!.imageFileName);
     await Property.delete({ id, creatorId: req.session.userId });
     return true;
   }
