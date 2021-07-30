@@ -32,7 +32,9 @@ export const Upload = async (
         console.log(e);
         return e;
       }
-      console.log('✅ uploaded file', data);
+      console.log(
+        `Uploaded file to ${process.env.NODE_ENV} s3 bucket: ${data}`,
+      );
       res({
         image: data.Location,
         imageFileName: data.Key,
@@ -55,8 +57,7 @@ export const Delete = async (Key: string) => {
         rej(e);
         return false;
       }
-      console.log(data);
-      console.log(`DELETE ${Key} FROM ${process.env.AWS_BUCKET_NAME}`);
+      console.log(`Deleted ${Key} from ${process.env.NODE_ENV} s3 bucket`);
       res(data);
       return true;
     });
