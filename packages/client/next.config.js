@@ -10,7 +10,6 @@ module.exports = {
     return config;
   },
   withImages,
-
   module: {
     rules: [
       {
@@ -24,6 +23,9 @@ module.exports = {
     ],
   },
   images: {
-    domains: ['dev-airbnb-clone.s3.eu-west-2.amazonaws.com'],
+    domains: [
+      'dev-airbnb-clone.s3.eu-west-2.amazonaws.com',
+      'prod-airbnb-clone.s3.eu-west-2.amazonaws.com',
+    ],
   },
 };
