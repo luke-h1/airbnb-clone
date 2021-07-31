@@ -5,7 +5,6 @@ import { Formik, Form } from 'formik';
 import { useRouter } from 'next/router';
 import React from 'react';
 import { toPropertyErrorMap } from '@src/utils/toErrorMap';
-import { propertySchema } from '@src/validation/propertySchema';
 
 interface FormValues {
   title: string;
@@ -14,7 +13,6 @@ interface FormValues {
   pricePerNight: number;
   beds: number;
   bedrooms: number;
-
   description: string;
   address: string;
   amenities: string[];
@@ -40,7 +38,6 @@ const CreatePropertyPage = () => {
           address: '',
           amenities: [],
         }}
-        validationSchema={propertySchema}
         onSubmit={async (values, { setErrors }) => {
           const res = await createProperty({
             variables: {
@@ -63,9 +60,8 @@ const CreatePropertyPage = () => {
 
           if (res.data?.createProperty.errors) {
             setErrors(toPropertyErrorMap(res.data.createProperty.errors));
-          } else {
-            router.push('/');
           }
+          router.push('/');
         }}
       >
         {({ isSubmitting, setFieldValue }) => (
@@ -134,8 +130,12 @@ const CreatePropertyPage = () => {
                 label="amenities"
                 type="text"
               />
-              <button type="submit" disabled={isSubmitting}>
-                Create Property
+              <button
+                className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-2 rounded"
+                type="submit"
+                disabled={isSubmitting}
+              >
+                Create
               </button>
             </Form>
           </div>
