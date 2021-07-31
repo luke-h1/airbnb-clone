@@ -14,7 +14,7 @@ const index = () => {
     notifyOnNetworkStatusChange: true,
   });
   return (
-    <div className="flex flex-col align-center items-center">
+    <div className="flex flex-col align-center items-center justify-center place-items-center">
       {error ? <p className="text-4xl">{error.message}</p> : null}
       <div>
         {data?.properties.properties.map((p) => (!p ? (

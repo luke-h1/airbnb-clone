@@ -30,10 +30,6 @@ const Nav = () => {
         name: 'Create Property',
         href: '/property/create-property',
       },
-      {
-        name: 'My Profile',
-        href: '/me',
-      },
     ];
   }
 

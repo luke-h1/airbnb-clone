@@ -26,7 +26,6 @@ export const localImageUpload = async (
   const stream = createReadStream();
   const filePath = `${v4()}-${filename}`;
   stream.pipe(fs.createWriteStream(`${STORAGE_DIR}/${filePath}`));
-  stream.on('end', () => encodeURI(`${STORAGE_DIR}/${filePath}`));
   stream.on('end', () => {
     let url: string = '';
     url = encodeURI(`${STORAGE_DIR}/${filePath}`);

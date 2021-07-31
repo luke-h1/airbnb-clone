@@ -5,6 +5,6 @@ interface ContainerProps {
 }
 
 const Container: React.FC<ContainerProps> = ({ children }) => {
-  return <main className="max-w-4xl mx-auto mt- antialiased">{children}</main>;
+  return <main className="max-w-4xl mx-auto mt-3 antialiased">{children}</main>;
 };
 export default Container;

@@ -13,7 +13,7 @@ function MyApp({ Component, pageProps }: AppProps) {
 
   return (
     <ApolloProvider client={apolloClient}>
-      <main className="max-w-4xl mx-auto mt- antialiased mb-6">
+      <main className="max-w-4xl mx-auto antialiased mb-6">
         <Nav {...pageProps} />
       </main>
       <Container>

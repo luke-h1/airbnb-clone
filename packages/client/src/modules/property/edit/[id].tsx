@@ -7,7 +7,7 @@ import {
 import { useGetIntId } from '@src/utils/useGetIntId';
 import { Formik, Form } from 'formik';
 import { useRouter } from 'next/router';
-import React, { useEffect } from 'react';
+import React from 'react';
 import { Loader } from '@src/components/Loader';
 import { useIsAuth } from '@src/utils/useIsAuth';
 import Link from 'next/link';
@@ -49,11 +49,9 @@ const EditPropertyPage = () => {
   if (!data) {
     return null;
   }
-  useEffect(() => {
-    if (meData?.me?.id !== data.property.creator.id) {
-      router.push('/');
-    }
-  }, []);
+  if (meData?.me?.id !== data.property.creator.id) {
+    router.push('/');
+  }
 
   return (
     <>
@@ -117,7 +115,6 @@ const EditPropertyPage = () => {
               type="file"
               id="image"
               value={undefined}
-              required
               onChange={(e) => {
                 // @ts-ignore
                 setFieldValue('image', e.currentTarget.files[0]);
@@ -128,18 +125,21 @@ const EditPropertyPage = () => {
               placeholder="Price per night"
               label="pricePerNight"
               type="number"
+              min="1"
             />
             <InputField
               name="beds"
               placeholder="Number of beds"
               label="beds"
               type="number"
+              min="1"
             />
             <InputField
               name="bedrooms"
               placeholder="Number of bedrooms"
               label="bedrooms"
               type="number"
+              min="1"
             />
             <InputField
               name="address"

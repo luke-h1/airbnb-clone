@@ -1,6 +1,6 @@
 import React from 'react';
 import { Menu, Transition } from '@headlessui/react';
-import { ChevronDownIcon } from '@chakra-ui/icons';
+import { AiFillCaretDown } from 'react-icons/ai';
 import Link from 'next/link';
 import { useLogoutMutation, User } from '@src/generated/graphql';
 import { useRouter } from 'next/router';
@@ -54,7 +54,7 @@ const DropDown: React.FC<DropDownProps> = ({ links, me }) => {
                 <path d="m2 8h28" />
               </g>
             </svg>
-            <ChevronDownIcon
+            <AiFillCaretDown
               className="w-5 h-5 ml-2 -mr-1 text-violet-200 hover:text-violet-100"
               aria-hidden="true"
             />

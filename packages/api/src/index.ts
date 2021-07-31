@@ -3,9 +3,10 @@ import { ApolloServer } from 'apollo-server-express';
 import connectRedis from 'connect-redis';
 import cors from 'cors';
 import 'dotenv-safe/config';
-import express from 'express';
+import express, { Response } from 'express';
 import session from 'express-session';
 import { graphqlUploadExpress } from 'graphql-upload';
+import rateLimit from 'express-rate-limit';
 import { constants } from './shared/constants';
 import { createUserLoader } from './Loaders/UserLoader';
 import { redis } from './shared/redis';
@@ -63,6 +64,16 @@ const main = async () => {
   apolloServer.applyMiddleware({
     app,
     cors: false,
+  });
+
+  const limiter = rateLimit({
+    windowMs: 10 * 60 * 1000, // 10 minutes
+    max: 15, // limit each IP to 15 requests per windowMs
+    message: 'Too many health check requests',
+  });
+
+  app.get('/api/health', limiter, (_, res: Response) => {
+    res.status(200).json({ status: 'ok' });
   });
 
   app.listen(process.env.PORT, () => {

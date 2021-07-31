@@ -13,7 +13,6 @@ interface FormValues {
   pricePerNight: number;
   beds: number;
   bedrooms: number;
-
   description: string;
   address: string;
   amenities: string[];
@@ -61,9 +60,8 @@ const CreatePropertyPage = () => {
 
           if (res.data?.createProperty.errors) {
             setErrors(toPropertyErrorMap(res.data.createProperty.errors));
-          } else {
-            router.push('/');
           }
+          router.push('/');
         }}
       >
         {({ isSubmitting, setFieldValue }) => (
@@ -94,7 +92,6 @@ const CreatePropertyPage = () => {
                 type="file"
                 id="image"
                 value={undefined}
-                required
                 onChange={(e) => {
                   // @ts-ignore
                   setFieldValue('image', e.currentTarget.files[0]);
@@ -106,18 +103,21 @@ const CreatePropertyPage = () => {
                 placeholder="Price per night"
                 label="pricePerNight"
                 type="number"
+                min="1"
               />
               <InputField
                 name="beds"
                 placeholder="Number of beds"
                 label="beds"
                 type="number"
+                min="1"
               />
               <InputField
                 name="bedrooms"
                 placeholder="Number of bedrooms"
                 label="bedrooms"
                 type="number"
+                min="1"
               />
               <InputField
                 name="address"
@@ -132,8 +132,12 @@ const CreatePropertyPage = () => {
                 label="amenities"
                 type="text"
               />
-              <button type="submit" disabled={isSubmitting}>
-                Create Property
+              <button
+                className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-2 rounded"
+                type="submit"
+                disabled={isSubmitting}
+              >
+                Create
               </button>
             </Form>
           </div>

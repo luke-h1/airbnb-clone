@@ -107,16 +107,16 @@ export class PropertyResolver {
     }
 
     // TODO: Change this SQL query before deploying
+
     const properties = await getConnection().query(
       `
-      SELECT p.* from "properties" p 
-      ${cursor ? `where p."createdAt" < $2` : ''} 
-      ORDER BY p."createdAt" DESC
-      LIMIT $1
-    `,
-      process.env.NODE_ENV === 'production'
-        ? [replacements, req.session.userId]
-        : replacements,
+        SELECT p.* from "properties" p
+        WHERE (p."creatorId" = $1)
+        ${cursor ? `AND WHERE p."createdAt" < ${replacements}` : ''}
+        ORDER BY p."createdAt" DESC
+        LIMIT $1
+      `,
+      [req.session.userId],
     );
     return {
       properties: properties.slice(0, realLimit),
