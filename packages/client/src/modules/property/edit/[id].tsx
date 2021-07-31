@@ -115,7 +115,6 @@ const EditPropertyPage = () => {
               type="file"
               id="image"
               value={undefined}
-              required
               onChange={(e) => {
                 // @ts-ignore
                 setFieldValue('image', e.currentTarget.files[0]);
@@ -126,18 +125,21 @@ const EditPropertyPage = () => {
               placeholder="Price per night"
               label="pricePerNight"
               type="number"
+              min="1"
             />
             <InputField
               name="beds"
               placeholder="Number of beds"
               label="beds"
               type="number"
+              min="1"
             />
             <InputField
               name="bedrooms"
               placeholder="Number of bedrooms"
               label="bedrooms"
               type="number"
+              min="1"
             />
             <InputField
               name="address"
