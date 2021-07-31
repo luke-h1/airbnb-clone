@@ -5,7 +5,6 @@ echo Enter IP address
 read TARGET
 echo Enter user 
 read USER 
-cd ../src/api
 
 echo "🚀 Deploying api to production"
 
