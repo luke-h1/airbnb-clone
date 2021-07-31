@@ -33,7 +33,7 @@ export const Upload = async (
         return e;
       }
       console.log(
-        `Uploaded file to ${process.env.NODE_ENV} s3 bucket: ${data}`,
+        `Uploaded file to ${process.env.AWS_BUCKET_NAME} s3 bucket: ${data.Location}`,
       );
       res({
         image: data.Location,
