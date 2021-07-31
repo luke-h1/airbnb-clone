@@ -112,7 +112,7 @@ export class PropertyResolver {
       `
         SELECT p.* from "properties" p
         WHERE (p."creatorId" = $1)
-        ${cursor ? `AND WHERE p."createdAt" < $2` : ''}
+        ${cursor ? `AND WHERE p."createdAt" < ${replacements}` : ''}
         ORDER BY p."createdAt" DESC
         LIMIT $1
       `,
