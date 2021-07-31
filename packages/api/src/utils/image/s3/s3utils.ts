@@ -57,7 +57,7 @@ export const Delete = async (Key: string) => {
         rej(e);
         return false;
       }
-      console.log(`Deleted ${Key} from ${process.env.NODE_ENV} s3 bucket`);
+      console.log(`Deleted ${Key} from ${process.env.AWS_BUCKET_NAME} s3 bucket`);
       res(data);
       return true;
     });
