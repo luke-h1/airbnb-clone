@@ -1,4 +1,3 @@
-import bcrypt from 'bcryptjs';
 import {
   Arg,
   Ctx,
@@ -12,6 +11,7 @@ import {
 } from 'type-graphql';
 import { getConnection } from 'typeorm';
 import { FileUpload, GraphQLUpload } from 'graphql-upload';
+import argon2 from 'argon2';
 import { User } from '../../entities/User';
 import { MyContext } from '../../shared/types';
 import { UsernamePasswordInput } from './inputs/UsernamePasswordInput';
@@ -77,7 +77,7 @@ export class UserResolver {
     if (errors) {
       return { errors };
     }
-    const hashedPassword = await bcrypt.hash(options.password, 12);
+    const hashedPassword = await argon2.hash(options.password);
     let user;
     try {
       const { image, imageFileName } = await Upload(
@@ -142,7 +142,7 @@ export class UserResolver {
         ],
       };
     }
-    const valid = await bcrypt.compare(user.password, password);
+    const valid = await argon2.verify(user.password, password);
     if (!valid) {
       return {
         errors: [

@@ -8,7 +8,6 @@ import {
   useRegisterMutation,
 } from 'src/generated/graphql';
 import { toErrorMap } from 'src/utils/toErrorMap';
-import { registerSchema } from '@src/validation/registerSchema';
 
 interface FormValues {
   firstName: string;
@@ -32,7 +31,6 @@ const RegisterPage = () => {
           email: '',
           password: '',
         }}
-        validationSchema={registerSchema}
         onSubmit={async (values, { setErrors }) => {
           const res = await register({
             variables: {
