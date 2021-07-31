@@ -6,7 +6,7 @@
     "password": "Password",
     "database": "abb-clone",
     "entities": ["dist/entities/*.js"],
-    "migrations": ["src/migrations/*.js"],
+    "migrations": ["dist/migrations/*.ts"],
     "cli": {
         "migrationsDir": "src/migrations/"
     }

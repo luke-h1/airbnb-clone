@@ -16,6 +16,8 @@
     "bootstrap:prod": "lerna bootstrap --ci --force-local -- --only=prod",
     "bootstrap:install": "lerna bootstrap --force-local",
     "build": "lerna run build",
+    "deploy:server": "sh scripts/deploy:server.sh",
+    "deploy:client": "sh scripts/deploy:client.sh",
     "clean": "lerna clean -y",
     "ci:local": "sh scripts/ci:local.sh",
     "prepare": "husky install"
