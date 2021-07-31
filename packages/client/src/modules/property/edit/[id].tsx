@@ -7,7 +7,7 @@ import {
 import { useGetIntId } from '@src/utils/useGetIntId';
 import { Formik, Form } from 'formik';
 import { useRouter } from 'next/router';
-import React, { useEffect } from 'react';
+import React from 'react';
 import { Loader } from '@src/components/Loader';
 import { useIsAuth } from '@src/utils/useIsAuth';
 import Link from 'next/link';
@@ -49,11 +49,9 @@ const EditPropertyPage = () => {
   if (!data) {
     return null;
   }
-  useEffect(() => {
-    if (meData?.me?.id !== data.property.creator.id) {
-      router.push('/');
-    }
-  }, []);
+  if (meData?.me?.id !== data.property.creator.id) {
+    router.push('/');
+  }
 
   return (
     <>

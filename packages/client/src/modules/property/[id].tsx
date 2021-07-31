@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React from 'react';
 import { useGetPropertyFromUrl } from '@src/utils/useGetPropertyFromUrl';
 import { Loader } from '@src/components/Loader';
 import { useMeQuery } from '@src/generated/graphql';
@@ -15,21 +15,16 @@ const SingleProperty: React.FC<{}> = () => {
     return <p className="text-4xl">{error.message}</p>;
   }
 
-  useEffect(() => {
-    if (meData?.me?.id !== data?.property.creator.id) {
-      router.push('/');
-    }
-    if (!data?.property.id) {
-      router.push('/');
-    }
-  }, []);
+  if (meData?.me?.id !== data?.property.creator.id) {
+    router.push('/');
+  }
   return (
     <>
       <section className="text-gray-600 body-font">
         <div className="container mx-auto flex px-5 py-24 items-center justify-center flex-col">
           <img
             className="lg:w-2/6 md:w-3/6 w-5/6 mb-10 object-cover object-center rounded"
-            alt="hero"
+            alt={data?.property.title}
             src={data?.property.image}
           />
           <div className="text-center lg:w-2/3 w-full">
