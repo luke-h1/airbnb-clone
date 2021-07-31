@@ -5,6 +5,7 @@ import { InputField } from '@src/components/InputField';
 import { MeDocument, MeQuery, useLoginMutation } from '@src/generated/graphql';
 import { toErrorMap } from '@src/utils/toErrorMap';
 import Link from 'next/link';
+import { loginSchema } from '@src/validation/loginSchema';
 
 interface FormValues {
   email: string;
@@ -21,6 +22,7 @@ const RegisterPage = () => {
           email: '',
           password: '',
         }}
+        validationSchema={loginSchema}
         onSubmit={async (values, { setErrors }) => {
           const res = await login({
             variables: { options: values },
