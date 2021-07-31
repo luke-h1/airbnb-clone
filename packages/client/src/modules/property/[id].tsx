@@ -19,7 +19,7 @@ const SingleProperty: React.FC<{}> = () => {
     if (meData?.me?.id !== data?.property.creator.id) {
       router.push('/');
     }
-    if (!data?.property) {
+    if (!data?.property.id) {
       router.push('/');
     }
   }, []);

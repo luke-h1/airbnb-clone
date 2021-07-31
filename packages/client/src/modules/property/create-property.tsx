@@ -5,6 +5,7 @@ import { Formik, Form } from 'formik';
 import { useRouter } from 'next/router';
 import React from 'react';
 import { toPropertyErrorMap } from '@src/utils/toErrorMap';
+import { propertySchema } from '@src/validation/propertySchema';
 
 interface FormValues {
   title: string;
@@ -39,6 +40,7 @@ const CreatePropertyPage = () => {
           address: '',
           amenities: [],
         }}
+        validationSchema={propertySchema}
         onSubmit={async (values, { setErrors }) => {
           const res = await createProperty({
             variables: {
