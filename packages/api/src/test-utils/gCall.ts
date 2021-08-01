@@ -1,7 +1,7 @@
 /* eslint-disable no-undef */
 import { graphql, GraphQLSchema } from 'graphql';
 import { Maybe } from 'graphql/jsutils/Maybe';
-import { createSchema } from '../shared/createSchema';
+import { createSchema } from '../utils/createSchema';
 
 interface Options {
   source: string;
