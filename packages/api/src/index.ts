@@ -7,11 +7,11 @@ import express, { Response } from 'express';
 import session from 'express-session';
 import { graphqlUploadExpress } from 'graphql-upload';
 import rateLimit from 'express-rate-limit';
-import { constants } from './shared/constants';
+import { constants } from './utils/constants';
 import { createUserLoader } from './Loaders/UserLoader';
-import { redis } from './shared/redis';
-import { createSchema } from './shared/createSchema';
-import { createConn } from './shared/createConn';
+import { redis } from './utils/redis';
+import { createSchema } from './utils/createSchema';
+import { createConn } from './utils/createConn';
 
 const main = async () => {
   await createConn();
