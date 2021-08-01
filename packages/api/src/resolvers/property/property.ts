@@ -106,8 +106,6 @@ export class PropertyResolver {
       replacements.push(new Date(parseInt(cursor, 10)));
     }
 
-    // TODO: Change this SQL query before deploying
-
     const properties = await getConnection().query(
       `
         SELECT p.* from "properties" p
