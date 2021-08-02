@@ -22,8 +22,11 @@ afterAll(async () => {
 const meQuery = `
 {
     me {
-        id
-        email
+       id  
+       firstName
+       lastName
+       image
+       email
     }
 }
 `;
@@ -31,7 +34,11 @@ const meQuery = `
 describe('me', () => {
   it('get user', async () => {
     const user = await User.create({
+      firstName: faker.name.firstName(),
+      lastName: faker.name.lastName(),
       email: faker.internet.email(),
+      image: faker.internet.avatar(),
+      imageFileName: faker.internet.avatar(),
       password: faker.internet.password(),
     }).save();
 
@@ -45,6 +52,9 @@ describe('me', () => {
       data: {
         me: {
           id: user.id,
+          firstName: user.firstName,
+          lastName: user.lastName,
+          image: user.image,
           email: user.email,
         },
       },
@@ -52,6 +62,10 @@ describe('me', () => {
   });
   it('return null', async () => {
     await User.create({
+      firstName: faker.name.firstName(),
+      lastName: faker.name.lastName(),
+      image: faker.internet.avatar(),
+      imageFileName: faker.internet.avatar(),
       email: faker.internet.email(),
       password: faker.internet.password(),
     }).save();

@@ -1,5 +1,5 @@
 import { MiddlewareFn } from 'type-graphql';
-import { MyContext } from '../utils/types';
+import { MyContext } from '../types/types';
 
 export const isAuth: MiddlewareFn<MyContext> = ({ context }, next) => {
   if (!context.req.session.userId) {

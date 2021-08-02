@@ -4,7 +4,7 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "gen-env": "gen-env-types .env -o src/utils/env.d.ts -e .",
+    "gen-env": "gen-env-types .env -o src/types/env.d.ts -e .",
     "build": "rimraf dist && tsc -p tsconfig.json",
     "start": "NODE_ENV=production node dist/index.js",
     "lint": "eslint --ext .ts,.tsx,.js,.jsx src --fix",
@@ -53,7 +53,6 @@
   "dependencies": {
     "@types/jest": "^26.0.23",
     "apollo-server-express": "^2.23.0",
-    "argon2": "^0.28.2",
     "aws-sdk": "^2.939.0",
     "axios": "^0.21.1",
     "bcryptjs": "^2.4.3",
@@ -68,7 +67,6 @@
     "graphql-upload": "^12.0.0",
     "ioredis": "^4.27.1",
     "jest": "^27.0.3",
-    "nodemailer": "^6.6.0",
     "pg": "^8.6.0",
     "rate-limit-redis": "^2.1.0",
     "reflect-metadata": "^0.1.13",

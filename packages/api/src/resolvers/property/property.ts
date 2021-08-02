@@ -17,7 +17,7 @@ import { FileUpload, GraphQLUpload } from 'graphql-upload';
 import { constants } from '../../utils/constants';
 import { User } from '../../entities/User';
 import { isAuth } from '../../middleware/isAuth';
-import { MyContext } from '../../utils/types';
+import { MyContext } from '../../types/types';
 import { validateProperty } from '../../validation/property/validateProperty';
 import { Property } from '../../entities/Property';
 import { PropertyInput } from './inputs/PropertyInput';
