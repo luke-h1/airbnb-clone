@@ -15,7 +15,6 @@
     "db:setup": "ts-node ./src/test-utils/setup.ts",
     "test": "cross-env NODE_ENV=test npm run db:setup && jest",
     "test:watch": "cross-env NODE_ENV=test npm run db:setup && jest --watch",
-    "jest:cache": "cross-env NODE_ENV=test jest --clearCache",
     "gen:migration": "typeorm migration:generate -n <NAME>",
     "run:migration": "typeorm migration:run"
   },

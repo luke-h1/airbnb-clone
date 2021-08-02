@@ -2,7 +2,6 @@ import 'dotenv-safe/config';
 
 const AWS = require('aws-sdk');
 
-// set public access to s3 bucket to true
 export type S3Object = {
   Etag: string;
   Location: string;

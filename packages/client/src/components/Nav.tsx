@@ -1,4 +1,3 @@
-/* eslint-disable react/jsx-indent */
 import { useMeQuery } from '@src/generated/graphql';
 import { isServer } from '@src/utils/isServer';
 import DropDown from './DropDown';
