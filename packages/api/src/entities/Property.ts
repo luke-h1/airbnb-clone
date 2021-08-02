@@ -19,7 +19,7 @@ export class Property extends BaseEntity {
   id!: number;
 
   @Field()
-  @Column('varchar', { length: 30 })
+  @Column('varchar', { length: 20 })
   title: string;
 
   @Field(() => Int)
@@ -31,7 +31,7 @@ export class Property extends BaseEntity {
   creator: User;
 
   @Field()
-  @Column('varchar', { length: 30 })
+  @Column('varchar', { length: 15 })
   propertyType: string;
 
   @Field(() => String)
@@ -58,7 +58,7 @@ export class Property extends BaseEntity {
   pricePerNight: number;
 
   @Field()
-  @Column('varchar', { length: 50 })
+  @Column('varchar', { length: 20 })
   address: string;
 
   @Field(() => [String])

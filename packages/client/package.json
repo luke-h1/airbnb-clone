@@ -5,8 +5,6 @@
   "scripts": {
     "dev": "next dev",
     "build": "next build",
-    "test": "exit 0",
-    "test:all": "jest",
     "tsc": "tsc",
     "start": "next start",
     "lint": "eslint \"./src/**/*.{js, jsx,ts,tsx}\" --quiet --fix && eslint \"./**/*.{js, jsx,ts,tsx}\" --quiet --fix",
@@ -56,25 +54,21 @@
     "@graphql-codegen/typescript-react-apollo": "^2.3.1",
     "@graphql-codegen/typescript-urql": "^2.0.6",
     "@testing-library/dom": "^8.0.0",
-    "@testing-library/jest-dom": "^5.12.0",
     "@testing-library/react": "^12.0.0",
     "@testing-library/react-hooks": "^7.0.0",
     "@testing-library/user-event": "^13.1.6",
     "@types/apollo-upload-client": "^14.1.0",
-    "@types/jest": "^26.0.23",
     "@types/node": "^16.0.0",
     "@types/react": "^17.0.4",
     "@types/react-leaflet": "^2.8.1",
     "@types/react-places-autocomplete": "^7.2.7",
     "@types/testing-library__dom": "^7.5.0",
-    "@types/testing-library__jest-dom": "^5.9.5",
     "@types/testing-library__react": "^10.2.0",
     "@types/testing-library__react-hooks": "^4.0.0",
     "@types/testing-library__user-event": "^4.2.0",
     "@typescript-eslint/eslint-plugin": "^4.22.0",
     "@typescript-eslint/parser": "^4.22.0",
     "autoprefixer": "^10.3.1",
-    "babel-jest": "^27.0.2",
     "eslint": "^7.25.0",
     "eslint-config-airbnb": "^18.2.1",
     "eslint-config-next": "^11.0.0",
@@ -82,76 +76,11 @@
     "eslint-plugin-jsx-a11y": "^6.4.1",
     "eslint-plugin-react": "^7.24.0",
     "eslint-plugin-react-hooks": "^4.2.0",
-    "jest": "^27.0.4",
-    "jest-junit": "^12.0.0",
-    "jest-resolve": "^27.0.4",
-    "jest-serializer-html": "^7.0.0",
-    "jest-watch-typeahead": "^0.6.3",
     "polished": "^4.1.2",
     "postcss": "^8.3.5",
     "prettier": "^2.2.1",
     "sass": "^1.34.1",
     "tailwindcss": "^2.2.4",
     "typescript": "^4.3.5"
-  },
-  "jest": {
-    "collectCoverageFrom": [
-      "src/**/*.{js,jsx,ts,tsx}",
-      "!src/**/*.d.ts"
-    ],
-    "setupFiles": [
-      "dotenv/config"
-    ],
-    "setupFilesAfterEnv": [
-      "<rootDir>/test/setupTests.js"
-    ],
-    "testMatch": [
-      "<rootDir>/src/**/*.(spec|test).{js,jsx,ts,tsx}",
-      "<rootDir>/test/**/*.(spec|test).{js,jsx,ts,tsx}"
-    ],
-    "testEnvironment": "jsdom",
-    "testURL": "http://localhost",
-    "transform": {
-      "^.+\\.(js|jsx|ts|tsx)$": "<rootDir>/node_modules/babel-jest",
-      "^.+\\.css$": "<rootDir>/../abb-common/test/cssTransform.js",
-      "^(?!.*\\.(js|jsx|ts|tsx|css|json)$)": "<rootDir>/../abb-common/test/fileTransform.js"
-    },
-    "transformIgnorePatterns": [
-      "[/\\\\]node_modules[/\\\\].+\\.(js|jsx|ts|tsx)$",
-      "^.+\\.module\\.(css|sass|scss)$"
-    ],
-    "moduleNameMapper": {
-      "^.+\\.module\\.(css|sass|scss)$": "identity-obj-proxy",
-      "^@frontend/(.*)$": "<rootDir>/src/$1",
-      "^react$": "<rootDir>/node_modules/react",
-      "^formik$": "<rootDir>/node_modules/formik",
-      "^@common/(.*)$": "<rootDir>/../abb-common/src/$1",
-      "^@common-test/(.*)$": "<rootDir>/../abb-common/test/$1"
-    },
-    "moduleFileExtensions": [
-      "web.js",
-      "js",
-      "web.ts",
-      "ts",
-      "web.tsx",
-      "tsx",
-      "json",
-      "web.jsx",
-      "jsx",
-      "node"
-    ],
-    "watchPlugins": [
-      "<rootDir>/node_modules/jest-watch-typeahead/filename.js",
-      "<rootDir>/node_modules/jest-watch-typeahead/testname.js"
-    ],
-    "resetMocks": true,
-    "snapshotSerializers": [
-      "jest-serializer-html"
-    ]
-  },
-  "jest-junit": {
-    "ancestorSeparator": " › ",
-    "suiteName": "Frontend Jest tests",
-    "outputName": "junit-frontend.xml"
   }
 }

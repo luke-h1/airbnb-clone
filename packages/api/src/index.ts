@@ -48,7 +48,7 @@ const main = async () => {
     }),
   );
   const apolloServer = new ApolloServer({
-    playground: process.env.NODE_ENV !== 'production',
+    playground: !constants.__prod__,
     uploads: false,
     schema: await createSchema(),
     context: ({ req, res }) => ({
@@ -64,8 +64,8 @@ const main = async () => {
   });
 
   const limiter = rateLimit({
-    windowMs: 10 * 60 * 1000, // 10 minutes
-    max: 15, // limit each IP to 15 requests per windowMs
+    windowMs: 10 * 60 * 1000,
+    max: 15,
     message: 'Too many health check requests',
   });
 

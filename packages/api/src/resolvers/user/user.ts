@@ -13,7 +13,7 @@ import { getConnection } from 'typeorm';
 import { FileUpload, GraphQLUpload } from 'graphql-upload';
 import bcrypt from 'bcryptjs';
 import { User } from '../../entities/User';
-import { MyContext } from '../../utils/types';
+import { MyContext } from '../../types/types';
 import { UsernamePasswordInput } from './inputs/UsernamePasswordInput';
 import { validateRegister } from '../../validation/user/validateRegister';
 import { constants } from '../../utils/constants';

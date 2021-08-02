@@ -21,13 +21,6 @@ const EditPropertyPage = () => {
   const [updateProperty] = useUpdatePropertyMutation();
 
   const { data, loading } = usePropertyQuery({
-    /**
-     * If id =-1 we know we're on server side
-     * pause until id is not -1
-     * lookup id in DB
-     * if is present, fetch property, prefill form with fields
-     * else not found
-     */
     skip: intId === -1,
     variables: {
       id: intId,
