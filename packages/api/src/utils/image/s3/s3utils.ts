@@ -1,8 +1,7 @@
 import { ReadStream } from 'fs';
 import { v4 } from 'uuid';
 import AWS from 'aws-sdk';
-import { S3Object } from '../../../interfaces/s3';
-import { S3, S3DefaultParams } from './s3';
+import { S3, S3DefaultParams, S3Object } from './s3';
 
 const s3 = new AWS.S3({
   signatureVersion: 's3v4',
@@ -57,7 +56,9 @@ export const Delete = async (Key: string) => {
         rej(e);
         return false;
       }
-      console.log(`Deleted ${Key} from ${process.env.AWS_BUCKET_NAME} s3 bucket`);
+      console.log(
+        `Deleted ${Key} from ${process.env.AWS_BUCKET_NAME} s3 bucket`,
+      );
       res(data);
       return true;
     });
