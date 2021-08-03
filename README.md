@@ -14,11 +14,10 @@ This project is made up of 2 areas that share code using <a href='https://lerna.
 * upload user & property images 
 
 ### tech stack
-* graphQL
-* TypeGraphQL
-* AWS S3 
 * Node
+* GraphQL
 * Next.js
+* AWS S3 
 
 ## Getting started with local development 
 
@@ -45,6 +44,7 @@ This project is made up of 2 areas that share code using <a href='https://lerna.
     * The first one is responsible for generating a migration based on changes made to the `entities` folder. `typeorm migration:generate -n <NAME>`. 
     * The second one is responsible for running the generated migrations. `typeorm migration:run`
     * If you want to learn more about how TypeORM works checkout the [docs](https://typeorm.io/#/)
+  
 ### Frontend: 
 * copy the `.env.example ` to `.env`. `cp .env.example .env`. 
 * Fill out the `.env` file with your own values
