@@ -1,5 +1,5 @@
 {
-  "name": "abb-clone",
+  "name": "airbnb-clone",
   "private": true,
   "devDependencies": {
     "eslint": "^7.30.0",
