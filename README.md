@@ -40,9 +40,8 @@ This project is made up of 2 areas that share code using <a href='https://lerna.
 
     ### Migrations 
     * The backend contains 2 commands which are responsible for dealing with migrations. 
-    * The first one is responsible for generating a migration based on changes made to the `entities` folder. `typeorm migration:generate -n <NAME>`. 
+    * The first one is responsible for generating a migration based on the schema difference in `entities` vs what is the current DB schema. `typeorm migration:generate -n <NAME>`. 
     * The second one is responsible for running the generated migrations. `typeorm migration:run`
-    * If you want to learn more about how TypeORM works checkout the [docs](https://typeorm.io/#/)
   
 ### Frontend: 
 * copy the `.env.example ` to `.env`. `cp .env.example .env`. 
