@@ -15,9 +15,10 @@ This project is made up of 2 areas that share code using <a href='https://lerna.
 
 ### tech stack
 * graphQL
-* TypeGrapQL 
+* TypeGraphQL
+* AWS S3 
 * Node
-* Next.js 
+* Next.js
 
 ## Getting started with local development 
 
