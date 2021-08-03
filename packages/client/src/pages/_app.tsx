@@ -1,7 +1,5 @@
 import type { AppProps } from 'next/app';
-import '@src/styles/global.scss';
 import Nav from '@src/components/Nav';
-import { Reset } from '@src/styles/Global';
 import '@fontsource/lato';
 import Container from '@src/components/Container';
 import { useApollo } from '@src/utils/withApollo';
@@ -17,7 +15,6 @@ function MyApp({ Component, pageProps }: AppProps) {
         <Nav {...pageProps} />
       </main>
       <Container>
-        <Reset />
         <Component {...pageProps} />
       </Container>
     </ApolloProvider>
