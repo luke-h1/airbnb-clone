@@ -5,7 +5,6 @@ WORKDIR /usr/src/app
 
 COPY package*.json ./
 
-
 RUN npm ci
 
 COPY . . 
@@ -22,7 +21,6 @@ COPY .env.production .
 COPY .env . 
 COPY .env.production .env
 
-
 RUN npm ci --production 
 
 COPY --from=builder /usr/src/app/dist ./dist 
@@ -30,5 +28,5 @@ COPY --from=builder /usr/src/app/dist ./dist
 ENV NODE_ENV production
 EXPOSE 4010
 
-CMD ["npm", "run", "start"]
+CMD ["node", "dist/index.js"]
 USER node

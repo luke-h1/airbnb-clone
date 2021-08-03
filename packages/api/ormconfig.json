@@ -5,9 +5,6 @@
     "username": "lhowsam",
     "password": "Password",
     "database": "abb-clone",
-    "entities": ["dist/entities/*.js"],
-    "migrations": ["dist/migrations/*.ts"],
-    "cli": {
-        "migrationsDir": "src/migrations/"
-    }
+    "entities": ["src/entities/*.ts"],
+    "migrations": ["src/migrations/*.ts"]
 }

@@ -14,7 +14,10 @@ import { createSchema } from './utils/createSchema';
 import { createConn } from './utils/createConn';
 
 const main = async () => {
-  await createConn();
+  const conn = await createConn();
+  console.log('Connected to DB, running migrations');
+  await conn.runMigrations();
+  console.log('Migrations ran');
   const app = express();
 
   const RedisStore = connectRedis(session);
