@@ -17,7 +17,6 @@
     "build": "lerna run build",
     "deploy": "lerna run deploy",
     "clean": "lerna clean -y",
-    "ci:local": "sh scripts/ci:local.sh",
     "prepare": "husky install"
   },
   "lint-staged": {
