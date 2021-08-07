@@ -1,5 +1,5 @@
 #!/bin/bash
-
+cd .. 
 npm run tsc
 npm run lint 
 npm run format
