@@ -7,14 +7,24 @@ import express, { Response } from 'express';
 import session from 'express-session';
 import { graphqlUploadExpress } from 'graphql-upload';
 import rateLimit from 'express-rate-limit';
+import { createConnection } from 'typeorm';
+import path from 'path';
 import { constants } from './utils/constants';
 import { createUserLoader } from './Loaders/UserLoader';
 import { redis } from './utils/redis';
 import { createSchema } from './utils/createSchema';
-import { createConn } from './utils/createConn';
+import { User } from './entities/User';
+import { Property } from './entities/Property';
 
 const main = async () => {
-  const conn = await createConn();
+  const conn = await createConnection({
+    type: 'postgres',
+    url: process.env.DATABASE_URL,
+    migrations: [path.join(__dirname, './migrations/*')],
+    entities: [User, Property],
+    logging: !constants.__prod__,
+    synchronize: !constants.__prod__,
+  });
   console.log('Connected to DB, running migrations');
   await conn.runMigrations();
   console.log('Migrations ran');
