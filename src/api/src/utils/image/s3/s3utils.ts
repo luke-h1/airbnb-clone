@@ -1,6 +1,7 @@
 import { ReadStream } from 'fs';
 import { v4 } from 'uuid';
 import AWS from 'aws-sdk';
+import { constants } from '../../constants';
 import { S3, S3DefaultParams, S3Object } from './s3';
 
 const s3 = new AWS.S3({
@@ -31,9 +32,11 @@ export const Upload = async (
         console.log(e);
         return e;
       }
-      console.log(
-        `Uploaded file to ${process.env.AWS_BUCKET_NAME} s3 bucket: ${data.Location}`,
-      );
+      if (!constants.__prod__) {
+        console.log(
+          `Uploaded file to ${process.env.AWS_BUCKET_NAME} s3 bucket: ${data.Location}`,
+        );
+      }
       res({
         image: data.Location,
         imageFileName: data.Key,
@@ -56,9 +59,11 @@ export const Delete = async (Key: string) => {
         rej(e);
         return false;
       }
-      console.log(
-        `Deleted ${Key} from ${process.env.AWS_BUCKET_NAME} s3 bucket`,
-      );
+      if (!constants.__prod__) {
+        console.log(
+          `Deleted ${Key} from ${process.env.AWS_BUCKET_NAME} s3 bucket`,
+        );
+      }
       res(data);
       return true;
     });
