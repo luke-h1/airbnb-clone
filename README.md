@@ -29,7 +29,7 @@ This project is made up of 2 areas that share code using <a href='https://lerna.
 * Ensure your postgres user has superuser access on the `abb-clone` DB
 * Run `npm ci && npm run bootstrap` in the root of the project to bootstrap the packages, install all their dependencies and link any cross-dependencies.
 
-### api: 
+### Api: 
 * [Install postgres](https://www.postgresql.org/download/)
 * [Install Redis (stable)](https://redis.io/download)
 * Create a blank postgres database called `abb-clone`
