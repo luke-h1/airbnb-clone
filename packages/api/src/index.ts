@@ -78,7 +78,7 @@ const main = async () => {
 
   app.listen(process.env.PORT, () => {
     console.log(
-      `Server listening on localhost:${process.env.PORT} in ${process.env.NODE_ENV} mode`,
+      `Server listening on localhost:${process.env.PORT} in ${process.env.NODE_ENV} mode. GraphQL API available at http://localhost:${process.env.PORT}/graphql`,
     );
   });
 };
