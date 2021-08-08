@@ -4,9 +4,7 @@ import { withUrqlClient } from 'next-urql';
 import { useRouter } from 'next/router';
 import React from 'react';
 import { InputField } from 'src/components/InputField';
-import {
-  useRegisterMutation,
-} from 'src/generated/graphql';
+import { useRegisterMutation } from 'src/generated/graphql';
 import { toErrorMap } from 'src/utils/toErrorMap';
 
 interface FormValues {
@@ -40,7 +38,6 @@ const RegisterPage = () => {
               password: values.password,
             },
             image: values.image,
-
           });
           if (res.data?.register.errors) {
             setErrors(toErrorMap(res.data.register.errors));
@@ -68,19 +65,33 @@ const RegisterPage = () => {
               label="password"
               type="password"
             />
-            <InputField
+            <input
+              type="file"
+              accept="image/*"
+              onChange={({ target: { validity, files } }) => {
+                if (validity.valid && files) {
+                  setFieldValue('image', files[0]);
+                  // set 'file' of the form data as files[0]
+                }
+              }}
+            />
+
+            {/* <InputField
               name="image"
               placeholder="image"
               label="image"
               type="file"
               id="image"
-              value={undefined}
+              value={null}
               required
-              onChange={(e) => {
-                // @ts-ignore
-                setFieldValue('image', e.currentTarget.files[0]);
+              accept="image/*"
+              onChange={({ target: { validity, files } }) => {
+                if (validity.valid && files) {
+                  setFieldValue('image', files[0]);
+                  console.log(files[0]);
+                }
               }}
-            />
+            /> */}
             <div className="flex flex-col mb-5">
               <button
                 className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-2 rounded"

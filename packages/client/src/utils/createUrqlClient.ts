@@ -71,7 +71,9 @@ const cursorPagination = (): Resolver => {
 
 function invalidateAllProperties(cache: Cache) {
   const allFields = cache.inspectFields('Query');
-  const fieldInfos = allFields.filter((info) => info.fieldName === 'properties');
+  const fieldInfos = allFields.filter(
+    (info) => info.fieldName === 'properties',
+  );
   fieldInfos.forEach((fi) => {
     cache.invalidate('Query', 'properties', fi.arguments || {});
   });
@@ -152,10 +154,11 @@ export const createUrqlClient = (ssrExchange: any, ctx: any) => {
           },
         },
       }),
+      // ORDER IS IMPORTANT!
+      multipartFetchExchange,
       errorExchange,
       ssrExchange,
       fetchExchange,
-      multipartFetchExchange,
     ],
   };
 };

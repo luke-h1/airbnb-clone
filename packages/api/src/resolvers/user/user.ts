@@ -69,24 +69,23 @@ export class UserResolver {
   @Mutation(() => UserResponse)
   async register(
     @Arg('options') options: UserRegisterInput,
-    @Arg('image', () => GraphQLUpload)
-      { createReadStream, filename }: FileUpload,
+    @Arg('image', () => GraphQLUpload, { nullable: true }) image: FileUpload, // take care of here
     @Ctx() { req }: MyContext,
   ): Promise<UserResponse> {
+    console.log(image);
     const errors = validateRegister(options);
     if (errors) {
       return { errors };
     }
     const hashedPassword = await bcrypt.hash(options.password, 12);
     let user;
+
     try {
-      const { image, imageFileName } = await Upload(
-        createReadStream,
-        filename,
+      const { image: s3Image, imageFileName } = await Upload(
+        image.createReadStream,
+        image.filename,
         constants.S3UserImageKey,
       );
-      console.log('image', image);
-      console.log('imageFileName', imageFileName);
 
       const result = await getConnection()
         .createQueryBuilder()
@@ -97,7 +96,7 @@ export class UserResolver {
           lastName: options.lastName,
           email: options.email,
           password: hashedPassword,
-          image,
+          image: s3Image,
           imageFileName,
         })
         .returning('*')
