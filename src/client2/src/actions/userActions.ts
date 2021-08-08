@@ -26,7 +26,7 @@ import {
   USER_UPDATE_REQUEST,
   USER_UPDATE_SUCCESS,
 } from '@src/constants/user';
-import userApi from '@src/utils/api/userApi';
+import baseApi from '@src/utils/baseApi';
 
 export const login = (email: string, password: string) => async (dispatch: any) => {
   try {
@@ -34,7 +34,7 @@ export const login = (email: string, password: string) => async (dispatch: any) 
       type: USER_LOGIN_REQUEST,
     });
 
-    const { data } = await userApi.post('/login', { email, password });
+    const { data } = await baseApi.post('/users/login', { email, password });
     dispatch({ type: USER_LOGIN_SUCCESS, payload: data });
     localStorage.setItem('userInfo', JSON.stringify(data));
   } catch (e) {
@@ -63,7 +63,7 @@ export const register = (name: string, email: string, password: string) => async
     dispatch({
       type: USER_REGISTER_REQUEST,
     });
-    const { data } = await userApi.post('/', { name, email, password });
+    const { data } = await baseApi.post('/users', { name, email, password });
     dispatch({
       type: USER_REGISTER_SUCCESS,
       payload: data,
@@ -95,7 +95,7 @@ export const getUserDetails = (id: string) => async (dispatch: any, getState: an
       userLogin: { userInfo },
     } = getState();
 
-    const { data } = await userApi.get(id, {
+    const { data } = await baseApi.get(`/users/${id}`, {
       headers: `Bearer ${userInfo.token}`,
     });
 
@@ -127,7 +127,7 @@ export const updateUserProfile = (user: any) => async (dispatch: any, getState: 
       userLogin: { userInfo },
     } = getState();
 
-    const { data } = await userApi.put('/profile', user, {
+    const { data } = await baseApi.put('/users/profile', user, {
       headers: `Bearer ${userInfo.token}`,
     });
 
@@ -164,7 +164,7 @@ export const listUsers = () => async (dispatch: any, getState: any) => {
       userLogin: { userInfo },
     } = getState();
 
-    const { data } = await userApi.get('/', {
+    const { data } = await baseApi.get('/users', {
       headers: `Bearer ${userInfo.token}`,
     });
     dispatch({
@@ -195,7 +195,9 @@ export const deleteUser = (id: string) => async (dispatch: any, getState: any) =
       userLogin: { userInfo },
     } = getState();
 
-    await userApi.delete(id, { headers: `Bearer ${userInfo.token}` });
+    await baseApi.delete(`/users/${id}`, {
+      headers: `Bearer ${userInfo.token}`,
+    });
     dispatch({ type: USER_DELETE_SUCCESS });
   } catch (e) {
     const message = e.response && e.response.data.message
@@ -221,7 +223,7 @@ export const updateUser = (user: any) => async (dispatch: any, getState: any) =>
       userLogin: { userInfo },
     } = getState();
 
-    const { data } = await userApi.put(`/${user._id}`, user, {
+    const { data } = await baseApi.put(`/users/${user._id}`, user, {
       headers: `Bearer ${userInfo.token}`,
     });
 

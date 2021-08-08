@@ -1,12 +1,12 @@
 import axios from 'axios';
 
-const userApi = axios.create({
+const baseApi = axios.create({
   baseURL:
     process.env.NODE_ENV === 'production'
-      ? 'deployed'
-      : 'http://localhost:5000/api/users',
+      ? 'deployed url'
+      : 'http://localhost:5000/api',
   headers: {
     'Content-Type': 'application/json',
   },
 });
-export default userApi;
+export default baseApi;
