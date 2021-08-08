@@ -20,8 +20,8 @@ import {
   PROPERTY_UPDATE_FAIL,
   PROPERTY_UPDATE_REQUEST,
   PROPERTY_UPDATE_SUCCESS,
-} from '@src/constants/property';
-import baseApi from '@src/utils/baseApi';
+} from '../constants/property';
+import baseApi from '../utils/baseApi';
 import { logout } from './userActions';
 
 export const listProperties = (keyword: string = '', pageNumber: string = '') => async (dispatch: any) => {

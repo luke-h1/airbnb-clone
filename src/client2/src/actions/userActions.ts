@@ -1,5 +1,5 @@
 /* eslint-disable no-underscore-dangle */
-import { ORDER_LIST_MY_RESET } from '@src/constants/order';
+import { ORDER_LIST_MY_RESET } from '../constants/order';
 import {
   USER_DELETE_FAIL,
   USER_DELETE_REQUEST,
@@ -25,8 +25,8 @@ import {
   USER_UPDATE_PROFILE_SUCCESS,
   USER_UPDATE_REQUEST,
   USER_UPDATE_SUCCESS,
-} from '@src/constants/user';
-import baseApi from '@src/utils/baseApi';
+} from '../constants/user';
+import baseApi from '../utils/baseApi';
 
 export const login = (email: string, password: string) => async (dispatch: any) => {
   try {

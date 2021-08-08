@@ -1,5 +1,5 @@
-import { CART_CLEAR_ITEMS } from '@src/constants/cart';
-import baseApi from '@src/utils/baseApi';
+import { CART_CLEAR_ITEMS } from '../constants/cart';
+import baseApi from '../utils/baseApi';
 import {
   ORDER_CREATE_REQUEST,
   ORDER_CREATE_SUCCESS,

@@ -9,7 +9,7 @@
     "noImplicitAny": true,
     "strict": true,
     "strictNullChecks": true,
-    "jsx": "preserve",
+    "jsx": "react-jsx",
     "target": "es5",
     "lib": [
       "dom",
@@ -21,9 +21,11 @@
     "forceConsistentCasingInFileNames": true,
     "resolveJsonModule": true,
     "baseUrl": ".",
-    "paths": {
-      "@src/*": ["./src/*"]
-    },
-    "sourceMap": true
-  }
+    "sourceMap": true,
+    "noFallthroughCasesInSwitch": true,
+    "isolatedModules": true
+  },
+  "include": [
+    "src"
+  ]
 }

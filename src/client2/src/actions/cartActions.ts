@@ -1,5 +1,5 @@
 /* eslint-disable no-underscore-dangle */
-import baseApi from '@src/utils/baseApi';
+import baseApi from '../utils/baseApi';
 import {
   CART_ADD_ITEM,
   CART_REMOVE_ITEM,
