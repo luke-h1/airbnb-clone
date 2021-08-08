@@ -74,9 +74,9 @@ const EditPropertyPage = () => {
               bedrooms: values.bedrooms,
               address: values.address,
               amenities: values.amenities,
-              image: values.image,
-              id: intId,
             },
+            id: intId,
+            image: values.image,
           });
           router.push(`/property/${intId}`);
         }}
@@ -101,16 +101,14 @@ const EditPropertyPage = () => {
               label="description"
               type="text"
             />
-            <InputField
-              name="image"
-              placeholder="image"
-              label="image"
+            <input
               type="file"
-              id="image"
-              value={undefined}
-              onChange={(e) => {
-                // @ts-ignore
-                setFieldValue('image', e.currentTarget.files[0]);
+              accept="image/*"
+              onChange={({ target: { validity, files } }) => {
+                if (validity.valid && files) {
+                  setFieldValue('image', files[0]);
+                  // set 'file' of the form data as files[0]
+                }
               }}
             />
             <InputField
@@ -164,4 +162,6 @@ const EditPropertyPage = () => {
     </>
   );
 };
-export default withUrqlClient(createUrqlClient, { ssr: false })(EditPropertyPage);
+export default withUrqlClient(createUrqlClient, { ssr: false })(
+  EditPropertyPage,
+);

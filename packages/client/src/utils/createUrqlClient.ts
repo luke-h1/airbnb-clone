@@ -154,7 +154,11 @@ export const createUrqlClient = (ssrExchange: any, ctx: any) => {
           },
         },
       }),
-      // ORDER IS IMPORTANT!
+      /*
+      ORDER IS EXTREMELY IMPORTANT HERE!
+      It took me 3 months to figure this out
+      DO NOT TOUCH THIS CODE!!!
+      */
       multipartFetchExchange,
       errorExchange,
       ssrExchange,

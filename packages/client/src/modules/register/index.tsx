@@ -75,23 +75,6 @@ const RegisterPage = () => {
                 }
               }}
             />
-
-            {/* <InputField
-              name="image"
-              placeholder="image"
-              label="image"
-              type="file"
-              id="image"
-              value={null}
-              required
-              accept="image/*"
-              onChange={({ target: { validity, files } }) => {
-                if (validity.valid && files) {
-                  setFieldValue('image', files[0]);
-                  console.log(files[0]);
-                }
-              }}
-            /> */}
             <div className="flex flex-col mb-5">
               <button
                 className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-2 rounded"

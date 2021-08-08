@@ -37,12 +37,12 @@ export type Mutation = {
 };
 
 export type MutationCreatePropertyArgs = {
-  image: Scalars['Upload'];
+  image?: Maybe<Scalars['Upload']>;
   options: PropertyInput;
 };
 
 export type MutationUpdatePropertyArgs = {
-  image: Scalars['Upload'];
+  image?: Maybe<Scalars['Upload']>;
   id: Scalars['Int'];
   options: PropertyInput;
 };
