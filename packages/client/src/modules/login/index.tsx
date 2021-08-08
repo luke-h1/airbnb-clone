@@ -5,13 +5,15 @@ import { InputField } from '@src/components/InputField';
 import { MeDocument, MeQuery, useLoginMutation } from '@src/generated/graphql';
 import { toErrorMap } from '@src/utils/toErrorMap';
 import Link from 'next/link';
+import { withUrqlClient } from 'next-urql';
+import { createUrqlClient } from '@src/utils/createUrqlClient';
 
 interface FormValues {
   email: string;
   password: string;
 }
 const RegisterPage = () => {
-  const [login] = useLoginMutation();
+  const [, login] = useLoginMutation();
   const router = useRouter();
   return (
     <>
@@ -23,17 +25,7 @@ const RegisterPage = () => {
         }}
         onSubmit={async (values, { setErrors }) => {
           const res = await login({
-            variables: { options: values },
-            update: (cache, { data }) => {
-              cache.writeQuery<MeQuery>({
-                query: MeDocument,
-                data: {
-                  __typename: 'Query',
-                  me: data?.login.user,
-                },
-              });
-              cache.evict({ fieldName: 'properties:{}' });
-            },
+            options: values,
           });
           if (res.data?.login.errors) {
             setErrors(toErrorMap(res.data.login.errors));
@@ -79,4 +71,4 @@ const RegisterPage = () => {
     </>
   );
 };
-export default RegisterPage;
+export default withUrqlClient(createUrqlClient, { ssr: false })(RegisterPage);

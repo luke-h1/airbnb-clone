@@ -3,12 +3,14 @@ import { useGetPropertyFromUrl } from '@src/utils/useGetPropertyFromUrl';
 import { Loader } from '@src/components/Loader';
 import { useMeQuery } from '@src/generated/graphql';
 import { useRouter } from 'next/router';
+import { withUrqlClient } from 'next-urql';
+import { createUrqlClient } from '@src/utils/createUrqlClient';
 
 const SingleProperty: React.FC<{}> = () => {
   const router = useRouter();
-  const { data: meData } = useMeQuery();
-  const { data, error, loading } = useGetPropertyFromUrl();
-  if (loading) {
+  const [{ data: meData }] = useMeQuery();
+  const [{ data, error, fetching }] = useGetPropertyFromUrl();
+  if (fetching) {
     return <Loader />;
   }
   if (error) {
@@ -45,4 +47,4 @@ const SingleProperty: React.FC<{}> = () => {
     </>
   );
 };
-export default SingleProperty;
+export default withUrqlClient(createUrqlClient, { ssr: false })(SingleProperty);

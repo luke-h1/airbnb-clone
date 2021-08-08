@@ -11,23 +11,25 @@ import React from 'react';
 import { Loader } from '@src/components/Loader';
 import { useIsAuth } from '@src/utils/useIsAuth';
 import Link from 'next/link';
+import { withUrqlClient } from 'next-urql';
+import { createUrqlClient } from '@src/utils/createUrqlClient';
 
 const EditPropertyPage = () => {
   useIsAuth();
 
   const router = useRouter();
   const intId = useGetIntId();
-  const { data: meData } = useMeQuery();
-  const [updateProperty] = useUpdatePropertyMutation();
+  const [{ data: meData }] = useMeQuery();
+  const [, updateProperty] = useUpdatePropertyMutation();
 
-  const { data, loading } = usePropertyQuery({
-    skip: intId === -1,
+  const [{ data, fetching }] = usePropertyQuery({
+    pause: intId === -1,
     variables: {
       id: intId,
     },
   });
 
-  if (loading) {
+  if (fetching) {
     return <Loader />;
   }
 
@@ -63,17 +65,15 @@ const EditPropertyPage = () => {
         }}
         onSubmit={async (values) => {
           await updateProperty({
-            variables: {
-              options: {
-                title: values.title,
-                propertyType: values.propertyType,
-                pricePerNight: values.pricePerNight,
-                description: values.description,
-                beds: values.beds,
-                bedrooms: values.bedrooms,
-                address: values.address,
-                amenities: values.amenities,
-              },
+            options: {
+              title: values.title,
+              propertyType: values.propertyType,
+              pricePerNight: values.pricePerNight,
+              description: values.description,
+              beds: values.beds,
+              bedrooms: values.bedrooms,
+              address: values.address,
+              amenities: values.amenities,
               image: values.image,
               id: intId,
             },
@@ -164,4 +164,4 @@ const EditPropertyPage = () => {
     </>
   );
 };
-export default EditPropertyPage;
+export default withUrqlClient(createUrqlClient, { ssr: false })(EditPropertyPage);
