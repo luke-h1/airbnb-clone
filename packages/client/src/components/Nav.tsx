@@ -1,15 +1,17 @@
 import { useMeQuery } from '@src/generated/graphql';
+import { createUrqlClient } from '@src/utils/createUrqlClient';
 import { isServer } from '@src/utils/isServer';
+import { withUrqlClient } from 'next-urql';
 import DropDown from './DropDown';
 
 const Nav = () => {
-  const { data, loading } = useMeQuery({
-    skip: isServer(),
+  const [{ data, fetching }] = useMeQuery({
+    pause: isServer(),
   });
 
   let links: { name: string; href: string }[] = [];
 
-  if (loading) {
+  if (fetching) {
     //   user is not logged in
   }
   if (!data?.me) {
@@ -163,4 +165,4 @@ const Nav = () => {
     </nav>
   );
 };
-export default Nav;
+export default withUrqlClient(createUrqlClient, { ssr: false })(Nav);
