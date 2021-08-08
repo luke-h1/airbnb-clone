@@ -1,31 +1,19 @@
 import React from 'react';
 import { Menu, Transition } from '@headlessui/react';
 import { AiFillCaretDown } from 'react-icons/ai';
-import Link from 'next/link';
-import { useRouter } from 'next/router';
-import { useLogoutMutation, User } from '../generated/graphql';
+import { useDispatch } from 'react-redux';
+import { Link } from 'react-router-dom';
+import { logout } from '../actions/userActions';
 
 interface DropDownProps {
   links: { href: string; name: string }[];
-  me?:
-    | ({
-        __typename?: 'User' | undefined;
-      } & {
-        __typename?: 'User' | undefined;
-      } & Pick<
-          User,
-          'image' | 'id' | 'email' | 'fullName' | 'firstName' | 'lastName'
-        >)
-    | null;
+  me?: any;
 }
 
 const DropDown: React.FC<DropDownProps> = ({ links, me }) => {
-  const router = useRouter();
-  const [logout] = useLogoutMutation();
-
-  const handleLogout = async () => {
-    await logout();
-    router.reload();
+  const handleLogout = () => {
+    const dispatch = useDispatch();
+    dispatch(logout());
   };
   return (
     <div className="">
@@ -83,7 +71,7 @@ const DropDown: React.FC<DropDownProps> = ({ links, me }) => {
                         } group flex rounded-md items-center w-full px-2 py-2 text-sm`}
                         type="button"
                       >
-                        <Link href={l.href}>
+                        <Link to={l.href}>
                           <a>{l.name}</a>
                         </Link>
                       </button>

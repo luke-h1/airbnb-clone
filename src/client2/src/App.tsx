@@ -1,11 +1,17 @@
+/* eslint-disable */
 import React from 'react';
 import { BrowserRouter as Router, Route } from 'react-router-dom';
+import Container from './components/Container';
+import Nav from './components/Nav';
 
 const App = () => {
   return (
     <Router>
-      {/* header */}
-      {/* wrapper */}
+      <Container>
+        {/* header */}
+        <Nav />
+        {/* wrapper */}
+        {/*
       <Route path="/order/:id" component={OrderPage} />
       <Route path="/payment" component={PaymentPage} />
       <Route path="/placeorder" component={PlaceOrderPage} />
@@ -37,6 +43,8 @@ const App = () => {
         exact
       />
       <Route path="/" component={HomeScreen} exact />
+      */}
+      </Container>
     </Router>
   );
 };
