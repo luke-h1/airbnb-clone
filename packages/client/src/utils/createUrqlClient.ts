@@ -53,7 +53,7 @@ const cursorPagination = (): Resolver => {
     let hasMore = true;
     const results: string[] = [];
     fieldInfos.forEach((fi) => {
-      const key = cache.resolveFieldByKey(entityKey, fi.fieldKey) as string;
+      const key = cache.resolve(entityKey, fi.fieldKey) as string;
       const data = cache.resolve(key, 'properties') as string[];
       const _hasMore = cache.resolve(key, 'hasMore');
       if (!_hasMore) {
@@ -94,7 +94,7 @@ export const createUrqlClient = (ssrExchange: any, ctx: any) => {
       dedupExchange,
       cacheExchange({
         keys: {
-          PaginatedTodos: () => null,
+          PaginatedProperties: () => null,
         },
         resolvers: {
           Query: {
