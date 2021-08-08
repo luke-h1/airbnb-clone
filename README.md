@@ -15,9 +15,11 @@ This project is made up of 2 areas that share code using <a href='https://lerna.
 
 ### tech stack
 * Node
-* GraphQL
+* GraphQL 
 * Next.js
 * AWS S3 
+* Apollo GraphQL (server-side)
+* URQL GraphQL (client-side)
 
 ## Getting started with local development 
 
@@ -37,7 +39,6 @@ This project is made up of 2 areas that share code using <a href='https://lerna.
 * Fill out the `.env` file with your own values
 * create programatic access user on AWS and give it access to the s3 bucket you create
 * create s3 bucket on AWS with public access allowed 
-
     ### Migrations 
     * The backend contains 2 commands which are responsible for dealing with migrations. 
     * The first one is responsible for generating a migration based on the schema difference in `entities` vs what the current DB schema is. `typeorm migration:generate -n <NAME>`. 
