@@ -1,4 +1,5 @@
 /* eslint-disable no-underscore-dangle */
+import { UserLocalStorage } from '../types/User';
 import {
   PROPERTY_CREATE_FAIL,
   PROPERTY_CREATE_REQUEST,
@@ -75,7 +76,7 @@ export const deleteProperty = (id: string) => async (dispatch: any, getState: an
 
     const {
       userLogin: { userInfo },
-    } = getState();
+    }: { userLogin: { userInfo: UserLocalStorage } } = getState();
 
     await baseApi.delete(`/products/${id}`, {
       headers: `Bearer ${userInfo.token}`,
@@ -102,7 +103,7 @@ export const createProperty = () => async (dispatch: any, getState: any) => {
 
     const {
       userLogin: { userInfo },
-    } = getState();
+    }: { userLogin: { userInfo: UserLocalStorage } } = getState();
 
     const { data } = await baseApi.post(
       '/products',
@@ -135,7 +136,7 @@ export const updateProperty = (property: any) => async (dispatch: any, getState:
 
     const {
       userLogin: { userInfo },
-    } = getState();
+    }: { userLogin: { userInfo: UserLocalStorage } } = getState();
 
     const { data } = await baseApi.put(
       `/products/${property._id}`,
@@ -170,7 +171,7 @@ export const createPropertyReview = (propertyId: number, review: any) => async (
 
     const {
       userLogin: { userInfo },
-    } = getState();
+    }: { userLogin: { userInfo: UserLocalStorage } } = getState();
 
     await baseApi.post(`/properties/${propertyId}/reviews`, review, {
       headers: `Bearer ${userInfo.token}`,

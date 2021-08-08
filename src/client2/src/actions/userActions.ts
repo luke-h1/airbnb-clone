@@ -1,4 +1,5 @@
 /* eslint-disable no-underscore-dangle */
+import { UserLocalStorage } from 'src/types/User';
 import { ORDER_LIST_MY_RESET } from '../constants/order';
 import {
   USER_DELETE_FAIL,
@@ -93,7 +94,7 @@ export const getUserDetails = (id: string) => async (dispatch: any, getState: an
 
     const {
       userLogin: { userInfo },
-    } = getState();
+    }: { userLogin: { userInfo: UserLocalStorage } } = getState();
 
     const { data } = await baseApi.get(`/users/${id}`, {
       headers: `Bearer ${userInfo.token}`,
@@ -125,7 +126,7 @@ export const updateUserProfile = (user: any) => async (dispatch: any, getState: 
 
     const {
       userLogin: { userInfo },
-    } = getState();
+    }: { userLogin: { userInfo: UserLocalStorage } } = getState();
 
     const { data } = await baseApi.put('/users/profile', user, {
       headers: `Bearer ${userInfo.token}`,
@@ -162,7 +163,7 @@ export const listUsers = () => async (dispatch: any, getState: any) => {
 
     const {
       userLogin: { userInfo },
-    } = getState();
+    }: { userLogin: { userInfo: UserLocalStorage } } = getState();
 
     const { data } = await baseApi.get('/users', {
       headers: `Bearer ${userInfo.token}`,
@@ -193,7 +194,7 @@ export const deleteUser = (id: string) => async (dispatch: any, getState: any) =
 
     const {
       userLogin: { userInfo },
-    } = getState();
+    }: { userLogin: { userInfo: UserLocalStorage } } = getState();
 
     await baseApi.delete(`/users/${id}`, {
       headers: `Bearer ${userInfo.token}`,
@@ -221,7 +222,7 @@ export const updateUser = (user: any) => async (dispatch: any, getState: any) =>
 
     const {
       userLogin: { userInfo },
-    } = getState();
+    }: { userLogin: { userInfo: UserLocalStorage } } = getState();
 
     const { data } = await baseApi.put(`/users/${user._id}`, user, {
       headers: `Bearer ${userInfo.token}`,

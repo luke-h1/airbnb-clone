@@ -1,7 +1,7 @@
 import { Review } from './Review';
 
 export interface Property {
-  _id: number;
+  _id: string;
   name: string;
   image: string;
   category: string;

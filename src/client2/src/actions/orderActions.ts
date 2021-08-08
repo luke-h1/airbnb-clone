@@ -18,6 +18,7 @@ import {
   ORDER_LIST_REQUEST,
 } from '../constants/order';
 import { logout } from './userActions';
+import { UserLocalStorage } from '../types/User';
 
 export const createOrder = (order: any) => async (dispatch: any, getState: any) => {
   try {
@@ -27,7 +28,7 @@ export const createOrder = (order: any) => async (dispatch: any, getState: any) 
 
     const {
       userLogin: { userInfo },
-    } = getState();
+    }: { userLogin: { userInfo: UserLocalStorage } } = getState();
 
     const { data } = await baseApi.post('/orders', order, {
       headers: `Bearer ${userInfo.token}`,
@@ -63,7 +64,7 @@ export const getOrderDetails = (id: number) => async (dispatch: any, getState: a
 
     const {
       userLogin: { userInfo },
-    } = getState();
+    }: { userLogin: { userInfo: UserLocalStorage } } = getState();
 
     const { data } = await baseApi.get(`/orders/${id}`, {
       headers: `Bearer ${userInfo.token}`,
@@ -94,7 +95,7 @@ export const payOrder = (orderId: number, paymentResult: any) => async (dispatch
 
     const {
       userLogin: { userInfo },
-    } = getState();
+    }: { userLogin: { userInfo: UserLocalStorage } } = getState();
 
     const { data } = await baseApi.put(
       `/orders/${orderId}/pay`,
@@ -128,7 +129,7 @@ export const listMyOrders = () => async (dispatch: any, getState: any) => {
 
     const {
       userLogin: { userInfo },
-    } = getState();
+    }: { userLogin: { userInfo: UserLocalStorage } } = getState();
 
     const { data } = await baseApi.get('/orders/myorders', {
       headers: `Bearer ${userInfo.token}`,
@@ -160,7 +161,7 @@ export const listOrders = () => async (dispatch: any, getState: any) => {
 
     const {
       userLogin: { userInfo },
-    } = getState();
+    }: { userLogin: { userInfo: UserLocalStorage } } = getState();
 
     const { data } = await baseApi.get('/orders', {
       headers: `Bearer ${userInfo.token}`,
