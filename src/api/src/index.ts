@@ -1,98 +1,31 @@
-import 'reflect-metadata';
-import { ApolloServer } from 'apollo-server-express';
-import connectRedis from 'connect-redis';
-import cors from 'cors';
-import 'dotenv-safe/config';
-import express, { Response } from 'express';
-import session from 'express-session';
-import { graphqlUploadExpress } from 'graphql-upload';
-import rateLimit from 'express-rate-limit';
-import { createConnection } from 'typeorm';
 import path from 'path';
-import { constants } from './utils/constants';
-import { createUserLoader } from './Loaders/UserLoader';
-import { redis } from './utils/redis';
-import { createSchema } from './utils/createSchema';
-import { User } from './entities/User';
-import { Property } from './entities/Property';
+import express from 'express';
+import morgan from 'morgan';
+import createConn from './utils/createConn';
+import { constants } from './constants';
+import { errorHandler, notFound } from './middleware/error';
 
 const main = async () => {
-  const conn = await createConnection({
-    type: 'postgres',
-    url: process.env.DATABASE_URL,
-    migrations: [path.join(__dirname, './migrations/*')],
-    entities: [User, Property],
-    logging: !constants.__prod__,
-    synchronize: !constants.__prod__,
-  });
-  console.log('Connected to DB, running migrations');
-  await conn.runMigrations();
-  console.log('Migrations ran');
+  createConn();
   const app = express();
 
-  const RedisStore = connectRedis(session);
+  if (!constants.__prod__) {
+    app.use(morgan('dev'));
+  }
 
-  app.use(
-    cors({
-      origin: process.env.FRONTEND_HOST,
-      credentials: true,
-    }),
-  );
+  app.use(express.json());
 
-  app.use(graphqlUploadExpress({ maxFileSize: 10000000, maxFiles: 10 }));
+  app.use('/api/properties');
+  app.use('/api/users');
+  app.use('/api/orders');
+  app.use('/api/upload');
 
-  app.set('trust-proxy', 1);
-  app.use(
-    session({
-      store: new RedisStore({
-        client: redis,
-        disableTouch: true,
-      }),
-      cookie: {
-        maxAge: 1000 * 60 * 60 * 24 * 4, // 4 days
-        httpOnly: true,
-        sameSite: 'lax', // csrf
-        secure: constants.__prod__,
-        domain: constants.__prod__ ? 'api.airbb-clone-code.xyz' : undefined,
-      },
-      saveUninitialized: false,
-      secret: process.env.COOKIE_SECRET!,
-      resave: false,
-    }),
-  );
-  const apolloServer = new ApolloServer({
-    playground: !constants.__prod__,
-    uploads: false,
-    schema: await createSchema(),
-    context: ({ req, res }) => ({
-      req,
-      res,
-      redis,
-      userLoader: createUserLoader(),
-    }),
-  });
-  apolloServer.applyMiddleware({
-    app,
-    cors: false,
-  });
+  app.use('/uploads', express.static(path.basename('..', '/uploads')));
 
-  const limiter = rateLimit({
-    windowMs: 10 * 60 * 1000,
-    max: 15,
-    message: 'Too many health check requests',
-  });
-
-  app.get('/api/health', limiter, (_, res: Response) => {
-    res.status(200).json({ status: 'ok' });
-  });
+  app.use(notFound);
+  app.use(errorHandler);
 
   app.listen(process.env.PORT, () => {
-    console.log(
-      `Server listening on localhost:${process.env.PORT} in ${process.env.NODE_ENV} mode`,
-    );
+    console.log('running');
   });
 };
-
-main().catch((err) => {
-  console.error(err);
-});
