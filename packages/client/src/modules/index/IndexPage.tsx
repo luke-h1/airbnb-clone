@@ -1,4 +1,4 @@
-import { Property, usePropertiesQuery } from '@src/generated/graphql';
+import { usePropertiesQuery } from '@src/generated/graphql';
 import React, { useState } from 'react';
 import Link from 'next/link';
 import EditDeleteButtons from '@src/components/EditDeleteButtons';
@@ -28,7 +28,7 @@ const index = () => {
     <div className="flex flex-col align-center items-center justify-center place-items-center">
       {error ? <p className="text-4xl">{error.message}</p> : null}
       <div>
-        {data?.properties.properties.map((p: Property) => (!p ? (
+        {data?.properties.properties.map((p) => (!p ? (
           <p>no properties</p>
         ) : (
           <Link href={`/property/${p.id}`}>

@@ -2,7 +2,7 @@ import { Form, Formik } from 'formik';
 import { useRouter } from 'next/router';
 import React from 'react';
 import { InputField } from '@src/components/InputField';
-import { MeDocument, MeQuery, useLoginMutation } from '@src/generated/graphql';
+import { useLoginMutation } from '@src/generated/graphql';
 import { toErrorMap } from '@src/utils/toErrorMap';
 import Link from 'next/link';
 import { withUrqlClient } from 'next-urql';

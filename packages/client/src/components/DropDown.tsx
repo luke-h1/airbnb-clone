@@ -21,7 +21,7 @@ interface DropDownProps {
 
 const DropDown: React.FC<DropDownProps> = ({ links, me }) => {
   const router = useRouter();
-  const [logout] = useLogoutMutation();
+  const [, logout] = useLogoutMutation();
 
   const handleLogout = async () => {
     await logout();
