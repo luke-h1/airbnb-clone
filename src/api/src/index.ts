@@ -1,10 +1,10 @@
 import path from 'path';
 import express from 'express';
 import morgan from 'morgan';
+import cors from 'cors';
 import createConn from './utils/createConn';
 import { constants } from './constants';
 import { errorHandler, notFound } from './middleware/error';
-
 import propertyRoutes from './routes/property';
 import userRoutes from './routes/user';
 import orderRoutes from './routes/order';
@@ -13,6 +13,13 @@ import uploadRoutes from './routes/upload';
 const main = async () => {
   createConn();
   const app = express();
+
+  app.use(
+    cors({
+      origin: process.env.FRONTEND_HOST,
+      credentials: true,
+    }),
+  );
 
   if (!constants.__prod__) {
     app.use(morgan('dev'));

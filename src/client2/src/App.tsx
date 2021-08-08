@@ -3,6 +3,9 @@ import React from 'react';
 import { BrowserRouter as Router, Route } from 'react-router-dom';
 import Container from './components/Container';
 import Nav from './components/Nav';
+import HomePage from './pages/Home';
+import Login from './pages/Login';
+import Register from './pages/Register';
 
 const App = () => {
   return (
@@ -10,6 +13,10 @@ const App = () => {
       <Container>
         {/* header */}
         <Nav />
+        <Route path="/" component={HomePage} exact />
+        <Route path="/login" component={Login} exact />
+        <Route path="/register" component={Register} exact />
+
         {/* wrapper */}
         {/*
       <Route path="/order/:id" component={OrderPage} />
@@ -42,7 +49,6 @@ const App = () => {
         component={HomeScreen}
         exact
       />
-      <Route path="/" component={HomeScreen} exact />
       */}
       </Container>
     </Router>

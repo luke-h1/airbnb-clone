@@ -1,5 +1,6 @@
 import { Request, Response } from 'express';
 import asyncHandler from 'express-async-handler';
+import bcrypt from 'bcryptjs';
 import genToken from '../utils/genToken';
 import User from '../models/userModel';
 
@@ -12,23 +13,30 @@ const login = asyncHandler(async (req, res) => {
   const { email, password }: { email: string; password: string } = req.body;
 
   const user = await User.findOne({ email });
-
-  if (user && (await user.matchPassword(password))) {
-    res.json({
-      _id: user._id,
-      name: user.name,
-      email: user.email,
-      isAdmin: user.isAdmin,
-      token: genToken(user._id),
-    });
-  } else {
-    res.status(401).json({
+  if (!user) {
+    res.status(400).json({
       errors: {
         field: 'email',
-        message: 'Incorrect credentials',
+        message: 'That email doesnt exist',
       },
     });
   }
+  const valid = await bcrypt.compare(user.password, password);
+  if (!valid) {
+    res.status(400).json({
+      errors: {
+        field: 'password',
+        message: 'incorrect creds',
+      },
+    });
+  }
+  res.json({
+    _id: user._id,
+    name: user.name,
+    email: user.email,
+    isAdmin: user.isAdmin,
+    token: genToken(user._id),
+  });
 });
 
 /*
@@ -52,9 +60,9 @@ const register = asyncHandler(async (req: Request, res: Response) => {
       },
     });
   }
+  const hashedPassword = await bcrypt.hash(password, 10);
 
-  const user = await User.create({ name, email, password });
-
+  const user = await User.create({ name, email, password: hashedPassword });
   if (user) {
     res.status(201).json({
       _id: user._id,
