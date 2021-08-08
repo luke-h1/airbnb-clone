@@ -62,18 +62,19 @@ export class PropertyResolver {
   async createProperty(
     @Arg('options') options: PropertyInput,
     @Ctx() { req }: MyContext,
-    @Arg('image', () => GraphQLUpload)
-      { createReadStream, filename }: FileUpload,
+    @Arg('image', () => GraphQLUpload, { nullable: true }) image: FileUpload, // take care of here
   ): Promise<PropertyResponse> {
     const errors = validateProperty(options);
     if (errors) {
       return { errors };
     }
-    const { image, imageFileName } = await Upload(
-      createReadStream,
-      filename,
+
+    const { image: s3Image, imageFileName } = await Upload(
+      image.createReadStream,
+      image.filename,
       constants.S3PropertyImageKey,
     );
+
     const result = await getConnection()
       .createQueryBuilder()
       .insert()
@@ -82,7 +83,7 @@ export class PropertyResolver {
         ...options,
         creatorId: req.session.userId,
         imageFileName,
-        image,
+        image: s3Image,
       })
       .returning('*')
       .execute();
@@ -134,8 +135,7 @@ export class PropertyResolver {
   async updateProperty(
     @Arg('options') options: PropertyInput,
     @Arg('id', () => Int) id: number,
-    @Arg('image', () => GraphQLUpload)
-      { createReadStream, filename }: FileUpload,
+    @Arg('image', () => GraphQLUpload, { nullable: true }) image: FileUpload, // take care of here
     @Ctx() { req }: MyContext,
   ): Promise<Property | null> {
     const {
@@ -148,9 +148,10 @@ export class PropertyResolver {
       address,
       amenities,
     } = options;
-    const { image, imageFileName } = await Upload(
-      createReadStream,
-      filename,
+
+    const { image: s3Image, imageFileName } = await Upload(
+      image.createReadStream,
+      image.filename,
       constants.S3PropertyImageKey,
     );
     const result = await getConnection()
@@ -164,7 +165,7 @@ export class PropertyResolver {
         address,
         beds,
         bedrooms,
-        image,
+        image: s3Image,
         imageFileName,
         amenities,
       })
