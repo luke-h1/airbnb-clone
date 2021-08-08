@@ -1,6 +1,6 @@
 import { Request, Response } from 'express';
 import asyncHandler from 'express-async-handler';
-import genToken from 'src/utils/genToken';
+import genToken from '../utils/genToken';
 import User from '../models/userModel';
 
 /*
@@ -127,7 +127,7 @@ const updateProfile = asyncHandler(async (req: any, res: Response) => {
 @route   GET /api/users
 @access  Private/Admin
 */
-const getUsers = asyncHandler(async (req, res) => {
+const getUsers = asyncHandler(async (_, res) => {
   const users = await User.find({});
   res.status(200).json(users);
 });

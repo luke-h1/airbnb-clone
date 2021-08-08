@@ -8,7 +8,7 @@ export const notFound = (req: Request, res: Response, next: NextFunction) => {
 
 export const errorHandler = (
   err: { message: string; stack: string },
-  req: Request,
+  _: Request,
   res: Response,
   next: NextFunction,
 ) => {
@@ -18,4 +18,5 @@ export const errorHandler = (
     message: err.message,
     stack: process.env.NODE_ENV === 'production' ? null : err.stack,
   });
+  next(err);
 };
