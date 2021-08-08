@@ -64,8 +64,8 @@ const deleteProperty = asyncHandler(async (req, res) => {
 @route   POST /api/properties
 @access  Private/Admin
 */
-const createProduct = asyncHandler(async (req: any, res) => {
-  const product = new Property({
+const createProperty = asyncHandler(async (req: any, res) => {
+  const property = new Property({
     name: 'Sample name',
     price: 20,
     user: req.user._id,
@@ -77,8 +77,8 @@ const createProduct = asyncHandler(async (req: any, res) => {
     bedrooms: 3,
   });
 
-  const createdProduct = await product.save();
-  res.status(201).json(createdProduct);
+  const createdProperty = await property.save();
+  res.status(201).json(createdProperty);
 });
 
 /*
@@ -168,7 +168,7 @@ export {
   getProperties,
   getPropertyById,
   deleteProperty,
-  createProduct,
+  createProperty,
   updateProperty,
   createPropertyReview,
   getTopProperties,
