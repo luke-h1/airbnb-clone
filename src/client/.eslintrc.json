@@ -1,82 +1,45 @@
 {
-  "env": {
-    "browser": true,
-    "es2021": true
-  },
-  "extends": ["plugin:react/recommended", "airbnb"],
-  "parser": "@typescript-eslint/parser",
-  "parserOptions": {
-    "ecmaFeatures": {
-      "jsx": true
+    "env": {
+        "browser": true,
+        "es2021": true
     },
-    "ecmaVersion": 12
-  },
-  "plugins": ["react", "@typescript-eslint"],
-  "rules": {
-    "react/react-in-jsx-scope": "off",
-    "no-console": "warn",
-    "no-use-before-define": "off",
-    "react/state-in-constructor": "off",
-    "no-unsafe-finally": "off",
-    "jsx-a11y/anchor-is-valid": "off",
-    "react/jsx-props-no-spreading": "off",
-    "arrow-body-style": "off",
-    "jsx-no-lambda": "off",
-    "react/prop-types": "off",
-    "jsx-a11y/anchor-has-content": "off",
-    "import/prefer-default-export": "off",
-    "no-multi-str": "off",
-    "@typescript-eslint/ban-ts-ignore": "off",
-    "@typescript-eslint/explicit-function-return-type": "off",
-    "@typescript-eslint/no-empty-function": "off",
-    "@typescript-eslint/no-unused-vars": [
-      "warn",
-      { "argsIgnorePattern": "^_$" }
+    "extends": [
+        "plugin:react/recommended",
+        "airbnb"
     ],
-    "@typescript-eslint/triple-slash-reference": "off",
-    "@typescript-eslint/explicit-module-boundary-types": "off",
-    "import/extensions": "off",
-    "import/no-cycle": "off",
-    "import/no-extraneous-dependencies": ["error", { "devDependencies": true }],
-    "import/no-unresolved": "off",
-    "react/forbid-prop-types": "off",
-    "max-len": "off",
-    
-    "react/no-unescaped-entities": [
-      "error",
-      {
-        "forbid": [
-          {
-            "char": ">",
-            "alternatives": ["&gt;"]
-          },
-          {
-            "char": "}",
-            "alternatives": ["&#125;"]
-          }
-        ]
-      }
+    "parser": "@typescript-eslint/parser",
+    "parserOptions": {
+        "ecmaFeatures": {
+            "jsx": true
+        },
+        "ecmaVersion": 12
+    },
+    "plugins": [
+        "react",
+        "@typescript-eslint"
     ],
-    "react/jsx-filename-extension": [
-      "error",
-      {
-        "extensions": [".jsx", ".tsx"]
-      }
-    ],
-    "react/jsx-curly-newline": "off",
-    "react/jsx-one-expression-per-line": "off",
-    "react/jsx-wrap-multilines": ["error", { "prop": "ignore" }]
-  },
-  "ignorePatterns": ["node_modules/", ".next/", "src/generated/*"],
-  "overrides": [
-    {
-      "files": ["**/*.js"],
-      "rules": {
-        "@typescript-eslint/no-var-requires": "off",
-        "global-require": "off",
-        "import/no-dynamic-require": "off",
-        "no-console": "off"
-      }
+    "rules": {
+        "react/react-in-jsx-scope": "off",
+        "no-console": "warn",
+        "no-use-before-define": "off",
+        "import/extensions": "off",
+        "react/jsx-filename-extension": [
+          0,
+          { "extensions": [".tsx, .ts, .js, .jsx"] }
+        ],
+        "react/jsx-props-no-spreading": "off",
+        "react/state-in-constructor": "off",
+        "no-unsafe-finally": "off",
+        "jsx-a11y/anchor-is-valid": "off",
+        "import/no-unresolved": "off",
+        "arrow-body-style": "off",
+        "jsx-no-lambda": "off",
+        "react/prop-types": "off",
+        "jsx-a11y/anchor-has-content": "off",
+        "import/prefer-default-export": "off",
+        "react/no-unescaped-entities": "off",
+        "no-multi-str": "off",
+        "max-len": "off",
+        "no-tabs": "off" // issue with tailwind class formatting
     }
-  ]
 }

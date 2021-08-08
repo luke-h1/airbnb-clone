@@ -1,18 +1,14 @@
-import { useMeQuery } from '@src/generated/graphql';
-import { isServer } from '@src/utils/isServer';
-import DropDown from './DropDown';
+import React from 'react';
+import { useSelector } from 'react-redux';
+import DropDown from './Dropdown';
 
 const Nav = () => {
-  const { data, loading } = useMeQuery({
-    skip: isServer(),
-  });
+  const userLogin = useSelector((state: any) => state.userLogin);
+  const { userInfo } = userLogin;
 
   let links: { name: string; href: string }[] = [];
 
-  if (loading) {
-    //   user is not logged in
-  }
-  if (!data?.me) {
+  if (!userInfo) {
     links = [
       {
         name: 'Login',
@@ -141,19 +137,18 @@ const Nav = () => {
                 className="inline-flex items-center relative px-2 border rounded-full hover:shadow-lg"
               >
                 <div className="pl-1">
-                  <DropDown links={links} me={data?.me} />
+                  <DropDown links={links} me={userInfo} />
                 </div>
-                {data?.me?.image && (
-                  <img
-                    src={data?.me.image}
-                    style={{
-                      width: '90px',
-                      height: '40px',
-                    }}
-                    alt={`${data?.me.fullName}'s profile`}
-                  />
-                )}
-
+                {/* {userInfo.image && (
+                <img
+                  src={userInfo.image}
+                  style={{
+                    width: '90px',
+                    height: '40px',
+                  }}
+                  alt={`${userInfo.name}'s profile`}
+                />
+                )} */}
                 <div className="block flex-grow-0 flex-shrink-0 h-15 w-12 pl-5" />
               </button>
             </div>
