@@ -20,3 +20,4 @@ router
   .get(getPropertyById)
   .delete(protect, admin, deleteProperty)
   .put(protect, admin, updateProperty);
+export default router;
