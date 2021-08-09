@@ -7,6 +7,7 @@ import express, { Response } from 'express';
 import session from 'express-session';
 import { graphqlUploadExpress } from 'graphql-upload';
 import rateLimit from 'express-rate-limit';
+import morgan from 'morgan';
 import { constants } from './utils/constants';
 import { createUserLoader } from './Loaders/UserLoader';
 import { redis } from './utils/redis';
@@ -19,7 +20,7 @@ const main = async () => {
   await conn.runMigrations();
   console.log('Migrations ran');
   const app = express();
-
+  app.use(morgan('dev'));
   const RedisStore = connectRedis(session);
 
   app.use(
