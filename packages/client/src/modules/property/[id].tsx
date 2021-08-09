@@ -5,22 +5,23 @@ import { useMeQuery } from '@src/generated/graphql';
 import { useRouter } from 'next/router';
 import { withUrqlClient } from 'next-urql';
 import { createUrqlClient } from '@src/utils/createUrqlClient';
+import NotFoundPage from '@src/pages/404';
 
 const SingleProperty: React.FC<{}> = () => {
   const router = useRouter();
   const [{ data: meData }] = useMeQuery();
-  const [{ data, error, fetching }] = useGetPropertyFromUrl();
+  const [{ data, fetching }] = useGetPropertyFromUrl();
   if (fetching) {
     return <Loader />;
-  }
-  if (error) {
-    return <p className="text-4xl">{error.message}</p>;
   }
 
   if (meData?.me?.id !== data?.property.creator.id) {
     router.push('/');
   }
 
+  if (!data?.property) {
+    return <NotFoundPage />;
+  }
   return (
     <>
       <div className="flex flex-col align-center items-center justify-center">

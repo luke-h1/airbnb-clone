@@ -18,13 +18,16 @@ const IndexPage = () => {
     pause: isServer(),
   });
 
-  if (!fetching && !data) {
+  if (!fetching && !data && error) {
     return (
       <div>
         <h1>Query Failed</h1>
         <div>{error?.message}</div>
       </div>
     );
+  }
+  if (!fetching && !error && !data) {
+    <p>no properties</p>;
   }
   return (
     <div className="flex flex-col align-center items-center justify-center place-items-center">

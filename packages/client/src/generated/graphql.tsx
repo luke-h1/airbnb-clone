@@ -20,6 +20,12 @@ export type Scalars = {
   Upload: any;
 };
 
+export type DeleteResponse = {
+  __typename?: 'DeleteResponse';
+  errors?: Maybe<Array<FieldError>>;
+  success?: Maybe<Scalars['Boolean']>;
+};
+
 export type FieldError = {
   __typename?: 'FieldError';
   field: Scalars['String'];
@@ -34,6 +40,7 @@ export type Mutation = {
   register: UserResponse;
   login: UserResponse;
   logout: Scalars['Boolean'];
+  delete: DeleteResponse;
 };
 
 export type MutationCreatePropertyArgs = {
@@ -58,6 +65,10 @@ export type MutationRegisterArgs = {
 
 export type MutationLoginArgs = {
   options: UsernamePasswordInput;
+};
+
+export type MutationDeleteArgs = {
+  id: Scalars['Float'];
 };
 
 export type PaginatedProperties = {

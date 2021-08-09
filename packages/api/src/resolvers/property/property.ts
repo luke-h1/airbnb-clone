@@ -168,7 +168,7 @@ export class PropertyResolver {
   ): Promise<boolean> {
     const property = await Property.findOne(id);
     if (property) {
-      await Delete(property!.imageFileName);
+      await Delete(property.imageFileName);
       await Property.delete({ id, creatorId: req.session.userId });
       return true;
     }
