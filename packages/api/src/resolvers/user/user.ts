@@ -69,7 +69,7 @@ export class UserResolver {
   @Mutation(() => UserResponse)
   async register(
     @Arg('options') options: UserRegisterInput,
-    @Arg('image', () => GraphQLUpload, { nullable: true }) image: FileUpload, // take care of here
+    @Arg('image', () => GraphQLUpload, { nullable: true }) image: FileUpload,
     @Ctx() { req }: MyContext,
   ): Promise<UserResponse> {
     console.log(image);
