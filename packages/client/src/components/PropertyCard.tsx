@@ -5,7 +5,6 @@ import EditDeleteButtons from '@src/components/EditDeleteButtons';
 
 interface PropertyProps {
   property: Property;
-  pagination: boolean;
 }
 
 const PropertyCard: React.FC<PropertyProps> = ({ property }) => {

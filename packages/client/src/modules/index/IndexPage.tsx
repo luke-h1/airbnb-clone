@@ -3,21 +3,18 @@ import React, { useState } from 'react';
 import Link from 'next/link';
 import { withUrqlClient } from 'next-urql';
 import { createUrqlClient } from '@src/utils/createUrqlClient';
-import { isServer } from '@src/hooks/isServer';
 import { Loader } from '@src/components/Loader';
 import PropertyCard from '@src/components/PropertyCard';
 import { Box, Button } from '@chakra-ui/react';
-import Banner from '@src/components/Banner';
 
 const IndexPage = () => {
   const [variables, setVariables] = useState({
-    limit: 15,
+    limit: 25,
     cursor: null as null | string,
   });
 
   const [{ data, error, fetching }] = usePropertiesQuery({
     variables,
-    pause: isServer(),
   });
 
   if (!fetching && !data && error) {
@@ -34,11 +31,6 @@ const IndexPage = () => {
   return (
     <>
       <div className="flex flex-col align-center items-center justify-center place-items-center">
-        <Box textAlign="center" fontSize="xl" w="100%">
-          <Box pt={10} pb={10}>
-            <Banner />
-          </Box>
-        </Box>
         {!data && fetching ? (
           <Loader />
         ) : (
@@ -51,20 +43,22 @@ const IndexPage = () => {
                   <PropertyCard property={p} />
                 </Link>
                 {data?.properties.hasMore ? (
-                  <Button
-                    type="button"
-                    onClick={() => {
-                      setVariables({
-                        limit: variables.limit,
-                        cursor:
-                            data.properties.properties[
-                              data.properties.properties.length - 1
-                            ].createdAt,
-                      });
-                    }}
-                  >
-                    More
-                  </Button>
+                  <Box>
+                    <Button
+                      type="button"
+                      onClick={() => {
+                        setVariables({
+                          limit: variables.limit,
+                          cursor:
+                              data.properties.properties[
+                                data.properties.properties.length - 1
+                              ].createdAt,
+                        });
+                      }}
+                    >
+                      More
+                    </Button>
+                  </Box>
                 ) : null}
               </Box>
             )))}
@@ -74,4 +68,4 @@ const IndexPage = () => {
     </>
   );
 };
-export default withUrqlClient(createUrqlClient, { ssr: true })(IndexPage);
+export default withUrqlClient(createUrqlClient, { ssr: false })(IndexPage);
