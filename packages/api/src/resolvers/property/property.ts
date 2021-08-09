@@ -62,7 +62,7 @@ export class PropertyResolver {
   async createProperty(
     @Arg('options') options: PropertyInput,
     @Ctx() { req }: MyContext,
-    @Arg('image', () => GraphQLUpload, { nullable: true }) image: FileUpload, // take care of here
+    @Arg('image', () => GraphQLUpload, { nullable: true }) image: FileUpload,
   ): Promise<PropertyResponse> {
     const errors = validateProperty(options);
     if (errors) {
@@ -135,20 +135,9 @@ export class PropertyResolver {
   async updateProperty(
     @Arg('options') options: PropertyInput,
     @Arg('id', () => Int) id: number,
-    @Arg('image', () => GraphQLUpload, { nullable: true }) image: FileUpload, // take care of here
+    @Arg('image', () => GraphQLUpload, { nullable: true }) image: FileUpload,
     @Ctx() { req }: MyContext,
   ): Promise<Property | null> {
-    const {
-      title,
-      propertyType,
-      description,
-      pricePerNight,
-      beds,
-      bedrooms,
-      address,
-      amenities,
-    } = options;
-
     const { image: s3Image, imageFileName } = await Upload(
       image.createReadStream,
       image.filename,
@@ -158,16 +147,9 @@ export class PropertyResolver {
       .createQueryBuilder()
       .update(Property)
       .set({
-        title,
-        propertyType,
-        description,
-        pricePerNight,
-        address,
-        beds,
-        bedrooms,
+        ...options,
         image: s3Image,
         imageFileName,
-        amenities,
       })
       .where('id = :id and creatorId = :creatorId', {
         id,
@@ -185,8 +167,11 @@ export class PropertyResolver {
     @Ctx() { req }: MyContext,
   ): Promise<boolean> {
     const property = await Property.findOne(id);
-    await Delete(property!.imageFileName);
-    await Property.delete({ id, creatorId: req.session.userId });
-    return true;
+    if (property) {
+      await Delete(property!.imageFileName);
+      await Property.delete({ id, creatorId: req.session.userId });
+      return true;
+    }
+    return false;
   }
 }
