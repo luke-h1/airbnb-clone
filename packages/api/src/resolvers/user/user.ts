@@ -8,17 +8,19 @@ import {
   Query,
   Resolver,
   Root,
+  UseMiddleware,
 } from 'type-graphql';
 import { getConnection } from 'typeorm';
 import { FileUpload, GraphQLUpload } from 'graphql-upload';
 import bcrypt from 'bcryptjs';
+import { isAuth } from '../../middleware/isAuth';
 import { User } from '../../entities/User';
 import { MyContext } from '../../types/types';
 import { UsernamePasswordInput } from './inputs/UsernamePasswordInput';
 import { validateRegister } from '../../validation/user/validateRegister';
 import { constants } from '../../utils/constants';
 import { UserRegisterInput } from './inputs/UserRegisterInput';
-import { Upload } from '../../utils/image/s3/s3utils';
+import { Delete, Upload } from '../../utils/image/s3/s3utils';
 
 @ObjectType()
 class FieldError {
@@ -35,6 +37,15 @@ class UserResponse {
 
   @Field(() => User, { nullable: true })
   user?: User;
+}
+
+@ObjectType()
+class DeleteResponse {
+  @Field(() => [FieldError], { nullable: true })
+  errors?: FieldError[];
+
+  @Field(() => Boolean, { nullable: true })
+  success?: boolean;
 }
 
 @Resolver(User)
@@ -69,7 +80,7 @@ export class UserResolver {
   @Mutation(() => UserResponse)
   async register(
     @Arg('options') options: UserRegisterInput,
-    @Arg('image', () => GraphQLUpload, { nullable: true }) image: FileUpload, // take care of here
+    @Arg('image', () => GraphQLUpload, { nullable: true }) image: FileUpload,
     @Ctx() { req }: MyContext,
   ): Promise<UserResponse> {
     console.log(image);
@@ -164,11 +175,33 @@ export class UserResolver {
     return new Promise((resolve) => req.session.destroy((e: any) => {
       res.clearCookie(constants.COOKIE_NAME);
       if (e) {
-        console.log('LOGOUT ERROR', e);
         resolve(false);
         return;
       }
       resolve(true);
     }));
+  }
+
+  @Mutation(() => DeleteResponse)
+  @UseMiddleware(isAuth)
+  async delete(@Ctx() { req, res }: MyContext, @Arg('id') id: number) {
+    if (req.session.userId !== id) {
+      return {
+        errors: [
+          {
+            field: 'email',
+            message: 'Incorrect credentials',
+          },
+        ],
+      };
+    }
+    const user = await User.findOne(id);
+    if (!user) {
+      return false;
+    }
+    await Delete(user.image);
+    await User.delete(id);
+    res.clearCookie(constants.COOKIE_NAME);
+    return true;
   }
 }

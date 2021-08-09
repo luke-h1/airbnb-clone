@@ -13,6 +13,7 @@ import {
 } from 'urql';
 import { pipe, tap } from 'wonka';
 import Router from 'next/router';
+import { SSRExchange } from 'next-urql';
 import {
   LoginMutation,
   LogoutMutation,
@@ -79,7 +80,7 @@ function invalidateAllProperties(cache: Cache) {
   });
 }
 
-export const createUrqlClient = (ssrExchange: any, ctx: any) => {
+export const createUrqlClient = (ssrExchange: SSRExchange, ctx: any) => {
   let cookie = '';
   if (isServer()) {
     cookie = ctx?.req?.headers?.cookie;
@@ -111,6 +112,12 @@ export const createUrqlClient = (ssrExchange: any, ctx: any) => {
             },
             createProperty: (_result, args, cache) => {
               invalidateAllProperties(cache);
+            },
+            updateProperty: (_result, args, cache) => {
+              cache.invalidate({
+                __typename: 'Property',
+                id: (args as DeletePropertyMutationVariables).id,
+              });
             },
             login: (_result, args, cache) => {
               CustomUpdateQuery<LoginMutation, MeQuery>(

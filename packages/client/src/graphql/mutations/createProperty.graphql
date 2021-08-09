@@ -13,6 +13,7 @@ mutation CreateProperty($options: PropertyInput!, $image: Upload!) {
       pricePerNight
       address
       amenities
+      baths
       beds
       bedrooms
       createdAt

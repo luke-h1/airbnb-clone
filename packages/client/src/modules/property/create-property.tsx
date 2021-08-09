@@ -7,6 +7,7 @@ import React from 'react';
 import { toPropertyErrorMap } from '@src/utils/toErrorMap';
 import { withUrqlClient } from 'next-urql';
 import { createUrqlClient } from '@src/utils/createUrqlClient';
+import Wrapper from '@src/components/Wrapper';
 
 interface FormValues {
   title: string;
@@ -14,6 +15,7 @@ interface FormValues {
   image: string;
   pricePerNight: number;
   beds: number;
+  baths: number;
   bedrooms: number;
   description: string;
   address: string;
@@ -26,7 +28,7 @@ const CreatePropertyPage = () => {
   const [, createProperty] = useCreatePropertyMutation();
 
   return (
-    <>
+    <Wrapper>
       <h1>Create Property</h1>
       <Formik<FormValues>
         initialValues={{
@@ -35,6 +37,7 @@ const CreatePropertyPage = () => {
           image: '',
           pricePerNight: 0,
           beds: 0,
+          baths: 0,
           bedrooms: 0,
           description: '',
           address: '',
@@ -48,6 +51,7 @@ const CreatePropertyPage = () => {
               pricePerNight: values.pricePerNight,
               description: values.description,
               beds: values.beds,
+              baths: values.baths,
               bedrooms: values.bedrooms,
               address: values.address,
               amenities: values.amenities,
@@ -101,6 +105,13 @@ const CreatePropertyPage = () => {
                 min="1"
               />
               <InputField
+                name="baths"
+                placeholder="Number of baths"
+                label="baths"
+                type="number"
+                min="1"
+              />
+              <InputField
                 name="beds"
                 placeholder="Number of beds"
                 label="beds"
@@ -138,7 +149,7 @@ const CreatePropertyPage = () => {
           </div>
         )}
       </Formik>
-    </>
+    </Wrapper>
   );
 };
 export default withUrqlClient(createUrqlClient, { ssr: false })(

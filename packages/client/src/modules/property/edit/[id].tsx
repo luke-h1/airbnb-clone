@@ -13,6 +13,7 @@ import { useIsAuth } from '@src/utils/useIsAuth';
 import Link from 'next/link';
 import { withUrqlClient } from 'next-urql';
 import { createUrqlClient } from '@src/utils/createUrqlClient';
+import Wrapper from '@src/components/Wrapper';
 
 const EditPropertyPage = () => {
   useIsAuth();
@@ -49,7 +50,7 @@ const EditPropertyPage = () => {
   }
 
   return (
-    <>
+    <Wrapper>
       <h1>Update Property</h1>
       <Formik
         initialValues={{
@@ -58,6 +59,7 @@ const EditPropertyPage = () => {
           image: data.property.image,
           pricePerNight: data.property.pricePerNight,
           beds: data.property.beds,
+          baths: data.property.baths,
           bedrooms: data.property.bedrooms,
           description: data.property.description,
           address: data.property.address,
@@ -71,6 +73,7 @@ const EditPropertyPage = () => {
               pricePerNight: values.pricePerNight,
               description: values.description,
               beds: values.beds,
+              baths: values.baths,
               bedrooms: values.bedrooms,
               address: values.address,
               amenities: values.amenities,
@@ -102,6 +105,7 @@ const EditPropertyPage = () => {
               type="text"
             />
             <input
+              className="input border border-gray-400 appearance-none rounded w-full px-3 py-3 pt-5 pb-2 focus focus:border-indigo-600 focus:outline-none active:outline-none active:border-indigo-600"
               type="file"
               accept="image/*"
               onChange={({ target: { validity, files } }) => {
@@ -122,6 +126,13 @@ const EditPropertyPage = () => {
               name="beds"
               placeholder="Number of beds"
               label="beds"
+              type="number"
+              min="1"
+            />
+            <InputField
+              name="baths"
+              placeholder="Number of baths"
+              label="baths"
               type="number"
               min="1"
             />
@@ -159,7 +170,7 @@ const EditPropertyPage = () => {
           </Form>
         )}
       </Formik>
-    </>
+    </Wrapper>
   );
 };
 export default withUrqlClient(createUrqlClient, { ssr: false })(

@@ -62,7 +62,7 @@ export class PropertyResolver {
   async createProperty(
     @Arg('options') options: PropertyInput,
     @Ctx() { req }: MyContext,
-    @Arg('image', () => GraphQLUpload, { nullable: true }) image: FileUpload, // take care of here
+    @Arg('image', () => GraphQLUpload, { nullable: true }) image: FileUpload,
   ): Promise<PropertyResponse> {
     const errors = validateProperty(options);
     if (errors) {
@@ -101,6 +101,7 @@ export class PropertyResolver {
   ): Promise<PaginatedProperties> {
     const realLimit = Math.min(50, limit);
     const realLimitPlusOne = realLimit + 1;
+
     const replacements: any[] = [realLimitPlusOne];
 
     if (cursor) {
@@ -111,12 +112,26 @@ export class PropertyResolver {
       `
         SELECT p.* from "properties" p
         WHERE (p."creatorId" = $1)
-        ${cursor ? `AND WHERE p."createdAt" < ${replacements}` : ''}
+        ${cursor ? `AND WHERE p."createdAt" < $2` : ''}
         ORDER BY p."createdAt" DESC
-        LIMIT $1
       `,
       [req.session.userId],
     );
+    // const qb = getConnection()
+    //   .getRepository(Property)
+    //   .createQueryBuilder("p")
+    //   .innerJoinAndSelect("p.creator", "u", 'u.id = p."creatorId"')
+    //   .orderBy('p."createdAt"', "DESC")
+    //   .take(reaLimitPlusOne);
+
+    // if (cursor) {
+    //   qb.where('p."createdAt" < :cursor', {
+    //     cursor: new Date(parseInt(cursor)),
+    //   });
+    // }
+
+    // const properties = await qb.getMany();
+
     return {
       properties: properties.slice(0, realLimit),
       hasMore: properties.length === realLimitPlusOne,
@@ -135,20 +150,9 @@ export class PropertyResolver {
   async updateProperty(
     @Arg('options') options: PropertyInput,
     @Arg('id', () => Int) id: number,
-    @Arg('image', () => GraphQLUpload, { nullable: true }) image: FileUpload, // take care of here
+    @Arg('image', () => GraphQLUpload, { nullable: true }) image: FileUpload,
     @Ctx() { req }: MyContext,
   ): Promise<Property | null> {
-    const {
-      title,
-      propertyType,
-      description,
-      pricePerNight,
-      beds,
-      bedrooms,
-      address,
-      amenities,
-    } = options;
-
     const { image: s3Image, imageFileName } = await Upload(
       image.createReadStream,
       image.filename,
@@ -158,16 +162,9 @@ export class PropertyResolver {
       .createQueryBuilder()
       .update(Property)
       .set({
-        title,
-        propertyType,
-        description,
-        pricePerNight,
-        address,
-        beds,
-        bedrooms,
+        ...options,
         image: s3Image,
         imageFileName,
-        amenities,
       })
       .where('id = :id and creatorId = :creatorId', {
         id,
@@ -185,8 +182,11 @@ export class PropertyResolver {
     @Ctx() { req }: MyContext,
   ): Promise<boolean> {
     const property = await Property.findOne(id);
-    await Delete(property!.imageFileName);
-    await Property.delete({ id, creatorId: req.session.userId });
-    return true;
+    if (property) {
+      await Delete(property.imageFileName);
+      await Property.delete({ id, creatorId: req.session.userId });
+      return true;
+    }
+    return false;
   }
 }

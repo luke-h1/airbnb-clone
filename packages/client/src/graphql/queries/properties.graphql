@@ -8,6 +8,7 @@ query Properties($limit: Int!, $cursor: String) {
       image
       description
       beds
+      baths
       bedrooms
       pricePerNight
       address

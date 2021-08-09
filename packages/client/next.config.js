@@ -26,6 +26,7 @@ module.exports = {
     domains: [
       'dev-airbnb-clone.s3.eu-west-2.amazonaws.com',
       'prod-airbnb-clone.s3.eu-west-2.amazonaws.com',
+      'images.unsplash.com',
     ],
   },
 };

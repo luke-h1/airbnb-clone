@@ -1,7 +1,14 @@
 import React from 'react';
+import { Spinner } from '@chakra-ui/react';
 
 export const Loader = () => {
   return (
-    <div className="loader ease-linear rounded-full border-8 border-t-8 border-gray-200 h-12 w-12" />
+    <Spinner
+      thickness="4px"
+      speed="0.65s"
+      emptyColor="gray.200"
+      color="blue.500"
+      size="xl"
+    />
   );
 };

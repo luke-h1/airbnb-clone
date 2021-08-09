@@ -20,6 +20,12 @@ export type Scalars = {
   Upload: any;
 };
 
+export type DeleteResponse = {
+  __typename?: 'DeleteResponse';
+  errors?: Maybe<Array<FieldError>>;
+  success?: Maybe<Scalars['Boolean']>;
+};
+
 export type FieldError = {
   __typename?: 'FieldError';
   field: Scalars['String'];
@@ -34,6 +40,7 @@ export type Mutation = {
   register: UserResponse;
   login: UserResponse;
   logout: Scalars['Boolean'];
+  delete: DeleteResponse;
 };
 
 export type MutationCreatePropertyArgs = {
@@ -60,6 +67,10 @@ export type MutationLoginArgs = {
   options: UsernamePasswordInput;
 };
 
+export type MutationDeleteArgs = {
+  id: Scalars['Float'];
+};
+
 export type PaginatedProperties = {
   __typename?: 'PaginatedProperties';
   properties: Array<Property>;
@@ -74,6 +85,7 @@ export type Property = {
   propertyType: Scalars['String'];
   image: Scalars['String'];
   beds: Scalars['Int'];
+  baths: Scalars['Int'];
   bedrooms: Scalars['Int'];
   description: Scalars['String'];
   pricePerNight: Scalars['Int'];
@@ -96,6 +108,7 @@ export type PropertyInput = {
   description: Scalars['String'];
   pricePerNight: Scalars['Int'];
   beds: Scalars['Int'];
+  baths: Scalars['Int'];
   bedrooms: Scalars['Int'];
   address: Scalars['String'];
   amenities: Array<Scalars['String']>;
@@ -212,6 +225,7 @@ export type CreatePropertyMutation = {
       pricePerNight: number;
       address: string;
       amenities: Array<string>;
+      baths: number;
       beds: number;
       bedrooms: number;
       createdAt: string;
@@ -300,6 +314,7 @@ export type UpdatePropertyMutation = {
     id: number;
     title: string;
     beds: number;
+    baths: number;
     bedrooms: number;
     propertyType: string;
     description: string;
@@ -352,6 +367,7 @@ export type PropertiesQuery = {
       image: string;
       description: string;
       beds: number;
+      baths: number;
       bedrooms: number;
       pricePerNight: number;
       address: string;
@@ -385,6 +401,7 @@ export type PropertyQuery = {
     pricePerNight: number;
     address: string;
     beds: number;
+    baths: number;
     bedrooms: number;
     amenities: Array<string>;
     createdAt: string;
@@ -443,6 +460,7 @@ export const CreatePropertyDocument = gql`
         pricePerNight
         address
         amenities
+        baths
         beds
         bedrooms
         createdAt
@@ -531,6 +549,7 @@ export const UpdatePropertyDocument = gql`
         updatedAt
       }
       beds
+      baths
       bedrooms
       propertyType
       description
@@ -574,6 +593,7 @@ export const PropertiesDocument = gql`
         image
         description
         beds
+        baths
         bedrooms
         pricePerNight
         address
@@ -610,6 +630,7 @@ export const PropertyDocument = gql`
       pricePerNight
       address
       beds
+      baths
       bedrooms
       amenities
       createdAt

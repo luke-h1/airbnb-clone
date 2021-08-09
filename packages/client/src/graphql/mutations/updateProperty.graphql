@@ -11,6 +11,7 @@ mutation UpdateProperty($options: PropertyInput!, $id: Int!, $image: Upload!) {
       updatedAt
     }
     beds
+    baths
     bedrooms
     propertyType
     description
