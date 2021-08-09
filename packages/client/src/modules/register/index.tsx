@@ -1,3 +1,4 @@
+import Wrapper from '@src/components/Wrapper';
 import { createUrqlClient } from '@src/utils/createUrqlClient';
 import { Form, Formik } from 'formik';
 import { withUrqlClient } from 'next-urql';
@@ -19,7 +20,7 @@ const RegisterPage = () => {
   const [, register] = useRegisterMutation();
   const router = useRouter();
   return (
-    <>
+    <Wrapper>
       <h1 className="title">Welcome to AirBnb</h1>
       <Formik<FormValues>
         initialValues={{
@@ -89,7 +90,7 @@ const RegisterPage = () => {
           </Form>
         )}
       </Formik>
-    </>
+    </Wrapper>
   );
 };
 export default withUrqlClient(createUrqlClient, { ssr: false })(RegisterPage);

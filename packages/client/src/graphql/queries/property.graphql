@@ -8,6 +8,7 @@ query Property($id: Int!, ) {
       pricePerNight
       address
       beds
+      baths
       bedrooms
       amenities
       createdAt

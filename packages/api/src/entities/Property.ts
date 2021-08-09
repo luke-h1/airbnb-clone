@@ -47,6 +47,10 @@ export class Property extends BaseEntity {
 
   @Field(() => Int)
   @Column()
+  baths: number;
+
+  @Field(() => Int)
+  @Column()
   bedrooms: number;
 
   @Field(() => String)

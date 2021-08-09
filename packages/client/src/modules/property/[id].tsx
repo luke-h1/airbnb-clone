@@ -6,6 +6,7 @@ import { useRouter } from 'next/router';
 import { withUrqlClient } from 'next-urql';
 import { createUrqlClient } from '@src/utils/createUrqlClient';
 import NotFoundPage from '@src/pages/404';
+import Wrapper from '@src/components/Wrapper';
 
 const SingleProperty: React.FC<{}> = () => {
   const router = useRouter();
@@ -23,7 +24,7 @@ const SingleProperty: React.FC<{}> = () => {
     return <NotFoundPage />;
   }
   return (
-    <>
+    <Wrapper>
       <div className="flex flex-col align-center items-center justify-center">
         <img src={data?.property.image} className="max-w-md" alt="hello" />
         <div className="max-w-3xl mt-5">
@@ -45,7 +46,7 @@ const SingleProperty: React.FC<{}> = () => {
           </ul>
         </div>
       </div>
-    </>
+    </Wrapper>
   );
 };
 export default withUrqlClient(createUrqlClient, { ssr: false })(SingleProperty);

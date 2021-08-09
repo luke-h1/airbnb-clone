@@ -13,6 +13,7 @@ import { useIsAuth } from '@src/utils/useIsAuth';
 import Link from 'next/link';
 import { withUrqlClient } from 'next-urql';
 import { createUrqlClient } from '@src/utils/createUrqlClient';
+import Wrapper from '@src/components/Wrapper';
 
 const EditPropertyPage = () => {
   useIsAuth();
@@ -49,7 +50,7 @@ const EditPropertyPage = () => {
   }
 
   return (
-    <>
+    <Wrapper>
       <h1>Update Property</h1>
       <Formik
         initialValues={{
@@ -58,6 +59,7 @@ const EditPropertyPage = () => {
           image: data.property.image,
           pricePerNight: data.property.pricePerNight,
           beds: data.property.beds,
+          baths: data.property.baths,
           bedrooms: data.property.bedrooms,
           description: data.property.description,
           address: data.property.address,
@@ -71,6 +73,7 @@ const EditPropertyPage = () => {
               pricePerNight: values.pricePerNight,
               description: values.description,
               beds: values.beds,
+              baths: values.baths,
               bedrooms: values.bedrooms,
               address: values.address,
               amenities: values.amenities,
@@ -127,6 +130,13 @@ const EditPropertyPage = () => {
               min="1"
             />
             <InputField
+              name="baths"
+              placeholder="Number of baths"
+              label="baths"
+              type="number"
+              min="1"
+            />
+            <InputField
               name="bedrooms"
               placeholder="Number of bedrooms"
               label="bedrooms"
@@ -160,7 +170,7 @@ const EditPropertyPage = () => {
           </Form>
         )}
       </Formik>
-    </>
+    </Wrapper>
   );
 };
 export default withUrqlClient(createUrqlClient, { ssr: false })(

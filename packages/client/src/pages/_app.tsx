@@ -1,18 +1,15 @@
 import type { AppProps } from 'next/app';
-import Nav from '@src/components/Nav';
 import '@fontsource/lato';
-import Container from '@src/components/Container';
-import '@src/styles/index.css';
+import { ChakraProvider } from '@chakra-ui/react';
+import Nav from '@src/components/Nav';
 
 function MyApp({ Component, pageProps }: AppProps) {
   return (
     <>
-      <main className="max-w-4xl mx-auto antialiased mb-6">
+      <ChakraProvider>
         <Nav {...pageProps} />
-      </main>
-      <Container>
         <Component {...pageProps} />
-      </Container>
+      </ChakraProvider>
     </>
   );
 }

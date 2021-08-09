@@ -1,7 +1,8 @@
+import Wrapper from '@src/components/Wrapper';
 import React from 'react';
 
 const NotFoundPage = () => {
-  return <>404</>;
+  return <Wrapper>404</Wrapper>;
 };
 
 export default NotFoundPage;

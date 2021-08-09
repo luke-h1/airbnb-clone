@@ -1,7 +1,8 @@
 import React from 'react';
 import Link from 'next/link';
 import { useDeletePropertyMutation, useMeQuery } from '@src/generated/graphql';
-import { AiFillEdit, AiTwotoneDelete } from 'react-icons/ai';
+import { DeleteIcon, EditIcon } from '@chakra-ui/icons';
+import { Box, Text } from '@chakra-ui/react';
 
 interface EditDeleteButtonProps {
   id: number;
@@ -19,22 +20,20 @@ const EditDeleteButtons: React.FC<EditDeleteButtonProps> = ({
     return null;
   }
   return (
-    <div className="my-2 flex justify-center align-center items-baseline">
+    <Box>
       <Link href={`/property/edit/${id}`}>
-        <a className="mr-4">
-          <AiFillEdit fontSize="23px" color="green" />
-        </a>
+        <Text mr={2}>
+          <EditIcon fontSize="23px" color="green" />
+        </Text>
       </Link>
-      <AiTwotoneDelete
-        color="red"
-        fontSize="23px"
+      <DeleteIcon
         onClick={() => {
           deleteProperty({
             id,
           });
         }}
       />
-    </div>
+    </Box>
   );
 };
 export default EditDeleteButtons;

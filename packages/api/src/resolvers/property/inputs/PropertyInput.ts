@@ -18,6 +18,9 @@ export class PropertyInput {
   beds: number;
 
   @Field(() => Int)
+  baths: number;
+
+  @Field(() => Int)
   bedrooms: number;
 
   @Field(() => String)

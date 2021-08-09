@@ -7,6 +7,7 @@ import { toErrorMap } from '@src/utils/toErrorMap';
 import Link from 'next/link';
 import { withUrqlClient } from 'next-urql';
 import { createUrqlClient } from '@src/utils/createUrqlClient';
+import Wrapper from '@src/components/Wrapper';
 
 interface FormValues {
   email: string;
@@ -16,7 +17,7 @@ const RegisterPage = () => {
   const [, login] = useLoginMutation();
   const router = useRouter();
   return (
-    <>
+    <Wrapper>
       <h1 className="title">Welcome to AirBnb</h1>
       <Formik<FormValues>
         initialValues={{
@@ -68,7 +69,7 @@ const RegisterPage = () => {
           </Form>
         )}
       </Formik>
-    </>
+    </Wrapper>
   );
 };
 export default withUrqlClient(createUrqlClient, { ssr: false })(RegisterPage);
