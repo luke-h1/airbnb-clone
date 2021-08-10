@@ -1,4 +1,5 @@
-import Wrapper from '@src/components/Wrapper';
+import { Button } from '@chakra-ui/react';
+import { Wrapper } from '@src/components/Wrapper';
 import { createUrqlClient } from '@src/utils/createUrqlClient';
 import { Form, Formik } from 'formik';
 import { withUrqlClient } from 'next-urql';
@@ -21,7 +22,6 @@ const RegisterPage = () => {
   const router = useRouter();
   return (
     <Wrapper>
-      <h1 className="title">Welcome to AirBnb</h1>
       <Formik<FormValues>
         initialValues={{
           firstName: '',
@@ -69,6 +69,7 @@ const RegisterPage = () => {
             <input
               type="file"
               accept="image/*"
+              style={{ marginBottom: '1rem' }}
               onChange={({ target: { validity, files } }) => {
                 if (validity.valid && files) {
                   setFieldValue('image', files[0]);
@@ -76,17 +77,9 @@ const RegisterPage = () => {
                 }
               }}
             />
-            <div className="flex flex-col mb-5">
-              <button
-                className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-2 rounded"
-                type="submit"
-                disabled={isSubmitting}
-              >
-                <a target="_blank" rel="noreferrer">
-                  Register
-                </a>
-              </button>
-            </div>
+            <Button type="submit" colorScheme="blue" disabled={isSubmitting}>
+              Register
+            </Button>
           </Form>
         )}
       </Formik>

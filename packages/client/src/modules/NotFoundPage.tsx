@@ -1,4 +1,4 @@
-import Wrapper from '@src/components/Wrapper';
+import { Wrapper } from '@src/components/Wrapper';
 import React from 'react';
 
 const NotFoundPage = () => {

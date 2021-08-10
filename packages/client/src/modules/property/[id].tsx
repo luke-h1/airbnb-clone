@@ -6,7 +6,7 @@ import { useRouter } from 'next/router';
 import { withUrqlClient } from 'next-urql';
 import { createUrqlClient } from '@src/utils/createUrqlClient';
 import NotFoundPage from '@src/pages/404';
-import Wrapper from '@src/components/Wrapper';
+import { Wrapper } from '@src/components/Wrapper';
 
 const SingleProperty: React.FC<{}> = () => {
   const router = useRouter();
@@ -23,6 +23,7 @@ const SingleProperty: React.FC<{}> = () => {
   if (!data?.property) {
     return <NotFoundPage />;
   }
+  // @TODO: Refactor this page to use chakra UI
   return (
     <Wrapper>
       <div className="flex flex-col align-center items-center justify-center">

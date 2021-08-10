@@ -7,7 +7,8 @@ import { toErrorMap } from '@src/utils/toErrorMap';
 import Link from 'next/link';
 import { withUrqlClient } from 'next-urql';
 import { createUrqlClient } from '@src/utils/createUrqlClient';
-import Wrapper from '@src/components/Wrapper';
+import { Wrapper } from '@src/components/Wrapper';
+import { Button, Flex, Text } from '@chakra-ui/react';
 
 interface FormValues {
   email: string;
@@ -18,7 +19,6 @@ const RegisterPage = () => {
   const router = useRouter();
   return (
     <Wrapper>
-      <h1 className="title">Welcome to AirBnb</h1>
       <Formik<FormValues>
         initialValues={{
           email: '',
@@ -45,27 +45,20 @@ const RegisterPage = () => {
               label="password"
               type="password"
             />
-            <div className="flex flex-col align-center">
+            <Flex direction="column" justifyContent="center">
+              <Button colorScheme="blue" mt={3} type="submit">
+                Login
+              </Button>
+            </Flex>
+
+            <Text as="h3">Don't have an account ?</Text>
+            <Link href="/register">
               <a>
-                <button
-                  className="bg-blue-500 hover:bg-blue-400 text-white font-bold py-2 px-4 border-b-4 border-blue-700 hover:border-blue-500 rounded"
-                  type="submit"
-                >
-                  Login
-                </button>
+                <Button colorScheme="blue" mt={3} type="submit">
+                  Register
+                </Button>
               </a>
-              <h3>Don't have an account ?</h3>
-              <Link href="/register">
-                <a>
-                  <button
-                    className="bg-blue-500 hover:bg-blue-400 text-white font-bold py-2 px-4 border-b-4 border-blue-700 hover:border-blue-500 rounded"
-                    type="button"
-                  >
-                    Register
-                  </button>
-                </a>
-              </Link>
-            </div>
+            </Link>
           </Form>
         )}
       </Formik>
