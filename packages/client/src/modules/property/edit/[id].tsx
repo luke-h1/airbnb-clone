@@ -104,8 +104,9 @@ const EditPropertyPage = () => {
               label="description"
               type="text"
             />
+            <br />
             <input
-              className="input border border-gray-400 appearance-none rounded w-full px-3 py-3 pt-5 pb-2 focus focus:border-indigo-600 focus:outline-none active:outline-none active:border-indigo-600"
+              style={{ marginBottom: '1rem' }}
               type="file"
               accept="image/*"
               onChange={({ target: { validity, files } }) => {
@@ -115,6 +116,7 @@ const EditPropertyPage = () => {
                 }
               }}
             />
+
             <InputField
               name="pricePerNight"
               placeholder="Price per night"

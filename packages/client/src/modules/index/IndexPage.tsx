@@ -42,7 +42,7 @@ const IndexPage = () => {
         {!data && fetching ? (
           <Loader />
         ) : (
-          <Grid templateColumns="repeat(4, 1fr)" gap={6}>
+          <Grid templateColumns="repeat(4, 1fr)" gap={4}>
             {data?.properties.properties.map((p) => (!p ? null : (
             // @TODO: Luke - fix this type error
               <Box>

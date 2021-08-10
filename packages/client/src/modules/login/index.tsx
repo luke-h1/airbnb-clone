@@ -8,7 +8,7 @@ import Link from 'next/link';
 import { withUrqlClient } from 'next-urql';
 import { createUrqlClient } from '@src/utils/createUrqlClient';
 import { Wrapper } from '@src/components/Wrapper';
-import { Button, Flex } from '@chakra-ui/react';
+import { Button, Flex, Text } from '@chakra-ui/react';
 
 interface FormValues {
   email: string;
@@ -51,7 +51,7 @@ const RegisterPage = () => {
               </Button>
             </Flex>
 
-            <h3>Don't have an account ?</h3>
+            <Text as="h3">Don't have an account ?</Text>
             <Link href="/register">
               <a>
                 <Button colorScheme="blue" mt={3} type="submit">

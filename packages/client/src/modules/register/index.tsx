@@ -69,6 +69,7 @@ const RegisterPage = () => {
             <input
               type="file"
               accept="image/*"
+              style={{ marginBottom: '1rem' }}
               onChange={({ target: { validity, files } }) => {
                 if (validity.valid && files) {
                   setFieldValue('image', files[0]);
