@@ -65,4 +65,4 @@ const RegisterPage = () => {
     </Wrapper>
   );
 };
-export default withUrqlClient(createUrqlClient, { ssr: false })(RegisterPage);
+export default withUrqlClient(createUrqlClient, { ssr: true })(RegisterPage);
