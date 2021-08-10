@@ -8,6 +8,7 @@ import {
   Box, Button, Flex, Grid,
 } from '@chakra-ui/react';
 import { Wrapper } from '@src/components/Wrapper';
+import { isServer } from '@src/utils/isServer';
 
 const IndexPage = () => {
   const [variables, setVariables] = useState({
@@ -17,6 +18,7 @@ const IndexPage = () => {
 
   const [{ data, error, fetching }] = usePropertiesQuery({
     variables,
+    pause: isServer(),
   });
 
   if (!fetching && !data && error) {
@@ -74,4 +76,4 @@ const IndexPage = () => {
     </Wrapper>
   );
 };
-export default withUrqlClient(createUrqlClient, { ssr: false })(IndexPage);
+export default withUrqlClient(createUrqlClient, { ssr: true })(IndexPage);

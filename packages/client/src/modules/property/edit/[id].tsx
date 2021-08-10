@@ -14,13 +14,14 @@ import Link from 'next/link';
 import { withUrqlClient } from 'next-urql';
 import { createUrqlClient } from '@src/utils/createUrqlClient';
 import { Wrapper } from '@src/components/Wrapper';
+import { isServer } from '@src/utils/isServer';
 
 const EditPropertyPage = () => {
   useIsAuth();
 
   const router = useRouter();
   const intId = useGetIntId();
-  const [{ data: meData }] = useMeQuery();
+  const [{ data: meData }] = useMeQuery({ pause: isServer() });
   const [, updateProperty] = useUpdatePropertyMutation();
 
   const [{ data, fetching }] = usePropertyQuery({
@@ -175,6 +176,6 @@ const EditPropertyPage = () => {
     </Wrapper>
   );
 };
-export default withUrqlClient(createUrqlClient, { ssr: false })(
+export default withUrqlClient(createUrqlClient, { ssr: true })(
   EditPropertyPage,
 );

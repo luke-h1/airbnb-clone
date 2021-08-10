@@ -152,6 +152,6 @@ const CreatePropertyPage = () => {
     </Wrapper>
   );
 };
-export default withUrqlClient(createUrqlClient, { ssr: false })(
+export default withUrqlClient(createUrqlClient, { ssr: true })(
   CreatePropertyPage,
 );
