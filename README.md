@@ -39,7 +39,8 @@ This project is made up of 2 areas that share code using <a href='https://lerna.
 * Fill out the `.env` file with your own values
 * create programatic access user on AWS and give it access to the s3 bucket you create
 * create s3 bucket on AWS with public access allowed 
-* After you have done the above you will need to run the following commands (in seperate terminals) to start the backend:
+* After you have done the above you will need to run the following (in seperate terminals) to start the backend:
+    * Ensure whatever port you pick for the backend is free 
     * `npm run watch` - transpile Typescript to common JS 
     * `npm run dev` - start the backend server
    
