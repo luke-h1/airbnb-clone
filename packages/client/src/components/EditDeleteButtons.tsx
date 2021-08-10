@@ -2,7 +2,7 @@ import React from 'react';
 import Link from 'next/link';
 import { useDeletePropertyMutation, useMeQuery } from '@src/generated/graphql';
 import { DeleteIcon, EditIcon } from '@chakra-ui/icons';
-import { Box, Text } from '@chakra-ui/react';
+import { Flex, Text } from '@chakra-ui/react';
 
 interface EditDeleteButtonProps {
   id: number;
@@ -20,20 +20,29 @@ const EditDeleteButtons: React.FC<EditDeleteButtonProps> = ({
     return null;
   }
   return (
-    <Box>
+    <Flex
+      flexDirection="row"
+      justifyContent="space-around"
+      alignItems="center"
+      mb={3}
+      mt={3}
+    >
       <Link href={`/property/edit/${id}`}>
-        <Text mr={2}>
+        <Text>
           <EditIcon fontSize="23px" color="green" />
         </Text>
       </Link>
+
       <DeleteIcon
+        fontSize="23px"
+        color="red"
         onClick={() => {
           deleteProperty({
             id,
           });
         }}
       />
-    </Box>
+    </Flex>
   );
 };
 export default EditDeleteButtons;

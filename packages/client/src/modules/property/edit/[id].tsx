@@ -13,7 +13,7 @@ import { useIsAuth } from '@src/utils/useIsAuth';
 import Link from 'next/link';
 import { withUrqlClient } from 'next-urql';
 import { createUrqlClient } from '@src/utils/createUrqlClient';
-import Wrapper from '@src/components/Wrapper';
+import { Wrapper } from '@src/components/Wrapper';
 
 const EditPropertyPage = () => {
   useIsAuth();

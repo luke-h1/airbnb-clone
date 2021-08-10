@@ -2,6 +2,7 @@ import { Property } from '@src/generated/graphql';
 import React from 'react';
 import { Box, Image, Badge } from '@chakra-ui/react';
 import EditDeleteButtons from '@src/components/EditDeleteButtons';
+import Link from 'next/link';
 
 interface PropertyProps {
   property: Property;
@@ -10,8 +11,9 @@ interface PropertyProps {
 const PropertyCard: React.FC<PropertyProps> = ({ property }) => {
   return (
     <Box maxW="sm" borderWidth="1px" borderRadius="lg" overflow="hidden">
-      <Image src={property.image} alt={property.title} />
-
+      <Link href={`/property/${property.id}`}>
+        <Image src={property.image} alt={property.title} />
+      </Link>
       <Box p="6">
         <Box d="flex" alignItems="baseline">
           <Badge borderRadius="full" px="2" colorScheme="teal">
@@ -28,7 +30,6 @@ const PropertyCard: React.FC<PropertyProps> = ({ property }) => {
             {property.beds} beds &bull; {property.baths} baths
           </Box>
         </Box>
-
         <Box
           mt="1"
           fontWeight="semibold"

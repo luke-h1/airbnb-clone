@@ -7,7 +7,7 @@ import React from 'react';
 import { toPropertyErrorMap } from '@src/utils/toErrorMap';
 import { withUrqlClient } from 'next-urql';
 import { createUrqlClient } from '@src/utils/createUrqlClient';
-import Wrapper from '@src/components/Wrapper';
+import { Wrapper } from '@src/components/Wrapper';
 
 interface FormValues {
   title: string;

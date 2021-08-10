@@ -1,11 +1,13 @@
 import { usePropertiesQuery } from '@src/generated/graphql';
 import React, { useState } from 'react';
-import Link from 'next/link';
 import { withUrqlClient } from 'next-urql';
 import { createUrqlClient } from '@src/utils/createUrqlClient';
 import { Loader } from '@src/components/Loader';
 import PropertyCard from '@src/components/PropertyCard';
-import { Box, Button } from '@chakra-ui/react';
+import {
+  Box, Button, Flex, Grid,
+} from '@chakra-ui/react';
+import { Wrapper } from '@src/components/Wrapper';
 
 const IndexPage = () => {
   const [variables, setVariables] = useState({
@@ -29,19 +31,23 @@ const IndexPage = () => {
     <p>no properties</p>;
   }
   return (
-    <>
-      <div className="flex flex-col align-center items-center justify-center place-items-center">
+    <Wrapper>
+      <Flex
+        direction="column"
+        alignItems="center"
+        alignContent="center"
+        justifyContent="center"
+        placeItems="center"
+      >
         {!data && fetching ? (
           <Loader />
         ) : (
-          <>
+          <Grid templateColumns="repeat(4, 1fr)" gap={6}>
             {data?.properties.properties.map((p) => (!p ? null : (
             // @TODO: Luke - fix this type error
               <Box>
-                <Link href={`/property/${p.id}`}>
-                  {/* @ts-ignore */}
-                  <PropertyCard property={p} />
-                </Link>
+                {/* @ts-ignore */}
+                <PropertyCard property={p} />
                 {data?.properties.hasMore ? (
                   <Box>
                     <Button
@@ -62,10 +68,10 @@ const IndexPage = () => {
                 ) : null}
               </Box>
             )))}
-          </>
+          </Grid>
         )}
-      </div>
-    </>
+      </Flex>
+    </Wrapper>
   );
 };
 export default withUrqlClient(createUrqlClient, { ssr: false })(IndexPage);
