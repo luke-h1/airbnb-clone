@@ -51,7 +51,7 @@
     "uuid": "^8.3.2"
   },
   "dependencies": {
-    "@types/jest": "^26.0.23",
+    "@types/jest": "^27.0.0",
     "apollo-server-express": "^2.23.0",
     "aws-sdk": "^2.939.0",
     "axios": "^0.21.1",
