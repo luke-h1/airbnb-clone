@@ -6,7 +6,7 @@ import { Property } from './Property';
 import { User } from './User';
 
 @ObjectType()
-@Entity('likes')
+@Entity()
 export class Like extends BaseEntity {
   @Column({ type: 'int' })
   value: number;
