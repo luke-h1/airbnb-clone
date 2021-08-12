@@ -59,6 +59,59 @@ export class UserResolver {
     return '';
   }
 
+  @Mutation(() => UserResponse)
+  async changePassword(
+    @Arg('token') token: string,
+    @Arg('newPassword') newPassword: string,
+    @Ctx() { redis, req }: MyContext,
+  ): Promise<UserResponse> {
+    if (newPassword.length <= 5) {
+      return {
+        errors: [
+          {
+            field: 'newPassword',
+            message: 'length of new password must be greater than 5',
+          },
+        ],
+      };
+    }
+    const key = constants.FORGET_PASSWORD_PREFIX + token;
+    const userId = await redis.get(key);
+    if (!userId) {
+      return {
+        errors: [
+          {
+            field: 'token',
+            message: 'token expired',
+          },
+        ],
+      };
+    }
+    const userIdNum = parseInt(userId, 10);
+    const user = await User.findOne(userIdNum);
+
+    if (!user) {
+      return {
+        errors: [
+          {
+            field: 'token',
+            message: 'User no longer exists',
+          },
+        ],
+      };
+    }
+    await User.update({ id: userIdNum }, { password: await bcrypt.hash(newPassword, 10) });
+    // delete reset password key
+    await redis.del(key);
+
+    // login the user after they change their password
+    req.session.userId = user.id;
+
+    return {
+      user,
+    };
+  }
+
   @FieldResolver(() => String)
   fullName(@Root() user: User) {
     if (user) {

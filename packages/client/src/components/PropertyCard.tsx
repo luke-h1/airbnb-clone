@@ -46,6 +46,12 @@ const PropertyCard: React.FC<PropertyProps> = ({ property }) => {
             / wk
           </Box>
         </Box>
+        <Box>
+          Posted By:
+          <Box as="span" color="gray.600" fontSize="sm">
+            {property.creator.fullName}
+          </Box>
+        </Box>
         {/* <Box d="flex" mt="2" alignItems="center">
           {Array(5)
             .fill('')
