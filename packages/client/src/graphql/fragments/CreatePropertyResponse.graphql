@@ -1,0 +1,25 @@
+fragment CreatePropertyResponse on Property { 
+    errors {
+      field
+      message
+    }
+    property {
+      id
+      image
+      title
+      propertyType
+      description
+      pricePerNight
+      address
+      amenities
+      baths
+      beds
+      bedrooms
+      creator {
+        id
+        email
+        image
+        fullName
+      }
+    } 
+}

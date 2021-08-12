@@ -60,10 +60,6 @@ const Nav = () => {
         href: '/property/create-property',
       },
       {
-        name: 'My properties',
-        href: '/properties/me',
-      },
-      {
         name: 'My Account',
         href: '/me',
       },

@@ -1,23 +1,5 @@
-query Property($id: Int!, ) {
+query Property($id: Int!) {
   property(id: $id) {
-      id
-      title
-      propertyType
-      image
-      description
-      pricePerNight
-      address
-      beds
-      baths
-      bedrooms
-      amenities
-      createdAt
-      updatedAt
-      creator {
-        id
-        email
-        image
-        fullName
-      }
+    ...PropertyResponse
   }
 } 

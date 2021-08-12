@@ -1,0 +1,22 @@
+fragment PropertiesResponse on Property {
+      hasMore
+      properties {
+      id
+      title
+      propertyType
+      image
+      description
+      beds
+      baths
+      bedrooms
+      pricePerNight
+      address
+      amenities
+      creator {
+        id
+        email
+        image
+        fullName
+      }
+    }
+}

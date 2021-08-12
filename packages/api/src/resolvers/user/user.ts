@@ -184,24 +184,23 @@ export class UserResolver {
 
   @Mutation(() => DeleteResponse)
   @UseMiddleware(isAuth)
-  async delete(@Ctx() { req, res }: MyContext, @Arg('id') id: number) {
+  async deleteUser(@Ctx() { req, res }: MyContext, @Arg('id') id: number): Promise<DeleteResponse> {
     if (req.session.userId !== id) {
       return {
-        errors: [
-          {
-            field: 'email',
-            message: 'Incorrect credentials',
-          },
-        ],
+        success: false,
       };
     }
     const user = await User.findOne(id);
     if (!user) {
-      return false;
+      return {
+        success: false,
+      };
     }
     await Delete(user.image);
     await User.delete(id);
     res.clearCookie(constants.COOKIE_NAME);
-    return true;
+    return {
+      success: true,
+    };
   }
 }
