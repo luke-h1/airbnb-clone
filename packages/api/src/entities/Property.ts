@@ -6,9 +6,11 @@ import {
   Entity,
   JoinColumn,
   ManyToOne,
+  OneToMany,
   PrimaryGeneratedColumn,
   UpdateDateColumn,
 } from 'typeorm';
+import { Like } from './Like';
 import { User } from './User';
 
 @ObjectType()
@@ -29,6 +31,9 @@ export class Property extends BaseEntity {
   @ManyToOne(() => User, (u) => u.properties)
   @JoinColumn({ name: 'creatorId' })
   creator: User;
+
+  @OneToMany(() => Like, (like) => like.property)
+  likes: Like[];
 
   @Field()
   @Column('varchar', { length: 15 })

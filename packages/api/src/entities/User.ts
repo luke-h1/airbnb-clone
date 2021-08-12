@@ -8,6 +8,7 @@ import {
   PrimaryGeneratedColumn,
   UpdateDateColumn,
 } from 'typeorm';
+import { Like } from './Like';
 import { Property } from './Property';
 
 @ObjectType()
@@ -42,6 +43,9 @@ export class User extends BaseEntity {
   @Field(() => [Property])
   @OneToMany(() => Property, (p) => p.creator)
   properties: Property[];
+
+  @OneToMany(() => Like, (like) => like.user)
+  likes: Like[];
 
   @Field(() => String)
   @CreateDateColumn()
