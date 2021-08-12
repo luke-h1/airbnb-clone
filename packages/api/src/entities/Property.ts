@@ -36,6 +36,10 @@ export class Property extends BaseEntity {
   likes: Like[];
 
   @Field()
+  @Column({ type: 'int', default: 0 })
+  points!: number;
+
+  @Field()
   @Column('varchar', { length: 15 })
   propertyType: string;
 
