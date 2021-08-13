@@ -8,7 +8,6 @@ import {
   PrimaryGeneratedColumn,
   UpdateDateColumn,
 } from 'typeorm';
-import { Like } from './Like';
 import { Property } from './Property';
 
 @ObjectType()
