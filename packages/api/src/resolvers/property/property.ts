@@ -118,21 +118,6 @@ export class PropertyResolver {
       `,
       [req.session.userId],
     );
-    // const qb = getConnection()
-    //   .getRepository(Property)
-    //   .createQueryBuilder("p")
-    //   .innerJoinAndSelect("p.creator", "u", 'u.id = p."creatorId"')
-    //   .orderBy('p."createdAt"', "DESC")
-    //   .take(reaLimitPlusOne);
-
-    // if (cursor) {
-    //   qb.where('p."createdAt" < :cursor', {
-    //     cursor: new Date(parseInt(cursor)),
-    //   });
-    // }
-
-    // const properties = await qb.getMany();
-
     return {
       properties: properties.slice(0, realLimit),
       hasMore: properties.length === realLimitPlusOne,

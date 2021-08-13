@@ -1,5 +1,26 @@
 query Properties($limit: Int!, $cursor: String) {
   properties(limit: $limit, cursor: $cursor) {
-    ...PropertiesResponse
+      hasMore
+      properties {
+      id
+      title
+      propertyType
+      image
+      description
+      beds
+      baths
+      bedrooms
+      pricePerNight
+      address
+      amenities
+      createdAt
+      updatedAt
+      creator {
+        id
+        email
+        image
+        fullName
+      }
+    }
   } 
 } 

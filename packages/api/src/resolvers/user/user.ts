@@ -100,7 +100,10 @@ export class UserResolver {
         ],
       };
     }
-    await User.update({ id: userIdNum }, { password: await bcrypt.hash(newPassword, 10) });
+    await User.update(
+      { id: userIdNum },
+      { password: await bcrypt.hash(newPassword, 10) },
+    );
     // delete reset password key
     await redis.del(key);
 
@@ -205,7 +208,7 @@ export class UserResolver {
         ],
       };
     }
-    const valid = await bcrypt.compare(user.password, password);
+    const valid = await bcrypt.compare(password, user.password);
     if (!valid) {
       return {
         errors: [
@@ -237,7 +240,10 @@ export class UserResolver {
 
   @Mutation(() => DeleteResponse)
   @UseMiddleware(isAuth)
-  async deleteUser(@Ctx() { req, res }: MyContext, @Arg('id') id: number): Promise<DeleteResponse> {
+  async deleteUser(
+    @Ctx() { req, res }: MyContext,
+    @Arg('id') id: number,
+  ): Promise<DeleteResponse> {
     if (req.session.userId !== id) {
       return {
         success: false,

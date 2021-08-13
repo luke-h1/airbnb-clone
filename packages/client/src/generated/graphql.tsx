@@ -35,17 +35,24 @@ export type FieldError = {
 export type Mutation = {
   __typename?: 'Mutation';
   createProperty: PropertyResponse;
+  like: Scalars['Boolean'];
   updateProperty?: Maybe<Property>;
   deleteProperty: Scalars['Boolean'];
+  changePassword: UserResponse;
   register: UserResponse;
   login: UserResponse;
   logout: Scalars['Boolean'];
-  delete: DeleteResponse;
+  deleteUser: DeleteResponse;
 };
 
 export type MutationCreatePropertyArgs = {
   image?: Maybe<Scalars['Upload']>;
   options: PropertyInput;
+};
+
+export type MutationLikeArgs = {
+  value: Scalars['Int'];
+  propertyId: Scalars['Int'];
 };
 
 export type MutationUpdatePropertyArgs = {
@@ -58,6 +65,11 @@ export type MutationDeletePropertyArgs = {
   id: Scalars['Int'];
 };
 
+export type MutationChangePasswordArgs = {
+  newPassword: Scalars['String'];
+  token: Scalars['String'];
+};
+
 export type MutationRegisterArgs = {
   image?: Maybe<Scalars['Upload']>;
   options: UserRegisterInput;
@@ -67,7 +79,7 @@ export type MutationLoginArgs = {
   options: UsernamePasswordInput;
 };
 
-export type MutationDeleteArgs = {
+export type MutationDeleteUserArgs = {
   id: Scalars['Float'];
 };
 
@@ -82,6 +94,7 @@ export type Property = {
   id: Scalars['Int'];
   title: Scalars['String'];
   creatorId: Scalars['Int'];
+  points: Scalars['Float'];
   propertyType: Scalars['String'];
   image: Scalars['String'];
   beds: Scalars['Int'];
