@@ -35,7 +35,6 @@ export type FieldError = {
 export type Mutation = {
   __typename?: 'Mutation';
   createProperty: PropertyResponse;
-  like: Scalars['Boolean'];
   updateProperty?: Maybe<Property>;
   deleteProperty: Scalars['Boolean'];
   changePassword: UserResponse;
@@ -48,11 +47,6 @@ export type Mutation = {
 export type MutationCreatePropertyArgs = {
   image?: Maybe<Scalars['Upload']>;
   options: PropertyInput;
-};
-
-export type MutationLikeArgs = {
-  value: Scalars['Int'];
-  propertyId: Scalars['Int'];
 };
 
 export type MutationUpdatePropertyArgs = {
@@ -94,7 +88,7 @@ export type Property = {
   id: Scalars['Int'];
   title: Scalars['String'];
   creatorId: Scalars['Int'];
-  points: Scalars['Float'];
+  likeStatus?: Maybe<Scalars['Int']>;
   propertyType: Scalars['String'];
   image: Scalars['String'];
   beds: Scalars['Int'];
@@ -262,13 +256,6 @@ export type DeletePropertyMutation = {
   __typename?: 'Mutation';
   deleteProperty: boolean;
 };
-
-export type LikeMutationVariables = Exact<{
-  value: Scalars['Int'];
-  propertyId: Scalars['Int'];
-}>;
-
-export type LikeMutation = { __typename?: 'Mutation'; like: boolean };
 
 export type LoginMutationVariables = Exact<{
   options: UsernamePasswordInput;
@@ -513,15 +500,6 @@ export function useDeletePropertyMutation() {
     DeletePropertyMutation,
     DeletePropertyMutationVariables
   >(DeletePropertyDocument);
-}
-export const LikeDocument = gql`
-  mutation Like($value: Int!, $propertyId: Int!) {
-    like(value: $value, propertyId: $propertyId)
-  }
-`;
-
-export function useLikeMutation() {
-  return Urql.useMutation<LikeMutation, LikeMutationVariables>(LikeDocument);
 }
 export const LoginDocument = gql`
   mutation Login($options: UsernamePasswordInput!) {

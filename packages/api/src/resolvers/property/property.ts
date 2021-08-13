@@ -22,7 +22,6 @@ import { validateProperty } from '../../validation/property/validateProperty';
 import { Property } from '../../entities/Property';
 import { PropertyInput } from './inputs/PropertyInput';
 import { Delete, Upload } from '../../utils/image/s3/s3utils';
-import { Like } from '../../entities/Like';
 
 @ObjectType()
 class PropertyFieldError {
@@ -56,6 +55,21 @@ export class PropertyResolver {
   @FieldResolver(() => User)
   creator(@Root() property: Property, @Ctx() { userLoader }: MyContext) {
     return userLoader.load(property.creatorId);
+  }
+
+  @FieldResolver(() => Int, { nullable: true })
+  async likeStatus(
+    @Root() property: Property,
+    @Ctx() { likeLoader, req }: MyContext,
+  ) {
+    if (!req.session.userId) {
+      return null;
+    }
+    const like = await likeLoader.load({
+      propertyId: property.id,
+      userId: req.session.userId,
+    });
+    return like ? like.value : null;
   }
 
   @Mutation(() => PropertyResponse)
@@ -129,63 +143,6 @@ export class PropertyResolver {
     @Arg('id', () => Int) id: number,
   ): Promise<Property | undefined> {
     return Property.findOne(id);
-  }
-
-  @Mutation(() => Boolean)
-  @UseMiddleware(isAuth)
-  async like(
-    @Arg('propertyId', () => Int) propertyId: number,
-    @Arg('value', () => Int) value: number,
-    @Ctx() { req }: MyContext,
-  ) {
-    const isLike = value !== -1;
-    const realValue = isLike ? 1 : -1;
-    const { userId } = req.session;
-
-    const like = await Like.findOne({ where: { propertyId, userId } });
-
-    // the user has voted on the property before
-    // and they are changing their vote
-    if (like && like.value !== realValue) {
-      await getConnection().transaction(async (tm) => {
-        await tm.query(
-          `
-            UPDATE like
-            SET value = $1 
-            WHERE "propertyId" = $2 and "userId" = $3
-          `,
-          [realValue, propertyId, userId],
-        );
-        await tm.query(
-          `
-            UPDATE property 
-            SET points = points + $1
-            WHERE id = $2
-            `,
-          [2 * realValue, propertyId],
-        );
-      });
-    } else if (!like) {
-      // has never liked the property before
-      await getConnection().transaction(async (tm) => {
-        await tm.query(
-          `
-        INSERT into like ("userId", "propertyId", valie)
-        values($1, $2, $3)
-        `,
-          [userId, propertyId, realValue],
-        );
-        await tm.query(
-          `
-        UPDATE property 
-        SET points = points + $1 
-        WHERE id = $2
-        `,
-          [realValue, propertyId],
-        );
-      });
-    }
-    return true;
   }
 
   @Mutation(() => Property, { nullable: true })
