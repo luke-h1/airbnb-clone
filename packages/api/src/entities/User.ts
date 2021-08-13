@@ -44,9 +44,6 @@ export class User extends BaseEntity {
   @OneToMany(() => Property, (p) => p.creator)
   properties: Property[];
 
-  @OneToMany(() => Like, (like) => like.user)
-  likes: Like[];
-
   @Field(() => String)
   @CreateDateColumn()
   createdAt: Date;

@@ -1,3 +1,4 @@
+/* eslint-disable no-await-in-loop */
 import {
   Arg,
   Ctx,
@@ -14,6 +15,7 @@ import {
 import { getConnection } from 'typeorm';
 import { FileUpload, GraphQLUpload } from 'graphql-upload';
 import bcrypt from 'bcryptjs';
+import { Property } from '../../entities/Property';
 import { isAuth } from '../../middleware/isAuth';
 import { User } from '../../entities/User';
 import { MyContext } from '../../types/types';
