@@ -1,8 +1,10 @@
+/* eslint-disable no-await-in-loop */
 import {
   Arg,
   Ctx,
   Field,
   FieldResolver,
+  Int,
   Mutation,
   ObjectType,
   Query,
@@ -57,6 +59,62 @@ export class UserResolver {
       return user.email;
     }
     return '';
+  }
+
+  @Mutation(() => UserResponse)
+  async changePassword(
+    @Arg('token') token: string,
+    @Arg('newPassword') newPassword: string,
+    @Ctx() { redis, req }: MyContext,
+  ): Promise<UserResponse> {
+    if (newPassword.length <= 5) {
+      return {
+        errors: [
+          {
+            field: 'newPassword',
+            message: 'length of new password must be greater than 5',
+          },
+        ],
+      };
+    }
+    const key = constants.FORGET_PASSWORD_PREFIX + token;
+    const userId = await redis.get(key);
+    if (!userId) {
+      return {
+        errors: [
+          {
+            field: 'token',
+            message: 'token expired',
+          },
+        ],
+      };
+    }
+    const userIdNum = parseInt(userId, 10);
+    const user = await User.findOne(userIdNum);
+
+    if (!user) {
+      return {
+        errors: [
+          {
+            field: 'token',
+            message: 'User no longer exists',
+          },
+        ],
+      };
+    }
+    await User.update(
+      { id: userIdNum },
+      { password: await bcrypt.hash(newPassword, 10) },
+    );
+    // delete reset password key
+    await redis.del(key);
+
+    // login the user after they change their password
+    req.session.userId = user.id;
+
+    return {
+      user,
+    };
   }
 
   @FieldResolver(() => String)
@@ -152,7 +210,7 @@ export class UserResolver {
         ],
       };
     }
-    const valid = await bcrypt.compare(user.password, password);
+    const valid = await bcrypt.compare(password, user.password);
     if (!valid) {
       return {
         errors: [
@@ -184,24 +242,26 @@ export class UserResolver {
 
   @Mutation(() => DeleteResponse)
   @UseMiddleware(isAuth)
-  async delete(@Ctx() { req, res }: MyContext, @Arg('id') id: number) {
+  async deleteUser(
+    @Ctx() { req, res }: MyContext,
+    @Arg('id', () => Int) id: number,
+  ): Promise<DeleteResponse> {
     if (req.session.userId !== id) {
       return {
-        errors: [
-          {
-            field: 'email',
-            message: 'Incorrect credentials',
-          },
-        ],
+        success: false,
       };
     }
     const user = await User.findOne(id);
     if (!user) {
-      return false;
+      return {
+        success: false,
+      };
     }
     await Delete(user.image);
     await User.delete(id);
     res.clearCookie(constants.COOKIE_NAME);
-    return true;
+    return {
+      success: true,
+    };
   }
 }

@@ -5,6 +5,6 @@
     "username": "lhowsam",
     "password": "123",
     "database": "abb-clone",
-    "entities": ["src/entities/*.ts"],
-    "migrations": ["src/migrations/*.ts"]
+    "entities": ["dist/entities/*.js"],
+    "migrations": ["dist/migrations/*.js"]
 }

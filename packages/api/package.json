@@ -16,7 +16,7 @@
     "test": "cross-env NODE_ENV=test npm run db:setup && jest",
     "test:watch": "cross-env NODE_ENV=test npm run db:setup && jest --watch",
     "gen:migration": "typeorm migration:generate -n <NAME>",
-    "run:migration": "typeorm migration:run"
+    "run:migration": "rm -rf dist && npm run build && typeorm migration:run"
   },
   "keywords": [],
   "author": "",
@@ -38,7 +38,6 @@
     "@types/uuid": "^8.3.0",
     "@typescript-eslint/eslint-plugin": "^4.22.0",
     "@typescript-eslint/parser": "^4.22.0",
-    "concurrently": "^6.2.0",
     "cross-env": "^7.0.3",
     "eslint": "^7.25.0",
     "eslint-config-airbnb-base": "^14.2.1",
@@ -54,7 +53,6 @@
     "@types/jest": "^27.0.0",
     "apollo-server-express": "^2.23.0",
     "aws-sdk": "^2.939.0",
-    "axios": "^0.21.1",
     "bcryptjs": "^2.4.3",
     "connect-redis": "^6.0.0",
     "cors": "^2.8.5",

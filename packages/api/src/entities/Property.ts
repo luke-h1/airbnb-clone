@@ -26,9 +26,12 @@ export class Property extends BaseEntity {
   @Column()
   creatorId: number;
 
-  @ManyToOne(() => User, (u) => u.properties)
+  @ManyToOne(() => User, (u) => u.properties, { onDelete: 'CASCADE' })
   @JoinColumn({ name: 'creatorId' })
   creator: User;
+
+  @Field(() => Int, { nullable: true })
+  likeStatus: number | null; // 1 or -1 or null
 
   @Field()
   @Column('varchar', { length: 15 })

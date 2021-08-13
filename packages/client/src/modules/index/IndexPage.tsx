@@ -50,7 +50,7 @@ const IndexPage = () => {
               <Box>
                 {/* @ts-ignore */}
                 <PropertyCard property={p} />
-                {data?.properties.hasMore ? (
+                {data && data?.properties.hasMore ? (
                   <Box>
                     <Button
                       type="button"

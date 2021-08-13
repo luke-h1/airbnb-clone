@@ -37,10 +37,11 @@ export type Mutation = {
   createProperty: PropertyResponse;
   updateProperty?: Maybe<Property>;
   deleteProperty: Scalars['Boolean'];
+  changePassword: UserResponse;
   register: UserResponse;
   login: UserResponse;
   logout: Scalars['Boolean'];
-  delete: DeleteResponse;
+  deleteUser: DeleteResponse;
 };
 
 export type MutationCreatePropertyArgs = {
@@ -58,6 +59,11 @@ export type MutationDeletePropertyArgs = {
   id: Scalars['Int'];
 };
 
+export type MutationChangePasswordArgs = {
+  newPassword: Scalars['String'];
+  token: Scalars['String'];
+};
+
 export type MutationRegisterArgs = {
   image?: Maybe<Scalars['Upload']>;
   options: UserRegisterInput;
@@ -67,8 +73,8 @@ export type MutationLoginArgs = {
   options: UsernamePasswordInput;
 };
 
-export type MutationDeleteArgs = {
-  id: Scalars['Float'];
+export type MutationDeleteUserArgs = {
+  id: Scalars['Int'];
 };
 
 export type PaginatedProperties = {
@@ -82,6 +88,7 @@ export type Property = {
   id: Scalars['Int'];
   title: Scalars['String'];
   creatorId: Scalars['Int'];
+  likeStatus?: Maybe<Scalars['Int']>;
   propertyType: Scalars['String'];
   image: Scalars['String'];
   beds: Scalars['Int'];
@@ -248,6 +255,21 @@ export type DeletePropertyMutationVariables = Exact<{
 export type DeletePropertyMutation = {
   __typename?: 'Mutation';
   deleteProperty: boolean;
+};
+
+export type DeleteUserMutationVariables = Exact<{
+  id: Scalars['Int'];
+}>;
+
+export type DeleteUserMutation = {
+  __typename?: 'Mutation';
+  deleteUser: {
+    __typename?: 'DeleteResponse';
+    success?: Maybe<boolean>;
+    errors?: Maybe<
+      Array<{ __typename?: 'FieldError'; field: string; message: string }>
+    >;
+  };
 };
 
 export type LoginMutationVariables = Exact<{
@@ -493,6 +515,23 @@ export function useDeletePropertyMutation() {
     DeletePropertyMutation,
     DeletePropertyMutationVariables
   >(DeletePropertyDocument);
+}
+export const DeleteUserDocument = gql`
+  mutation DeleteUser($id: Int!) {
+    deleteUser(id: $id) {
+      success
+      errors {
+        field
+        message
+      }
+    }
+  }
+`;
+
+export function useDeleteUserMutation() {
+  return Urql.useMutation<DeleteUserMutation, DeleteUserMutationVariables>(
+    DeleteUserDocument
+  );
 }
 export const LoginDocument = gql`
   mutation Login($options: UsernamePasswordInput!) {
