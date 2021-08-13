@@ -16,7 +16,7 @@
     "test": "cross-env NODE_ENV=test npm run db:setup && jest",
     "test:watch": "cross-env NODE_ENV=test npm run db:setup && jest --watch",
     "gen:migration": "typeorm migration:generate -n <NAME>",
-    "run:migration": "typeorm migration:run"
+    "run:migration": "rm -rf dist && npm run build && typeorm migration:run"
   },
   "keywords": [],
   "author": "",
