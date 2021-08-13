@@ -263,6 +263,13 @@ export type DeletePropertyMutation = {
   deleteProperty: boolean;
 };
 
+export type LikeMutationVariables = Exact<{
+  value: Scalars['Int'];
+  propertyId: Scalars['Int'];
+}>;
+
+export type LikeMutation = { __typename?: 'Mutation'; like: boolean };
+
 export type LoginMutationVariables = Exact<{
   options: UsernamePasswordInput;
 }>;
@@ -506,6 +513,15 @@ export function useDeletePropertyMutation() {
     DeletePropertyMutation,
     DeletePropertyMutationVariables
   >(DeletePropertyDocument);
+}
+export const LikeDocument = gql`
+  mutation Like($value: Int!, $propertyId: Int!) {
+    like(value: $value, propertyId: $propertyId)
+  }
+`;
+
+export function useLikeMutation() {
+  return Urql.useMutation<LikeMutation, LikeMutationVariables>(LikeDocument);
 }
 export const LoginDocument = gql`
   mutation Login($options: UsernamePasswordInput!) {

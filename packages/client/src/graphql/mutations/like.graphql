@@ -1,0 +1,3 @@
+mutation Like($value: Int!, $propertyId: Int!) {
+  like(value: $value, propertyId: $propertyId)
+}
