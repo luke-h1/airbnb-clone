@@ -3,7 +3,6 @@ import React from 'react';
 import { Box, Image, Badge } from '@chakra-ui/react';
 import EditDeleteButtons from '@src/components/EditDeleteButtons';
 import Link from 'next/link';
-import LikeSection from './LikeSection';
 
 interface PropertyProps {
   property: Property;
@@ -53,8 +52,6 @@ const PropertyCard: React.FC<PropertyProps> = ({ property }) => {
             {property.creator.fullName}
           </Box>
         </Box>
-        <LikeSection property={property} />
-
         {/* <Box d="flex" mt="2" alignItems="center">
           {Array(5)
             .fill('')

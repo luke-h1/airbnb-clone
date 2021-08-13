@@ -6,25 +6,26 @@ import {
   Text,
   Stack,
   Button,
-  Link,
-  Badge,
   useColorModeValue,
 } from '@chakra-ui/react';
-import { useMeQuery } from '@src/generated/graphql';
+import { useMeQuery, useDeleteUserMutation } from '@src/generated/graphql';
 import { createUrqlClient } from '@src/utils/createUrqlClient';
+import { isServer } from '@src/utils/isServer';
 import { withUrqlClient } from 'next-urql';
 import Router from 'next/router';
 
 const Me = () => {
-  const [{ data }] = useMeQuery();
+  const [{ data }] = useMeQuery({ pause: isServer() });
+  const [, deleteUser] = useDeleteUserMutation();
   if (!data?.me) {
-    Router.replace('/login');
+    // eslint-disable-next-line no-unused-expressions
+    isServer() ?? Router.replace('/login');
   }
 
-
-  const handleDelete = async () => { 
-    
-   }
+  const handleDelete = async () => {
+    await deleteUser({ id: data!.me!.id });
+    await Router.push('/');
+  };
 
   return (
     <Center py={6}>

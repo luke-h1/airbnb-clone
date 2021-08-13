@@ -3,6 +3,7 @@ import {
   Ctx,
   Field,
   FieldResolver,
+  Int,
   Mutation,
   ObjectType,
   Query,
@@ -242,7 +243,7 @@ export class UserResolver {
   @UseMiddleware(isAuth)
   async deleteUser(
     @Ctx() { req, res }: MyContext,
-    @Arg('id') id: number,
+    @Arg('id', () => Int) id: number,
   ): Promise<DeleteResponse> {
     if (req.session.userId !== id) {
       return {

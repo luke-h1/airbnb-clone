@@ -57,21 +57,6 @@ export class PropertyResolver {
     return userLoader.load(property.creatorId);
   }
 
-  @FieldResolver(() => Int, { nullable: true })
-  async likeStatus(
-    @Root() property: Property,
-    @Ctx() { likeLoader, req }: MyContext,
-  ) {
-    if (!req.session.userId) {
-      return null;
-    }
-    const like = await likeLoader.load({
-      propertyId: property.id,
-      userId: req.session.userId,
-    });
-    return like ? like.value : null;
-  }
-
   @Mutation(() => PropertyResponse)
   @UseMiddleware(isAuth)
   async createProperty(

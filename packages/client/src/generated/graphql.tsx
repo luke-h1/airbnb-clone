@@ -74,7 +74,7 @@ export type MutationLoginArgs = {
 };
 
 export type MutationDeleteUserArgs = {
-  id: Scalars['Float'];
+  id: Scalars['Int'];
 };
 
 export type PaginatedProperties = {
@@ -255,6 +255,21 @@ export type DeletePropertyMutationVariables = Exact<{
 export type DeletePropertyMutation = {
   __typename?: 'Mutation';
   deleteProperty: boolean;
+};
+
+export type DeleteUserMutationVariables = Exact<{
+  id: Scalars['Int'];
+}>;
+
+export type DeleteUserMutation = {
+  __typename?: 'Mutation';
+  deleteUser: {
+    __typename?: 'DeleteResponse';
+    success?: Maybe<boolean>;
+    errors?: Maybe<
+      Array<{ __typename?: 'FieldError'; field: string; message: string }>
+    >;
+  };
 };
 
 export type LoginMutationVariables = Exact<{
@@ -500,6 +515,23 @@ export function useDeletePropertyMutation() {
     DeletePropertyMutation,
     DeletePropertyMutationVariables
   >(DeletePropertyDocument);
+}
+export const DeleteUserDocument = gql`
+  mutation DeleteUser($id: Int!) {
+    deleteUser(id: $id) {
+      success
+      errors {
+        field
+        message
+      }
+    }
+  }
+`;
+
+export function useDeleteUserMutation() {
+  return Urql.useMutation<DeleteUserMutation, DeleteUserMutationVariables>(
+    DeleteUserDocument
+  );
 }
 export const LoginDocument = gql`
   mutation Login($options: UsernamePasswordInput!) {
