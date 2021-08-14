@@ -10,5 +10,5 @@ export const createConn = () => createConnection({
   migrations: [join(__dirname), './migrations/*'],
   entities: [User, Property],
   logging: !constants.__prod__,
-  synchronize: !constants.__prod__,
+  synchronize: true,
 });

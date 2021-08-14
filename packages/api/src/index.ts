@@ -2,7 +2,6 @@ import 'reflect-metadata';
 import { ApolloServer } from 'apollo-server-express';
 import connectRedis from 'connect-redis';
 import cors from 'cors';
-import 'dotenv-safe/config';
 import express, { Response } from 'express';
 import session from 'express-session';
 import { graphqlUploadExpress } from 'graphql-upload';
@@ -13,6 +12,10 @@ import { createUserLoader } from './Loaders/UserLoader';
 import { redis } from './utils/redis';
 import { createSchema } from './utils/createSchema';
 import { createConn } from './utils/createConn';
+
+require('dotenv-safe').config({
+  allowEmptyValues: true,
+});
 
 const main = async () => {
   const conn = await createConn();
@@ -44,7 +47,7 @@ const main = async () => {
         httpOnly: true,
         sameSite: 'lax', // csrf
         secure: constants.__prod__,
-        domain: constants.__prod__ ? 'api.airbb-clone-code.xyz' : undefined,
+        domain: constants.__prod__ ? 'https://airbb-clone-code.xyz' : undefined,
       },
       saveUninitialized: false,
       secret: process.env.COOKIE_SECRET!,
