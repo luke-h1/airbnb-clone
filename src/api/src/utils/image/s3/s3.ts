@@ -1,6 +1,4 @@
-require('dotenv-safe').config({
-  allowEmptyValues: true,
-});
+import 'dotenv-safe/config';
 
 const AWS = require('aws-sdk');
 

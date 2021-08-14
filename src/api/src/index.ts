@@ -13,9 +13,7 @@ import { redis } from './utils/redis';
 import { createSchema } from './utils/createSchema';
 import { createConn } from './utils/createConn';
 
-require('dotenv-safe').config({
-  allowEmptyValues: true,
-});
+import 'dotenv-safe/config';
 
 const main = async () => {
   const conn = await createConn();
