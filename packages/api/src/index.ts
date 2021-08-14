@@ -43,11 +43,11 @@ const main = async () => {
         disableTouch: true,
       }),
       cookie: {
-        maxAge: 1000 * 60 * 60 * 24 * 4, // 4 days
+        maxAge: 7 * 24 * 60 * 60 * 1000, // 7 days
         httpOnly: true,
         sameSite: 'lax', // csrf
-        secure: constants.__prod__,
-        domain: constants.__prod__ ? 'https://airbb-clone-code.xyz' : undefined,
+        secure: constants.__prod__, // cookie only works in https
+        domain: constants.__prod__ ? '.airbb-clone-code.xyz' : undefined, // SSR issues with forwarding cookies
       },
       saveUninitialized: false,
       secret: process.env.COOKIE_SECRET!,

@@ -28,5 +28,5 @@ COPY --from=builder /usr/src/app/dist ./dist
 ENV NODE_ENV production
 EXPOSE 4010
 
-CMD ["node", "dist/index.js"]
+CMD ["npm", "run", "start"]
 USER node
