@@ -25,6 +25,9 @@
         "@api/*": ["./api/src/*"],
         "@client/*": ["./client/src/*"],
       },
-      "sourceMap": true
+      "sourceMap": true,
+      "exclude": ["node_modules", "cypress"],
+      "include": ["api", "client"],
+
     }
  }

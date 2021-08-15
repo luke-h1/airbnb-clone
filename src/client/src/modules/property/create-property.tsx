@@ -73,18 +73,21 @@ const CreatePropertyPage = () => {
                 placeholder="title"
                 label="title"
                 type="text"
+                data-testid="property-title"
               />
               <InputField
                 name="propertyType"
                 placeholder="Flat, House, Bungalow..."
                 label="propertyType"
                 type="text"
+                data-testid="property-type"
               />
               <InputField
                 name="description"
                 placeholder="Description of property"
                 label="description"
                 type="text"
+                data-testid="property-description"
               />
               <input
                 type="file"
@@ -95,6 +98,7 @@ const CreatePropertyPage = () => {
                     // set 'file' of the form data as files[0]
                   }
                 }}
+                data-testid="property-image"
               />
 
               <InputField
@@ -103,6 +107,7 @@ const CreatePropertyPage = () => {
                 label="pricePerNight"
                 type="number"
                 min="1"
+                data-testid="property-price"
               />
               <InputField
                 name="baths"
@@ -110,6 +115,7 @@ const CreatePropertyPage = () => {
                 label="baths"
                 type="number"
                 min="1"
+                data-testid="property-baths"
               />
               <InputField
                 name="beds"
@@ -117,6 +123,7 @@ const CreatePropertyPage = () => {
                 label="beds"
                 type="number"
                 min="1"
+                data-testid="property-beds"
               />
               <InputField
                 name="bedrooms"
@@ -124,12 +131,14 @@ const CreatePropertyPage = () => {
                 label="bedrooms"
                 type="number"
                 min="1"
+                data-testid="property-bedrooms"
               />
               <InputField
                 name="address"
                 placeholder="address"
                 label="address"
                 type="text"
+                data-testid="property-address"
               />
 
               <InputField
@@ -137,6 +146,7 @@ const CreatePropertyPage = () => {
                 placeholder="amenities"
                 label="amenities"
                 type="text"
+                data-testid="property-amenities"
               />
               <button
                 className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-2 rounded"

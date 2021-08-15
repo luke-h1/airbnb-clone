@@ -67,7 +67,7 @@
     "react/jsx-one-expression-per-line": "off",
     "react/jsx-wrap-multilines": ["error", { "prop": "ignore" }]
   },
-  "ignorePatterns": ["node_modules/", ".next/", "src/generated/*"],
+  "ignorePatterns": ["node_modules/", ".next/", "src/generated/*", "cypress", "__tests__"],
   "overrides": [
     {
       "files": ["**/*.js"],

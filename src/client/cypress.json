@@ -1,0 +1,12 @@
+{
+    "experimentalSessionSupport": true,
+    "baseUrl": "http://localhost:3000",
+    "defaultCommandTimeout": 5000,
+    "video": false,
+    "retries": {
+        "runMode": 1,
+        "openMode": 0
+    },
+    "viewportHeight": 1280,
+    "viewportWidth": 720
+}

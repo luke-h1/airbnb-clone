@@ -38,8 +38,14 @@ const RegisterPage = () => {
         {({ isSubmitting }) => (
           <Form>
             {isSubmitting && <p>submitting</p>}
-            <InputField name="email" placeholder="Email" label="email" />
             <InputField
+              name="email"
+              placeholder="Email"
+              label="email"
+              data-testid="email"
+            />
+            <InputField
+              data-testid="password"
               name="password"
               placeholder="Password"
               label="password"
@@ -54,7 +60,7 @@ const RegisterPage = () => {
             <Text as="h3">Don't have an account ?</Text>
             <Link href="/register">
               <a>
-                <Button colorScheme="blue" mt={3} type="submit">
+                <Button colorScheme="blue" mt={3} type="button">
                   Register
                 </Button>
               </a>

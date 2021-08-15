@@ -10,7 +10,9 @@
     "lint": "eslint \"./src/**/*.{js, jsx,ts,tsx}\" --quiet --fix && eslint \"./**/*.{js, jsx,ts,tsx}\" --quiet --fix",
     "format": "prettier --write \"**/*.{ts,tsx}\"",
     "gen-env": "gen-env-types .env -o src/env.d.ts -e .",
-    "gen": "graphql-codegen --config codegen.yml"
+    "gen": "graphql-codegen --config codegen.yml",
+    "cy:open": "npx cypress open",
+    "cy:run": "npx cypress run"
   },
   "dependencies": {
     "@chakra-ui/icons": "^1.0.15",
@@ -24,6 +26,8 @@
     "@urql/exchange-multipart-fetch": "^0.1.13",
     "cross-env": "^7.0.3",
     "cross-fetch": "^3.1.4",
+    "cypress": "^8.2.0",
+    "cypress-file-upload": "^5.0.8",
     "deepmerge": "^4.2.2",
     "formik": "^2.2.9",
     "framer-motion": "^4.1.17",
@@ -40,6 +44,7 @@
     "react-icons": "^4.2.0",
     "react-is": "^17.0.2",
     "urql": "^2.0.4",
+    "uuid": "^3.4.0",
     "wonka": "^4.0.15",
     "yup": "^0.32.9"
   },
@@ -61,6 +66,7 @@
     "@types/testing-library__react": "^10.2.0",
     "@types/testing-library__react-hooks": "^4.0.0",
     "@types/testing-library__user-event": "^4.2.0",
+    "@types/uuid": "^8.3.1",
     "@typescript-eslint/eslint-plugin": "^4.29.1",
     "@typescript-eslint/parser": "^4.29.1",
     "autoprefixer": "^10.3.1",
