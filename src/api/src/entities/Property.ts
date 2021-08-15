@@ -30,9 +30,6 @@ export class Property extends BaseEntity {
   @JoinColumn({ name: 'creatorId' })
   creator: User;
 
-  @Field(() => Int, { nullable: true })
-  likeStatus: number | null; // 1 or -1 or null
-
   @Field()
   @Column('varchar', { length: 15 })
   propertyType: string;
