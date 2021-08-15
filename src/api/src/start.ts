@@ -20,7 +20,7 @@ const start = async () => {
   await conn.runMigrations();
   console.log('Migrations ran');
   if (process.env.NODE_ENV === 'development') {
-    seedDatabase();
+    await seedDatabase();
   }
   const app = express();
   app.use(morgan('dev'));
