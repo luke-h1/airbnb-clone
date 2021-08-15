@@ -28,8 +28,6 @@ export const seedDatabase = async () => {
     }
     return;
   } catch (e) {
-    if (e.code === '23505') {
-      console.log('user already exists');
-    }
+    console.error(e)
   }
 };
