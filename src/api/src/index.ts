@@ -18,12 +18,13 @@ import { seedDatabase } from './utils/seedDatabase';
 
 const main = async () => {
   const conn = await createConn();
-  if (process.env.NODE_ENV === 'development') {
-    seedDatabase();
-  }
+
   console.log('Connected to DB, running migrations');
   await conn.runMigrations();
   console.log('Migrations ran');
+  if (process.env.NODE_ENV === 'development') {
+    seedDatabase();
+  }
   const app = express();
   app.use(morgan('dev'));
   const RedisStore = connectRedis(session);

@@ -36,6 +36,7 @@ const EditDeleteButtons: React.FC<EditDeleteButtonProps> = ({
       <DeleteIcon
         fontSize="23px"
         color="red"
+        data-testid={`delete-property-${id}`}
         onClick={() => {
           deleteProperty({
             id,

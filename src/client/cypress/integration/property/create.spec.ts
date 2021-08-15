@@ -3,6 +3,10 @@ describe('create property', () => {
     cy.login('bob@test.com', 'testpassword');
   });
 
+  afterEach(() => {
+    cy.deleteProperty('delete-property-1');
+  });
+
   it('should render create property page', () => {
     cy.visit('/property/create-property');
   });

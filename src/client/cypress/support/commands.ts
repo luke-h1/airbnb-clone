@@ -84,3 +84,9 @@ Cypress.Commands.add(
     cy.wait('@createProperty');
   }
 );
+
+Cypress.Commands.add('deleteProperty', (id: string) => {
+  cy.visit('/');
+  cy.getByTestId(id).click();
+  cy.getByTestId(id).should('not.be.visible');
+});

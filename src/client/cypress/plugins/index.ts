@@ -27,6 +27,7 @@ declare namespace Cypress {
      * @example cy.dataCy('greeting')
      */
 
+    deleteProperty(id: string): Chainable<Element>;
     getByTestId(testId: string): Chainable<Element>;
     getById(id: string): Chainable<Element>;
     login(email: string, password: string): Chainable<Element>;
