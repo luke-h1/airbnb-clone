@@ -11,10 +11,14 @@ Cypress.Commands.add('getById', (id: string) => {
 Cypress.Commands.add('login', (email: string, password: string) => {
   cy.session([email, password], () => {
     cy.visit('/login');
-    cy.get('[data-test=email]').type(email);
-    cy.get('[data-test=password]').type(password);
-    cy.get('#submit').click();
-    cy.url().should('contain', 'http://localhost:3000');
+    cy.getByTestId('email').type(email);
+    cy.getByTestId('password').type(password);
+    cy.get('button[type="submit"]').click();
+    cy.intercept('POST', 'http://localhost:4000/graphql', []).as(
+      'getProperties'
+    );
+    cy.wait('@getProperties');
+    cy.getCookie('connect.sid').should('exist');
   });
 });
 

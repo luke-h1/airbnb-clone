@@ -60,7 +60,7 @@ const RegisterPage = () => {
             <Text as="h3">Don't have an account ?</Text>
             <Link href="/register">
               <a>
-                <Button colorScheme="blue" mt={3} type="submit">
+                <Button colorScheme="blue" mt={3} type="button">
                   Register
                 </Button>
               </a>
