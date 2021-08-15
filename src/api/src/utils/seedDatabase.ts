@@ -7,7 +7,6 @@ export const seedDatabase = async () => {
     const userExists = await User.findOne({ where: { email: 'bob@test.com' } });
 
     if (!userExists) {
-      console.log('test user already exists');
       const hashedPassword = await bcrypt.hash('testpassword', 12);
       const result = await getConnection()
         .createQueryBuilder()
