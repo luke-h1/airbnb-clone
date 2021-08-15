@@ -14,9 +14,13 @@ import { createSchema } from './utils/createSchema';
 import { createConn } from './utils/createConn';
 
 import 'dotenv-safe/config';
+import { seedDatabase } from './utils/seedDatabase';
 
 const main = async () => {
   const conn = await createConn();
+  if (process.env.NODE_ENV === 'development') {
+    seedDatabase();
+  }
   console.log('Connected to DB, running migrations');
   await conn.runMigrations();
   console.log('Migrations ran');

@@ -20,7 +20,7 @@ Cypress.Commands.add('login', (email: string, password: string) => {
 
 /* 
 Local test user: 
-email: test@test.com
+email: bob@test.com
 password: testpassword
 */
 
