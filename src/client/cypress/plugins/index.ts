@@ -37,5 +37,18 @@ declare namespace Cypress {
       password: string,
       image: string
     ): Chainable<Element>;
+
+    createProperty(
+      title: string,
+      propertyType: string,
+      description: string,
+      image: string,
+      pricePerNight: number,
+      baths: number,
+      beds: number,
+      bedrooms: number,
+      address: string,
+      amenities: string
+    ): Chainable<Element>;
   }
 }

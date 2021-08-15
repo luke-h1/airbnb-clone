@@ -51,3 +51,36 @@ Cypress.Commands.add(
     cy.getCookie('connect.sid').should('exist');
   }
 );
+
+Cypress.Commands.add(
+  'createProperty',
+  (
+    title: string,
+    propertyType: string,
+    description: string,
+    image: string,
+    pricePerNight: number,
+    baths: number,
+    beds: number,
+    bedrooms: number,
+    address: string,
+    amenities: string
+  ) => {
+    cy.visit('/property/create-property');
+    cy.getByTestId('property-title').clear().type(title);
+    cy.getByTestId('property-type').clear().type(propertyType);
+    cy.getByTestId('property-description').clear().type(description);
+    cy.getByTestId('property-image').attachFile(image);
+    cy.getByTestId('property-price').clear().type(`${pricePerNight}`);
+    cy.getByTestId('property-baths').clear().type(`${baths}`);
+    cy.getByTestId('property-beds').clear().type(`${beds}`);
+    cy.getByTestId('property-bedrooms').clear().type(`${bedrooms}`);
+    cy.getByTestId('property-address').clear().type(address);
+    cy.getByTestId('property-amenities').clear().type(amenities);
+    cy.get('button[type="submit"]').scrollIntoView().click();
+    cy.intercept('POST', 'http://localhost:4000/graphql', []).as(
+      'createProperty'
+    );
+    cy.wait('@createProperty');
+  }
+);
