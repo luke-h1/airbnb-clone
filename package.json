@@ -15,6 +15,7 @@
     "bootstrap:prod": "lerna bootstrap --ci --force-local -- --only=prod",
     "bootstrap:install": "lerna bootstrap --force-local",
     "build": "lerna run build",
+    "dropdb": "dropdb abb-clone && createdb abb-clone && dropdb abb-clone-test && createdb abb-clone-test",
     "deploy": "lerna run deploy",
     "clean": "lerna clean -y",
     "prepare": "husky install"

@@ -38,8 +38,14 @@ const RegisterPage = () => {
         {({ isSubmitting }) => (
           <Form>
             {isSubmitting && <p>submitting</p>}
-            <InputField name="email" placeholder="Email" label="email" />
             <InputField
+              name="email"
+              placeholder="Email"
+              label="email"
+              data-testid="email"
+            />
+            <InputField
+              data-testid="password"
               name="password"
               placeholder="Password"
               label="password"
