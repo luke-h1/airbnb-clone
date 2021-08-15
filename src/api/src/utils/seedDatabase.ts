@@ -1,7 +1,6 @@
 import { getConnection } from 'typeorm';
 import bcrypt from 'bcryptjs';
 import { User } from '../entities/User';
-import sleep from './sleep';
 
 export const seedDatabase = async () => {
   try {

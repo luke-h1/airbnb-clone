@@ -4,14 +4,14 @@ describe('create property', () => {
   });
 
   afterEach(() => {
-    cy.deleteProperty('delete-property-1');
+    cy.login('bob@test.com', 'testpassword');
   });
 
   it('should render create property page', () => {
     cy.visit('/property/create-property');
   });
 
-  it('should create property with correct info', () => {
+  it('should create property with correct info & display it', () => {
     cy.createProperty(
       'test title',
       'flat',
@@ -24,9 +24,10 @@ describe('create property', () => {
       'test address',
       'central location'
     );
-  });
-  it('should display card', () => {
     cy.visit('/');
+    cy.login('bob@test.com', 'testpassword');
     cy.contains('h4', 'test title', { timeout: 5000 }).should('be.visible');
+
+    cy.deleteProperty('delete-property-1');
   });
 });

@@ -86,7 +86,7 @@ Cypress.Commands.add(
 );
 
 Cypress.Commands.add('deleteProperty', (id: string) => {
-  cy.visit('/');
+  cy.visit('/', { timeout: 5000 });
   cy.getByTestId(id).click();
   cy.getByTestId(id).should('not.be.visible');
 });
