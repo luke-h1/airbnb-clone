@@ -47,7 +47,7 @@ const start = async () => {
         httpOnly: true,
         sameSite: 'lax', // csrf
         secure: constants.__prod__, // cookie only works in https
-        domain: constants.__prod__ ? '.airbb-clone-code.xyz' : undefined, // SSR issues with forwarding cookies
+        domain: constants.__prod__ ? '.airbb-clone-code.xyz' : undefined,
       },
       saveUninitialized: false,
       secret: process.env.COOKIE_SECRET!,
