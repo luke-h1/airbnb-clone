@@ -57,6 +57,11 @@ export class PropertyResolver {
     return userLoader.load(property.creatorId);
   }
 
+  @FieldResolver(() => String)
+  descriptionSnippet(@Root() property: Property) {
+    return property.description.slice(0, 50);
+  }
+
   @Mutation(() => PropertyResponse)
   @UseMiddleware(isAuth)
   async createProperty(

@@ -9,6 +9,7 @@ import { withUrqlClient } from 'next-urql';
 import { createUrqlClient } from '@src/utils/createUrqlClient';
 import { Wrapper } from '@src/components/Wrapper';
 import { Button, Flex, Text } from '@chakra-ui/react';
+import { Loader } from '@src/components/Loader';
 
 interface FormValues {
   email: string;
@@ -37,7 +38,7 @@ const RegisterPage = () => {
       >
         {({ isSubmitting }) => (
           <Form>
-            {isSubmitting && <p>submitting</p>}
+            {isSubmitting && <Loader />}
             <InputField
               name="email"
               placeholder="Email"

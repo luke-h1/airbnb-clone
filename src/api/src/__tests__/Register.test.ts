@@ -1,7 +1,7 @@
 /* eslint-disable no-undef */
 import { Connection } from 'typeorm';
 import faker from 'faker';
-import { redis } from '../utils/redis';
+import { redis } from '../test-utils/redis';
 import { gCall } from '../test-utils/gCall';
 import { User } from '../entities/User';
 import { testConn } from '../test-utils/testConn';

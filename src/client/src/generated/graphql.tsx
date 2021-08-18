@@ -88,7 +88,6 @@ export type Property = {
   id: Scalars['Int'];
   title: Scalars['String'];
   creatorId: Scalars['Int'];
-  likeStatus?: Maybe<Scalars['Int']>;
   propertyType: Scalars['String'];
   image: Scalars['String'];
   beds: Scalars['Int'];
@@ -101,6 +100,7 @@ export type Property = {
   createdAt: Scalars['String'];
   updatedAt: Scalars['String'];
   creator: User;
+  descriptionSnippet: Scalars['String'];
 };
 
 export type PropertyFieldError = {
@@ -387,7 +387,6 @@ export type PropertiesQuery = {
       title: string;
       propertyType: string;
       image: string;
-      description: string;
       beds: number;
       baths: number;
       bedrooms: number;
@@ -630,7 +629,6 @@ export const PropertiesDocument = gql`
         title
         propertyType
         image
-        description
         beds
         baths
         bedrooms

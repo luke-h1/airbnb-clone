@@ -12,19 +12,23 @@ import { useMeQuery, useDeleteUserMutation } from '@src/generated/graphql';
 import { createUrqlClient } from '@src/utils/createUrqlClient';
 import { isServer } from '@src/utils/isServer';
 import { withUrqlClient } from 'next-urql';
-import Router from 'next/router';
+import { useRouter } from 'next/router';
+import { useEffect } from 'react';
 
 const Me = () => {
+  const router = useRouter();
   const [{ data }] = useMeQuery({ pause: isServer() });
   const [, deleteUser] = useDeleteUserMutation();
-  if (!data?.me) {
-    // eslint-disable-next-line no-unused-expressions
-    isServer() ?? Router.replace('/login');
-  }
+
+  useEffect(() => {
+    if (!data?.me) {
+      router.push('/');
+    }
+  }, []);
 
   const handleDelete = async () => {
     await deleteUser({ id: data!.me!.id });
-    await Router.push('/');
+    router.push('/');
   };
 
   return (
@@ -95,4 +99,4 @@ const Me = () => {
     </Center>
   );
 };
-export default withUrqlClient(createUrqlClient, { ssr: true })(Me);
+export default withUrqlClient(createUrqlClient, { ssr: false })(Me);
