@@ -42,8 +42,9 @@ const RegisterPage = () => {
           });
           if (res.data?.register.errors) {
             setErrors(toErrorMap(res.data.register.errors));
+          } else {
+            router.push('/');
           }
-          router.push('/');
         }}
       >
         {({ isSubmitting, setFieldValue }) => (

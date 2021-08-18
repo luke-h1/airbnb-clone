@@ -48,7 +48,7 @@ const main = async () => {
         httpOnly: true,
         sameSite: 'lax', // csrf
         secure: constants.__prod__, // cookie only works in https
-        domain: constants.__prod__ ? '.airbb-clone-code.xyz' : undefined, // put deployed url here
+        domain: constants.__prod__ ? '.airbb-clone-code.xyz' : undefined,
       },
       saveUninitialized: false,
       secret: process.env.COOKIE_SECRET!,
