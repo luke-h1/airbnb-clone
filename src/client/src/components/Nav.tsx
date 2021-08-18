@@ -151,4 +151,4 @@ const Nav = () => {
     </>
   );
 };
-export default withUrqlClient(createUrqlClient, { ssr: true })(Nav);
+export default withUrqlClient(createUrqlClient, { ssr: false })(Nav);
