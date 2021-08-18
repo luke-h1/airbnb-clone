@@ -6,7 +6,6 @@ query Properties($limit: Int!, $cursor: String) {
       title
       propertyType
       image
-      description
       beds
       baths
       bedrooms

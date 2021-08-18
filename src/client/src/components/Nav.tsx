@@ -3,7 +3,6 @@ import {
   Flex,
   Avatar,
   HStack,
-  Link,
   IconButton,
   Button,
   Menu,
@@ -22,6 +21,7 @@ import { isServer } from '@src/hooks/isServer';
 import { withUrqlClient } from 'next-urql';
 import { createUrqlClient } from '@src/utils/createUrqlClient';
 import { useRouter } from 'next/router';
+import Link from 'next/link';
 
 const Nav = () => {
   const router = useRouter();
@@ -79,27 +79,21 @@ const Nav = () => {
           />
           <HStack spacing={8} alignItems="center">
             <Box>
-              <Image
-                boxSize="30px"
-                rounded="md"
-                objectFit="cover"
-                src="/images/airbnb.svg"
-              />
+              <Link href="/">
+                <a>
+                  <Image
+                    boxSize="30px"
+                    rounded="md"
+                    objectFit="cover"
+                    src="/images/airbnb.svg"
+                  />
+                </a>
+              </Link>
             </Box>
             <HStack as="nav" spacing={4} display={{ base: 'none', md: 'flex' }}>
               {Links.map((link) => (
-                <Link
-                  px={2}
-                  py={1}
-                  key={link.name}
-                  rounded="md"
-                  _hover={{
-                    textDecoration: 'none',
-                    bg: useColorModeValue('gray.200', 'gray.700'),
-                  }}
-                  href={link.href}
-                >
-                  {link.name}
+                <Link href={link.href}>
+                  <a>{link.name}</a>
                 </Link>
               ))}
               {data?.me && (
@@ -146,18 +140,8 @@ const Nav = () => {
             <Stack as="nav" spacing={4}>
               {Links
                 && Links.map((link) => (
-                  <Link
-                    px={2}
-                    py={1}
-                    key={link.name}
-                    rounded="md"
-                    _hover={{
-                      textDecoration: 'none',
-                      bg: useColorModeValue('gray.200', 'gray.700'),
-                    }}
-                    href={link.href}
-                  >
-                    {link.name}
+                  <Link href={link.href}>
+                    <a>{link.name}</a>
                   </Link>
                 ))}
             </Stack>

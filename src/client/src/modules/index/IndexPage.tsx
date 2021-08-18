@@ -1,4 +1,4 @@
-import { usePropertiesQuery } from '@src/generated/graphql';
+import { Property, usePropertiesQuery } from '@src/generated/graphql';
 import React, { useState } from 'react';
 import { withUrqlClient } from 'next-urql';
 import { createUrqlClient } from '@src/utils/createUrqlClient';
@@ -46,10 +46,8 @@ const IndexPage = () => {
         ) : (
           <Grid templateColumns="repeat(4, 1fr)" gap={4}>
             {data?.properties.properties.map((p) => (!p ? null : (
-            // @TODO: Luke - fix this type error
               <Box>
-                {/* @ts-ignore */}
-                <PropertyCard property={p} />
+                <PropertyCard property={p as Property} />
                 {data && data?.properties.hasMore ? (
                   <Box>
                     <Button

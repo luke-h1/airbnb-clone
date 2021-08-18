@@ -1,16 +1,42 @@
-import { Property } from '@src/generated/graphql';
+import { Scalars, User } from '@src/generated/graphql';
 import React from 'react';
-import { Box, Image, Badge } from '@chakra-ui/react';
+import {
+  Box, Image, Badge, Avatar, Text,
+} from '@chakra-ui/react';
 import EditDeleteButtons from '@src/components/EditDeleteButtons';
 import Link from 'next/link';
 
 interface PropertyProps {
-  property: Property;
+  property: {
+    __typename?: 'Property' | undefined;
+    id: Scalars['Int'];
+    title: Scalars['String'];
+    creatorId: Scalars['Int'];
+    propertyType: Scalars['String'];
+    image: Scalars['String'];
+    beds: Scalars['Int'];
+    baths: Scalars['Int'];
+    bedrooms: Scalars['Int'];
+    description: Scalars['String'];
+    pricePerNight: Scalars['Int'];
+    address: Scalars['String'];
+    amenities: Array<Scalars['String']>;
+    createdAt: Scalars['String'];
+    updatedAt: Scalars['String'];
+    creator: User;
+    descriptionSnippet: Scalars['String'];
+  };
 }
 
 const PropertyCard: React.FC<PropertyProps> = ({ property }) => {
   return (
-    <Box maxW="sm" borderWidth="1px" borderRadius="lg" overflow="hidden">
+    <Box
+      maxW="sm"
+      borderWidth="1px"
+      borderRadius="lg"
+      overflow="hidden"
+      cursor="pointer"
+    >
       <Link href={`/property/${property.id}`}>
         <Image src={property.image} alt={property.title} />
       </Link>
@@ -47,9 +73,12 @@ const PropertyCard: React.FC<PropertyProps> = ({ property }) => {
           </Box>
         </Box>
         <Box>
-          Posted By:
-          <Box as="span" color="gray.600" fontSize="sm">
-            {property.creator.fullName}
+          <hr />
+          <Text mr={2} as="p">
+            Posted By: {property.creator.fullName}
+          </Text>
+          <Box m={0}>
+            <Avatar src={property.creator.image} />
           </Box>
         </Box>
         {/* <Box d="flex" mt="2" alignItems="center">
