@@ -10,7 +10,8 @@ This project is made up of 2 areas that share code using <a href='https://lerna.
 
 ### Features 
 * CRUD properties 
-* login/signup 
+* login/signup
+* delete user 
 * upload user & property images 
 
 ### tech stack
