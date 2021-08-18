@@ -13,14 +13,14 @@ import { createUrqlClient } from '@src/utils/createUrqlClient';
 import { isServer } from '@src/utils/isServer';
 import { withUrqlClient } from 'next-urql';
 import { useRouter } from 'next/router';
-import { useMemo } from 'react';
+import { useEffect } from 'react';
 
 const Me = () => {
   const router = useRouter();
   const [{ data }] = useMeQuery({ pause: isServer() });
   const [, deleteUser] = useDeleteUserMutation();
 
-  useMemo(() => {
+  useEffect(() => {
     if (!data?.me) {
       router.push('/');
     }
