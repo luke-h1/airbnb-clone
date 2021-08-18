@@ -8,9 +8,9 @@ read USER
 cd ../src/api
 echo "🚀 Deploying api to production"
 
-docker build -t lhowsam/api:$VERSION .
-docker push lhowsam/api:$VERSION
+docker build -t lhowsam/airbnb-api:$VERSION .
+docker push lhowsam/airbnb-api:$VERSION
 
-ssh ${USER}@${TARGET} -i /Users/lukehowsam/aws/dev*.cer "sudo docker pull lhowsam/api:$VERSION && sudo docker tag lhowsam/api:$VERSION dokku/api:$VERSION && dokku deploy api $VERSION"
+ssh ${USER}@${TARGET} -i /Users/lukehowsam/aws/dev*.cer "sudo docker pull lhowsam/airbnb-api:$VERSION && sudo docker tag lhowsam/airbbnb-api:$VERSION dokku/airbnb-api:$VERSION && dokku deploy airbnb-api $VERSION"
 
 echo "✅ Succesfully deployed backend to production"
