@@ -83,6 +83,7 @@ const CreatePropertyPage = () => {
                 data-testid="property-type"
               />
               <InputField
+                textarea
                 name="description"
                 placeholder="Description of property"
                 label="description"
