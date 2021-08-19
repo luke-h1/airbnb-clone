@@ -100,6 +100,7 @@ const EditPropertyPage = () => {
               type="text"
             />
             <InputField
+              textarea
               name="description"
               placeholder="Description of property"
               label="description"
@@ -117,7 +118,6 @@ const EditPropertyPage = () => {
                 }
               }}
             />
-
             <InputField
               name="pricePerNight"
               placeholder="Price per night"

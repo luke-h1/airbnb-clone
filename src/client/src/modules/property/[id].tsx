@@ -4,7 +4,6 @@ import {
   SimpleGrid,
   Image,
   Flex,
-  Heading,
   Text,
   Stack,
   StackDivider,
@@ -77,7 +76,7 @@ const SinglePropertyPage = () => {
           >
             {data?.property.title}
           </Text>
-          <Heading>{data?.property.description}</Heading>
+          <Text as="p">{data?.property.description}</Text>
           <Text color="gray.500" fontSize="lg">
             £{data.property.pricePerNight} per night
           </Text>
