@@ -14,7 +14,7 @@
   "plugins": ["react", "@typescript-eslint"],
   "rules": {
     "react/react-in-jsx-scope": "off",
-    "no-console": "warn",
+    "no-console": "off",
     "no-use-before-define": "off",
     "import/extensions": "off",
     "react/jsx-filename-extension": [
