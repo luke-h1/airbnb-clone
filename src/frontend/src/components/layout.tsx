@@ -3,7 +3,7 @@ import Link from 'next/link';
 import { useAuth } from 'src/auth/useAuth';
 
 interface Iprops {
-  main: ReactNode;
+  children: ReactNode;
 }
 
 const Layout: React.FC<Iprops> = ({ children }) => {
