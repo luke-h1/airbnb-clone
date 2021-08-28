@@ -1,31 +1,30 @@
 {
-  "name": "airbnb-clone",
+  "name": "root",
   "private": true,
   "devDependencies": {
-    "eslint": "^7.30.0",
-    "husky": "^7.0.1",
+    "eslint": "^7.32.0",
+    "husky": "^6.0.0",
     "lerna": "^4.0.0",
-    "lint-staged": "^11.0.1",
+    "lint-staged": "^11.1.2",
     "prettier": "^2.3.2"
   },
   "scripts": {
     "lint": "lerna run lint",
     "format": "lerna run format",
+    "tsc": "lerna run tsc",
     "bootstrap": "lerna bootstrap --ci --force-local",
     "bootstrap:prod": "lerna bootstrap --ci --force-local -- --only=prod",
     "bootstrap:install": "lerna bootstrap --force-local",
     "build": "lerna run build",
-    "dropdb": "dropdb abb-clone && createdb abb-clone && dropdb abb-clone-test && createdb abb-clone-test",
-    "deploy": "lerna run deploy",
     "clean": "lerna clean -y",
     "prepare": "husky install"
   },
   "lint-staged": {
     "*.{ts,tsx,js,jsx}": [
-      "eslint --fix --quiet"
+      "npm run lint"
     ],
     "*.{js,jsx,ts,tsx,css,scss,html}": [
-      "prettier --write"
+      "npm run format"
     ]
   }
 }
