@@ -1,0 +1,17 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+body {
+  background-color: #011627;
+}
+
+input {
+  color: #000;
+  border-radius: 5px;
+}
+
+/* Custom Classes */
+
+.marker-active {
+  z-index: 1;
+}
