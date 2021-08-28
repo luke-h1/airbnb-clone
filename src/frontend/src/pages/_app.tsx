@@ -1,18 +1,6 @@
-import '../styles/index.css';
-import type { AppProps } from 'next/app';
-import { useApollo } from '@frontend/src/apollo';
-import { ApolloProvider } from '@apollo/client';
-import { AuthProvider } from '@frontend/src/auth/useAuth';
+import { AppProps } from "next/app";
 
-function MyApp({ Component, pageProps }: AppProps) {
-  const client = useApollo();
-  return (
-    <AuthProvider>
-      <ApolloProvider client={client}>
-        <Component {...pageProps} />
-      </ApolloProvider>
-    </AuthProvider>
-  );
+
+export default function MyApp({ Component, pageProps }: AppProps) {
+  return <Component {...pageProps} />;
 }
-
-export default MyApp;

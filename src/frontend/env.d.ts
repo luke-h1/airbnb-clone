@@ -1,5 +1,5 @@
 declare namespace NodeJS {
-  interface ProcessEnv {
+  export interface ProcessEnv {
     NEXT_PUBLIC_MAPBOX_API_TOKEN: string;
     NEXT_PUBLIC_FIREBASE_API_KEY: string;
     NEXT_PUBLIC_FIREBASE_AUTH_DOMAIN: string;
