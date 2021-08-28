@@ -1,6 +1,5 @@
 {
   "packages": [
-    "src/common",
     "src/frontend"
   ],
   "version": "0.0.0"
