@@ -1,3 +1,4 @@
-export const dummy = () => {
-  return true;
+const index = () => {
+  return <div>hello</div>;
 };
+export default index;

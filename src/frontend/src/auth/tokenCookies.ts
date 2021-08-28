@@ -1,4 +1,4 @@
-import { frontendApi } from '@common/src/services/api/index';
+import frontendApi from '@frontend/src/services/index';
 
 export const setTokenCookie = (token: string) => {
   frontendApi.post('/api/login', JSON.stringify({ token }), {
