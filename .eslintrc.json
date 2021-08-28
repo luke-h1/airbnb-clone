@@ -43,6 +43,7 @@
     "src/types/env.d.ts",
     "src/__tests__/*.*",
     "test",
-    "src/__mocks__"
+    "src/__mocks__",
+    "src/frontend/src/types/env.d.ts"
   ]
 }
