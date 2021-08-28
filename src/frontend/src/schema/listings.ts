@@ -1,5 +1,5 @@
-import { Min, Max } from "class-validator";
-import { getBoundsOfDistance } from "geolib";
+import { Min, Max } from 'class-validator';
+import { getBoundsOfDistance } from 'geolib';
 import {
   Ctx,
   Field,
@@ -8,8 +8,8 @@ import {
   InputType,
   Int,
   ObjectType,
-} from "type-graphql";
-import { Context, AuthorizedContext } from "./context";
+} from 'type-graphql';
+import { Context, AuthorizedContext } from './context';
 
 @InputType()
 class CoordinatesInput {
@@ -70,7 +70,7 @@ class Listing {
 
   @Field(() => String)
   publicId(): String {
-    const parts = this.image.split("/");
+    const parts = this.image.split('/');
     return parts[parts.length - 1];
   }
 
@@ -81,7 +81,7 @@ class Listing {
   async nearby(@Ctx() ctx: Context) {
     const bounds = getBoundsOfDistance(
       { latitude: this.latitude, longitude: this.longitude },
-      1000 // 10km
+      1000, // 10km
     );
     /*
     bounds array shape:
