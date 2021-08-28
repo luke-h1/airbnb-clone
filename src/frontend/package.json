@@ -8,6 +8,8 @@
     "start": "next start",
     "codegen": "apollo client:codegen --target typescript --localSchemaFile schema.gql --outputFlat --includes \"{pages,src}/**\" --excludes \"src/generated/**\" src/generated",
     "codegen:watch": "yarn codegen --watch",
+    "lint": "eslint \"./src/**/*.{js, jsx,ts,tsx}\" --quiet --fix && eslint \"./**/*.{js, jsx,ts,tsx}\" --quiet --fix",
+    "format": "prettier --write \"**/*.{js,jsx,ts,tsx}\"",
     "db:init": "yarn prisma init",
     "db:generate": "yarn prisma generate",
     "db:migrate:new": "yarn prisma migrate save --experimental",
