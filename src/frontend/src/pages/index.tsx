@@ -62,7 +62,7 @@ export default function Home() {
       <Layout
         main={(
           <div>
-            Error loading houses
+            Error loading listings
             {' '}
             <pre>{JSON.stringify(error, null, 2)}</pre>
           </div>

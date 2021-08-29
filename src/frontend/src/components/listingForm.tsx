@@ -92,7 +92,7 @@ interface IProps {
   listing?: IListing;
 }
 
-export default function HouseForm({ listing }: IProps) {
+export default function ListingForm({ listing }: IProps) {
   const router = useRouter();
   const [submitting, setSubmitting] = useState<boolean>(false);
   const [previewImage, setPreviewImage] = useState<string>("");
