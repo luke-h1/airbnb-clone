@@ -37,7 +37,7 @@ export default function Map({
         ref={(instance) => (mapRef.current = instance)}
         minZoom={5}
         maxZoom={15}
-        mapStyle="mapbox://styles/leighhalliday/ckhjaksxg0x2v19s1ovps41ef"
+        mapStyle="mapbox://styles/mapbox/dark-v10"
         onLoad={() => {
           if (mapRef.current) {
             const bounds = mapRef.current.getMap().getBounds(); // ask component for mapbbox map

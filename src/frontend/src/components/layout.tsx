@@ -9,16 +9,15 @@ interface Iprops {
 const Layout: React.FC<Iprops> = ({ main }) => {
   const { authenticated, logout } = useAuth();
   return (
-    <div className="bg-gray-900 max-w-screen-2xl mx-auto text-white">
-      <nav className="bg-gray-800" style={{ height: '64px' }}>
+    <div className="bg-white max-w-screen-2xl mx-auto text-black">
+      <nav
+        className="bg-white"
+        style={{ height: '64px', borderBottom: '12px', borderColor: '#fff' }}
+      >
         <div className="px-6 flex items-center justify-between h-16">
           <Link href="/">
             <a>
-              <img
-                src="/pinpoint-color.svg"
-                alt="home"
-                className="inline w-6"
-              />
+              <img src="/airbnb-logo.svg" alt="home" className="inline w-6" />
             </a>
           </Link>
           {authenticated ? (

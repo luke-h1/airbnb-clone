@@ -15,11 +15,11 @@
 /* Generics */
 
 body {
-  background-color: rgba(17, 24, 39);
+  background-color: #fff;
 }
 
 input {
-  color: black;
+  color: #000;
   border-radius: 5px;
 }
 

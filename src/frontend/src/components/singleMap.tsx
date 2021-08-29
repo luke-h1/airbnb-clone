@@ -29,7 +29,7 @@ export default function SingleMap({ listing, nearby }: IProps) {
         height="calc(100vh - 64px)"
         onViewportChange={(nextViewport) => setViewport(nextViewport)}
         mapboxApiAccessToken={process.env.NEXT_PUBLIC_MAPBOX_API_TOKEN}
-        mapStyle="mapbox://styles/leighhalliday/ckhjaksxg0x2v19s1ovps41ef"
+        mapStyle="mapbox://styles/mapbox/dark-v10"
         scrollZoom={false}
         minZoom={8}
       >
