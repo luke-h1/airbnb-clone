@@ -113,19 +113,25 @@ export class ListingResolver {
     const result = await ctx.prisma.listing.findOne({
       where: { id: parseInt(id, 10) },
     });
+    if (ctx.uid !== result?.userId) return null;
     return result;
   }
 
   @Query(() => [Listing], { nullable: false }) // [] if no listings
   async listings(@Arg('bounds') bounds: BoundsInput, @Ctx() ctx: Context) {
-    const result = ctx.prisma.listing.findMany({
+    const results = await ctx.prisma.listing.findMany({
       where: {
         latitude: { gte: bounds.sw.latitude, lte: bounds.ne.latitude },
         longitude: { gte: bounds.sw.longitude, lte: bounds.ne.longitude },
       },
       take: 50, // limit results to 50
     });
-    return result;
+    // in production filter out listings created by other users
+    if (process.env.NODE_ENV !== 'development') {
+      const canAccess = results.filter((r) => r.userId === ctx.uid);
+      return canAccess;
+    }
+    return results;
   }
 
   @Authorized()
