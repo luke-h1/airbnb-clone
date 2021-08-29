@@ -3,12 +3,12 @@ import { useRouter } from 'next/router';
 import { useQuery, gql } from '@apollo/client';
 import { loadIdToken } from 'src/auth/firebaseAdmin';
 import Layout from 'src/components/layout';
-import HouseForm from 'src/components/listingForm';
 import { useAuth } from 'src/auth/useAuth';
 import {
   EditListingQuery,
   EditListingQueryVariables,
 } from 'src/generated/EditListingQuery';
+import ListingForm from 'src/components/listingForm';
 
 const EDIT_LISTING_QUERY = gql`
   query EditListingQuery($id: String!) {
@@ -47,7 +47,7 @@ function HouseData({ id }: { id: string }) {
   if (data && !data.listing) return <Layout main={<div>Unable to load listing</div>} />;
   if (user.uid !== data?.listing?.userId) return <Layout main={<div>Forbidden</div>} />;
 
-  return <Layout main={<HouseForm listing={data.listing} />} />;
+  return <Layout main={<ListingForm listing={data.listing} />} />;
 }
 
 export const getServerSideProps: GetServerSideProps = async ({ req, res }) => {

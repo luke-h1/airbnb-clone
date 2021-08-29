@@ -10,10 +10,6 @@ export default function MyApp({ Component, pageProps }: AppProps) {
   return (
     <AuthProvider>
       <ApolloProvider client={client}>
-        <Head>
-          <title>Home sweet home</title>
-          <link rel="icon" href="/favicon.ico" />
-        </Head>
         <Component {...pageProps} />
       </ApolloProvider>
     </AuthProvider>

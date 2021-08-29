@@ -1,7 +1,7 @@
 import { Image } from 'cloudinary-react';
 import { useQuery, gql } from '@apollo/client';
 import Layout from 'src/components/layout';
-import HouseNav from 'src/components/houseNav';
+import HouseNav from 'src/components/listingNav';
 import SingleMap from 'src/components/singleMap';
 import { useRouter } from 'next/router';
 import {

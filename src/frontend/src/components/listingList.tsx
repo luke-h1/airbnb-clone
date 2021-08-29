@@ -7,7 +7,7 @@ interface IProps {
   setHighlightedId: (id: string | null) => void;
 }
 
-export default function HouseList({ listings, setHighlightedId }: IProps) {
+export default function ListingList({ listings, setHighlightedId }: IProps) {
   return (
     <>
       {listings.map((listing) => (
