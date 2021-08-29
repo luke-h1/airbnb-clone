@@ -6,7 +6,7 @@ A Fullstack Airbnb Clone with Next.js & GraphQL
 This project is made up of 1 area that is managed by using <a href='https://lerna.js.org/' target="_blank">Lerna</a>
 
 
-* frontend - Next.js frontend / Prisma + TypegrapQL backend
+* frontend - Next.js frontend / Prisma + TypegraphQL backend
 
 ### Features 
 * CRUD listing 
