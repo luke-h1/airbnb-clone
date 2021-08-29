@@ -1,15 +1,5 @@
 {
   "compilerOptions": {
-    "removeComments": true,
-    "noImplicitAny": true,
-    "strictNullChecks": true,
-    "strictFunctionTypes": true,
-    "noImplicitThis": true,
-    "noUnusedLocals": true,
-    "noUnusedParameters": true,
-    "noImplicitReturns": true,
-    "noFallthroughCasesInSwitch": true,
-    "allowSyntheticDefaultImports": true,
     "target": "es2018",
     "lib": ["dom", "dom.iterable", "esnext"],
     "allowJs": false,
@@ -26,8 +16,8 @@
     "jsx": "preserve",
     "baseUrl": ".",
     "emitDecoratorMetadata": true,
-    "experimentalDecorators": true,
+    "experimentalDecorators": true
   },
   "include": ["next-env.d.ts", "**/*.ts", "**/*.tsx"],
-  "exclude": ["node_modules", "*.test.*", "*.spec.*"]
+  "exclude": ["node_modules"]
 }

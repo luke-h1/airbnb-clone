@@ -1,6 +1,6 @@
 import { useRef } from 'react';
 
-export function useLastData<T>(data: T) {
+export function useLastData<S>(data: S) {
   const ref = useRef(data);
   if (data !== null && data !== undefined) {
     ref.current = data;

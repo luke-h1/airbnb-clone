@@ -1,20 +1,21 @@
 {
-  "name": "frontend",
+  "name": "house",
   "version": "0.1.0",
   "private": true,
   "scripts": {
     "dev": "next dev",
     "build": "next build",
     "start": "next start",
-    "codegen": "apollo client:codegen --target typescript --localSchemaFile schema.gql --outputFlat --includes \"{pages,src}/**\" --excludes \"src/generated/**\" src/generated",
-    "codegen:watch": "npx codegen --watch",
+    "gen-env": "gen-env-types .env -o src/types/env.d.ts -e .",
     "lint": "eslint \"./src/**/*.{js, jsx,ts,tsx}\" --quiet --fix && eslint \"./**/*.{js, jsx,ts,tsx}\" --quiet --fix",
     "format": "prettier --write \"**/*.{js,jsx,ts,tsx}\"",
-    "db:init": "npx prisma init",
-    "db:generate": "npx prisma generate",
-    "db:migrate:new": "npx prisma migrate save --experimental",
-    "db:migrate:up": "npx prisma migrate up --experimental",
-    "db:migrate:down": "npx prisma migrate down --experimental"
+    "gen": "apollo client:codegen --target typescript --localSchemaFile schema.gql --outputFlat --includes \"src/**\" --excludes \"src/generated/**\" src/generated",
+    "gen:watch": "yarn gen --watch",
+    "db:init": "yarn prisma init",
+    "db:generate": "yarn prisma generate",
+    "db:migrate:new": "yarn prisma migrate save --experimental",
+    "db:migrate:up": "yarn prisma migrate up --experimental",
+    "db:migrate:down": "yarn prisma migrate down --experimental"
   },
   "dependencies": {
     "@apollo/client": "^3.2.5",
@@ -52,7 +53,7 @@
     "@babel/plugin-proposal-decorators": "^7.12.1",
     "@prisma/cli": "~2.11.0",
     "@types/cookie": "^0.4.1",
-    "@types/js-cookie": "^2.2.7",
+    "@types/js-cookie": "^2.2.6",
     "@types/react": "^16.9.56",
     "@types/react-map-gl": "^5.2.9",
     "apollo": "^2.31.1",

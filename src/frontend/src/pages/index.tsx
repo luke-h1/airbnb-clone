@@ -3,20 +3,24 @@ import { useQuery, gql } from '@apollo/client';
 import { useDebounce } from 'use-debounce';
 import Layout from 'src/components/layout';
 import Map from 'src/components/map';
-import ListingList from 'src/components/listingList';
+import ListingsList from 'src/components/listingList';
 import { useLastData } from 'src/utils/useLastData';
 import { useLocalState } from 'src/utils/useLocalState';
+import {
+  ListingsQuery,
+  ListingsQueryVariables,
+} from 'src/generated/ListingsQuery';
 
-const LISTING_QUERY = gql`
+const LISTINGS_QUERY = gql`
   query ListingsQuery($bounds: BoundsInput!) {
-      listings(bounds: $bounds) {
-          id
-          latitude
-          longitude
-          address
-          publicId
-          bedrooms
-      }
+    listings(bounds: $bounds) {
+      id
+      latitude
+      longitude
+      address
+      publicId
+      bedrooms
+    }
   }
 `;
 
@@ -36,9 +40,59 @@ const parseBounds = (boundsString: string) => {
   };
 };
 
-const Home = () => {
-  const [highlighted, setHighlightedId] = useState<string | null>(null);
-  const [dataBounds, setDataBounds] = useLocalState<string>('bounds', '[[0, 0], [0, 0]]');
-  const [debouncedDataBounds] = useDebounce(dataBounds, 500);
-};
-export default Home;
+export default function Home() {
+  const [highlightedId, setHighlightedId] = useState<string | null>(null);
+  const [dataBounds, setDataBounds] = useLocalState<string>(
+    'bounds',
+    '[[0, 0], [0, 0]]',
+  );
+
+  const [deboundedDataBounds] = useDebounce(dataBounds, 300);
+  const { data, error } = useQuery<ListingsQuery, ListingsQueryVariables>(
+    LISTINGS_QUERY,
+    {
+      variables: { bounds: parseBounds(deboundedDataBounds) },
+    },
+  );
+
+  const lastData = useLastData(data);
+
+  if (error) {
+    return (
+      <Layout
+        main={(
+          <div>
+            Error loading houses
+            {' '}
+            <pre>{JSON.stringify(error, null, 2)}</pre>
+          </div>
+        )}
+      />
+    );
+  }
+
+  return (
+    <Layout
+      main={(
+        <div className="flex">
+          <div
+            className="w-1/2 pb-4"
+            style={{ maxHeight: 'calc(100vh) - 64px', overflowX: 'scroll' }}
+          >
+            <ListingsList
+              listings={lastData ? lastData.listings : []}
+              setHighlightedId={setHighlightedId}
+            />
+          </div>
+          <div className="w-1/2">
+            <Map
+              setDataBounds={setDataBounds}
+              listings={lastData ? lastData.listings : []}
+              highlightedId={highlightedId}
+            />
+          </div>
+        </div>
+      )}
+    />
+  );
+}

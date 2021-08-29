@@ -2,7 +2,7 @@ import * as admin from 'firebase-admin';
 import { NextApiRequest } from 'next';
 
 const verifyIdToken = (token: string) => {
-  const firebasePrivateKey: string = process.env.FIREBASE_PRIVATE_KEY;
+  const firebasePrivateKey: string = process.env.FIREBASE_PRIVATE_KEY ?? '';
 
   if (!admin.apps.length) {
     admin.initializeApp({

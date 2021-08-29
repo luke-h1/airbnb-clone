@@ -17,6 +17,13 @@ export interface CoordiantesInput {
   longitude: number;
 }
 
+export interface ListingInput {
+  address: string;
+  bedrooms: number;
+  coordinates: CoordiantesInput;
+  image: string;
+}
+
 //==============================================================
 // END Enums and Input Objects
 //==============================================================

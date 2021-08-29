@@ -1,34 +1,61 @@
-This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
+# Full stack GraphQL airbnb clone 
 
-## Getting Started
+A Fullstack Airbnb Clone with Next.js & GraphQL
 
-First, run the development server:
+### Structure 
+This project is made up of 2 areas that share code using <a href='https://lerna.js.org/' target="_blank">Lerna</a>
 
-```bash
-npm run dev
-# or
-yarn dev
-```
+* api - GraphQL, Typescript API 
+* client - Next.js frontend 
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+### Features 
+* CRUD properties 
+* login/signup
+* delete user 
+* upload user & property images 
 
-You can start editing the page by modifying `pages/index.js`. The page auto-updates as you edit the file.
+### tech stack
+* Node
+* GraphQL 
+* Next.js
+* AWS S3 
+* Apollo GraphQL (server-side)
+* URQL GraphQL (client-side)
 
-[API routes](https://nextjs.org/docs/api-routes/introduction) can be accessed on [http://localhost:3000/api/hello](http://localhost:3000/api/hello). This endpoint can be edited in `pages/api/hello.js`.
+## Getting started with local development 
 
-The `pages/api` directory is mapped to `/api/*`. Files in this directory are treated as [API routes](https://nextjs.org/docs/api-routes/introduction) instead of React pages.
+### Prerequisites
+* This project targets Node V14. Ensure you're using Node V14 by using something such as NVM. 
+* Ensure you have Node / NPM installed.
+* Ensure Postgres is installed & is running (see backend section for more details)
+* Ensure Redis is installed & is running (see backend section for more details)
+* Ensure your postgres user has superuser access on the `abb-clone` DB
+* Run `npm ci && npm run bootstrap` in the root of the project to bootstrap the packages, install all their dependencies and link any cross-dependencies.
 
-## Learn More
+### api: 
+* [Install postgres](https://www.postgresql.org/download/)
+* [Install Redis (stable)](https://redis.io/download)
+* Create a blank postgres database called `abb-clone`
+* copy the `.env.example ` to `.env` (`cp .env.example .env`).
+* Fill out the `.env` file with your own values
+* create programatic access user on AWS and give it access to the s3 bucket you create
+* create s3 bucket on AWS with public access allowed 
+* After you have done the above you will need to run the following (in seperate terminals) to start the backend:
+    * Ensure whatever port you pick for the backend is free 
+    * `npm run watch` - transpile Typescript to common JS 
+    * `npm run dev` - start the backend server
+   
+    ### Migrations 
+    * The backend contains 2 commands which are responsible for dealing with migrations. 
+    * The first one is responsible for generating a migration based on the schema difference in `entities` vs what the current DB schema is. `typeorm migration:generate -n <NAME>`. 
+    * The second one is responsible for running the generated migrations. `typeorm migration:run`
+  
+### Frontend: 
+* copy the `.env.example ` to `.env`. `cp .env.example .env`. 
+* Fill out the `.env` file with your own values
+* run `npm run dev` to start the frontend
 
-To learn more about Next.js, take a look at the following resources:
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
-
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js/) - your feedback and contributions are welcome!
-
-## Deploy on Vercel
-
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/deployment) for more details.
+### Inspirations 
+* [benawad](https://github.com/benawad)
+* [Ania Kubów](https://twitter.com/ania_kubow)

@@ -40,7 +40,7 @@ export const AuthProvider: React.FC = ({ children }) => {
   useEffect(() => {
     const cancelAuthListener = firebase
       .auth()
-      // eslint-disable-next-line
+      // eslint-disable-next-line no-shadow
       .onIdTokenChanged(async (user) => {
         if (user) {
           // user has logged in

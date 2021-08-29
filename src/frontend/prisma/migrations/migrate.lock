@@ -1,3 +1,4 @@
 # Prisma Migrate lockfile v1
 
-20210829104859-listings
+20210822152929-createhouses
+20210829145356-rename-house-to-listing

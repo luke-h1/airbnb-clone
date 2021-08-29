@@ -89,12 +89,12 @@ class Listing {
       10000, // 10km
     );
     /*
-      bounds array shape:
-      [
-        {latitude: 10, longitude: 20},
-        {latitude: 10, longitude: 20}
-      ]
-      */
+    bounds array shape:
+    [
+      {latitude: 10, longitude: 20},
+      {latitude: 10, longitude: 20}
+    ]
+    */
     return ctx.prisma.listing.findMany({
       where: {
         latitude: { gte: bounds[0].latitude, lte: bounds[1].latitude },
@@ -118,13 +118,14 @@ export class ListingResolver {
 
   @Query(() => [Listing], { nullable: false }) // [] if no listings
   async listings(@Arg('bounds') bounds: BoundsInput, @Ctx() ctx: Context) {
-    return ctx.prisma.listing.findMany({
+    const result = ctx.prisma.listing.findMany({
       where: {
         latitude: { gte: bounds.sw.latitude, lte: bounds.ne.latitude },
         longitude: { gte: bounds.sw.longitude, lte: bounds.ne.longitude },
       },
       take: 50, // limit results to 50
     });
+    return result;
   }
 
   @Authorized()

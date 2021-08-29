@@ -13,7 +13,7 @@ generator client {
 model Listing {
   id Int @id @default(autoincrement())
   userId String @map(name: "user_id")
-  image String
+  image String 
   latitude Float 
   longitude Float 
   address String 
