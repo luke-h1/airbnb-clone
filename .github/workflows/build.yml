@@ -39,11 +39,14 @@ jobs:
       - name: bootstrap prod
         run: npm run bootstrap:prod
 
+      - name: tsc
+        run: npm run tsc
+
       - name: format
         run: npm run format
 
       - name: lint
         run: npm run lint
       
-      - name: build api & client 
+      - name: build frontend
         run: npm run build
