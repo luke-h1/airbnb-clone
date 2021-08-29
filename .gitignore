@@ -3,3 +3,5 @@ dist/
 .env.*
 !.env.example
 .DS_Store
+.env
+/src/frontend/.env

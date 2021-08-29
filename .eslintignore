@@ -1,3 +1,0 @@
-node_modules
-migrations
-src/abb-server/src/migrations/*.ts
