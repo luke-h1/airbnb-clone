@@ -15,16 +15,16 @@ const Layout: React.FC<Iprops> = ({ main }) => {
           <Link href="/">
             <a>
               <img
-                src="/home-color.svg"
-                alt="home house"
+                src="/pinpoint-color.svg"
+                alt="home"
                 className="inline w-6"
               />
             </a>
           </Link>
           {authenticated ? (
             <>
-              <Link href="/houses/add">
-                <a>Add House</a>
+              <Link href="/listings/add">
+                <a>Add listing</a>
               </Link>
               <button onClick={logout} type="button">
                 Logout

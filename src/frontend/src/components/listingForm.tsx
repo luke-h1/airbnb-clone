@@ -201,7 +201,7 @@ export default function ListingForm({ listing }: IProps) {
   return (
     <form className="mx-auto max-w-xl py-4" onSubmit={handleSubmit(onSubmit)}>
       <h1 className="text-xl">
-        {listing ? `Editing ${listing.address}` : "Add a new House"}
+        {listing ? `Editing ${listing.address}` : "Add a new listing"}
       </h1>
       <div className="mt-4">
         <label htmlFor="search" className="block">

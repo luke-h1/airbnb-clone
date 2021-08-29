@@ -88,8 +88,8 @@ export default function Map({
               <img
                 src={
                   highlightedId === listing.id
-                    ? '/home-color.svg'
-                    : '/home-solid.svg'
+                    ? '/pinpoint-color.svg'
+                    : '/pinpoint-solid.svg'
                 }
                 alt="listing"
                 className="w-8"

@@ -21,7 +21,7 @@ interface IProps {
   };
 }
 
-export default function HouseNav({ listing }: IProps) {
+export default function ListingNav({ listing }: IProps) {
   const router = useRouter();
   const { user } = useAuth();
   const canManage = !!user && user.uid === listing.userId;

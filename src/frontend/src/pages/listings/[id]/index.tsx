@@ -1,7 +1,7 @@
 import { Image } from 'cloudinary-react';
 import { useQuery, gql } from '@apollo/client';
 import Layout from 'src/components/layout';
-import HouseNav from 'src/components/listingNav';
+import ListingNav from 'src/components/listingNav';
 import SingleMap from 'src/components/singleMap';
 import { useRouter } from 'next/router';
 import {
@@ -28,16 +28,16 @@ const SHOW_LISTING_QUERY = gql`
   }
 `;
 
-export default function ShowHouse() {
+export default function ShowListing() {
   const {
     query: { id },
   } = useRouter(); // get int from URL
   if (!id) return null; // not initialized
   // at this point id is defined
-  return <HouseData id={id as string} />;
+  return <ListingData id={id as string} />;
 }
 
-function HouseData({ id }: { id: string }) {
+function ListingData({ id }: { id: string }) {
   const { data, loading } = useQuery<
     ShowListingQuery,
     ShowListingQueryVariables
@@ -62,7 +62,7 @@ function HouseData({ id }: { id: string }) {
       main={(
         <div className="sm:block md:flex">
           <div className="sm:w-full md:w-1/2 p-4">
-            <HouseNav listing={listing} />
+            <ListingNav listing={listing} />
             <h1 className="text-3xl my-2">{listing.address}</h1>
             <Image
               className="pb-2"

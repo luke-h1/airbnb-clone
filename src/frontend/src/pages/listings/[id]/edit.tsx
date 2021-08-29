@@ -25,17 +25,17 @@ const EDIT_LISTING_QUERY = gql`
   }
 `;
 
-export default function EditHouse() {
+export default function EditListing() {
   const {
     query: { id },
   } = useRouter();
 
   if (!id) return null;
 
-  return <HouseData id={id as string} />;
+  return <ListingData id={id as string} />;
 }
 
-function HouseData({ id }: { id: string }) {
+function ListingData({ id }: { id: string }) {
   const { user } = useAuth();
   const { data, loading } = useQuery<
     EditListingQuery,
