@@ -11,16 +11,15 @@
     "lint": "eslint \"./src/**/*.{js, jsx,ts,tsx}\" --quiet --fix && eslint \"./**/*.{js, jsx,ts,tsx}\" --quiet --fix",
     "format": "prettier --write \"**/*.{js,jsx,ts,tsx}\"",
     "gen": "apollo client:codegen --target typescript --localSchemaFile schema.gql --outputFlat --includes \"src/**\" --excludes \"src/generated/**\" src/generated",
-    "gen:watch": "yarn gen --watch",
-    "db:init": "yarn prisma init",
-    "db:generate": "yarn prisma generate",
-    "db:migrate:new": "yarn prisma migrate save --experimental",
-    "db:migrate:up": "yarn prisma migrate up --experimental",
-    "db:migrate:down": "yarn prisma migrate down --experimental"
+    "gen:watch": "npx gen --watch",
+    "db:init": "npx prisma init",
+    "db:generate": "npx prisma generate",
+    "db:migrate:dev": "npx prisma migrate dev",
+    "db:migrate:up": "npx prisma migrate push",
+    "db:migrate:down": "npx prisma migrate down"
   },
   "dependencies": {
     "@apollo/client": "^3.2.5",
-    "@prisma/client": "~2.11.0",
     "@reach/combobox": "^0.11.2",
     "apollo-server-micro": "^2.19.0",
     "autoprefixer": "^10.0.2",
@@ -38,6 +37,7 @@
     "next": "10.0.1",
     "postcss": "^8.1.7",
     "postcss-import": "^14.0.0",
+    "prisma": "^2.30.2",
     "react": "17.0.1",
     "react-dom": "17.0.1",
     "react-firebaseui": "^4.1.0",
@@ -53,7 +53,6 @@
   "devDependencies": {
     "@babel/plugin-proposal-class-properties": "^7.12.1",
     "@babel/plugin-proposal-decorators": "^7.12.1",
-    "@prisma/cli": "~2.11.0",
     "@types/cookie": "^0.4.1",
     "@types/js-cookie": "^2.2.6",
     "@types/react": "^16.9.56",
