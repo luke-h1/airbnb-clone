@@ -26,6 +26,7 @@ type Listing {
   latitude: Float!
   longitude: Float!
   nearby: [Listing!]!
+  propertyType: String!
   publicId: String!
   userId: String!
 }
@@ -35,6 +36,7 @@ input ListingInput {
   bedrooms: Int!
   coordinates: CoordiantesInput!
   image: String!
+  propertyType: String!
 }
 
 type Mutation {

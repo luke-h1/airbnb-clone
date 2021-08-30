@@ -49,6 +49,9 @@ class ListingInput {
   @Field(() => CoordiantesInput)
   coordinates!: CoordiantesInput;
 
+  @Field(() => String)
+  propertyType!: string;
+
   @Field(() => Int)
   bedrooms!: number;
 }
@@ -66,6 +69,9 @@ class Listing {
 
   @Field(() => Float)
   longitude!: number;
+
+  @Field(() => String)
+  propertyType!: string;
 
   @Field(() => String)
   address!: string;
@@ -145,6 +151,7 @@ export class ListingResolver {
         userId: ctx.uid,
         image: input.image,
         address: input.address,
+        propertyType: input.propertyType,
         latitude: input.coordinates.latitude,
         longitude: input.coordinates.longitude,
         bedrooms: input.bedrooms,
@@ -172,6 +179,7 @@ export class ListingResolver {
       data: {
         image: input.image,
         address: input.address,
+        propertyType: input.propertyType,
         latitude: input.coordinates.latitude,
         longitude: input.coordinates.longitude,
         bedrooms: input.bedrooms,

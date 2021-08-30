@@ -9,11 +9,8 @@ interface Iprops {
 const Layout: React.FC<Iprops> = ({ main }) => {
   const { authenticated, logout } = useAuth();
   return (
-    <div className="bg-white max-w-screen-2xl mx-auto text-black">
-      <nav
-        className="bg-white"
-        style={{ height: '64px', borderBottom: '12px', borderColor: '#fff' }}
-      >
+    <div className="bg-black max-w-screen-2xl mx-auto text-white">
+      <nav className="bg-black" style={{ height: '64px' }}>
         <div className="px-6 flex items-center justify-between h-16">
           <Link href="/">
             <a>

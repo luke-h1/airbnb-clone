@@ -22,6 +22,7 @@ export interface ListingInput {
   bedrooms: number;
   coordinates: CoordiantesInput;
   image: string;
+  propertyType: string;
 }
 
 //==============================================================
