@@ -10,18 +10,33 @@ generator client {
   provider = "prisma-client-js"
 }
 
+model PropertyLikes {
+  id        Int     @id @default(autoincrement())
+  value     Int
+  author    Listing @relation(fields: [creatorId], references: [id])
+  creatorId Int
+
+
+
+
+}
+
 model Listing {
-  id Int @id @default(autoincrement())
-  userId String @map(name: "user_id")
-  image String 
-  latitude Float 
-  longitude Float 
-  address String 
-  bedrooms Int 
-  createdAt DateTime @default(now()) @map(name: "created_at")
-  updatedAt DateTime @default(now()) @map(name: "updated_at")
+  id           Int      @id @default(autoincrement())
+  userId       String   @map(name: "user_id")
+  image        String
+  propertyType String   @map(name: "property_type")
+  likes        Int      @default(0)
+  likeStatus   Int?
+  latitude     Float
+  longitude    Float
+  address      String
+  bedrooms     Int
+  createdAt    DateTime @default(now()) @map(name: "created_at")
+  updatedAt    DateTime @default(now()) @map(name: "updated_at")
+
 
   @@index([userId], name: "listings.userId")
-
   @@map("listings")
+  PropertyLikes PropertyLikes[]
 }

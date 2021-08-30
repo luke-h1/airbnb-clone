@@ -14,6 +14,7 @@
     "gen:watch": "yarn gen --watch",
     "db:init": "yarn prisma init",
     "db:generate": "yarn prisma generate",
+    "db:format": "yarn prisma format",
     "db:migrate:new": "yarn prisma migrate save --experimental",
     "db:migrate:up": "yarn prisma migrate up --experimental",
     "db:migrate:down": "yarn prisma migrate down --experimental"
