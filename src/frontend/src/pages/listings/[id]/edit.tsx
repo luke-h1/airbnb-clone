@@ -2,7 +2,6 @@ import { GetServerSideProps, NextApiRequest } from 'next';
 import { useRouter } from 'next/router';
 import { useQuery, gql } from '@apollo/client';
 import { loadIdToken } from 'src/auth/firebaseAdmin';
-import Layout from 'src/components/layout';
 import { useAuth } from 'src/auth/useAuth';
 import {
   EditListingQuery,
@@ -44,47 +43,19 @@ function ListingData({ id }: { id: string }) {
   >(EDIT_LISTING_QUERY, { variables: { id } });
 
   if (!user) {
-    return (
-      <Layout>
-        {' '}
-        <div>Please login</div>
-      </Layout>
-    );
+    return <div>Please login</div>;
   }
   if (loading) {
-    return (
-      <Layout>
-        {' '}
-        <div>Loading...</div>
-        {' '}
-      </Layout>
-    );
+    return <div>Loading...</div>;
   }
   if (data && !data.listing) {
-    return (
-      <Layout>
-        {' '}
-        <div>Unable to load listing</div>
-        {' '}
-      </Layout>
-    );
+    return <div>Unable to load listing</div>;
   }
   if (user.uid !== data?.listing?.userId) {
-    return (
-      <Layout>
-        {' '}
-        <div>Forbidden</div>
-        {' '}
-      </Layout>
-    );
+    return <div>Forbidden</div>;
   }
 
-  return (
-    <Layout>
-      <ListingForm listing={data.listing} />
-      {' '}
-    </Layout>
-  );
+  return <ListingForm listing={data.listing} />;
 }
 
 export const getServerSideProps: GetServerSideProps = async ({ req, res }) => {

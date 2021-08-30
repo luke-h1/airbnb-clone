@@ -1,14 +1,9 @@
 import { GetServerSideProps, NextApiRequest } from 'next';
 import { loadIdToken } from 'src/auth/firebaseAdmin';
-import Layout from 'src/components/layout';
 import ListingForm from 'src/components/listingForm';
 
 const AddListingPage = () => {
-  return (
-    <Layout>
-      <ListingForm />
-    </Layout>
-  );
+  return <ListingForm />;
 };
 
 export const getServerSideProps: GetServerSideProps = async ({ req, res }) => {

@@ -1,7 +1,6 @@
 import { useState } from 'react';
 import { useQuery, gql } from '@apollo/client';
 import { useDebounce } from 'use-debounce';
-import Layout from 'src/components/layout';
 import Map from 'src/components/map';
 import ListingsList from 'src/components/listingList';
 import { useLastData } from 'src/utils/useLastData';
@@ -60,37 +59,33 @@ const IndexPage = () => {
 
   if (error) {
     return (
-      <Layout>
-        <div>
-          Error loading listings
-          {' '}
-          <pre>{JSON.stringify(error, null, 2)}</pre>
-        </div>
-      </Layout>
+      <div>
+        Error loading listings
+        {' '}
+        <pre>{JSON.stringify(error, null, 2)}</pre>
+      </div>
     );
   }
 
   return (
-    <Layout>
-      <div className="flex">
-        <div
-          className="w-1/2 pb-4"
-          style={{ maxHeight: 'calc(100vh) - 64px', overflowX: 'scroll' }}
-        >
-          <ListingsList
-            listings={lastData ? lastData.listings : []}
-            setHighlightedId={setHighlightedId}
-          />
-        </div>
-        <div className="w-1/2">
-          <Map
-            setDataBounds={setDataBounds}
-            listings={lastData ? lastData.listings : []}
-            highlightedId={highlightedId}
-          />
-        </div>
+    <div className="flex">
+      <div
+        className="w-1/2 pb-4"
+        style={{ maxHeight: 'calc(100vh) - 64px', overflowX: 'scroll' }}
+      >
+        <ListingsList
+          listings={lastData ? lastData.listings : []}
+          setHighlightedId={setHighlightedId}
+        />
       </div>
-    </Layout>
+      <div className="w-1/2">
+        <Map
+          setDataBounds={setDataBounds}
+          listings={lastData ? lastData.listings : []}
+          highlightedId={highlightedId}
+        />
+      </div>
+    </div>
   );
 };
 export default IndexPage;
