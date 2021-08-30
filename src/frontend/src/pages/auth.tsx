@@ -3,9 +3,9 @@ import FirebaseAuth from 'src/components/firebaseAuth';
 import { GetServerSideProps, NextApiRequest } from 'next';
 import { loadIdToken } from 'src/auth/firebaseAdmin';
 
-export default function Auth() {
+const Auth = () => {
   return <Layout main={<FirebaseAuth />} />;
-}
+};
 
 export const getServerSideProps: GetServerSideProps = async ({ req, res }) => {
   const uid = await loadIdToken(req as NextApiRequest);
@@ -19,3 +19,4 @@ export const getServerSideProps: GetServerSideProps = async ({ req, res }) => {
   console.log({ uid });
   return { props: {} };
 };
+export default Auth;

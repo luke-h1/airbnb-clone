@@ -41,7 +41,7 @@ const parseBounds = (boundsString: string) => {
   };
 };
 
-export default function Home() {
+const IndexPage = () => {
   const [highlightedId, setHighlightedId] = useState<string | null>(null);
   const [dataBounds, setDataBounds] = useLocalState<string>(
     'bounds',
@@ -96,4 +96,5 @@ export default function Home() {
       )}
     />
   );
-}
+};
+export default IndexPage;

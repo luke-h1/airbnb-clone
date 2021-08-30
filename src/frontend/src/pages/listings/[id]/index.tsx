@@ -29,14 +29,14 @@ const SHOW_LISTING_QUERY = gql`
   }
 `;
 
-export default function ShowListing() {
+const listingPage = () => {
   const {
     query: { id },
   } = useRouter(); // get int from URL
   if (!id) return null; // not initialized
   // at this point id is defined
   return <ListingData id={id as string} />;
-}
+};
 
 function ListingData({ id }: { id: string }) {
   const { data, loading } = useQuery<
@@ -94,3 +94,4 @@ function ListingData({ id }: { id: string }) {
     />
   );
 }
+export default listingPage;
