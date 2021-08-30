@@ -13,10 +13,11 @@
     "gen": "apollo client:codegen --target typescript --localSchemaFile schema.gql --outputFlat --includes \"src/**\" --excludes \"src/generated/**\" src/generated",
     "gen:watch": "npx gen --watch",
     "db:init": "npx prisma init",
+    "db:format": "npx prisma format",
     "db:generate": "npx prisma generate",
     "db:migrate:new": "npx prisma migrate dev",
     "db:migrate:up": "npx prisma migrate deploy",
-    "db:migrate:down": "npx prisma migrate down --experimental"
+    "db:migrate:down": "npx prisma migrate down"
   },
   "dependencies": {
     "@apollo/client": "^3.2.5",
