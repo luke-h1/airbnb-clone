@@ -16,7 +16,7 @@
     "db:format": "npx prisma format",
     "db:generate": "npx prisma generate",
     "db:migrate:new": "npx prisma migrate dev",
-    "db:migrate:up": "npx prisma migrate deploy",
+    "db:migrate:up": "npx prisma db push",
     "db:migrate:down": "npx prisma migrate down"
   },
   "dependencies": {
