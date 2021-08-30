@@ -1,12 +1,12 @@
-import React, { ReactNode } from 'react';
+import React from 'react';
 import Link from 'next/link';
 import { useAuth } from 'src/auth/useAuth';
 
 interface Iprops {
-  main: ReactNode;
+  children: React.ReactNode;
 }
 
-const Layout: React.FC<Iprops> = ({ main }) => {
+const Layout: React.FC<Iprops> = ({ children }) => {
   const { authenticated, logout } = useAuth();
   return (
     <div className="bg-black max-w-screen-2xl mx-auto text-white">
@@ -33,7 +33,7 @@ const Layout: React.FC<Iprops> = ({ main }) => {
           )}
         </div>
       </nav>
-      <main style={{ minHeight: 'calc(100vh - 64px)' }}>{main}</main>
+      <main style={{ minHeight: 'calc(100vh - 64px)' }}>{children}</main>
     </div>
   );
 };

@@ -43,24 +43,24 @@ function ListingData({ id }: { id: string }) {
     ShowListingQuery,
     ShowListingQueryVariables
   >(SHOW_LISTING_QUERY, { variables: { id } });
-  if (loading || !data) return <Layout main={<div>loading...</div>} />;
-  if (!data.listing) {
-    return (
-      <Layout
-        main={(
+    <Layout>
+      <div>loading...</div>
+      {' '}
+    </Layout>;
+    if (!data?.listing) {
+      return (
+        <Layout>
           <div>
             Unable to load listing
             {id}
           </div>
-        )}
-      />
-    );
-  }
+        </Layout>
+      );
+    }
 
-  const { listing } = data;
-  return (
-    <Layout
-      main={(
+    const { listing } = data;
+    return (
+      <Layout>
         <div className="sm:block md:flex">
           <div className="sm:w-full md:w-1/2 p-4">
             <ListingNav listing={listing} />
@@ -74,7 +74,7 @@ function ListingData({ id }: { id: string }) {
               dpr="auto" // pixel depth
               quality="auto"
               width={900}
-              height={Math.floor(9 / 16) * 900} // 16:9
+              height={Math.floor(9 / 16) * 900}
             />
             <p>
               {listing.bedrooms}
@@ -90,8 +90,7 @@ function ListingData({ id }: { id: string }) {
             <SingleMap listing={listing} nearby={listing.nearby} />
           </div>
         </div>
-      )}
-    />
-  );
+      </Layout>
+    );
 }
 export default listingPage;

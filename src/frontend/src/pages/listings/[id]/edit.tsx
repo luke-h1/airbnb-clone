@@ -43,12 +43,48 @@ function ListingData({ id }: { id: string }) {
     EditListingQueryVariables
   >(EDIT_LISTING_QUERY, { variables: { id } });
 
-  if (!user) return <Layout main={<div>Please login</div>} />;
-  if (loading) return <Layout main={<div>Loading...</div>} />;
-  if (data && !data.listing) return <Layout main={<div>Unable to load listing</div>} />;
-  if (user.uid !== data?.listing?.userId) return <Layout main={<div>Forbidden</div>} />;
+  if (!user) {
+    return (
+      <Layout>
+        {' '}
+        <div>Please login</div>
+      </Layout>
+    );
+  }
+  if (loading) {
+    return (
+      <Layout>
+        {' '}
+        <div>Loading...</div>
+        {' '}
+      </Layout>
+    );
+  }
+  if (data && !data.listing) {
+    return (
+      <Layout>
+        {' '}
+        <div>Unable to load listing</div>
+        {' '}
+      </Layout>
+    );
+  }
+  if (user.uid !== data?.listing?.userId) {
+    return (
+      <Layout>
+        {' '}
+        <div>Forbidden</div>
+        {' '}
+      </Layout>
+    );
+  }
 
-  return <Layout main={<ListingForm listing={data.listing} />} />;
+  return (
+    <Layout>
+      <ListingForm listing={data.listing} />
+      {' '}
+    </Layout>
+  );
 }
 
 export const getServerSideProps: GetServerSideProps = async ({ req, res }) => {

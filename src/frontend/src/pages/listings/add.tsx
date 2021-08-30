@@ -4,7 +4,11 @@ import Layout from 'src/components/layout';
 import ListingForm from 'src/components/listingForm';
 
 const AddListingPage = () => {
-  return <Layout main={<ListingForm />} />;
+  return (
+    <Layout>
+      <ListingForm />
+    </Layout>
+  );
 };
 
 export const getServerSideProps: GetServerSideProps = async ({ req, res }) => {
