@@ -116,7 +116,7 @@ class Listing {
 export class ListingResolver {
   @Query(() => Listing, { nullable: true })
   async listing(@Arg('id') id: string, @Ctx() ctx: Context) {
-    const result = await ctx.prisma.listing.findUnique({
+    const result = await ctx.prisma.listing.findOne({
       where: { id: parseInt(id, 10) },
     });
     if (ctx.uid !== result?.userId) return null;
@@ -168,7 +168,7 @@ export class ListingResolver {
     @Ctx() ctx: AuthorizedContext,
   ) {
     const listingId = parseInt(id, 10);
-    const listing = await ctx.prisma.listing.findUnique({
+    const listing = await ctx.prisma.listing.findOne({
       where: { id: listingId },
     });
 
@@ -195,7 +195,7 @@ export class ListingResolver {
     @Ctx() ctx: AuthorizedContext,
   ): Promise<boolean> {
     const listingId = parseInt(id, 10);
-    const listing = await ctx.prisma.listing.findUnique({
+    const listing = await ctx.prisma.listing.findOne({
       where: { id: listingId },
     });
 
