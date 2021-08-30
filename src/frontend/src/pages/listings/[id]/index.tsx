@@ -17,6 +17,7 @@ const SHOW_LISTING_QUERY = gql`
       address
       publicId
       bedrooms
+      propertyType
       latitude
       longitude
       nearby {
@@ -79,6 +80,10 @@ function ListingData({ id }: { id: string }) {
               {listing.bedrooms}
               {' '}
               bedroom listing
+            </p>
+            <p>
+              Property Type:
+              {listing.propertyType}
             </p>
           </div>
           <div className="sm:w-full md:w-1/2">

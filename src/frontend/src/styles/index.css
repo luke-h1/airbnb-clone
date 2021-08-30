@@ -28,3 +28,13 @@ input {
 .marker-active {
   z-index: 1;
 }
+
+.select-menu {
+  box-shadow: 0 5px 5px rgba(0, 0, 0, 0.4);
+  font-size: 20px;
+  padding: 0.3rem;
+  background: #fff;
+  color: #000;
+  border-radius: 10px;
+  border: 0;
+}

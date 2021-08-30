@@ -18,6 +18,7 @@ const LISTINGS_QUERY = gql`
       latitude
       longitude
       address
+      propertyType
       publicId
       bedrooms
     }

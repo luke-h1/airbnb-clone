@@ -38,6 +38,10 @@ export default function ListingList({ listings, setHighlightedId }: IProps) {
                 {' '}
                 bedroom listing
               </p>
+              <p>
+                Property Type:
+                {listing.propertyType}
+              </p>
             </div>
           </div>
         </Link>

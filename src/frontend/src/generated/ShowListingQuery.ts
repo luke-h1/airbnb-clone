@@ -8,19 +8,20 @@
 // ====================================================
 
 export interface ShowListingQuery_listing_nearby {
-  __typename: "Listing";
+  __typename: 'Listing';
   id: string;
   latitude: number;
   longitude: number;
 }
 
 export interface ShowListingQuery_listing {
-  __typename: "Listing";
+  __typename: 'Listing';
   id: string;
   userId: string;
   address: string;
   publicId: string;
   bedrooms: number;
+  propertyType: string;
   latitude: number;
   longitude: number;
   nearby: ShowListingQuery_listing_nearby[];

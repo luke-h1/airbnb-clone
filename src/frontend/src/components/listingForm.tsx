@@ -174,6 +174,7 @@ export default function ListingForm({ listing }: IProps) {
         image = imageData.secure_url;
       }
     }
+
     const { data: listingData } = await updateListing({
       variables: {
         id: currentListing.id,
@@ -300,17 +301,17 @@ export default function ListingForm({ listing }: IProps) {
             <select
               id="propertyType"
               name="propertyType"
-              // onChange={(e: ChangeEvent<HTMLSelectElement>) =>
-              //   setSelect(e.target.value)
-              // }
-              className="p-2"
+              onChange={(e: ChangeEvent<HTMLSelectElement>) =>
+                setSelect(e.target.value)
+              }
               value={select}
+              className="select-menu"
               ref={register({
                 required: 'Please enter the property type',
               })}
             >
               {errors.propertyType && <p>{errors.propertyType}</p>}
-              <option value="0" disabled>
+              <option value="0" disabled className="text-black">
                 Select property type:
               </option>
               <option value="Flat">Flat</option>
