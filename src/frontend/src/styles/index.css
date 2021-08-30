@@ -1,19 +1,6 @@
 @tailwind base;
-
-/* Write your own custom base styles here */
-
-/* Start purging... */
 @tailwind components;
-/* Stop purging. */
-
-/* Write your own custom component styles here */
-
-/* Start purging... */
 @tailwind utilities;
-/* Stop purging. */
-
-/* Generics */
-
 body {
   background-color: #000;
 }
@@ -22,8 +9,6 @@ input {
   color: #000;
   border-radius: 5px;
 }
-
-/* Custom Classes */
 
 .marker-active {
   z-index: 1;
