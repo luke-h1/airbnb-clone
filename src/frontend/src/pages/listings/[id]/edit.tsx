@@ -26,7 +26,7 @@ const EDIT_LISTING_QUERY = gql`
   }
 `;
 
-export default function EditListing() {
+const EditListingPage = () => {
   const {
     query: { id },
   } = useRouter();
@@ -34,7 +34,7 @@ export default function EditListing() {
   if (!id) return null;
 
   return <ListingData id={id as string} />;
-}
+};
 
 function ListingData({ id }: { id: string }) {
   const { user } = useAuth();
@@ -63,3 +63,4 @@ export const getServerSideProps: GetServerSideProps = async ({ req, res }) => {
     props: {},
   };
 };
+export default EditListingPage;

@@ -3,9 +3,9 @@ import { loadIdToken } from 'src/auth/firebaseAdmin';
 import Layout from 'src/components/layout';
 import ListingForm from 'src/components/listingForm';
 
-export default function Add() {
+const AddListingPage = () => {
   return <Layout main={<ListingForm />} />;
-}
+};
 
 export const getServerSideProps: GetServerSideProps = async ({ req, res }) => {
   const uid = await loadIdToken(req as NextApiRequest);
@@ -16,3 +16,5 @@ export const getServerSideProps: GetServerSideProps = async ({ req, res }) => {
   }
   return { props: {} };
 };
+
+export default AddListingPage;
