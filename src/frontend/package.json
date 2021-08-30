@@ -49,7 +49,7 @@
     "reflect-metadata": "^0.1.13",
     "tailwindcss": "^2.0.1",
     "type-graphql": "^1.1.1",
-    "use-debounce": "^5.0.4",
+    "use-debounce": "^7.0.0",
     "use-google-maps-script": "^0.1.0",
     "use-places-autocomplete": "^1.6.0"
   },
