@@ -17,6 +17,7 @@ const EDIT_LISTING_QUERY = gql`
       userId
       address
       image
+      propertyType
       publicId
       bedrooms
       latitude

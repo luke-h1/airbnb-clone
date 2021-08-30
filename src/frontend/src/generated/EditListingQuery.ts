@@ -8,11 +8,12 @@
 // ====================================================
 
 export interface EditListingQuery_listing {
-  __typename: "Listing";
+  __typename: 'Listing';
   id: string;
   userId: string;
   address: string;
   image: string;
+  propertyType: string;
   publicId: string;
   bedrooms: number;
   latitude: number;
