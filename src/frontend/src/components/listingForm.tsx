@@ -16,6 +16,7 @@ import {
   UpdateListingMutation,
   UpdateListingMutationVariables,
 } from 'src/generated/UpdateListingMutation';
+import Spinner from './spinner';
 
 const SIGNATURE_MUTATION = gql`
   mutation CreateSignatureMutation {
