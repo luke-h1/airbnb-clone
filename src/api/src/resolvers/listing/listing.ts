@@ -1,8 +1,6 @@
 import {
-  ObjectType,
   InputType,
   Field,
-  ID,
   Float,
   Int,
   Resolver,
@@ -13,8 +11,9 @@ import {
   Authorized,
 } from 'type-graphql';
 import { Min, Max } from 'class-validator';
-import { getBoundsOfDistance } from 'geolib';
+import { getConnection } from 'typeorm';
 import { Context, AuthorizedContext } from '../../types/Context';
+import { Listing } from '../../entities/Listing';
 
 @InputType()
 class CoordiantesInput {
@@ -56,69 +55,12 @@ class ListingInput {
   bedrooms!: number;
 }
 
-@ObjectType()
-class Listing {
-  @Field(() => ID)
-  id!: number;
-
-  @Field(() => String)
-  userId!: string;
-
-  @Field(() => Float)
-  latitude!: number;
-
-  @Field(() => Float)
-  longitude!: number;
-
-  @Field(() => String)
-  propertyType!: string;
-
-  @Field(() => String)
-  address!: string;
-
-  @Field(() => String)
-  image!: string;
-
-  @Field(() => String)
-  publicId(): String {
-    const parts = this.image.split('/');
-    return parts[parts.length - 1];
-  }
-
-  @Field(() => Int)
-  bedrooms!: number;
-
-  @Field(() => [Listing])
-  async nearby(@Ctx() ctx: Context) {
-    const bounds = getBoundsOfDistance(
-      { latitude: this.latitude, longitude: this.longitude },
-      10000, // 10km
-    );
-    /*
-    bounds array shape:
-    [
-      {latitude: 10, longitude: 20},
-      {latitude: 10, longitude: 20}
-    ]
-    */
-    return ctx.prisma.listing.findMany({
-      where: {
-        latitude: { gte: bounds[0].latitude, lte: bounds[1].latitude },
-        longitude: { gte: bounds[0].longitude, lte: bounds[1].longitude },
-        id: { not: { equals: this.id } },
-      },
-      take: 25, // return 25
-    });
-  }
-}
-
 @Resolver()
 export class ListingResolver {
   @Query(() => Listing, { nullable: true })
   async listing(@Arg('id') id: string, @Ctx() ctx: Context) {
-    const result = await ctx.prisma.listing.findUnique({
-      where: { id: parseInt(id, 10) },
-    });
+    const result = await Listing.findOne({ where: { id: parseInt(id, 10) } });
+
     if (process.env.NODE_ENV === 'production') {
       if (ctx.uid !== result?.userId) return null;
     }
@@ -148,16 +90,14 @@ export class ListingResolver {
     @Arg('input') input: ListingInput,
     @Ctx() ctx: AuthorizedContext,
   ) {
-    const result = await ctx.prisma.listing.create({
-      data: {
-        userId: ctx.uid,
-        image: input.image,
-        address: input.address,
-        propertyType: input.propertyType,
-        latitude: input.coordinates.latitude,
-        longitude: input.coordinates.longitude,
-        bedrooms: input.bedrooms,
-      },
+    const result = await Listing.create({
+      userId: ctx.uid,
+      image: input.image,
+      address: input.address,
+      propertyType: input.propertyType,
+      latitude: input.coordinates.latitude,
+      longitude: input.coordinates.longitude,
+      bedrooms: input.bedrooms,
     });
     return result;
   }
@@ -170,23 +110,26 @@ export class ListingResolver {
     @Ctx() ctx: AuthorizedContext,
   ) {
     const listingId = parseInt(id, 10);
-    const listing = await ctx.prisma.listing.findUnique({
-      where: { id: listingId },
-    });
+    const listing = await Listing.findOne({ where: { id: listingId } });
 
     if (!listing || listing.userId !== ctx.uid) return null;
 
-    const result = await ctx.prisma.listing.update({
-      where: { id: listingId },
-      data: {
+    const result = await getConnection()
+      .createQueryBuilder()
+      .update(Listing)
+      .set({
         image: input.image,
         address: input.address,
         propertyType: input.propertyType,
         latitude: input.coordinates.latitude,
         longitude: input.coordinates.longitude,
         bedrooms: input.bedrooms,
-      },
-    });
+      })
+      .where('id = :listingId and "userId" :creatorId', {
+        id: listingId,
+        userId: ctx.uid,
+      });
+
     return result;
   }
 
@@ -197,13 +140,12 @@ export class ListingResolver {
     @Ctx() ctx: AuthorizedContext,
   ): Promise<boolean> {
     const listingId = parseInt(id, 10);
-    const listing = await ctx.prisma.listing.findUnique({
-      where: { id: listingId },
-    });
+    const listing = await Listing.findOne({ where: { id: listingId } });
 
     if (!listing || listing.userId !== ctx.uid) return false;
 
-    await ctx.prisma.listing.delete({ where: { id: listingId } });
+    await Listing.delete({ id: listingId, userId: ctx.uid });
+
     return true;
   }
 }

@@ -1,4 +1,7 @@
-import { Field, Int, ObjectType } from 'type-graphql';
+import { getBoundsOfDistance } from 'geolib';
+import {
+  Ctx, Field, Float, Int, ObjectType,
+} from 'type-graphql';
 import {
   BaseEntity,
   Column,
@@ -6,7 +9,9 @@ import {
   Entity,
   PrimaryGeneratedColumn,
   UpdateDateColumn,
+  getConnection,
 } from 'typeorm';
+import { Context } from 'vm';
 import { CoordiantesInput } from '../resolvers/listing/inputs/CoordinatesInput';
 
 @ObjectType()
@@ -42,6 +47,40 @@ export class Listing extends BaseEntity {
   @Field(() => String)
   @Column()
   description!: string;
+
+  @Field(() => String)
+  userId!: string;
+
+  @Field(() => Float)
+  latitude!: number;
+
+  @Field(() => Float)
+  longitude!: number;
+
+  @Field(() => [Listing])
+  async nearby(@Ctx() ctx: Context) {
+    const bounds = getBoundsOfDistance(
+      { latitude: this.latitude, longitude: this.longitude },
+      10000, // 10km
+    );
+    /*
+    bounds array shape:
+    [
+      {latitude: 10, longitude: 20},
+      {latitude: 10, longitude: 20}
+    ]
+
+    */
+
+    // return ctx.prisma.listing.findMany({
+    //   where: {
+    //     latitude: { gte: bounds[0].latitude, lte: bounds[1].latitude },
+    //     longitude: { gte: bounds[0].longitude, lte: bounds[1].longitude },
+    //     id: { not: { equals: this.id } },
+    //   },
+    //   take: 25, // return 25
+    // });
+  }
 
   @Field(() => String)
   @CreateDateColumn()
