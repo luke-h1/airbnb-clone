@@ -1,8 +1,7 @@
 import { buildSchema } from 'type-graphql';
-import { PropertyResolver } from '../resolvers/property/property';
-import { UserResolver } from '../resolvers/user/user';
+import { ListingResolver } from '../resolvers/listing/listing';
 
 export const createSchema = async () => await buildSchema({
-  resolvers: [UserResolver, PropertyResolver],
+  resolvers: [ListingResolver],
   validate: false,
 });

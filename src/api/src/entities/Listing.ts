@@ -4,26 +4,25 @@ import {
   Column,
   CreateDateColumn,
   Entity,
-  OneToMany,
   PrimaryGeneratedColumn,
   UpdateDateColumn,
 } from 'typeorm';
-import { Property } from './Property';
+import { CoordiantesInput } from '../resolvers/listing/inputs/CoordinatesInput';
 
 @ObjectType()
-@Entity('users')
-export class User extends BaseEntity {
+@Entity('listings')
+export class Listing extends BaseEntity {
   @Field(() => Int)
   @PrimaryGeneratedColumn()
   id!: number;
 
-  @Field(() => String)
-  @Column({ unique: true })
-  email!: string;
+  @Field()
+  @Column('varchar', { length: 50 })
+  address: string;
 
-  @Field(() => String)
-  @Column()
-  firstName!: string;
+  @Field()
+  @Column('varchar', { length: 15 })
+  propertyType: string;
 
   @Field(() => String)
   @Column()
@@ -32,16 +31,17 @@ export class User extends BaseEntity {
   @Column()
   imageFileName: string;
 
+  @Field(() => Int)
+  @Column()
+  bedrooms: number;
+
+  @Field(() => CoordiantesInput)
+  @Column()
+  coordinates: CoordiantesInput;
+
   @Field(() => String)
   @Column()
-  lastName!: string;
-
-  @Column()
-  password!: string;
-
-  @Field(() => [Property])
-  @OneToMany(() => Property, (p) => p.creator)
-  properties: Property[];
+  description!: string;
 
   @Field(() => String)
   @CreateDateColumn()

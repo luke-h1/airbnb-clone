@@ -8,20 +8,12 @@ import { graphqlUploadExpress } from 'graphql-upload';
 import morgan from 'morgan';
 import Redis from 'ioredis';
 import { constants } from './utils/constants';
-import { createUserLoader } from './Loaders/UserLoader';
 import { createConn } from './utils/createConn';
 import { createSchema } from './utils/createSchema';
-import { seedDatabase } from './utils/seedDatabase';
 
 const main = async () => {
-  const conn = await createConn();
+  await createConn();
 
-  console.log('Connected to DB, running migrations');
-  await conn.runMigrations();
-  console.log('Migrations ran');
-  if (process.env.NODE_ENV === 'development') {
-    await seedDatabase();
-  }
   const app = express();
   app.use(
     cors({
@@ -64,8 +56,6 @@ const main = async () => {
     context: ({ req, res }) => ({
       req,
       res,
-      redis,
-      userLoader: createUserLoader(),
     }),
   });
   apolloServer.applyMiddleware({
@@ -85,7 +75,7 @@ const main = async () => {
 
   app.listen(process.env.PORT, () => {
     console.log(
-      `Server listening on localhost:${process.env.PORT} in ${process.env.NODE_ENV} mode. GraphQL API available at http://localhost:${process.env.PORT}/graphql`,
+      `Server listening on localhost:${process.env.PORT} in ${process.env.NODE_ENV} mode.`,
     );
   });
 };

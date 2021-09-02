@@ -1,7 +1,7 @@
-import { PropertyInput } from '../../resolvers/property/inputs/PropertyInput';
+import { PropertyInput } from '../../resolvers/listing/inputs/PropertyInput';
 
 export const validateProperty = (options: PropertyInput) => {
-  if (!options.title) {
+  if (!options.address) {
     return [
       {
         field: 'title',
@@ -17,22 +17,6 @@ export const validateProperty = (options: PropertyInput) => {
       },
     ];
   }
-  if (!options.address) {
-    return [
-      {
-        field: 'address',
-        message: 'address is a required field',
-      },
-    ];
-  }
-  if (!options.amenities) {
-    return [
-      {
-        field: 'amenities',
-        message: 'amenities is a required field',
-      },
-    ];
-  }
   if (!options.bedrooms) {
     return [
       {
@@ -41,11 +25,19 @@ export const validateProperty = (options: PropertyInput) => {
       },
     ];
   }
-  if (!options.beds) {
+  if (!options.coordinates) {
     return [
       {
-        field: 'beds',
-        message: 'beds is a required field',
+        field: 'coordinates',
+        message: 'coordinates is a required field',
+      },
+    ];
+  }
+  if (!options.bedrooms) {
+    return [
+      {
+        field: 'bedrooms',
+        message: 'bedrooms is a required field',
       },
     ];
   }
