@@ -5,14 +5,13 @@ import ListingsList from 'src/components/listingList';
 import { useLastData } from 'src/utils/useLastData';
 import { useLocalState } from 'src/utils/useLocalState';
 import dynamic from 'next/dynamic';
+import Map from 'src/components/map';
 
 import {
   ListingsQuery,
   ListingsQueryVariables,
 } from 'src/generated/ListingsQuery';
 import Spinner from 'src/components/spinner';
-
-const Map = dynamic(() => import('../components/map'));
 
 const LISTINGS_QUERY = gql`
   query ListingsQuery($bounds: BoundsInput!) {
