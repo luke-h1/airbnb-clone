@@ -10,7 +10,6 @@ import {
   ListingsQuery,
   ListingsQueryVariables,
 } from 'src/generated/ListingsQuery';
-import Spinner from 'src/components/spinner';
 
 const Map = dynamic(() => import('../components/map'));
 
@@ -52,12 +51,12 @@ const IndexPage = () => {
   );
 
   const [deboundedDataBounds] = useDebounce(dataBounds, 300);
-  const { data, error, loading } = useQuery<
-    ListingsQuery,
-    ListingsQueryVariables
-  >(LISTINGS_QUERY, {
-    variables: { bounds: parseBounds(deboundedDataBounds) },
-  });
+  const { data, error } = useQuery<ListingsQuery, ListingsQueryVariables>(
+    LISTINGS_QUERY,
+    {
+      variables: { bounds: parseBounds(deboundedDataBounds) },
+    },
+  );
 
   const lastData = useLastData(data);
 
@@ -69,10 +68,6 @@ const IndexPage = () => {
         <pre>{JSON.stringify(error, null, 2)}</pre>
       </div>
     );
-  }
-
-  if (loading) {
-    return <Spinner />;
   }
 
   return (

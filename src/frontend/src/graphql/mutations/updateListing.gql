@@ -1,0 +1,12 @@
+  mutation UpdateListing($id: String!, $input: ListingInput!) {
+    updateListing(id: $id, input: $input) {
+      id
+      image
+      publicId
+      latitude
+      propertyType
+      longitude
+      bedrooms
+      address
+    }
+  }

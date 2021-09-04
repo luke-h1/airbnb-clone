@@ -1,0 +1,17 @@
+  query Listing($id: String!) {
+    listing(id: $id) {
+      id
+      userId
+      address
+      publicId
+      bedrooms
+      propertyType
+      latitude
+      longitude
+      nearby {
+        id
+        latitude
+        longitude
+      }
+    }
+  }

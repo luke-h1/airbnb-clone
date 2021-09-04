@@ -1,0 +1,3 @@
+  mutation DeleteListing($id: String!) {
+    deleteListing(id: $id)
+  }

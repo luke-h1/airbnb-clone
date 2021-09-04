@@ -1,0 +1,5 @@
+  mutation CreateListing($input: ListingInput!) {
+    createListing(input: $input) {
+      id
+    }
+  }

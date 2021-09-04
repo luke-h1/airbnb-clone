@@ -1,0 +1,11 @@
+query Listings($bounds: BoundsInput!) {
+    listings(bounds: $bounds) {
+      id
+      latitude
+      longitude
+      address
+      propertyType
+      publicId
+      bedrooms
+    }
+  }
