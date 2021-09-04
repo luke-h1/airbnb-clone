@@ -11,7 +11,6 @@ import {
   ListingsQuery,
   ListingsQueryVariables,
 } from 'src/generated/ListingsQuery';
-import Spinner from 'src/components/spinner';
 
 const LISTINGS_QUERY = gql`
   query ListingsQuery($bounds: BoundsInput!) {
@@ -68,10 +67,6 @@ const IndexPage = () => {
         <pre>{JSON.stringify(error, null, 2)}</pre>
       </div>
     );
-  }
-
-  if (loading) {
-    return <Spinner />;
   }
 
   return (
