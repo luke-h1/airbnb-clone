@@ -28,16 +28,13 @@ This project is made up of 2 areas that share code using <a href='https://lerna.
 * This project targets Node V14. Ensure you're using Node V14 by using something such as NVM. 
 * Ensure you have Node / NPM installed.
 * Ensure Postgres is installed & is running (see backend section for more details)
-* Ensure Redis is installed & is running (see backend section for more details)
-* Ensure your postgres user has superuser access on the `abb-clone` DB
+* Ensure you have docker installed and running 
 * Run `npm ci && npm run bootstrap` in the root of the project to bootstrap the packages, install all their dependencies and link any cross-dependencies.
 
 ### api: 
-* [Install postgres](https://www.postgresql.org/download/)
-* [Install Redis (stable)](https://redis.io/download)
-* Create a blank postgres database called `abb-clone`
 * copy the `.env.example ` to `.env` (`cp .env.example .env`).
 * Fill out the `.env` file with your own values
+* Run `docker-compose up` to start the backend DB and redis
 * create programatic access user on AWS and give it access to the s3 bucket you create
 * create s3 bucket on AWS with public access allowed 
 * After you have done the above you will need to run the following (in seperate terminals) to start the backend:
