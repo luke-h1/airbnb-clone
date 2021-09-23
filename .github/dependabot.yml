@@ -5,7 +5,7 @@ updates:
     target-branch: "dev"
     schedule:
       interval: "daily"
-      time: "7:30"
-    open-pull-requests-limit: 1000
+      time: "19:00"
+    open-pull-requests-limit: 300
     assignees: 
     - luke-h1
