@@ -1,0 +1,11 @@
+version: '3'
+services:
+  redis:
+    image: redis:latest
+    restart: always
+    command: --port 6200
+    expose:
+      - "6200"
+
+    ports: 
+      - 6200:6200
