@@ -42,47 +42,43 @@ function ListingData({ id }: { id: string }) {
     ShowListingQuery,
     ShowListingQueryVariables
   >(SHOW_LISTING_QUERY, { variables: { id } });
-    <div>loading...</div>;
-    if (!data?.listing) {
-      return (
-        <div>
-          Unable to load listing
-          {id}
-        </div>
-      );
-    }
-
-    const { listing } = data;
+  <div>loading...</div>;
+  if (!data?.listing) {
     return (
-      <div className="sm:block md:flex">
-        <div className="sm:w-full md:w-1/2 p-4">
-          <ListingNav listing={listing} />
-          <h1 className="text-3xl my-2">{listing.address}</h1>
-          <Image
-            className="pb-2"
-            cloudName={process.env.NEXT_PUBLIC_CLOUDINARY_CLOUD_NAME}
-            publicId={listing.publicId}
-            alt={listing.address}
-            secure
-            dpr="auto" // pixel depth
-            quality="auto"
-            width={900}
-            height={Math.floor(9 / 16) * 900}
-          />
-          <p>
-            {listing.bedrooms}
-            {' '}
-            bedroom listing
-          </p>
-          <p>
-            Property Type:
-            {listing.propertyType}
-          </p>
-        </div>
-        <div className="sm:w-full md:w-1/2">
-          <SingleMap listing={listing} nearby={listing.nearby} />
-        </div>
+      <div>
+        Unable to load listing
+        {id}
       </div>
     );
+  }
+
+  const { listing } = data;
+  return (
+    <div className="sm:block md:flex">
+      <div className="sm:w-full md:w-1/2 p-4">
+        <ListingNav listing={listing} />
+        <h1 className="text-3xl my-2">{listing.address}</h1>
+        <Image
+          className="pb-2"
+          cloudName={process.env.NEXT_PUBLIC_CLOUDINARY_CLOUD_NAME}
+          publicId={listing.publicId}
+          alt={listing.address}
+          secure
+          dpr="auto" // pixel depth
+          quality="auto"
+          width={900}
+          height={Math.floor(9 / 16) * 900}
+        />
+        <p>{listing.bedrooms} bedroom listing</p>
+        <p>
+          Property Type:
+          {listing.propertyType}
+        </p>
+      </div>
+      <div className="sm:w-full md:w-1/2">
+        <SingleMap listing={listing} nearby={listing.nearby} />
+      </div>
+    </div>
+  );
 }
 export default listingPage;

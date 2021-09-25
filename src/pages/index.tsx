@@ -46,7 +46,7 @@ const IndexPage = () => {
   const [highlightedId, setHighlightedId] = useState<string | null>(null);
   const [dataBounds, setDataBounds] = useLocalState<string>(
     'bounds',
-    '[[0, 0], [0, 0]]',
+    '[[0, 0], [0, 0]]'
   );
 
   const [deboundedDataBounds] = useDebounce(dataBounds, 300);
@@ -54,7 +54,7 @@ const IndexPage = () => {
     LISTINGS_QUERY,
     {
       variables: { bounds: parseBounds(deboundedDataBounds) },
-    },
+    }
   );
 
   const lastData = useLastData(data);
@@ -62,9 +62,7 @@ const IndexPage = () => {
   if (error) {
     return (
       <div>
-        Error loading listings
-        {' '}
-        <pre>{JSON.stringify(error, null, 2)}</pre>
+        Error loading listings <pre>{JSON.stringify(error, null, 2)}</pre>
       </div>
     );
   }

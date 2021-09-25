@@ -8,7 +8,7 @@
 // ====================================================
 
 export interface CreateSignatureMutation_createImageSignature {
-  __typename: "ImageSignature";
+  __typename: 'ImageSignature';
   signature: string;
   timestamp: number;
 }

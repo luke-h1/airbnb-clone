@@ -81,8 +81,8 @@ function ReadySearchBox({ onSelectAddress, defaultValue }: ISearchBoxProps) {
       />
       <ComboboxPopover>
         <ComboboxList>
-          {status === 'OK'
-            && data.map(({ place_id, description }) => (
+          {status === 'OK' &&
+            data.map(({ place_id, description }) => (
               <ComboboxOption key={place_id} value={description} />
             ))}
         </ComboboxList>

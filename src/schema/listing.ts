@@ -92,7 +92,7 @@ class Listing {
   async nearby(@Ctx() ctx: Context) {
     const bounds = getBoundsOfDistance(
       { latitude: this.latitude, longitude: this.longitude },
-      10000, // 10km
+      10000 // 10km
     );
     /*
     bounds array shape:
@@ -146,7 +146,7 @@ export class ListingResolver {
   @Mutation(() => Listing, { nullable: true })
   async createListing(
     @Arg('input') input: ListingInput,
-    @Ctx() ctx: AuthorizedContext,
+    @Ctx() ctx: AuthorizedContext
   ) {
     const result = await ctx.prisma.listing.create({
       data: {
@@ -167,7 +167,7 @@ export class ListingResolver {
   async updateListing(
     @Arg('id') id: string,
     @Arg('input') input: ListingInput,
-    @Ctx() ctx: AuthorizedContext,
+    @Ctx() ctx: AuthorizedContext
   ) {
     const listingId = parseInt(id, 10);
     const listing = await ctx.prisma.listing.findUnique({
@@ -194,7 +194,7 @@ export class ListingResolver {
   @Mutation(() => Boolean, { nullable: false })
   async deleteListing(
     @Arg('id') id: string,
-    @Ctx() ctx: AuthorizedContext,
+    @Ctx() ctx: AuthorizedContext
   ): Promise<boolean> {
     const listingId = parseInt(id, 10);
     const listing = await ctx.prisma.listing.findUnique({

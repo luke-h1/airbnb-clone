@@ -206,7 +206,7 @@ export function useCreateListingMutation(
   baseOptions?: Apollo.MutationHookOptions<
     CreateListingMutation,
     CreateListingMutationVariables
-  >,
+  >
 ) {
   const options = { ...defaultOptions, ...baseOptions };
   return Apollo.useMutation<
@@ -217,8 +217,9 @@ export function useCreateListingMutation(
 export type CreateListingMutationHookResult = ReturnType<
   typeof useCreateListingMutation
 >;
-export type CreateListingMutationResult =
-  Apollo.MutationResult<CreateListingMutation>;
+export type CreateListingMutationResult = Apollo.MutationResult<
+  CreateListingMutation
+>;
 export type CreateListingMutationOptions = Apollo.BaseMutationOptions<
   CreateListingMutation,
   CreateListingMutationVariables
@@ -254,7 +255,7 @@ export function useDeleteListingMutation(
   baseOptions?: Apollo.MutationHookOptions<
     DeleteListingMutation,
     DeleteListingMutationVariables
-  >,
+  >
 ) {
   const options = { ...defaultOptions, ...baseOptions };
   return Apollo.useMutation<
@@ -265,8 +266,9 @@ export function useDeleteListingMutation(
 export type DeleteListingMutationHookResult = ReturnType<
   typeof useDeleteListingMutation
 >;
-export type DeleteListingMutationResult =
-  Apollo.MutationResult<DeleteListingMutation>;
+export type DeleteListingMutationResult = Apollo.MutationResult<
+  DeleteListingMutation
+>;
 export type DeleteListingMutationOptions = Apollo.BaseMutationOptions<
   DeleteListingMutation,
   DeleteListingMutationVariables
@@ -312,7 +314,7 @@ export function useUpdateListingMutation(
   baseOptions?: Apollo.MutationHookOptions<
     UpdateListingMutation,
     UpdateListingMutationVariables
-  >,
+  >
 ) {
   const options = { ...defaultOptions, ...baseOptions };
   return Apollo.useMutation<
@@ -323,8 +325,9 @@ export function useUpdateListingMutation(
 export type UpdateListingMutationHookResult = ReturnType<
   typeof useUpdateListingMutation
 >;
-export type UpdateListingMutationResult =
-  Apollo.MutationResult<UpdateListingMutation>;
+export type UpdateListingMutationResult = Apollo.MutationResult<
+  UpdateListingMutation
+>;
 export type UpdateListingMutationOptions = Apollo.BaseMutationOptions<
   UpdateListingMutation,
   UpdateListingMutationVariables
@@ -366,21 +369,21 @@ export const ListingDocument = gql`
  * });
  */
 export function useListingQuery(
-  baseOptions: Apollo.QueryHookOptions<ListingQuery, ListingQueryVariables>,
+  baseOptions: Apollo.QueryHookOptions<ListingQuery, ListingQueryVariables>
 ) {
   const options = { ...defaultOptions, ...baseOptions };
   return Apollo.useQuery<ListingQuery, ListingQueryVariables>(
     ListingDocument,
-    options,
+    options
   );
 }
 export function useListingLazyQuery(
-  baseOptions?: Apollo.LazyQueryHookOptions<ListingQuery, ListingQueryVariables>,
+  baseOptions?: Apollo.LazyQueryHookOptions<ListingQuery, ListingQueryVariables>
 ) {
   const options = { ...defaultOptions, ...baseOptions };
   return Apollo.useLazyQuery<ListingQuery, ListingQueryVariables>(
     ListingDocument,
-    options,
+    options
   );
 }
 export type ListingQueryHookResult = ReturnType<typeof useListingQuery>;
@@ -420,24 +423,24 @@ export const ListingsDocument = gql`
  * });
  */
 export function useListingsQuery(
-  baseOptions: Apollo.QueryHookOptions<ListingsQuery, ListingsQueryVariables>,
+  baseOptions: Apollo.QueryHookOptions<ListingsQuery, ListingsQueryVariables>
 ) {
   const options = { ...defaultOptions, ...baseOptions };
   return Apollo.useQuery<ListingsQuery, ListingsQueryVariables>(
     ListingsDocument,
-    options,
+    options
   );
 }
 export function useListingsLazyQuery(
   baseOptions?: Apollo.LazyQueryHookOptions<
     ListingsQuery,
     ListingsQueryVariables
-  >,
+  >
 ) {
   const options = { ...defaultOptions, ...baseOptions };
   return Apollo.useLazyQuery<ListingsQuery, ListingsQueryVariables>(
     ListingsDocument,
-    options,
+    options
   );
 }
 export type ListingsQueryHookResult = ReturnType<typeof useListingsQuery>;

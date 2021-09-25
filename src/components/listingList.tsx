@@ -33,11 +33,7 @@ export default function ListingList({ listings, setHighlightedId }: IProps) {
             </div>
             <div className="sm:w-full md:w-1/2 sm:pl-2 md:pl-4">
               <h2 className="text-lg">{listing.address}</h2>
-              <p>
-                {listing.bedrooms}
-                {' '}
-                bedroom listing
-              </p>
+              <p>{listing.bedrooms} bedroom listing</p>
               <p>
                 Property Type:
                 {listing.propertyType}

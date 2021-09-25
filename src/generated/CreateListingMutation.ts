@@ -3,14 +3,14 @@
 // @generated
 // This file was automatically generated and should not be edited.
 
-import { ListingInput } from "./globalTypes";
+import { ListingInput } from './globalTypes';
 
 // ====================================================
 // GraphQL mutation operation: CreateListingMutation
 // ====================================================
 
 export interface CreateListingMutation_createListing {
-  __typename: "Listing";
+  __typename: 'Listing';
   id: string;
 }
 

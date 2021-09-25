@@ -28,7 +28,7 @@ export class ImageResolver {
       {
         timestamp,
       },
-      process.env.CLOUDINARY_SECRET,
+      process.env.CLOUDINARY_SECRET
     );
     return { timestamp, signature };
   }

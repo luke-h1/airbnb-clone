@@ -100,22 +100,24 @@ export default function ListingForm({ listing }: IProps) {
   const [submitting, setSubmitting] = useState<boolean>(false);
   const [previewImage, setPreviewImage] = useState<string>('');
   const [select, setSelect] = useState<string>('');
-  const { register, handleSubmit, setValue, errors, watch } =
-    useForm<IFormData>({
-      defaultValues: listing
-        ? {
-            address: listing.address,
-            latitude: listing.latitude,
-            longitude: listing.longitude,
-            bedrooms: listing.bedrooms.toString(),
-            propertyType: listing.propertyType,
-          }
-        : {},
-    });
+  const { register, handleSubmit, setValue, errors, watch } = useForm<
+    IFormData
+  >({
+    defaultValues: listing
+      ? {
+          address: listing.address,
+          latitude: listing.latitude,
+          longitude: listing.longitude,
+          bedrooms: listing.bedrooms.toString(),
+          propertyType: listing.propertyType,
+        }
+      : {},
+  });
 
   const address = watch('address');
-  const [createSignature] =
-    useMutation<CreateSignatureMutation>(SIGNATURE_MUTATION);
+  const [createSignature] = useMutation<CreateSignatureMutation>(
+    SIGNATURE_MUTATION
+  );
 
   const [createListing] = useMutation<
     CreateListingMutation,

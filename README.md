@@ -3,8 +3,6 @@
 A Fullstack Airbnb Clone with Next.js & GraphQL
 
 ### Structure 
-This project is made up of 1 area that is managed by using <a href='https://lerna.js.org/' target="_blank">Lerna</a>
-
 
 * frontend - Next.js frontend / Prisma + TypegraphQL backend
 
@@ -14,8 +12,6 @@ This project is made up of 1 area that is managed by using <a href='https://lern
 * upload listing images (cloudinary)
 * mapbox 
 * google places 
-* geo-coding
-
 
 ### tech stack
 * Node
@@ -39,7 +35,6 @@ This project is made up of 1 area that is managed by using <a href='https://lern
 * copy the `.env.example ` to `.env.local` (`cp .env.example .env.local`).
 * Fill out the `.env.local` file with your own values
 * create accounts for all of the things in the `.env.local` file    
-
 
 ### Inspirations 
 * [benawad](https://github.com/benawad)
