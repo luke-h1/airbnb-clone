@@ -22,7 +22,7 @@
     "@fontsource/lato": "^4.5.0",
     "@headlessui/react": "^1.4.0",
     "@types/yup": "^0.29.13",
-    "@urql/exchange-graphcache": "^4.2.1",
+    "@urql/exchange-graphcache": "^4.4.3",
     "@urql/exchange-multipart-fetch": "^0.1.13",
     "cross-env": "^7.0.3",
     "cross-fetch": "^3.1.4",
